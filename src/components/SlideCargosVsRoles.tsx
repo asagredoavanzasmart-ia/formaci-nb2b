@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, Scale, Server, Calculator, Crown, Briefcase, Users, Shield, DollarSign, Compass, AlertOctagon, HeartHandshake, Wrench, XCircle, CheckCircle2 } from 'lucide-react';
+import { User, Scale, Server, Calculator, Crown, Briefcase, Users, Shield, DollarSign, Compass, AlertOctagon, HeartHandshake, Wrench, Settings, XCircle, CheckCircle2 } from 'lucide-react';
 
 export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
   const [viewMode, setViewMode] = useState<'cargos' | 'roles'>('cargos');
@@ -145,23 +145,24 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                   <g fill="none" stroke={isDark ? '#4a4a4a' : '#cbd5e1'} strokeWidth="0.3" vectorEffect="non-scaling-stroke">
                     {/* Gerencia to Level 2 */}
                     <path d="M 50 15 L 50 30" />
-                    <path d="M 20 30 L 80 30" />
-                    <path d="M 20 30 L 20 45" />
-                    <path d="M 40 30 L 40 45" />
-                    <path d="M 60 30 L 60 45" />
+                    <path d="M 8 30 L 80 30" />
+                    <path d="M 8 30 L 8 45" />
+                    <path d="M 26 30 L 26 45" />
+                    <path d="M 44 30 L 44 45" />
+                    <path d="M 62 30 L 62 45" />
                     <path d="M 80 30 L 80 45" />
                     
-                    {/* Legal to Jefe de Area */}
-                    <path d="M 40 45 L 40 75" />
-                    
-                    {/* RRHH to Operadores */}
-                    <path d="M 60 45 L 60 75" />
+                    {/* Operaciones to Jefe de Área */}
+                    <path d="M 44 45 L 44 75" />
+
+                    {/* Jefe de Área to Operadores (horizontal) */}
+                    <path d="M 44 75 L 62 75" />
                   </g>
                   
                   {/* Vendedor Connections (Dashed Gray) */}
                   <g fill="none" stroke={isDark ? '#4a4a4a' : '#cbd5e1'} strokeWidth="0.3" strokeDasharray="1.5 1" vectorEffect="non-scaling-stroke">
                     {/* Vendedor to Jefe de Area */}
-                    <path d="M 20 85 L 40 75" />
+                    <path d="M 20 85 L 44 75" />
                   </g>
                 </svg>
 
@@ -173,45 +174,52 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                   </div>
                 </div>
 
-                {/* Level 2: Finanzas, Legal, RRHH, TI */}
-                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '20%', top: '45%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                {/* Level 2: Legal (izquierda), Finanzas, Operaciones, RRHH, TI */}
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '8%', top: '45%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                    <Scale size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
+                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Legal</span>
+                  </div>
+                </div>
+
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '26%', top: '45%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Calculator size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Finanzas</span>
                   </div>
                 </div>
                 
-                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '40%', top: '45%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
-                    <Scale size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Legal</span>
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '44%', top: '45%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                    <Settings size={20} className={`mb-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`} />
+                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operaciones</span>
                   </div>
                 </div>
-                
-                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '60%', top: '45%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '62%', top: '45%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <HeartHandshake size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>RRHH</span>
                   </div>
                 </div>
                 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '80%', top: '45%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Server size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>TI</span>
                   </div>
                 </div>
 
-                {/* Level 3: Jefe de Área, Operadores */}
-                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '40%', top: '75%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                {/* Level 3: Jefe de Área (bajo Operaciones), Operadores */}
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '44%', top: '75%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Briefcase size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Jefe de Área</span>
                   </div>
                 </div>
                 
-                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '60%', top: '75%' }}>
-                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-28 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
+                <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '62%', top: '75%' }}>
+                  <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Wrench size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operadores</span>
                   </div>
