@@ -6,38 +6,38 @@ const comparisonData = [
   {
     icon: Target,
     feature: 'Enfoque',
-    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">Relaciones Personales.</span>Se centra solo en el "pez gordo" (el CEO).</>,
-    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Mapeo de Influencias.</span>Analiza quién tiene realmente el poder de decisión.</>
+    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">Relaciones personales.</span>Se centra solo en el CEO o "pez gordo".</>,
+    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Mapeo de influencias.</span>Analiza quién tiene realmente el poder de decisión.</>
   },
   {
     icon: Lightbulb,
     feature: 'Premisa',
-    traditional: '"Tengo contactos de alto nivel, la venta está en la bolsa".',
-    strategic: '"Necesito identificar quién da la aprobación final y quién me puede guiar".'
+    traditional: '"Mis contactos de alto nivel me aseguran la venta".',
+    strategic: '"¿Quién aprueba realmente y quién puede guiarme?"'
   },
   {
     icon: Zap,
     feature: 'Táctica',
-    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">Excelente.</span>Invita a una cena o reunión brillante con el CEO.</>,
-    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Dirigida.</span>Sus acciones son menos "glamorosas" pero más efectivas.</>
+    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">Glamorosa.</span>Cena o reunión brillante con el CEO.</>,
+    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Dirigida.</span>Acciones menos glamorosas pero más efectivas.</>
   },
   {
     icon: Users,
     feature: 'Coach',
-    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">No busca coach.</span>Confía en su percepción subjetiva del trato.</>,
-    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Fundamental.</span>Encuentra a alguien que le explica la realidad política interna.</>
+    traditional: <><span className="font-bold text-gray-800 dark:text-gray-200 block mb-0.5">No lo busca.</span>Confía en su percepción subjetiva del trato.</>,
+    strategic: <><span className="font-bold text-[#ef375c] dark:text-[#ff851d] block mb-0.5">Fundamental.</span>Encuentra a alguien que le explica la política interna.</>
   },
   {
     icon: EyeOff,
     feature: 'Punto Ciego',
-    traditional: 'Ignora al Gerente de División y a otros actores técnicos.',
-    strategic: 'Sabe que el CEO solo delega la decisión técnica.'
+    traditional: 'Ignora al Gerente de División y a actores técnicos.',
+    strategic: 'Sabe que el CEO delega la decisión técnica final.'
   },
   {
     icon: Trophy,
     feature: 'Resultado',
-    traditional: 'Pierde una venta "segura" (Sorpresa negativa).',
-    strategic: <span className="font-bold text-[#ef375c] dark:text-[#ff851d]">Gana la cuenta (Resultado planificado).</span>
+    traditional: 'Pierde una venta "segura" (sorpresa negativa).',
+    strategic: <span className="font-bold text-[#ef375c] dark:text-[#ff851d]">Gana la cuenta (resultado planificado).</span>
   }
 ];
 
@@ -46,12 +46,12 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
     <div className={`p-4 sm:p-6 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
       <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
       
-      <div className="mb-2 sm:mb-4 shrink-0 text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold inline-flex items-center justify-center gap-2">
-          Ventas <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Complejas</span>
+      <div className="mb-4 shrink-0">
+        <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
+          Ventas Complejas: <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Tradicional vs Estratégico</span>
         </h2>
-        <p className={`mt-1 text-xs sm:text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-          Comparación de enfoques: Tradicional vs. Estratégico
+        <p className={`mt-1 text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          Diferencias clave en el abordaje de grandes cuentas.
         </p>
       </div>
 
@@ -95,8 +95,8 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
                 className="flex-1 grid grid-cols-[1fr_auto_1fr] gap-2 sm:gap-4 items-stretch group relative z-10"
               >
                 {/* Traditional Column */}
-                <div className={`p-2 sm:p-3 rounded-xl flex items-center justify-end text-right transition-all duration-300 ${isDark ? 'bg-[#252525] group-hover:bg-[#2a2a2a] border border-transparent group-hover:border-[#333]' : 'bg-white group-hover:bg-gray-50 border border-transparent group-hover:border-gray-100 shadow-sm group-hover:shadow-md'}`}>
-                  <p className={`text-[10px] sm:text-[11px] leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{row.traditional}</p>
+                <div className={`p-2 sm:p-2.5 rounded-xl flex items-center justify-end text-right transition-all duration-300 ${isDark ? 'bg-[#252525] group-hover:bg-[#2a2a2a] border border-transparent group-hover:border-[#333]' : 'bg-white group-hover:bg-gray-50 border border-transparent group-hover:border-gray-100 shadow-sm group-hover:shadow-md'}`}>
+                  <p className={`text-xs sm:text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{row.traditional}</p>
                 </div>
 
                 {/* Center Axis */}
@@ -110,8 +110,8 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
                 </div>
 
                 {/* Strategic Column */}
-                <div className={`p-2 sm:p-3 rounded-xl flex items-center justify-start text-left transition-all duration-300 ${isDark ? 'bg-[#2a201a]/30 group-hover:bg-[#2a201a]/60 border border-[#ff851d]/10 group-hover:border-[#ff851d]/30' : 'bg-orange-50/50 group-hover:bg-orange-50 border border-orange-100/50 group-hover:border-orange-200 shadow-sm group-hover:shadow-md'}`}>
-                  <p className={`text-[10px] sm:text-[11px] leading-tight ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>{row.strategic}</p>
+                <div className={`p-2 sm:p-2.5 rounded-xl flex items-center justify-start text-left transition-all duration-300 ${isDark ? 'bg-[#2a201a]/30 group-hover:bg-[#2a201a]/60 border border-[#ff851d]/10 group-hover:border-[#ff851d]/30' : 'bg-orange-50/50 group-hover:bg-orange-50 border border-orange-100/50 group-hover:border-orange-200 shadow-sm group-hover:shadow-md'}`}>
+                  <p className={`text-xs sm:text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>{row.strategic}</p>
                 </div>
               </motion.div>
             );

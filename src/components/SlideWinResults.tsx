@@ -66,12 +66,12 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header */}
-      <div className="shrink-0 mb-6 z-10 text-center">
-        <h2 className="text-2xl md:text-4xl font-bold mb-2">
+      <div className="shrink-0 mb-4 z-10 text-center">
+        <h2 className="text-xl md:text-3xl font-bold mb-1">
           Descubriendo <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Resultados y Ganancias</span>
         </h2>
-        <p className={`text-sm md:text-base max-w-4xl mx-auto leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-          Selecciona un tipo de pregunta y usa el interruptor para alternar entre el concepto teórico y los ejemplos prácticos.
+        <p className={`text-[11px] md:text-xs max-w-4xl mx-auto leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          Alterna entre el concepto teórico y los ejemplos prácticos.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
                   setActiveId(q.id);
                   setViewMode('concepto'); // Reset to concept view when changing category
                 }}
-                className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 text-left ${
+                className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-300 text-left ${
                   isActive 
                     ? isDark 
                       ? 'bg-[#2a2a2a] border-[#4a4a4a] shadow-lg' 
@@ -100,20 +100,17 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
                       : 'bg-gray-50 border-gray-100 hover:bg-gray-100'
                 }`}
               >
-                <div className={`p-3 rounded-xl transition-colors duration-300 ${
+                <div className={`p-2 rounded-lg transition-colors duration-300 ${
                   isActive 
                     ? `bg-gradient-to-br ${q.color} text-white shadow-md` 
                     : isDark ? 'bg-[#3a3a3a] text-gray-400' : 'bg-gray-200 text-gray-500'
                 }`}>
-                  <Icon size={20} />
+                  <Icon size={18} />
                 </div>
                 <div>
-                  <h3 className={`font-bold text-sm md:text-base ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-400' : 'text-gray-600')}`}>
+                  <h3 className={`font-bold text-[11px] md:text-xs ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-400' : 'text-gray-600')}`}>
                     {q.title}
                   </h3>
-                  <p className={`text-xs ${isActive ? (isDark ? 'text-gray-300' : 'text-gray-500') : (isDark ? 'text-gray-500' : 'text-gray-400')}`}>
-                    {q.subtitle}
-                  </p>
                 </div>
               </button>
             );
@@ -124,22 +121,19 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
         <div className={`flex-1 flex flex-col rounded-3xl border p-6 md:p-8 relative overflow-hidden ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200 shadow-sm'}`}>
           
           {/* Category Header inside Right Panel */}
-          <div className="flex items-center gap-4 mb-6 shrink-0">
-            <div className={`p-4 rounded-2xl text-white shadow-lg bg-gradient-to-br ${activeData.color}`}>
-              <activeData.icon size={28} />
+          <div className="flex items-center gap-3 mb-4 shrink-0">
+            <div className={`p-3 rounded-xl text-white shadow-lg bg-gradient-to-br ${activeData.color}`}>
+              <activeData.icon size={24} />
             </div>
             <div>
-              <h3 className={`text-2xl md:text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              <h3 className={`text-xl md:text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                 {activeData.title}
               </h3>
-              <p className={`text-sm md:text-base font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                {activeData.subtitle}
-              </p>
             </div>
           </div>
 
           {/* Custom Toggle Switch */}
-          <div className={`flex p-1.5 rounded-xl w-full max-w-md mb-8 shrink-0 ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-100'}`}>
+          <div className={`flex p-1 rounded-lg w-full max-w-xs mb-4 shrink-0 ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-100'}`}>
             <button 
               onClick={() => setViewMode('concepto')}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 ${
@@ -187,7 +181,7 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute inset-0 flex flex-col justify-center gap-6 overflow-y-auto custom-scrollbar pr-4"
+                  className="absolute inset-0 flex flex-col justify-center gap-3 overflow-y-auto custom-scrollbar pr-2 py-4"
                 >
                   {activeData.questions.map((question, idx) => (
                     <motion.div 
@@ -195,12 +189,12 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: idx * 0.1 }}
-                      className="flex items-start gap-4"
+                      className="flex items-start gap-3"
                     >
-                      <div className={`mt-1 shrink-0 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
-                        <MessageCircle size={20} />
+                      <div className={`mt-0.5 shrink-0 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+                        <MessageCircle size={18} />
                       </div>
-                      <p className={`text-base md:text-lg leading-relaxed italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <p className={`text-sm md:text-base leading-snug italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                         "{question}"
                       </p>
                     </motion.div>

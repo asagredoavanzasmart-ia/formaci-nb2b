@@ -28,14 +28,17 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
             
             {/* Sinking Ship Illustration (SVG) */}
             <motion.div 
-              className="absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-64 opacity-90 z-0"
-              animate={{ y: [0, 10, 0], rotate: [0, -2, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute bottom-16 left-1/2 -translate-x-1/2 w-64 h-64 opacity-90 z-0"
+              animate={{ 
+                y: [0, 8, 0], 
+                rotate: [20, 24, 20] 
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             >
               <svg viewBox="0 0 200 200" className="w-full h-full drop-shadow-xl">
                 {/* Water/Rocks */}
-                <path d="M 20 160 Q 50 140 100 160 T 180 160 L 180 190 L 20 190 Z" fill={isDark ? '#4a4a4a' : '#c2b280'} />
-                <path d="M 40 170 Q 80 150 120 170 T 160 170 L 160 190 L 40 190 Z" fill={isDark ? '#3a3a3a' : '#a89a6c'} />
+                <path d="M 20 144 Q 50 128 100 144 T 180 144 L 180 190 L 20 190 Z" fill={isDark ? '#4a4a4a' : '#c2b280'} />
+                <path d="M 40 154 Q 80 138 120 154 T 160 154 L 160 190 L 40 190 Z" fill={isDark ? '#3a3a3a' : '#a89a6c'} />
                 
                 {/* Ship Body */}
                 <g transform="rotate(25, 100, 150)">

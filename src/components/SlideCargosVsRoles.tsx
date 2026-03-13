@@ -35,8 +35,8 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
     // Base path parameters (figure 8 / infinity shape around the center)
     const centerX = 50;
     const centerY = 50;
-    const radiusX = 46; // Increased width of the path (+15%)
-    const radiusY = 52; // Increased height of the path (+15%)
+    const radiusX = 50.6; // +10% from 46
+    const radiusY = 57.2; // +10% from 52
     const baseSpeed = 0.0008; // Slower, smoother speed
     
     const animate = (timestamp: number) => {
@@ -191,7 +191,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '44%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
-                    <Settings size={20} className={`mb-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`} />
+                    <Settings size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
                     <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operaciones</span>
                   </div>
                 </div>
@@ -312,7 +312,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                             animate={{ opacity: 1, x: 0, scale: 1 }}
                             exit={{ opacity: 0, x: role.id === 'vendedor' ? 5 : -5, scale: 0.9 }}
                             transition={{ duration: 0.2 }}
-                            className={`absolute top-1/2 -translate-y-1/2 ${role.id === 'vendedor' ? 'left-full ml-4' : 'right-full mr-4'} w-56 p-4 rounded-xl shadow-2xl z-[100] text-left pointer-events-none ${isDark ? 'bg-[#3a3a3a] border border-[#4a4a4a] text-gray-200' : 'bg-white border border-gray-200 text-gray-700'}`}
+                            className={`absolute top-1/2 -translate-y-1/2 ${role.id === 'vendedor' ? 'left-full ml-4' : 'right-full mr-4'} w-56 p-4 rounded-xl shadow-2xl ${role.id === 'vendedor' ? 'z-[300]' : 'z-[100]'} text-left pointer-events-none ${isDark ? 'bg-[#3a3a3a] border border-[#4a4a4a] text-gray-200' : 'bg-white border border-gray-200 text-gray-700'}`}
                           >
                             <div className={`absolute top-1/2 -translate-y-1/2 ${role.id === 'vendedor' ? '-left-2 border-b border-l' : '-right-2 border-t border-r'} w-4 h-4 rotate-45 ${isDark ? 'bg-[#3a3a3a] border-[#4a4a4a]' : 'bg-white border-gray-200'}`}></div>
                             
