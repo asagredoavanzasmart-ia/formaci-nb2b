@@ -144,56 +144,45 @@ export default function App() {
   return (
     <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#0a0a0a] text-[#f8f9fa]' : 'bg-[#e5e7eb] text-[#4f4f4f]'}`}>
       
-      {/* Sidebar - Ahora con altura limitada y diseño tipo flotante para evitar desplazamiento de la página */}
+      {/* Sidebar - Índice convencional y minimalista */}
       <aside 
-        className={`transition-all duration-300 z-50 fixed left-0 top-1/2 -translate-y-1/2 ml-4 flex flex-col rounded-3xl border shadow-2xl overflow-hidden ${isDark ? 'bg-[#1e1e1e] border-[#2a2a2a]' : 'bg-white border-gray-200'} ${isSidebarOpen ? 'w-72 opacity-100 translate-x-0' : 'w-0 opacity-0 -translate-x-full pointer-events-none'}`}
+        className={`transition-all duration-300 z-50 fixed left-0 top-1/2 -translate-y-1/2 ml-4 flex flex-col rounded-2xl border shadow-xl overflow-hidden ${isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-60 opacity-100 translate-x-0' : 'w-0 opacity-0 -translate-x-full pointer-events-none'}`}
         style={{ 
-          maxHeight: '85vh',
+          maxHeight: '80vh',
         }}
       >
-        <div className="p-4 border-b flex items-center justify-between shrink-0 h-16" style={{ borderColor: 'inherit' }}>
-          <h2 className="font-black text-lg whitespace-nowrap tracking-tight">Índice</h2>
-          <button onClick={() => setIsSidebarOpen(false)} className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
-            <X size={18} />
+        <div className="p-3 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
+          <h2 className="font-bold text-xs uppercase tracking-widest opacity-50 px-2 pb-0.5">Contenido</h2>
+          <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
+            <X size={14} />
           </button>
         </div>
-        {/* Lista con scrollbar vertical */}
-        <div
-          className="flex-1 py-4 px-3 custom-scrollbar"
-          style={{
-            overflowY: 'auto',
-          }}
-        >
-          <div className="space-y-1">
+        
+        {/* Lista de diapositivas tipo link simple */}
+        <div className="flex-1 overflow-y-auto py-2 custom-scrollbar">
+          <div className="flex flex-col">
             {slidesOrder.map((slide, index) => (
-              <div 
-                key={slide.id} 
-                className={`flex items-center gap-2 px-3 py-2.5 rounded-2xl transition-all relative group ${currentSlideIndex === index ? (isDark ? 'bg-orange-500/10' : 'bg-orange-50') : (isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50')}`}
+              <button 
+                key={slide.id}
+                onClick={() => setCurrentSlideIndex(index)}
+                className={`flex items-center gap-3 px-4 py-1.5 text-left transition-all relative ${
+                  currentSlideIndex === index 
+                    ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/5 to-transparent' 
+                    : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
+                }`}
               >
+                <span className={`text-[10px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d]' : 'opacity-30'}`}>
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[11px] truncate">{slide.title}</span>
+                
                 {currentSlideIndex === index && (
                   <motion.div 
-                    layoutId="activeSlideIndicator"
-                    className="absolute left-1 w-1 h-6 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full"
+                    layoutId="activePointer"
+                    className="absolute left-0 w-0.5 h-3 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full"
                   />
                 )}
-                
-                <div className="flex flex-col gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={(e) => { e.stopPropagation(); moveSlide(index, -1); }} disabled={index === 0} className={`p-0.5 rounded ${index === 0 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-700'}`}>
-                    <ChevronUp size={12} />
-                  </button>
-                  <button onClick={(e) => { e.stopPropagation(); moveSlide(index, 1); }} disabled={index === slidesOrder.length - 1} className={`p-0.5 rounded ${index === slidesOrder.length - 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-gray-200 dark:hover:bg-gray-700'}`}>
-                    <ChevronDown size={12} />
-                  </button>
-                </div>
-
-                <button 
-                  className={`flex-1 text-left text-[11px] font-bold leading-tight truncate ${currentSlideIndex === index ? 'text-[#ef375c]' : 'text-gray-500 dark:text-gray-400'}`}
-                  onClick={() => setCurrentSlideIndex(index)}
-                >
-                  <span className="opacity-40 mr-1.5">{String(index + 1).padStart(2, '0')}.</span>
-                  {slide.title}
-                </button>
-              </div>
+              </button>
             ))}
           </div>
         </div>

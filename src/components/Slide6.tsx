@@ -79,6 +79,9 @@ const BoatScene = ({ mode, isDark }: { mode: string, isDark: boolean }) => {
             className="absolute right-0 bottom-[35%] w-1/2 h-[180px] z-0 flex items-end justify-end pr-4 md:pr-8"
           >
             <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Foundations (Underwater block) */}
+              <rect x="20" y="145" width="150" height="35" fill={isDark ? "#334155" : "#94a3b8"} opacity="0.8" />
+              
               {/* Pillars going into water */}
               <rect x="40" y="140" width="15" height="40" fill={isDark ? "#334155" : "#64748b"} />
               <rect x="120" y="140" width="15" height="40" fill={isDark ? "#334155" : "#64748b"} />
@@ -91,16 +94,48 @@ const BoatScene = ({ mode, isDark }: { mode: string, isDark: boolean }) => {
               <path d="M80 70 L150 70 M80 90 L150 90 M80 110 L150 110" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
               <path d="M100 50 L100 130 M130 50 L130 130" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
               
-              {/* Crane */}
-              <path d="M110 50 L110 10 L20 30" stroke={isDark ? "#eab308" : "#ca8a04"} strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M110 25 L150 15" stroke={isDark ? "#eab308" : "#ca8a04"} strokeWidth="4" strokeLinecap="round" />
+              {/* Crane Arm */}
+              <motion.path 
+                d="M110 50 L110 10 L20 30" 
+                stroke={isDark ? "#eab308" : "#ca8a04"} 
+                strokeWidth="5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                animate={{ d: ["M110 50 L110 10 L20 30", "M110 50 L110 10 L20 15", "M110 50 L110 10 L20 30"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.path 
+                d="M110 25 L150 15" 
+                stroke={isDark ? "#eab308" : "#ca8a04"} 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                animate={{ d: ["M110 25 L150 15", "M110 25 L150 5", "M110 25 L150 15"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
               
               {/* Crane cable holding cabin */}
-              <line x1="20" y1="30" x2="20" y2="80" stroke={isDark ? "#94a3b8" : "#64748b"} strokeWidth="1.5" strokeDasharray="3 3" />
+              <motion.line 
+                x1="20" y1="30" x2="20" y2="80" 
+                stroke={isDark ? "#94a3b8" : "#64748b"} 
+                strokeWidth="1.5" 
+                strokeDasharray="3 3" 
+                animate={{ y1: [30, 15, 30], y2: [80, 65, 80] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
               
               {/* Cabin piece being lowered */}
-              <path d="M0 80 L10 50 L40 50 L40 80 Z" fill={isDark ? "#94a3b8" : "#cbd5e1"} />
-              <rect x="15" y="60" width="10" height="10" rx="1" fill={isDark ? "#38bdf8" : "#0ea5e9"} />
+              <motion.path 
+                d="M0 80 L10 50 L40 50 L40 80 Z" 
+                fill={isDark ? "#94a3b8" : "#cbd5e1"} 
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.rect 
+                x="15" y="60" width="10" height="10" rx="1" 
+                fill={isDark ? "#38bdf8" : "#0ea5e9"} 
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              />
             </svg>
           </motion.div>
         )}
@@ -139,107 +174,126 @@ const BoatScene = ({ mode, isDark }: { mode: string, isDark: boolean }) => {
         )}
       </AnimatePresence>
 
-      {/* Boat */}
+      {/* Boat Container (Handles smooth transitions between modes) */}
       <motion.div
         className="relative z-10"
         animate={{ 
-          rotate: isProblemas ? 15 : isExceso ? -15 : isCrecimiento ? 0 : [-2, 2, -2],
-          y: isProblemas ? 10 : isExceso ? 0 : isCrecimiento ? 0 : [-2, 2, -2],
+          y: isProblemas ? 28 : isExceso ? 4 : 18,
+          rotate: isProblemas ? 15 : isExceso ? -15 : 0,
           x: isExceso ? 20 : isCrecimiento ? -30 : 0
         }}
-        transition={{ 
-          y: isEquilibrio ? { repeat: Infinity, duration: 4, ease: "easeInOut" } : { type: "spring", stiffness: 50 },
-          rotate: isEquilibrio ? { repeat: Infinity, duration: 5, ease: "easeInOut" } : { type: "spring", stiffness: 60 },
-          x: { type: "spring", stiffness: 40 }
-        }}
+        transition={{ type: "spring", stiffness: 60, damping: 15 }}
       >
-        {/* Rooster Tail for Exceso */}
-        <AnimatePresence>
-          {isExceso && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: [0.7, 1, 0.7], scale: [0.9, 1.2, 0.9], rotate: [-5, 5, -5] }}
-              transition={{ repeat: Infinity, duration: 0.3 }}
-              className="absolute top-[14px] left-[-72px] w-28 h-24 z-0 origin-bottom-right"
-            >
-              <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M100 100 C80 80 60 40 40 20 C20 0 0 10 10 30 C20 50 40 80 100 100 Z" fill="white" opacity="0.9" />
-                <path d="M100 100 C70 90 50 60 30 40 C10 20 0 30 15 50 C30 70 50 90 100 100 Z" fill="#bae6fd" opacity="0.8" />
-                <path d="M100 100 C90 70 70 30 50 10 C30 -10 10 0 20 20 C30 40 60 70 100 100 Z" fill="white" opacity="1" />
-              </svg>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Boat SVG */}
-        <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-lg relative z-10">
-          {/* Hull */}
-          <path d="M10 80 L40 110 L120 110 L150 80 Z" fill={isDark ? "#e2e8f0" : "#334155"} />
-          <path d="M10 80 L40 110 L120 110 L150 80 Z" fill="black" fillOpacity="0.1" />
-          
-          {/* Problemas: Hole in the hull */}
-          {isProblemas && (
-            <path d="M90 95 C95 90 105 90 110 95 C115 100 105 110 95 105 C85 100 85 100 90 95 Z" fill={isDark ? "#1e293b" : "#0f172a"} />
-          )}
-
-          {/* Cabin - Hide in Crecimiento to show it's under construction */}
-          {!isCrecimiento && (
-            <>
-              <path d="M50 80 L60 40 L110 40 L110 80 Z" fill={isDark ? "#94a3b8" : "#cbd5e1"} />
-              <rect x="70" y="50" width="15" height="15" rx="2" fill={isDark ? "#38bdf8" : "#0ea5e9"} />
-              <rect x="90" y="50" width="15" height="15" rx="2" fill={isDark ? "#38bdf8" : "#0ea5e9"} />
-              <rect x="85" y="20" width="12" height="20" fill={isDark ? "#64748b" : "#94a3b8"} />
-            </>
-          )}
-
-          {/* Crecimiento: Under construction elements */}
-          {isCrecimiento && (
-            <>
-              {/* Partial cabin base */}
-              <path d="M50 80 L55 60 L110 60 L110 80 Z" fill={isDark ? "#94a3b8" : "#cbd5e1"} />
-              {/* Scaffolding on boat */}
-              <path d="M55 60 L55 40 M80 60 L80 40 M105 60 L105 40" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
-              <path d="M50 50 L110 50 M50 40 L110 40" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
-            </>
-          )}
-
-          {/* Stripe */}
-          <path d="M15 85 L145 85" stroke={isProblemas ? "#ef4444" : isCrecimiento ? "#3b82f6" : isExceso ? "#a855f7" : "#10b981"} strokeWidth="4" />
-        </svg>
-
-        {/* Smoke for Problemas */}
-        <AnimatePresence>
-          {isProblemas && (
-            <>
+        {/* Wave Animation (Handles the cyclical motion relative to the mode position) */}
+        <motion.div
+          animate={{ 
+            y: [0, 4, 0],
+            rotate: [-1, 1, -1]
+          }}
+          transition={{ 
+            y: { repeat: Infinity, duration: isExceso ? 2 : isCrecimiento ? 8 : isProblemas ? 4 : 6, ease: "easeInOut" },
+            rotate: { repeat: Infinity, duration: isExceso ? 2.5 : isCrecimiento ? 9 : isProblemas ? 4.5 : 7, ease: "easeInOut" }
+          }}
+        >
+          {/* Rooster Tail for Exceso */}
+          <AnimatePresence>
+            {isExceso && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 0 }}
-                animate={{ opacity: [0, 0.8, 0], y: -60, scale: 2, x: -30 }}
-                transition={{ repeat: Infinity, duration: 1.5, delay: 0 }}
-                className="absolute top-[10px] left-[80px] w-8 h-8 bg-[#3a3a3a] dark:bg-gray-300 rounded-full blur-md z-20"
-              />
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 0 }}
-                animate={{ opacity: [0, 0.6, 0], y: -80, scale: 2.5, x: -40 }}
-                transition={{ repeat: Infinity, duration: 1.8, delay: 0.5 }}
-                className="absolute top-[10px] left-[80px] w-10 h-10 bg-gray-700 dark:bg-gray-400 rounded-full blur-md z-20"
-              />
-            </>
-          )}
-        </AnimatePresence>
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: [0.7, 1, 0.7], scale: [0.9, 1.2, 0.9], rotate: [-5, 5, -5] }}
+                transition={{ repeat: Infinity, duration: 0.3 }}
+                className="absolute top-[-2px] left-[-72px] w-28 h-24 z-0 origin-bottom-right"
+              >
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M100 100 C80 80 60 40 40 20 C20 0 0 10 10 30 C20 50 40 80 100 100 Z" fill="white" opacity="0.9" />
+                  <path d="M100 100 C70 90 50 60 30 40 C10 20 0 30 15 50 C30 70 50 90 100 100 Z" fill="#bae6fd" opacity="0.8" />
+                  <path d="M100 100 C90 70 70 30 50 10 C30 -10 10 0 20 20 C30 40 60 70 100 100 Z" fill="white" opacity="1" />
+                </svg>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Boat SVG */}
+          <svg width="160" height="120" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-lg relative z-10">
+            {/* Hull */}
+            <path d="M10 80 L40 110 L120 110 L150 80 Z" fill={isDark ? "#e2e8f0" : "#334155"} />
+            <path d="M10 80 L40 110 L120 110 L150 80 Z" fill="black" fillOpacity="0.1" />
+            
+            {/* Problemas: Hole in the hull */}
+            {isProblemas && (
+              <path d="M90 95 C95 90 105 90 110 95 C115 100 105 110 95 105 C85 100 85 100 90 95 Z" fill={isDark ? "#1e293b" : "#0f172a"} />
+            )}
+
+            {/* Cabin - Hide in Crecimiento to show it's under construction */}
+            {!isCrecimiento && (
+              <>
+                <path d="M50 80 L60 40 L110 40 L110 80 Z" fill={isDark ? "#94a3b8" : "#cbd5e1"} />
+                <rect x="70" y="50" width="15" height="15" rx="2" fill={isDark ? "#38bdf8" : "#0ea5e9"} />
+                <rect x="90" y="50" width="15" height="15" rx="2" fill={isDark ? "#38bdf8" : "#0ea5e9"} />
+                <rect x="85" y="20" width="12" height="20" fill={isDark ? "#64748b" : "#94a3b8"} />
+              </>
+            )}
+
+            {/* Crecimiento: Under construction elements */}
+            {isCrecimiento && (
+              <>
+                {/* Partial cabin base */}
+                <path d="M50 80 L55 60 L110 60 L110 80 Z" fill={isDark ? "#94a3b8" : "#cbd5e1"} />
+                {/* Scaffolding on boat */}
+                <path d="M55 60 L55 40 M80 60 L80 40 M105 60 L105 40" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
+                <path d="M50 50 L110 50 M50 40 L110 40" stroke={isDark ? "#f59e0b" : "#d97706"} strokeWidth="2" />
+              </>
+            )}
+
+            {/* Stripe */}
+            <path d="M15 85 L145 85" stroke={isProblemas ? "#ef4444" : isCrecimiento ? "#3b82f6" : isExceso ? "#a855f7" : "#10b981"} strokeWidth="4" />
+          </svg>
+
+          {/* Smoke for Problemas */}
+          <AnimatePresence>
+            {isProblemas && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 0 }}
+                  animate={{ opacity: [0, 0.8, 0], y: -60, scale: 2, x: -30 }}
+                  transition={{ repeat: Infinity, duration: 1.5, delay: 0 }}
+                  className="absolute top-[10px] left-[80px] w-8 h-8 bg-[#3a3a3a] dark:bg-gray-300 rounded-full blur-md z-20"
+                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 0 }}
+                  animate={{ opacity: [0, 0.6, 0], y: -80, scale: 2.5, x: -40 }}
+                  transition={{ repeat: Infinity, duration: 1.8, delay: 0.5 }}
+                  className="absolute top-[10px] left-[80px] w-10 h-10 bg-gray-700 dark:bg-gray-400 rounded-full blur-md z-20"
+                />
+              </>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </motion.div>
 
       {/* Natural Water Animation */}
       <div className="absolute bottom-0 left-0 w-full h-[95%] overflow-hidden z-20 pointer-events-none">
-        <motion.div
-          className="absolute bottom-0 left-0 w-[200%] h-[60%] flex items-end"
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ repeat: Infinity, duration: isExceso ? 2 : isCrecimiento ? 8 : isProblemas ? 4 : 6, ease: "linear" }}
-        >
-          <svg viewBox="0 0 2400 120" preserveAspectRatio="none" className={`w-full h-full ${isDark ? 'fill-blue-500/40' : 'fill-blue-400/50'}`}>
-            <path d="M0,40 C150,60 350,20 600,40 C850,60 1050,20 1200,40 L1200,120 L0,120 Z" />
-            <path d="M0,40 C150,60 350,20 600,40 C850,60 1050,20 1200,40 L1200,120 L0,120 Z" transform="translate(1200, 0)" />
-          </svg>
-        </motion.div>
+        {/* PARÁMETRO REGULABLE: Amplitud de la ola superior (3% de 120px = 3.6) */}
+        {(() => {
+          const WAVE_AMPLITUDE_TOP = 3.6;
+          const peak = 40 - WAVE_AMPLITUDE_TOP;
+          const valley = 40 + WAVE_AMPLITUDE_TOP;
+          const pathContent = `M0,40 C150,${valley} 350,${peak} 600,40 C850,${valley} 1050,${peak} 1200,40 L1200,120 L0,120 Z`;
+          
+          return (
+            <motion.div
+              className="absolute bottom-0 left-0 w-[200%] h-[60%] flex items-end"
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ repeat: Infinity, duration: isExceso ? 2 : isCrecimiento ? 8 : isProblemas ? 4 : 6, ease: "linear" }}
+            >
+              <svg viewBox="0 0 2400 120" preserveAspectRatio="none" className={`w-full h-full ${isDark ? 'fill-blue-500/40' : 'fill-blue-400/50'}`}>
+                <path d={pathContent} />
+                <path d={pathContent} transform="translate(1200, 0)" />
+              </svg>
+            </motion.div>
+          );
+        })()}
+        
         
         <motion.div
           className="absolute bottom-[-10px] left-0 w-[200%] h-[50%] flex items-end"
