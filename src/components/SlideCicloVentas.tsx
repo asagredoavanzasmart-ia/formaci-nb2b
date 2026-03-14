@@ -13,7 +13,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
       icon: History,
       short: 'Analiza tu pasado',
       desc: 'Revisa las ventas cerradas en los últimos 12-24 meses. Necesitamos datos reales, no suposiciones, para construir una base estadística sólida.',
-      color: 'from-blue-500 to-indigo-600',
+      color: 'from-[#ff851d] to-[#ffb347]',
       tag: 'FASE 1: RECOPILACIÓN'
     },
     {
@@ -23,7 +23,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
       icon: Clock,
       short: 'Mide el tiempo real',
       desc: 'Calcula el intervalo exacto desde la prospección inicial (primer hola) hasta el cierre formal (firma del contrato). El tiempo es tu métrica reina.',
-      color: 'from-purple-500 to-pink-500',
+      color: 'from-[#ef375c] to-[#ff5c8d]',
       tag: 'FASE 2: MEDICIÓN'
     },
     {
@@ -33,7 +33,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
       icon: Filter,
       short: 'Limpia los datos',
       desc: 'Elimina anomalías: renovaciones automáticas "sin esfuerzo" o ventas flash fortuitas. Si una venta tardó 2 días pero lo normal son 6 meses, bórrala del promedio.',
-      color: 'from-orange-500 to-red-500',
+      color: 'from-[#ff851d] to-[#ef375c]',
       tag: 'FASE 3: DEPURACIÓN'
     },
     {
@@ -43,7 +43,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
       icon: Calculator,
       short: 'Obtén tu Número',
       desc: 'Suma el tiempo de tu volumen regular de ventas y divide. El resultado es tu CICLO NORMAL. Esta es la verdad matemática de tu proceso comercial.',
-      color: 'from-[#ff851d] to-[#ef375c]',
+      color: 'from-[#ef375c] to-[#ff851d]',
       tag: 'FASE 4: RESULTADO'
     }
   ];
@@ -64,8 +64,8 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
             animate={{ opacity: 1, x: 0 }}
             className="flex items-center gap-2"
           >
-            <div className="h-[2px] w-8 bg-gradient-to-r from-[#ff851d] to-[#ef375c]" />
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ff851d]">MÉTRICA ESTRATÉGICA</span>
+            {/* Segmento naranja eliminado */}
+            <span className="text-sm font-black uppercase tracking-[0.3em] text-[#ff851d]">MÉTRICA ESTRATÉGICA</span>
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
             Ciclo <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Normal</span>
@@ -85,7 +85,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
             <Zap size={24} />
           </div>
           <div>
-            <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">Fórmula Clave</p>
+            <p className="text-sm font-black opacity-40 uppercase tracking-widest">Fórmula Clave</p>
             <p className="text-sm font-bold">Tiempo Total / # Ventas Reales</p>
           </div>
         </motion.div>
@@ -105,7 +105,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
             {/* Left Col: Big Icon & Label */}
             <div className="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left space-y-4">
               <div className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-br ${steps[activeStep].color} flex items-center justify-center text-white shadow-2xl relative`}>
-                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center text-xs font-black border-4 border-current">
+                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center text-sm font-black border-4 border-current">
                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
                      {steps[activeStep].num}
                    </span>
@@ -113,7 +113,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                 {React.createElement(steps[activeStep].icon, { size: 64, strokeWidth: 1.5 })}
               </div>
               <div>
-                <span className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 block px-3 py-1 rounded-full border border-current opacity-40 inline-flex`}>
+                <span className={`text-sm font-black uppercase tracking-[0.2em] mb-1 block px-3 py-1 rounded-full border border-current opacity-40 inline-flex`}>
                   {steps[activeStep].tag}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-black mt-2 leading-tight">
@@ -136,11 +136,11 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                 
                 <div className="flex flex-wrap gap-3">
                    {activeStep === 2 ? (
-                     <div className="flex items-center gap-2 text-red-500 font-bold text-xs uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
+                     <div className="flex items-center gap-2 text-red-500 font-bold text-sm uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
                        <Target size={14} /> Cuidado con las anomalías
                      </div>
                    ) : (
-                     <div className="flex items-center gap-2 text-[#ff851d] font-bold text-xs uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
+                     <div className="flex items-center gap-2 text-[#ff851d] font-bold text-sm uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
                        <ChevronRight size={14} /> Paso crítico para el ROI
                      </div>
                    )}
@@ -171,7 +171,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                     : (isDark ? 'bg-[#222] border border-white/10' : 'bg-white border border-black/10')
                  }`}
                >
-                 <span className={`text-xs font-black ${i <= activeStep ? 'text-white' : 'opacity-40'}`}>{s.num}</span>
+                 <span className={`text-sm font-black ${i <= activeStep ? 'text-white' : 'opacity-40'}`}>{s.num}</span>
                  
                  {/* Tooltip on hover */}
                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 pointer-events-none">

@@ -46,18 +46,41 @@ const Potentiometer = ({ value, label, color, onChange, isDark }: {
   onChange: (val: number) => void;
   isDark: boolean;
 }) => {
-  const radius = 32;
-  const stroke = 6;
-  const normalizedRadius = radius - stroke * 2;
+  const radius = 35;
+  const stroke = 5;
+  const normalizedRadius = radius - stroke;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (value / 10) * circumference;
 
   return (
-    <div className="flex flex-col items-center group">
-      <div className="relative cursor-pointer" onClick={() => onChange((value % 10) + 1)}>
-        <svg height={radius * 2} width={radius * 2} className="transform -rotate-90">
+    <div className="flex flex-col items-center group relative">
+      <div 
+        className="relative cursor-pointer transition-transform hover:scale-105 active:scale-95" 
+        onClick={() => onChange((value % 10) + 1)}
+      >
+        {/* Marcadores de graduación (ticks) */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          {[...Array(10)].map((_, i) => {
+            const angle = (i * 36) - 90;
+            const active = i < value;
+            return (
+              <div 
+                key={i} 
+                className="absolute w-full h-full flex items-center justify-end"
+                style={{ transform: `rotate(${angle}deg)` }}
+              >
+                <div 
+                  className={`w-1.5 h-[1.5px] rounded-full transition-all duration-300 ${active ? 'opacity-100 scale-125' : 'opacity-20 scale-100'}`}
+                  style={{ backgroundColor: active ? color : (isDark ? 'white' : 'black'), marginRight: '2px' }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        <svg height={radius * 2} width={radius * 2} className="transform -rotate-90 relative z-10">
           <circle
-            stroke={isDark ? '#333' : '#eee'}
+            stroke={isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}
             fill="transparent"
             strokeWidth={stroke}
             r={normalizedRadius}
@@ -76,23 +99,71 @@ const Potentiometer = ({ value, label, color, onChange, isDark }: {
             cy={radius}
             initial={{ strokeDashoffset: circumference }}
             animate={{ strokeDashoffset }}
-            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+            transition={{ type: "spring", stiffness: 100, damping: 15 }}
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center font-black text-xs">
+
+        {/* Centro de la perilla */}
+        <div className={`absolute inset-[10px] rounded-full flex items-center justify-center font-black text-sm z-20 ${isDark ? 'bg-[#1a1a1a] shadow-[inset_0_2px_4px_rgba(255,255,255,0.05)]' : 'bg-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] shadow-xl border border-gray-100'}`}>
+          <div className="absolute top-1 w-1 h-3 rounded-full opacity-20" style={{ backgroundColor: color, transform: `rotate(${(value-1)*36}deg)`, transformOrigin: 'bottom center' }} />
           {value}
         </div>
       </div>
-      <span className={`text-[8px] font-black uppercase tracking-tighter mt-1 opacity-60 ${isDark ? 'text-white' : 'text-black'}`}>{label}</span>
-      <div className="flex gap-0.5 mt-2">
-        {[...Array(10)].map((_, i) => (
-          <div 
-            key={i} 
-            onClick={() => onChange(i + 1)}
-            className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-all ${i < value ? `bg-${color.includes('#') ? 'current' : color}` : 'bg-gray-200 dark:bg-gray-800'}`}
-            style={{ backgroundColor: i < value ? color : undefined }}
-          />
-        ))}
+      <span className={`text-[8.5px] font-black uppercase tracking-tighter mt-2 opacity-50 ${isDark ? 'text-white' : 'text-black'}`}>{label}</span>
+    </div>
+  );
+};
+
+const RankingChart = ({ icps, isDark }: { icps: CompleteICP[]; isDark: boolean }) => {
+  const scores = icps.map(icp => ({ 
+    name: icp.company.name || 'Segmento sin nombre', 
+    score: icp.ice.impact * icp.ice.confidence * icp.ice.ease 
+  }));
+  const maxScore = Math.max(...scores.map(s => s.score), 1);
+  const sorted = [...scores].sort((a, b) => b.score - a.score);
+
+  return (
+    <div className={`mt-2 p-6 rounded-[2rem] border ${isDark ? 'bg-black/40 border-white/5' : 'bg-gray-50/50 border-black/5'}`}>
+      <div className="flex items-center gap-2 mb-6">
+        <Calculator size={18} className="text-[#ff851d]" />
+        <h3 className="font-black text-xs uppercase tracking-widest opacity-80">Comparativa Estratégica</h3>
+      </div>
+      
+      <div className="space-y-4">
+        {sorted.map((item, idx) => {
+          const isWinner = idx === 0 && icps.length > 1;
+          const percentage = (item.score / maxScore) * 100;
+          return (
+            <div key={idx} className="space-y-1.5">
+              <div className="flex justify-between items-end">
+                <div className="flex items-center gap-2">
+                  <span className={`text-[10px] font-black ${isWinner ? 'text-[#ff851d]' : 'opacity-40'}`}>
+                    #{idx + 1}
+                  </span>
+                  <span className={`text-xs font-bold truncate max-w-[200px] ${isWinner ? 'opacity-100' : 'opacity-50'}`}>
+                    {item.name}
+                  </span>
+                  {isWinner && (
+                    <span className="px-2 py-0.5 rounded-full bg-[#ff851d]/10 text-[#ff851d] text-[8px] font-black uppercase border border-[#ff851d]/20 animate-pulse">
+                      ¡Elección Recomendada!
+                    </span>
+                  )}
+                </div>
+                <span className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+                  {item.score} pts
+                </span>
+              </div>
+              <div className={`h-2.5 w-full rounded-full overflow-hidden ${isDark ? 'bg-white/5' : 'bg-black/5'}`}>
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${percentage}%` }}
+                  transition={{ type: "spring", stiffness: 50, damping: 15, delay: 0.5 + idx * 0.1 }}
+                  className={`h-full rounded-full bg-gradient-to-r ${isWinner ? 'from-[#ff851d] to-[#ef375c] shadow-[0_0_20px_rgba(239,55,92,0.3)]' : isDark ? 'from-gray-700 to-gray-600' : 'from-gray-300 to-gray-400'}`}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -294,12 +365,12 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
             </motion.div>
           )}
 
-          {/* STEP 3: EVALUACIÓN ICE (POTENCIÓMETROS) */}
+          {/* STEP 3: EVALUACIÓN ICE (POTENCIÓMETROS + GRÁFICO) */}
           {step === 3 && (
-            <motion.div key="step3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex flex-col gap-6">
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 overflow-hidden">
+            <motion.div key="step3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 shrink-0">
                 {icps.length === 0 ? (
-                   <div className="col-span-3 flex flex-col items-center justify-center opacity-20">
+                   <div className="col-span-3 flex flex-col items-center justify-center opacity-20 py-12">
                       <XCircle size={64} className="mb-4" />
                       <p className="font-black">No hay ICPs definidos.</p>
                       <button onClick={() => setStep(0)} className="underline mt-2">Empezar de nuevo</button>
@@ -312,29 +383,29 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                       initial={{ y: 20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: idx * 0.1 }}
-                      className={`h-full flex flex-col p-6 rounded-[2.5rem] border relative overflow-hidden ${panelClass}`}
+                      className={`flex flex-col p-5 rounded-[2.2rem] border relative overflow-hidden ${panelClass}`}
                     >
-                      <button onClick={() => deleteIcp(icp.id)} className="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
-                        <Trash2 size={16} />
+                      <button onClick={() => deleteIcp(icp.id)} className="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors z-30">
+                        <Trash2 size={14} />
                       </button>
 
                       <div className="mb-4 flex items-center gap-3">
-                        <span className="text-2xl font-black text-[#ff851d] opacity-20">0{idx+1}</span>
+                        <span className="text-xl font-black text-[#ff851d] opacity-20">0{idx+1}</span>
                         <div className="min-w-0">
-                          <h4 className="font-black text-sm truncate uppercase tracking-tight">{icp.company.name}</h4>
-                          <p className="text-[10px] opacity-40 font-bold truncate">{icp.company.industry} • {icp.company.size}</p>
+                          <h4 className="font-black text-[11px] truncate uppercase tracking-tight">{icp.company.name}</h4>
+                          <p className="text-[9px] opacity-40 font-bold truncate">{icp.company.industry} • {icp.company.size}</p>
                         </div>
                       </div>
 
-                      <div className="flex flex-col items-center justify-around flex-1 py-4 gap-6">
+                      <div className="flex items-center justify-between flex-1 py-1 px-2">
                         <Potentiometer value={icp.ice.impact} label="Impacto" color="#ff851d" onChange={(v) => updateIce(icp.id, 'impact', v)} isDark={isDark} />
                         <Potentiometer value={icp.ice.confidence} label="Confianza" color="#ef375c" onChange={(v) => updateIce(icp.id, 'confidence', v)} isDark={isDark} />
                         <Potentiometer value={icp.ice.ease} label="Facilidad" color="#60a5fa" onChange={(v) => updateIce(icp.id, 'ease', v)} isDark={isDark} />
                       </div>
 
-                      <div className={`mt-4 p-4 rounded-2xl border-t-2 border-dashed flex flex-col items-center justify-center ${isDark ? 'bg-black/20 border-white/5' : 'bg-white border-black/5'}`}>
-                        <span className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">ICE SCORE</span>
-                        <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+                      <div className={`mt-4 p-3 rounded-[1.5rem] border-t-2 border-dashed flex items-center justify-between ${isDark ? 'bg-black/20 border-white/5' : 'bg-white border-black/5'}`}>
+                        <span className="text-[9px] font-black uppercase tracking-widest opacity-40">ICE SCORE</span>
+                        <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
                           {score}
                         </span>
                       </div>
@@ -343,7 +414,10 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                 })}
               </div>
 
-              <div className="shrink-0 flex justify-between items-center py-4 px-6 border-t border-gray-500/10">
+              {/* GRÁFICO DE COMPARACIÓN */}
+              {icps.length > 0 && <RankingChart icps={icps} isDark={isDark} />}
+
+              <div className="shrink-0 flex justify-between items-center py-4 px-6 border-t border-gray-500/10 mt-2">
                 <div className="flex items-center gap-3">
                   <RefreshCcw size={16} className="text-[#ff851d]" />
                   <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Presiona el centro del potenciómetro para rotar valor</p>
