@@ -248,23 +248,46 @@ export default function App() {
                   </div>
                 )}
                 {currentSlideId === 'slide-simple' && (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className={`w-full max-w-3xl px-12 py-16 rounded-3xl border-2 ${isDark ? 'bg-[#1e1e1e] border-[#2a2a2a]' : 'bg-white border-gray-100 shadow-xl'}`}>
-                      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-                        Venta <span className="text-[#ef375c]">Simple</span>
+                  <div className="w-full h-full flex items-center justify-center p-12">
+                    <div className={`w-full h-full flex flex-col items-center justify-center rounded-[3rem] border-2 relative overflow-hidden ${isDark ? 'bg-[#1e1e1e] border-[#2a2a2a]' : 'bg-white border-gray-100 shadow-2xl'}`}>
+                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#ff851d]/5 to-transparent blur-[120px] pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-[#ef375c]/5 to-transparent blur-[120px] pointer-events-none" />
+                      
+                      <h2 className="text-5xl md:text-6xl font-black mb-20 text-center tracking-tighter">
+                        Venta <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Simple</span>
                       </h2>
-                      <div className="flex items-center justify-center">
-                        <div className={`flex flex-col items-center justify-center rounded-full shadow-lg w-32 h-32 shrink-0 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-gray-50 border border-gray-200'}`}>
-                          <User size={28} className="mb-1" />
-                          <span className="font-bold text-sm">Vendedor</span>
+                      
+                      <div className="flex items-center justify-center w-full max-w-4xl px-10">
+                        <motion.div 
+                          initial={{ x: -50, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          className={`flex flex-col items-center justify-center rounded-3xl shadow-xl w-48 h-48 shrink-0 relative z-10 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-white border border-gray-100'}`}
+                        >
+                          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ff851d]/10 to-[#ff851d]/20 flex items-center justify-center mb-3">
+                            <User size={48} className="text-[#ff851d]" />
+                          </div>
+                          <span className="font-black text-lg uppercase tracking-widest opacity-80">Vendedor</span>
+                        </motion.div>
+
+                        <div className="flex-1 mx-10 relative">
+                          <div className="h-4 w-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-lg shadow-red-500/20" />
+                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 border-t-8 border-r-8 border-[#ef375c] rotate-45 rounded-sm" />
+                          <div className="absolute left-1/2 -translate-x-1/2 -top-12 flex flex-col items-center">
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-2">Transacción Directa</span>
+                            <div className="h-1 w-12 bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full" />
+                          </div>
                         </div>
-                        <div className="flex-1 mx-6 h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full relative">
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-5 h-5 border-t-4 border-r-4 border-[#ef375c] rotate-45"></div>
-                        </div>
-                        <div className={`flex flex-col items-center justify-center rounded-full shadow-lg w-32 h-32 shrink-0 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-gray-50 border border-gray-200'}`}>
-                          <User size={28} className="mb-1" />
-                          <span className="font-bold text-sm">Comprador</span>
-                        </div>
+
+                        <motion.div 
+                          initial={{ x: 50, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          className={`flex flex-col items-center justify-center rounded-3xl shadow-xl w-48 h-48 shrink-0 relative z-10 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-white border border-gray-100'}`}
+                        >
+                          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ef375c]/10 to-[#ef375c]/20 flex items-center justify-center mb-3">
+                            <User size={48} className="text-[#ef375c]" />
+                          </div>
+                          <span className="font-black text-lg uppercase tracking-widest opacity-80">Comprador</span>
+                        </motion.div>
                       </div>
                     </div>
                   </div>

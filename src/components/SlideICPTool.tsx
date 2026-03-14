@@ -1,363 +1,359 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Building2, User, Zap, Plus, Trash2, CheckCircle, AlertTriangle, XCircle, Target, Info, Calculator, TrendingUp, ShieldCheck, MousePointer2 } from 'lucide-react';
+import { Building2, User, Zap, Plus, Trash2, CheckCircle, AlertTriangle, XCircle, Target, Info, Calculator, TrendingUp, ShieldCheck, MousePointer2, ChevronRight, ChevronLeft, RefreshCcw } from 'lucide-react';
 
-// ─── Tipos ───────────────────────────────────────────────────────────────────
-interface ICESegment { id: string; name: string; impacto: number; confianza: number; facilidad: number; evidence: boolean; }
+// ─── Tipos e Interfaces ──────────────────────────────────────────────────────
+interface CompanyData {
+  name: string;
+  industry: string;
+  size: string;
+  geography: string;
+  stack: string;
+  triggers: string[];
+}
 
-// ─── Sub-componente: Etiqueta de campo ───────────────────────────────────────
+interface PersonaData {
+  decisor: string;
+  influencer: string;
+  budgetOwner: string;
+  mainPain: string;
+  antiIcp: string;
+}
+
+interface IceData {
+  impact: number;
+  confidence: number;
+  ease: number;
+  evidence: boolean;
+}
+
+interface CompleteICP {
+  id: string;
+  company: CompanyData;
+  persona: PersonaData;
+  ice: IceData;
+}
+
+// ─── Componentes Atómicos ────────────────────────────────────────────────────
 const FieldLabel = ({ children, isDark }: { children: React.ReactNode; isDark: boolean }) => (
   <label className={`text-[10px] font-black uppercase tracking-wider mb-1 block ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{children}</label>
 );
 
-// ─── Sub-componente: Input de texto ──────────────────────────────────────────
-const TextInput = ({ value, onChange, placeholder, isDark }: { value: string; onChange: (v: string) => void; placeholder: string; isDark: boolean }) => (
-  <input
-    type="text" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder}
-    className={`w-full p-2 rounded-xl border text-sm outline-none transition-colors ${isDark ? 'bg-[#1e1e1e] border-[#4a4a4a] text-gray-200 placeholder-gray-600 focus:border-[#ff851d]' : 'bg-white border-gray-200 text-gray-800 placeholder-gray-300 focus:border-[#ff851d]'}`}
-  />
-);
-
-// ─── Sub-componente: Área de texto ───────────────────────────────────────────
-const TextArea = ({ value, onChange, placeholder, isDark }: { value: string; onChange: (v: string) => void; placeholder: string; isDark: boolean }) => (
-  <textarea
-    value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} rows={3}
-    className={`w-full p-2 rounded-xl border text-sm outline-none transition-colors resize-none ${isDark ? 'bg-[#1e1e1e] border-[#4a4a4a] text-gray-200 placeholder-gray-600 focus:border-[#ef375c]' : 'bg-white border-gray-200 text-gray-800 placeholder-gray-300 focus:border-[#ef375c]'}`}
-  />
-);
-
-// ─── Componente principal ─────────────────────────────────────────────────────
-export default function SlideICPTool({ isDark }: { isDark: boolean }) {
-  const [activeTab, setActiveTab] = useState<'empresa' | 'persona' | 'ice'>('empresa');
-
-  // Estado: Empresa (ICP)
-  const [industria, setIndustria] = useState('');
-  const [tamano, setTamano] = useState('51-200');
-  const [geografia, setGeografia] = useState('');
-  const [stack, setStack] = useState('');
-  const [disparadores, setDisparadores] = useState<string[]>([]);
-
-  // Estado: Buyer Persona
-  const [rol1, setRol1] = useState('');
-  const [rol2, setRol2] = useState('');
-  const [quienSufre, setQuienSufre] = useState('');
-  const [quienFirma, setQuienFirma] = useState('');
-  const [dolorPrincipal, setDolorPrincipal] = useState('');
-  const [antiIcp, setAntiIcp] = useState('');
-
-  // Estado: ICE Framework
-  const [segments, setSegments] = useState<ICESegment[]>([
-    { id: 'seg1', name: 'SaaS B2B', impacto: 9, confianza: 8, facilidad: 8, evidence: true },
-    { id: 'seg2', name: 'Agencias Marketing',  impacto: 6, confianza: 7, facilidad: 9, evidence: true },
-    { id: 'seg3', name: 'Logística Tradicional',  impacto: 8, confianza: 3, facilidad: 5, evidence: false },
-  ]);
-
-  const DISPARADORES = [
-    'Están contratando', 'Levantaron inversión', 'Expandieron sedes',
-    'Cambiaron C-Level', 'Lanzaron nuevo producto', 'Pasaron 50 empleados',
-  ];
-
-  const toggleDisparador = (d: string) =>
-    setDisparadores(prev => prev.includes(d) ? prev.filter(x => x !== d) : [...prev, d]);
-
-  const addSegment = () => {
-    if (segments.length >= 6) return;
-    setSegments(prev => [...prev, { id: `seg${Date.now()}`, name: '', impacto: 5, confianza: 4, facilidad: 5, evidence: false }]);
-  };
-
-  const removeSegment = (id: string) => setSegments(prev => prev.filter(s => s.id !== id));
-
-  const updateSegment = (id: string, field: keyof ICESegment, value: string | number | boolean) =>
-    setSegments(prev => prev.map(s => s.id === id ? { ...s, [field]: value } : s));
-
-  const iceScore = (s: ICESegment) => s.impacto * s.confianza * s.facilidad;
-
-  const sorted = [...segments].sort((a, b) => iceScore(b) - iceScore(a));
-  const maxScore = Math.max(...segments.map(iceScore), 1);
-
-  // Estilos compartidos
-  const panel = isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200';
-
-  const tabs = [
-    { id: 'empresa', label: 'Empresa (ICP)', icon: Building2, color: 'from-[#ff851d] to-[#f59e0b]' },
-    { id: 'persona', label: 'Buyer Persona', icon: User,      color: 'from-[#ef375c] to-[#f43f5e]' },
-    { id: 'ice',     label: 'ICE Evaluation', icon: Zap,       color: 'from-[#ff851d] to-[#ef375c]' },
-  ] as const;
-
-  const getVerdict = (score: number) => {
-    const pct = score / maxScore;
-    if (pct >= 0.75) return { label: 'Prioridad Máxima', icon: CheckCircle,  color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' };
-    if (pct >= 0.4)  return { label: 'Analizar/Pivotar', icon: AlertTriangle, color: 'text-yellow-500', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' };
-    return               { label: 'Baja Prioridad',   icon: XCircle,       color: 'text-red-400',     bg: 'bg-red-500/10', border: 'border-red-500/20' };
-  };
-
-  const iceGuide = [
-    { 
-      letter: 'I', name: 'Impacto', color: 'text-[#ff851d]', icon: TrendingUp,
-      desc: '¿Cuánto valor genera tu solución?', 
-      q: '¿Cuánto dinero pierde el cliente si no resuelve el problema? ¿Es estratégico?',
-      signals: 'Afecta ingresos, crecimiento o eficiencia clave.'
-    },
-    { 
-      letter: 'C', name: 'Confianza', color: 'text-[#ef375c]', icon: ShieldCheck,
-      desc: '¿Qué evidencias tienes del dolor?', 
-      q: '¿Has hablado ya con clientes? ¿Viste el problema repetirse? ¿Hay datos?',
-      signals: 'Puntúa ≤ 4 si nunca has hablado directa con el mercado.'
-    },
-    { 
-      letter: 'E', name: 'Facilidad', color: 'text-blue-400', icon: MousePointer2,
-      desc: '¿Qué tan fácil es contactarlos?', 
-      q: '¿Existen bases de datos? ¿Responden cold email? ¿Cargos claros?',
-      signals: 'Contactos visibles, mercado activo digitalmente.'
-    },
-  ];
+const Potentiometer = ({ value, label, color, onChange, isDark }: { 
+  value: number; 
+  label: string; 
+  color: string; 
+  onChange: (val: number) => void;
+  isDark: boolean;
+}) => {
+  const radius = 32;
+  const stroke = 6;
+  const normalizedRadius = radius - stroke * 2;
+  const circumference = normalizedRadius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (value / 10) * circumference;
 
   return (
-    <div className={`p-4 sm:p-6 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
+    <div className="flex flex-col items-center group">
+      <div className="relative cursor-pointer" onClick={() => onChange((value % 10) + 1)}>
+        <svg height={radius * 2} width={radius * 2} className="transform -rotate-90">
+          <circle
+            stroke={isDark ? '#333' : '#eee'}
+            fill="transparent"
+            strokeWidth={stroke}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+          />
+          <motion.circle
+            stroke={color}
+            fill="transparent"
+            strokeWidth={stroke}
+            strokeDasharray={circumference + ' ' + circumference}
+            style={{ strokeDashoffset }}
+            strokeLinecap="round"
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+            initial={{ strokeDashoffset: circumference }}
+            animate={{ strokeDashoffset }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center font-black text-xs">
+          {value}
+        </div>
+      </div>
+      <span className={`text-[8px] font-black uppercase tracking-tighter mt-1 opacity-60 ${isDark ? 'text-white' : 'text-black'}`}>{label}</span>
+      <div className="flex gap-0.5 mt-2">
+        {[...Array(10)].map((_, i) => (
+          <div 
+            key={i} 
+            onClick={() => onChange(i + 1)}
+            className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-all ${i < value ? `bg-${color.includes('#') ? 'current' : color}` : 'bg-gray-200 dark:bg-gray-800'}`}
+            style={{ backgroundColor: i < value ? color : undefined }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ─── Componente Principal ─────────────────────────────────────────────────────
+export default function SlideICPTool({ isDark }: { isDark: boolean }) {
+  const [icps, setIcps] = useState<CompleteICP[]>([]);
+  const [step, setStep] = useState(0); // 0: Empresa, 1: Persona, 2: Decisión, 3: Evaluación
+
+  // Estados Temporales para el Formulario Actual
+  const [tempCompany, setTempCompany] = useState<CompanyData>({
+    name: '', industry: '', size: '51-200', geography: '', stack: '', triggers: []
+  });
+  const [tempPersona, setTempPersona] = useState<PersonaData>({
+    decisor: '', influencer: '', budgetOwner: '', mainPain: '', antiIcp: ''
+  });
+
+  const DISPARADORES = [
+    'Están contratando', 'Levantaron inversión', 'Cambiaron C-Level', 
+    'Lanzaron nuevo producto', 'Pasaron 50 empleados'
+  ];
+
+  const handleNext = () => {
+    if (step === 0 && !tempCompany.name) return;
+    setStep(step + 1);
+  };
+
+  const saveAndAsk = () => {
+    const newIcp: CompleteICP = {
+      id: `icp-${Date.now()}`,
+      company: { ...tempCompany },
+      persona: { ...tempPersona },
+      ice: { impact: 5, confidence: 5, ease: 5, evidence: false }
+    };
+    setIcps([...icps, newIcp]);
+    resetTemps();
+    setStep(2); // Ir a la pantalla de decisión
+  };
+
+  const resetTemps = () => {
+    setTempCompany({ name: '', industry: '', size: '51-200', geography: '', stack: '', triggers: [] });
+    setTempPersona({ decisor: '', influencer: '', budgetOwner: '', mainPain: '', antiIcp: '' });
+  };
+
+  const updateIce = (id: string, field: keyof IceData, value: number | boolean) => {
+    setIcps(prev => prev.map(icp => icp.id === id ? { ...icp, ice: { ...icp.ice, [field]: value } } : icp));
+  };
+
+  const deleteIcp = (id: string) => {
+    setIcps(icps.filter(i => i.id !== id));
+  };
+
+  const panelClass = isDark ? 'bg-[#222] border-[#333]' : 'bg-gray-50 border-gray-100 shadow-sm';
+  const inputClass = `w-full p-2.5 rounded-xl border text-xs outline-none transition-all ${isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-200 focus:border-[#ff851d]' : 'bg-white border-gray-200 text-gray-800 focus:border-[#ff851d]'}`;
+
+  const renderStepper = () => (
+    <div className="flex justify-center gap-1.5 mb-6 shrink-0">
+      {[0, 1, 2, 3].map((s) => (
+        <div key={s} className={`h-1.5 rounded-full transition-all duration-500 ${step === s ? 'w-10 bg-gradient-to-r from-[#ff851d] to-[#ef375c]' : 'w-4 bg-gray-200 dark:bg-gray-800'}`} />
+      ))}
+    </div>
+  );
+
+  return (
+    <div className={`p-8 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#0f0f0f] border border-white/5' : 'bg-white border border-black/5'}`}>
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-bl from-[#ff851d]/10 to-transparent blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-[#ef375c]/10 to-transparent blur-[100px] pointer-events-none" />
 
       {/* Header */}
-      <div className="shrink-0 mb-3 z-10 flex justify-between items-start">
+      <div className="shrink-0 mb-6 z-10 flex justify-between items-end">
         <div>
-          <h2 className="text-xl md:text-2xl font-bold mb-0.5 flex items-center gap-2">
-            <Target size={22} className="text-[#ff851d]" />
+          <h2 className="text-3xl font-black mb-1 flex items-center gap-3 tracking-tighter">
+            <Target size={28} className="text-[#ff851d]" />
             Herramienta: <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia e ICP</span>
           </h2>
-          <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Mapea tu mercado ideal y prioriza usando datos, no intuición.</p>
+          <p className={`text-sm font-medium opacity-50`}>Define tu mercado, tus personas y mide el potencial estratégico.</p>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-2 mb-3 z-10 shrink-0">
-        {tabs.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-bold text-xs transition-all ${activeTab === tab.id ? `bg-gradient-to-r ${tab.color} text-white shadow-md` : isDark ? 'bg-[#2a2a2a] text-gray-400 hover:text-white' : 'bg-gray-100 text-gray-500 hover:text-gray-900'}`}>
-            <tab.icon size={14} />
-            <span className="hidden sm:inline">{tab.label}</span>
-            <span className="sm:hidden">{tab.id === 'empresa' ? 'Empresa' : tab.id === 'persona' ? 'Persona' : 'ICE'}</span>
-          </button>
-        ))}
-      </div>
+      {renderStepper()}
 
-      {/* Contenido */}
-      <div className="flex-1 z-10 min-h-0 overflow-hidden">
+      <div className="flex-1 z-10 min-h-0 relative">
         <AnimatePresence mode="wait">
-
-          {/* ── TAB 1: EMPRESA (ICP) ── */}
-          {activeTab === 'empresa' && (
-            <motion.div key="empresa" initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16 }} transition={{ duration: 0.2 }}
-              className="flex flex-col md:flex-row gap-3 h-full min-h-0 overflow-y-auto custom-scrollbar">
-              
-              <div className={`w-full md:w-1/2 rounded-2xl border p-4 flex flex-col gap-3 min-h-0 ${panel}`}>
-                <div className="flex items-center gap-2 mb-1 shrink-0">
-                  <Building2 size={15} className="text-[#ff851d]" />
-                  <h3 className={`font-black text-sm ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Firmografía</h3>
-                </div>
-                <div><FieldLabel isDark={isDark}>Industria / Rubro</FieldLabel><TextInput value={industria} onChange={setIndustria} placeholder="Ej: SaaS B2B, Fintech..." isDark={isDark} /></div>
-                <div><FieldLabel isDark={isDark}>Empleados</FieldLabel>
-                  <select value={tamano} onChange={e => setTamano(e.target.value)}
-                    className={`w-full p-2 rounded-xl border text-sm outline-none ${isDark ? 'bg-[#1e1e1e] border-[#4a4a4a] text-gray-200' : 'bg-white border-gray-200'}`}>
-                    <option value="1-50">1 – 50 empleados</option><option value="51-200">51 – 200 empleados</option><option value="201+">201+ empleados</option>
-                  </select>
-                </div>
-                <div><FieldLabel isDark={isDark}>Geografía</FieldLabel><TextInput value={geografia} onChange={setGeografia} placeholder="Ej: México, LATAM..." isDark={isDark} /></div>
-                <div><FieldLabel isDark={isDark}>Stack Tecnológico</FieldLabel><TextInput value={stack} onChange={setStack} placeholder="Ej: HubSpot, Salesforce..." isDark={isDark} /></div>
-              </div>
-
-              <div className={`w-full md:w-1/2 rounded-2xl border p-4 flex flex-col gap-3 min-h-0 ${panel}`}>
-                <div className="flex items-center gap-2 mb-1 shrink-0">
-                  <Zap size={15} className="text-[#ef375c]" />
-                  <h3 className={`font-black text-sm ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Señales de Compra</h3>
-                </div>
-                <div className="grid grid-cols-1 gap-2 overflow-y-auto custom-scrollbar pr-1">
-                  {DISPARADORES.map(d => (
-                    <button key={d} onClick={() => toggleDisparador(d)}
-                      className={`flex items-center gap-3 p-2.5 rounded-xl border text-left transition-all ${disparadores.includes(d) ? 'border-[#ff851d]/50 bg-[#ff851d]/5' : isDark ? 'border-[#3a3a3a] bg-[#1e1e1e]' : 'border-gray-100 bg-white'}`}>
-                      <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${disparadores.includes(d) ? 'bg-[#ff851d] border-transparent' : 'border-gray-500'}`}>
-                        {disparadores.includes(d) && <CheckCircle size={10} className="text-white" />}
-                      </div>
-                      <span className="text-xs font-bold">{d}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── TAB 2: BUYER PERSONA ── */}
-          {activeTab === 'persona' && (
-            <motion.div key="persona" initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16 }} transition={{ duration: 0.2 }}
-              className="flex flex-col md:flex-row gap-3 h-full min-h-0 overflow-y-auto custom-scrollbar">
-              <div className={`w-full md:w-1/2 rounded-2xl border p-4 flex flex-col gap-3 ${panel}`}>
-                <div className="flex items-center gap-2 mb-1 shrink-0"><User size={15} className="text-[#ef375c]" /><h3 className="font-black text-sm">Roles de Compra</h3></div>
-                <div><FieldLabel isDark={isDark}>Cargo Decisor</FieldLabel><TextInput value={rol1} onChange={setRol1} placeholder="Ej: CFO, Founder..." isDark={isDark} /></div>
-                <div><FieldLabel isDark={isDark}>Cargo Influenciador</FieldLabel><TextInput value={rol2} onChange={setRol2} placeholder="Ej: VP Sales..." isDark={isDark} /></div>
-                <div><FieldLabel isDark={isDark}>¿Quién tiene el presupuesto?</FieldLabel><TextInput value={quienFirma} onChange={setQuienFirma} placeholder="Área o Cargo" isDark={isDark} /></div>
-              </div>
-              <div className={`w-full md:w-1/2 rounded-2xl border p-4 flex flex-col gap-3 ${panel}`}>
-                <div className="flex items-center gap-2 mb-1 shrink-0"><Target size={15} className="text-[#ff851d]" /><h3 className="font-black text-sm">Dolor Estratégico</h3></div>
-                <div><FieldLabel isDark={isDark}>Dolor principal</FieldLabel><TextArea value={dolorPrincipal} onChange={setDolorPrincipal} placeholder="¿Qué les duele de verdad?" isDark={isDark} /></div>
-                <div><FieldLabel isDark={isDark}>Anti-ICP (¿A quién no?)</FieldLabel><TextArea value={antiIcp} onChange={setAntiIcp} placeholder="Sectores o tipos a evitar" isDark={isDark} /></div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* ── TAB 3: ICE EVALUATION (REDESIGNED) ── */}
-          {activeTab === 'ice' && (
-            <motion.div key="ice" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.25 }}
-              className="flex flex-col gap-3 h-full min-h-0">
-
-              {/* Leyenda y Guía Interactiva */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-2 shrink-0">
-                {iceGuide.map((g) => (
-                  <div key={g.letter} className={`p-3 rounded-2xl border relative overflow-hidden flex flex-col ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-100 shadow-sm'}`}>
-                    <div className="absolute top-[-10px] right-[-5px] opacity-10 font-black text-4xl select-none" style={{ color: 'currentColor' }}>{g.letter}</div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <g.icon size={14} className={g.color} />
-                      <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>{g.letter} · {g.name}</span>
-                    </div>
-                    <p className={`text-[9px] font-bold leading-tight mb-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{g.desc}</p>
-                    <p className={`text-[8px] italic leading-relaxed ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{g.q}</p>
+          {/* STEP 0: EMPRESA */}
+          {step === 0 && (
+            <motion.div key="step0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full gap-6">
+              <div className={`w-full p-8 rounded-[2.5rem] border ${panelClass} space-y-5`}>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2.5 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg">
+                    <Building2 size={24} />
                   </div>
-                ))}
+                  <h3 className="text-xl font-bold tracking-tight">Paso 1: Firmografía de la Empresa</h3>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="col-span-2">
+                    <FieldLabel isDark={isDark}>Nombre del Segmento / Empresa</FieldLabel>
+                    <input type="text" value={tempCompany.name} onChange={e => setTempCompany({...tempCompany, name: e.target.value})} placeholder="Ej: Fintechs en Serie A..." className={inputClass} />
+                  </div>
+                  <div>
+                    <FieldLabel isDark={isDark}>Industria</FieldLabel>
+                    <input type="text" value={tempCompany.industry} onChange={e => setTempCompany({...tempCompany, industry: e.target.value})} placeholder="Ej: SaaS B2B" className={inputClass} />
+                  </div>
+                  <div>
+                    <FieldLabel isDark={isDark}>Tamaño</FieldLabel>
+                    <select value={tempCompany.size} onChange={e => setTempCompany({...tempCompany, size: e.target.value})} className={inputClass}>
+                      <option value="1-50">1-50 empleados</option><option value="51-200">51-200 empleados</option><option value="201+">201+ empleados</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <FieldLabel isDark={isDark}>Señales / Disparadores de Compra</FieldLabel>
+                  <div className="flex flex-wrap gap-2">
+                    {DISPARADORES.map(d => (
+                      <button key={d} onClick={() => setTempCompany({
+                        ...tempCompany, 
+                        triggers: tempCompany.triggers.includes(d) ? tempCompany.triggers.filter(x => x !== d) : [...tempCompany.triggers, d]
+                      })} className={`px-3 py-1.5 rounded-full text-[10px] font-black transition-all border ${tempCompany.triggers.includes(d) ? 'bg-[#ff851d] border-transparent text-white' : isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-500' : 'bg-white border-gray-200 text-gray-400'}`}>
+                        {d}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 flex justify-end">
+                  <button onClick={handleNext} className="bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white px-8 py-3 rounded-2xl font-black text-sm shadow-xl shadow-red-500/20 flex items-center gap-2 hover:scale-105 transition-transform">
+                    Continuar <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 1: PERSONA */}
+          {step === 1 && (
+            <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full gap-6">
+              <div className={`w-full p-8 rounded-[2.5rem] border ${panelClass} space-y-5`}>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2.5 rounded-2xl bg-gradient-to-br from-[#ef375c] to-[#f43f5e] text-white shadow-lg">
+                    <User size={24} />
+                  </div>
+                  <h3 className="text-xl font-bold tracking-tight">Paso 2: Buyer Persona</h3>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <FieldLabel isDark={isDark}>Decisor Principal</FieldLabel>
+                    <input type="text" value={tempPersona.decisor} onChange={e => setTempPersona({...tempPersona, decisor: e.target.value})} placeholder="Ej: CFO, Founder" className={inputClass} />
+                  </div>
+                  <div>
+                    <FieldLabel isDark={isDark}>Influenciador Clave</FieldLabel>
+                    <input type="text" value={tempPersona.influencer} onChange={e => setTempPersona({...tempPersona, influencer: e.target.value})} placeholder="Ej: Gerente TI" className={inputClass} />
+                  </div>
+                  <div className="col-span-2">
+                    <FieldLabel isDark={isDark}>Dolor Estratégico Principal</FieldLabel>
+                    <textarea rows={2} value={tempPersona.mainPain} onChange={e => setTempPersona({...tempPersona, mainPain: e.target.value})} placeholder="¿Qué problema real les quita el sueño?" className={`${inputClass} resize-none`} />
+                  </div>
+                </div>
+
+                <div className="pt-4 flex justify-between">
+                  <button onClick={() => setStep(0)} className="px-6 py-3 rounded-2xl font-bold text-sm opacity-50 flex items-center gap-2">
+                    <ChevronLeft size={18} /> Atrás
+                  </button>
+                  <button onClick={saveAndAsk} className="bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white px-8 py-3 rounded-2xl font-black text-sm shadow-xl shadow-red-500/20 flex items-center gap-2 hover:scale-105 transition-transform">
+                    Guardar y Continuar <ChevronRight size={18} />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 2: DECISIÓN */}
+          {step === 2 && (
+            <motion.div key="step2" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto w-full gap-8 text-center">
+              <div className="space-y-4">
+                <div className="w-20 h-20 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle size={48} />
+                </div>
+                <h3 className="text-3xl font-black tracking-tighter">ICP Guardado Correctamente</h3>
+                <p className="opacity-60 max-w-md mx-auto">Has definido con éxito un perfil de cliente. ¿Qué deseas hacer ahora?</p>
               </div>
 
-              {/* Listado de Segmentos */}
-              <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar flex flex-col gap-3 pr-1">
-                {segments.map((seg, i) => {
-                  const score = iceScore(seg);
-                  const verdict = getVerdict(score);
-                  const showWarning = seg.confianza > 4 && !seg.evidence;
-                  
+              <div className="flex gap-4">
+                {icps.length < 3 && (
+                  <button onClick={() => setStep(0)} className={`flex flex-col items-center gap-3 p-6 rounded-[2rem] border transition-all hover:scale-105 w-48 ${panelClass} hover:border-[#ff851d]`}>
+                    <Plus size={32} className="text-[#ff851d]" />
+                    <span className="font-black text-xs uppercase tracking-widest">Agregar Otro ICP</span>
+                    <span className="text-[10px] opacity-40">({icps.length}/3 agregados)</span>
+                  </button>
+                )}
+                <button onClick={() => setStep(3)} className="flex flex-col items-center gap-3 p-6 rounded-[2rem] border transition-all hover:scale-105 w-48 bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white border-transparent shadow-xl shadow-red-500/20">
+                  <Zap size={32} />
+                  <span className="font-black text-xs uppercase tracking-widest">Ir a Evaluación</span>
+                  <span className="text-[10px] opacity-80">Finalizar Definición</span>
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {/* STEP 3: EVALUACIÓN ICE (POTENCIÓMETROS) */}
+          {step === 3 && (
+            <motion.div key="step3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full flex flex-col gap-6">
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 overflow-hidden">
+                {icps.length === 0 ? (
+                   <div className="col-span-3 flex flex-col items-center justify-center opacity-20">
+                      <XCircle size={64} className="mb-4" />
+                      <p className="font-black">No hay ICPs definidos.</p>
+                      <button onClick={() => setStep(0)} className="underline mt-2">Empezar de nuevo</button>
+                   </div>
+                ) : icps.map((icp, idx) => {
+                  const score = icp.ice.impact * icp.ice.confidence * icp.ice.ease;
                   return (
-                    <motion.div key={seg.id} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                      className={`rounded-2xl border-2 p-4 relative transition-all ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'} ${verdict.border.replace('border-', 'hover:border-')}`}>
-                      
-                      {/* Cabecera del Segmento */}
-                      <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                        <div className="flex items-center gap-3 flex-1 min-w-[200px]">
-                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black ${isDark ? 'bg-[#1e1e1e] text-gray-400 shadow-inner' : 'bg-gray-100 text-gray-500'}`}>{i + 1}</span>
-                          <input type="text" value={seg.name} onChange={e => updateSegment(seg.id, 'name', e.target.value)} placeholder="Nombre del mercado/segmento..."
-                            className={`flex-1 bg-transparent border-b-2 outline-none text-base font-black transition-all ${isDark ? 'border-[#3a3a3a] text-white focus:border-[#ff851d]' : 'border-gray-100 text-gray-900 focus:border-[#ff851d]'}`} />
-                        </div>
-                        
-                        <div className="flex items-center gap-3">
-                          <div className={`px-3 py-1.5 rounded-xl flex items-center gap-2 border ${verdict.bg} ${verdict.border}`}>
-                            <verdict.icon size={14} className={verdict.color} />
-                            <div className="text-right">
-                              <p className={`text-[8px] font-black uppercase tracking-tight leading-none ${verdict.color}`}>ICE Score</p>
-                              <p className={`text-lg font-black leading-none ${verdict.color}`}>{score}</p>
-                            </div>
-                          </div>
-                          <button onClick={() => removeSegment(seg.id)} className={`p-2 rounded-xl transition-colors hover:bg-red-500/10 text-gray-500 hover:text-red-400`}>
-                            <Trash2 size={16} />
-                          </button>
+                    <motion.div 
+                      key={icp.id} 
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className={`h-full flex flex-col p-6 rounded-[2.5rem] border relative overflow-hidden ${panelClass}`}
+                    >
+                      <button onClick={() => deleteIcp(icp.id)} className="absolute top-4 right-4 text-red-500/30 hover:text-red-500 transition-colors">
+                        <Trash2 size={16} />
+                      </button>
+
+                      <div className="mb-4 flex items-center gap-3">
+                        <span className="text-2xl font-black text-[#ff851d] opacity-20">0{idx+1}</span>
+                        <div className="min-w-0">
+                          <h4 className="font-black text-sm truncate uppercase tracking-tight">{icp.company.name}</h4>
+                          <p className="text-[10px] opacity-40 font-bold truncate">{icp.company.industry} • {icp.company.size}</p>
                         </div>
                       </div>
 
-                      {/* Sliders y Controles */}
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                        <div className="lg:col-span-11 grid grid-cols-1 md:grid-cols-3 gap-6">
-                          
-                          {/* IMPACTO */}
-                          <div className="flex flex-col gap-2">
-                            <div className="flex justify-between items-center"><FieldLabel isDark={isDark}>Impacto</FieldLabel><span className="text-xs font-black text-[#ff851d]">{seg.impacto}</span></div>
-                            <input type="range" min="1" max="10" step="1" value={seg.impacto} onChange={e => updateSegment(seg.id, 'impacto', parseInt(e.target.value))}
-                              className="w-full h-2 rounded-full appearance-none cursor-pointer bg-gray-200 dark:bg-[#1e1e1e] accent-[#ff851d]" />
-                          </div>
-
-                          {/* CONFIANZA */}
-                          <div className="flex flex-col gap-2">
-                            <div className="flex justify-between items-center">
-                              <FieldLabel isDark={isDark}>Confianza</FieldLabel>
-                              <div className="flex items-center gap-2">
-                                <label className="flex items-center gap-1.5 cursor-pointer">
-                                  <input type="checkbox" checked={seg.evidence} onChange={e => updateSegment(seg.id, 'evidence', e.target.checked)} className="rounded accent-[#ef375c]" />
-                                  <span className={`text-[8px] font-black uppercase ${seg.evidence ? 'text-emerald-500' : 'text-gray-500'}`}>¿Hay evidencias?</span>
-                                </label>
-                                <span className={`text-xs font-black text-[#ef375c]`}>{seg.confianza}</span>
-                              </div>
-                            </div>
-                            <input type="range" min="1" max="10" step="1" value={seg.confianza} onChange={e => updateSegment(seg.id, 'confianza', parseInt(e.target.value))}
-                              className="w-full h-2 rounded-full appearance-none cursor-pointer bg-gray-200 dark:bg-[#1e1e1e] accent-[#ef375c]" />
-                          </div>
-
-                          {/* FACILIDAD */}
-                          <div className="flex flex-col gap-2">
-                            <div className="flex justify-between items-center"><FieldLabel isDark={isDark}>Facilidad</FieldLabel><span className="text-xs font-black text-blue-400">{seg.facilidad}</span></div>
-                            <input type="range" min="1" max="10" step="1" value={seg.facilidad} onChange={e => updateSegment(seg.id, 'facilidad', parseInt(e.target.value))}
-                              className="w-full h-2 rounded-full appearance-none cursor-pointer bg-gray-200 dark:bg-[#1e1e1e] accent-blue-400" />
-                          </div>
-                        </div>
-
-                        {/* Visualización de la Fórmula */}
-                        <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center gap-1 border-l border-gray-100 dark:border-[#3a3a3a] pl-4">
-                           <span className="text-[10px] text-gray-500 font-bold">{seg.impacto}</span>
-                           <span className="text-[8px] text-gray-400">×</span>
-                           <span className="text-[10px] text-gray-500 font-bold">{seg.confianza}</span>
-                           <span className="text-[8px] text-gray-400">×</span>
-                           <span className="text-[10px] text-gray-500 font-bold">{seg.facilidad}</span>
-                           <div className="w-full h-[1px] bg-gray-300 dark:bg-gray-600 my-1" />
-                           <span className="text-xs font-black text-[#ff851d]">{score}</span>
-                        </div>
+                      <div className="flex flex-col items-center justify-around flex-1 py-4 gap-6">
+                        <Potentiometer value={icp.ice.impact} label="Impacto" color="#ff851d" onChange={(v) => updateIce(icp.id, 'impact', v)} isDark={isDark} />
+                        <Potentiometer value={icp.ice.confidence} label="Confianza" color="#ef375c" onChange={(v) => updateIce(icp.id, 'confidence', v)} isDark={isDark} />
+                        <Potentiometer value={icp.ice.ease} label="Facilidad" color="#60a5fa" onChange={(v) => updateIce(icp.id, 'ease', v)} isDark={isDark} />
                       </div>
 
-                      {/* Advertencias */}
-                      <AnimatePresence>
-                        {showWarning && (
-                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                            className="mt-3 overflow-hidden">
-                            <div className={`p-2 rounded-xl flex items-center gap-2 border ${isDark ? 'bg-yellow-900/20 border-yellow-700/30' : 'bg-yellow-50 border-yellow-200'}`}>
-                              <AlertTriangle size={12} className="text-yellow-500 shrink-0" />
-                              <p className="text-[9px] font-bold text-yellow-600 dark:text-yellow-400">
-                                <span className="uppercase">⚠️ Regla de Confianza:</span> Sin evidencias directas (entrevistas/ventas), la confianza no debería superar los 4 puntos.
-                              </p>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      <div className={`mt-4 p-4 rounded-2xl border-t-2 border-dashed flex flex-col items-center justify-center ${isDark ? 'bg-black/20 border-white/5' : 'bg-white border-black/5'}`}>
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-1">ICE SCORE</span>
+                        <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+                          {score}
+                        </span>
+                      </div>
                     </motion.div>
                   );
                 })}
-
-                {segments.length < 6 && (
-                  <button onClick={addSegment}
-                    className={`flex items-center justify-center gap-2 p-5 rounded-3xl border-2 border-dashed font-black text-xs transition-all ${isDark ? 'border-[#3a3a3a] text-gray-500 hover:border-[#ff851d]/50 hover:text-[#ff851d]' : 'border-gray-200 text-gray-400 hover:border-[#ff851d] hover:text-[#ff851d] border-dashed shadow-sm'}`}>
-                    <Plus size={18} /> Evaluar nuevo mercado o hipótesis
-                  </button>
-                )}
               </div>
 
-              {/* Ranking Final y Tips */}
-              {segments.length > 0 && (
-                <div className="shrink-0 flex flex-col md:flex-row gap-3">
-                  <div className={`flex-1 rounded-2xl p-4 border flex flex-col items-center justify-center gap-2 ${isDark ? 'bg-gradient-to-r from-emerald-950/20 to-transparent border-emerald-950/40' : 'bg-gradient-to-r from-emerald-50 to-white border-emerald-100 shadow-sm'}`}>
-                    <div className="flex items-center gap-2 mb-1">
-                      <Calculator size={14} className="text-emerald-500" />
-                      <p className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Prioridad Estratégica</p>
-                    </div>
-                    <div className="flex flex-wrap items-center justify-center gap-2">
-                      {sorted.map((s, idx) => (
-                        <div key={s.id} className={`flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-bold transition-all ${idx === 0 ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg scale-105 border-transparent' : isDark ? 'bg-[#1e1e1e] border-[#3a3a3a] text-gray-500' : 'bg-white border-gray-200 text-gray-400'}`}>
-                          <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[8px] bg-black/20`}>{idx + 1}</span>
-                          <span className="truncate max-w-[120px]">{s.name || 'Segmento…'}</span>
-                          <span className={idx === 0 ? 'text-white/80' : 'text-[#ff851d]'}>{iceScore(s)}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className={`w-full md:w-64 rounded-2xl p-3 border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'}`}>
-                    <p className="text-[9px] font-black uppercase tracking-widest text-[#ff851d] mb-2 flex items-center gap-1"><Info size={10}/> Pro-Tip de Puntuación</p>
-                    <p className={`text-[9px] leading-relaxed italic ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
-                      "Empresas industriales pequeñas → difícil encontrar contactos directos → <strong>Facilidad Baja (2-4)</strong>."
-                    </p>
-                  </div>
+              <div className="shrink-0 flex justify-between items-center py-4 px-6 border-t border-gray-500/10">
+                <div className="flex items-center gap-3">
+                  <RefreshCcw size={16} className="text-[#ff851d]" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Presiona el centro del potenciómetro para rotar valor</p>
                 </div>
-              )}
+                <button onClick={() => { setIcps([]); setStep(0); }} className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-xs transition-all ${isDark ? 'bg-white/5 border border-white/10 hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'}`}>
+                  Reiniciar Todo
+                </button>
+              </div>
             </motion.div>
           )}
-
         </AnimatePresence>
       </div>
     </div>
