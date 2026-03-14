@@ -190,7 +190,7 @@ function RadarChart({
             y={labelY.toFixed(2)}
             textAnchor="middle"
             dominantBaseline="middle"
-            fontSize="7"
+            fontSize="10"
             fontWeight="600"
             fill={isDark ? '#9ca3af' : '#6b7280'}
           >
@@ -273,13 +273,13 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
             </span>
             Estratégica
           </h2>
-          <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             Marca cada criterio cumplido. El puntaje y gráfico se actualizan en tiempo real.
           </p>
         </div>
         <button
           onClick={resetear}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-bold transition-all ${
             isDark
               ? 'bg-[#2a2a2a] text-gray-400 hover:bg-[#3a3a3a] hover:text-white border border-[#3a3a3a]'
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800 border border-gray-200'
@@ -350,7 +350,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
 
                   {/* Texto */}
                   <p
-                    className={`flex-1 text-xs font-medium leading-snug cursor-pointer ${
+                    className={`flex-1 text-sm font-medium leading-snug cursor-pointer ${
                       checked
                         ? isDark
                           ? 'text-emerald-400 line-through'
@@ -367,7 +367,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
                   {/* Badge de peso + botón de tip */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     <span
-                      className="text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+                      className="text-sm font-bold px-1.5 py-0.5 rounded-full"
                       style={{
                         backgroundColor: (categoryColors[q.category] ?? '#6b7280') + '22',
                         color: categoryColors[q.category] ?? '#6b7280',
@@ -397,7 +397,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
                       className="overflow-hidden"
                     >
                       <div
-                        className={`px-4 pb-3 flex items-start gap-2 text-xs leading-relaxed border-t ${
+                        className={`px-4 pb-3 flex items-start gap-2 text-sm leading-relaxed border-t ${
                           isDark ? 'border-[#3a3a3a] text-gray-400' : 'border-gray-100 text-gray-600'
                         }`}
                       >
@@ -422,10 +422,10 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
               isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'
             }`}>
               <div className="flex justify-between items-center mb-2">
-                <h3 className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                   <BarChart2 size={11} /> Puntaje
                 </h3>
-                <span className="text-[10px] font-bold" style={{ color: nivel.color }}>
+                <span className="text-sm font-bold" style={{ color: nivel.color }}>
                   {nivel.emoji} {nivel.label}
                 </span>
               </div>
@@ -456,7 +456,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
               <div className="flex flex-col gap-1.5">
                 {categorias.map((cat, i) => (
                   <div key={cat.label} className="flex items-center gap-1.5">
-                    <span className={`text-[8px] font-bold w-16 truncate ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{cat.label}</span>
+                    <span className={`text-sm font-bold w-16 truncate ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{cat.label}</span>
                     <div className={`flex-1 h-1 rounded-full overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-100'}`}>
                       <motion.div
                         className="h-full rounded-full"
@@ -466,7 +466,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
                         transition={{ duration: 0.6, delay: i * 0.07, ease: 'easeOut' }}
                       />
                     </div>
-                    <span className="text-[8px] font-bold tabular-nums w-5 text-right" style={{ color: cat.color }}>
+                    <span className="text-sm font-bold tabular-nums w-5 text-right" style={{ color: cat.color }}>
                       {cat.value}
                     </span>
                   </div>
@@ -485,7 +485,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
           <div className={`flex-1 p-3 rounded-2xl border overflow-hidden ${
             isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'
           }`}>
-            <h3 className={`text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+            <h3 className={`text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
               <Lightbulb size={11} /> Acciones Prioritarias
             </h3>
 
@@ -496,7 +496,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
                 className="flex flex-col items-center gap-2 py-3"
               >
                 <CheckCircle2 size={32} className="text-emerald-500" />
-                <p className={`text-xs font-bold text-center ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                <p className={`text-sm font-bold text-center ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
                   ¡Estrategia completa! Estás listo para cerrar.
                 </p>
               </motion.div>
@@ -508,7 +508,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: idx * 0.08 }}
-                    className={`flex items-start gap-2 p-2 rounded-lg text-xs ${
+                    className={`flex items-start gap-2 p-2 rounded-lg text-sm ${
                       isDark ? 'bg-[#3a3a3a] text-gray-300' : 'bg-gray-50 text-gray-700'
                     }`}
                   >

@@ -44,7 +44,7 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
           <h2 className="text-2xl md:text-3xl font-bold mb-1">
             Evaluación de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
           </h2>
-          <p className={`text-xs md:text-sm max-w-4xl leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-sm md:text-sm max-w-4xl leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             ¿Qué tan sólida es tu posición en la cuenta? Evalúa cada pilar para priorizar tus acciones.
           </p>
         </div>
@@ -55,11 +55,11 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
             <span className={`text-2xl md:text-3xl font-black tabular-nums transition-colors duration-500 ${status.color}`}>
               {Math.max(0, totalScore)}
             </span>
-            <span className={`text-[10px] block uppercase font-bold ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Puntaje</span>
+            <span className={`text-sm block uppercase font-bold ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Puntaje</span>
           </div>
           <div className="w-px h-10 bg-gray-200 dark:bg-[#3a3a3a]"></div>
           <div>
-            <div className={`flex items-center gap-1.5 font-bold text-xs uppercase tracking-wider ${status.color}`}>
+            <div className={`flex items-center gap-1.5 font-bold text-sm uppercase tracking-wider ${status.color}`}>
               <status.icon size={14} /> {status.text}
             </div>
           </div>
@@ -87,7 +87,7 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
                 }`}>
                   {selectedPoints.includes(point.id) && <CheckCircle2 size={12} strokeWidth={3} />}
                 </div>
-                <span className={`text-xs md:text-sm font-medium transition-colors ${
+                <span className={`text-sm md:text-sm font-medium transition-colors ${
                   selectedPoints.includes(point.id)
                     ? (isDark ? 'text-gray-100' : 'text-gray-900')
                     : (isDark ? 'text-gray-500' : 'text-gray-600')
@@ -95,7 +95,7 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
                   {point.text}
                 </span>
               </div>
-              <span className={`text-[10px] font-bold px-2 py-1 rounded-lg ${
+              <span className={`text-sm font-bold px-2 py-1 rounded-lg ${
                 point.isNegative 
                   ? 'bg-red-500/10 text-[#ef375c]' 
                   : (isDark ? 'bg-gray-800 text-gray-500' : 'bg-gray-100 text-gray-400')
@@ -123,7 +123,7 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
                 <h4 className={`text-lg font-bold mb-2 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
                   {totalScore >= 70 ? '¡Buen trabajo!' : totalScore >= 40 ? 'Sigue refinando' : 'Atención Crítica'}
                 </h4>
-                <p className={`text-xs leading-relaxed font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                <p className={`text-sm leading-relaxed font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   {totalScore >= 70 
                     ? 'Has cubierto las bases críticas. Enfócate en la ejecución y el cierre.' 
                     : totalScore >= 40 
@@ -135,10 +135,10 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
           </div>
 
           <div className="p-4 rounded-2xl bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white">
-            <h4 className="text-xs font-bold flex items-center gap-2 mb-1">
+            <h4 className="text-sm font-bold flex items-center gap-2 mb-1">
               <ChevronRight size={14} /> Pro-Tip Estratégico
             </h4>
-            <p className="text-[11px] leading-snug font-medium text-white/90">
+            <p className="text-sm leading-snug font-medium text-white/90">
               Usa esta evaluación antes de cada reunión interna de forecast para ser brutalmente honesto sobre tus tratos.
             </p>
           </div>

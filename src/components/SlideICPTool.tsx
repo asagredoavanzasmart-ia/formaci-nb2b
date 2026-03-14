@@ -36,7 +36,7 @@ interface CompleteICP {
 
 // ─── Componentes Atómicos ────────────────────────────────────────────────────
 const FieldLabel = ({ children, isDark }: { children: React.ReactNode; isDark: boolean }) => (
-  <label className={`text-[10px] font-black uppercase tracking-wider mb-1 block ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{children}</label>
+  <label className={`text-sm font-black uppercase tracking-wider mb-1 block ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{children}</label>
 );
 
 const Potentiometer = ({ value, label, color, onChange, isDark }: { 
@@ -46,70 +46,126 @@ const Potentiometer = ({ value, label, color, onChange, isDark }: {
   onChange: (val: number) => void;
   isDark: boolean;
 }) => {
-  const radius = 35;
-  const stroke = 5;
-  const normalizedRadius = radius - stroke;
-  const circumference = normalizedRadius * 2 * Math.PI;
-  const strokeDashoffset = circumference - (value / 10) * circumference;
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const handleUpdate = (e: MouseEvent | TouchEvent | React.MouseEvent | React.TouchEvent) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const clientX = 'touches' in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+    
+    // Calcular ángulo (0 a 360) comenzando desde abajo (-90 deg offset para que el 0 sea 1)
+    const angleRad = Math.atan2(clientY - centerY, clientX - centerX);
+    let angleDeg = (angleRad * 180) / Math.PI + 90;
+    if (angleDeg < 0) angleDeg += 360;
+    
+    // Mapear 0-360 a 1-10
+    const newValue = Math.min(10, Math.max(1, Math.round((angleDeg / 360) * 9) + 1));
+    if (newValue !== value) onChange(newValue);
+  };
+
+  const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    handleUpdate(e);
+  };
+
+  React.useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => isDragging && handleUpdate(e);
+    const handleMouseUp = () => setIsDragging(false);
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleMouseMove as any);
+      window.addEventListener('touchend', handleMouseUp);
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleMouseMove as any);
+      window.removeEventListener('touchend', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  const radius = 45;
+  const stroke = 8;
+  const normRadius = radius - stroke;
+  const circumference = normRadius * 2 * Math.PI;
+  const dashOffset = circumference - (value / 10) * circumference;
+  const rotation = (value / 10) * 360;
 
   return (
-    <div className="flex flex-col items-center group relative">
+    <div className="flex flex-col items-center select-none">
       <div 
-        className="relative cursor-pointer transition-transform hover:scale-105 active:scale-95" 
-        onClick={() => onChange((value % 10) + 1)}
+        ref={containerRef}
+        className="relative cursor-pointer touch-none"
+        onMouseDown={onMouseDown}
+        onTouchStart={onMouseDown}
+        style={{ width: radius * 2.5, height: radius * 2.5 }}
       >
-        {/* Marcadores de graduación (ticks) */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          {[...Array(10)].map((_, i) => {
-            const angle = (i * 36) - 90;
-            const active = i < value;
-            return (
-              <div 
-                key={i} 
-                className="absolute w-full h-full flex items-center justify-end"
-                style={{ transform: `rotate(${angle}deg)` }}
-              >
-                <div 
-                  className={`w-1.5 h-[1.5px] rounded-full transition-all duration-300 ${active ? 'opacity-100 scale-125' : 'opacity-20 scale-100'}`}
-                  style={{ backgroundColor: active ? color : (isDark ? 'white' : 'black'), marginRight: '2px' }}
-                />
-              </div>
-            );
-          })}
-        </div>
-
-        <svg height={radius * 2} width={radius * 2} className="transform -rotate-90 relative z-10">
+        {/* Background Track */}
+        <svg className="absolute inset-0 transform -rotate-90" width="100%" height="100%" viewBox={`0 0 ${radius * 2} ${radius * 2}`}>
           <circle
-            stroke={isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}
-            fill="transparent"
-            strokeWidth={stroke}
-            r={normalizedRadius}
-            cx={radius}
-            cy={radius}
+            cx={radius} cy={radius} r={normRadius}
+            fill="none"
+            stroke={isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)'}
+            strokeWidth={stroke + 2}
           />
+          {/* Progress Bar with Gradient */}
           <motion.circle
+            cx={radius} cy={radius} r={normRadius}
+            fill="none"
             stroke={color}
-            fill="transparent"
             strokeWidth={stroke}
-            strokeDasharray={circumference + ' ' + circumference}
-            style={{ strokeDashoffset }}
+            strokeDasharray={circumference}
+            animate={{ strokeDashoffset: dashOffset }}
+            transition={{ type: "spring", stiffness: 60, damping: 15 }}
             strokeLinecap="round"
-            r={normalizedRadius}
-            cx={radius}
-            cy={radius}
-            initial={{ strokeDashoffset: circumference }}
-            animate={{ strokeDashoffset }}
-            transition={{ type: "spring", stiffness: 100, damping: 15 }}
+            className="drop-shadow-[0_0_8px_rgba(var(--color-rgb),0.5)]"
+            style={{ filter: `drop-shadow(0 0 5px ${color}88)` }}
           />
         </svg>
 
-        {/* Centro de la perilla */}
-        <div className={`absolute inset-[10px] rounded-full flex items-center justify-center font-black text-sm z-20 ${isDark ? 'bg-[#1a1a1a] shadow-[inset_0_2px_4px_rgba(255,255,255,0.05)]' : 'bg-white shadow-[inset_0_2px_4px_rgba(0,0,0,0.05)] shadow-xl border border-gray-100'}`}>
-          <div className="absolute top-1 w-1 h-3 rounded-full opacity-20" style={{ backgroundColor: color, transform: `rotate(${(value-1)*36}deg)`, transformOrigin: 'bottom center' }} />
-          {value}
+        {/* 3D Knob */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <motion.div 
+            animate={{ rotate: rotation }}
+            transition={{ type: "spring", stiffness: 60, damping: 15 }}
+            className={`relative w-16 h-16 rounded-full flex items-center justify-center ${
+              isDark 
+                ? 'bg-gradient-to-br from-[#2a2a2a] to-[#151515] shadow-[0_10px_20px_rgba(0,0,0,0.5),inset_0_2px_2px_rgba(255,255,255,0.1)]' 
+                : 'bg-gradient-to-br from-[#f9f9f9] to-[#e0e0e0] shadow-[0_10px_20px_rgba(0,0,0,0.1),inset_0_2px_2px_rgba(255,255,255,0.8)]'
+            }`}
+          >
+            {/* Indicator Dot */}
+            <div 
+              className="absolute top-2 w-2 h-2 rounded-full shadow-lg"
+              style={{ backgroundColor: color, boxShadow: `0 0 10px ${color}` }}
+            />
+            {/* Texture */}
+            <div className="absolute inset-2 rounded-full border border-black/5 dark:border-white/5 opacity-50" />
+            
+            {/* Value Display (Non-rotating) */}
+            <div className={`rotate-[-${rotation}deg] transform transition-transform`}>
+              <span 
+                className={`text-xl font-black italic ${isDark ? 'text-white/20' : 'text-black/10'}`}
+                style={{ transform: `rotate(-${rotation}deg)` }}
+              >
+                {value}
+              </span>
+            </div>
+          </motion.div>
         </div>
       </div>
-      <span className={`text-[8.5px] font-black uppercase tracking-tighter mt-2 opacity-50 ${isDark ? 'text-white' : 'text-black'}`}>{label}</span>
+      
+      <div className="mt-4 text-center">
+        <span className={`text-sm font-black uppercase tracking-[0.2em] ${isDragging ? 'text-[#ff851d]' : 'opacity-40'}`}>
+          {label}
+        </span>
+      </div>
     </div>
   );
 };
@@ -126,7 +182,7 @@ const RankingChart = ({ icps, isDark }: { icps: CompleteICP[]; isDark: boolean }
     <div className={`mt-2 p-6 rounded-[2rem] border ${isDark ? 'bg-black/40 border-white/5' : 'bg-gray-50/50 border-black/5'}`}>
       <div className="flex items-center gap-2 mb-6">
         <Calculator size={18} className="text-[#ff851d]" />
-        <h3 className="font-black text-xs uppercase tracking-widest opacity-80">Comparativa Estratégica</h3>
+        <h3 className="font-black text-sm uppercase tracking-widest opacity-80">Comparativa Estratégica</h3>
       </div>
       
       <div className="space-y-4">
@@ -137,14 +193,14 @@ const RankingChart = ({ icps, isDark }: { icps: CompleteICP[]; isDark: boolean }
             <div key={idx} className="space-y-1.5">
               <div className="flex justify-between items-end">
                 <div className="flex items-center gap-2">
-                  <span className={`text-[10px] font-black ${isWinner ? 'text-[#ff851d]' : 'opacity-40'}`}>
+                  <span className={`text-sm font-black ${isWinner ? 'text-[#ff851d]' : 'opacity-40'}`}>
                     #{idx + 1}
                   </span>
-                  <span className={`text-xs font-bold truncate max-w-[200px] ${isWinner ? 'opacity-100' : 'opacity-50'}`}>
+                  <span className={`text-sm font-bold truncate max-w-[200px] ${isWinner ? 'opacity-100' : 'opacity-50'}`}>
                     {item.name}
                   </span>
                   {isWinner && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#ff851d]/10 text-[#ff851d] text-[8px] font-black uppercase border border-[#ff851d]/20 animate-pulse">
+                    <span className="px-2 py-0.5 rounded-full bg-[#ff851d]/10 text-[#ff851d] text-sm font-black uppercase border border-[#ff851d]/20 animate-pulse">
                       ¡Elección Recomendada!
                     </span>
                   )}
@@ -218,7 +274,7 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
   };
 
   const panelClass = isDark ? 'bg-[#222] border-[#333]' : 'bg-gray-50 border-gray-100 shadow-sm';
-  const inputClass = `w-full p-2.5 rounded-xl border text-xs outline-none transition-all ${isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-200 focus:border-[#ff851d]' : 'bg-white border-gray-200 text-gray-800 focus:border-[#ff851d]'}`;
+  const inputClass = `w-full p-2.5 rounded-xl border text-sm outline-none transition-all ${isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-200 focus:border-[#ff851d]' : 'bg-white border-gray-200 text-gray-800 focus:border-[#ff851d]'}`;
 
   const renderStepper = () => (
     <div className="flex justify-center gap-1.5 mb-6 shrink-0">
@@ -283,7 +339,7 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                       <button key={d} onClick={() => setTempCompany({
                         ...tempCompany, 
                         triggers: tempCompany.triggers.includes(d) ? tempCompany.triggers.filter(x => x !== d) : [...tempCompany.triggers, d]
-                      })} className={`px-3 py-1.5 rounded-full text-[10px] font-black transition-all border ${tempCompany.triggers.includes(d) ? 'bg-[#ff851d] border-transparent text-white' : isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-500' : 'bg-white border-gray-200 text-gray-400'}`}>
+                      })} className={`px-3 py-1.5 rounded-full text-sm font-black transition-all border ${tempCompany.triggers.includes(d) ? 'bg-[#ff851d] border-transparent text-white' : isDark ? 'bg-[#1a1a1a] border-[#333] text-gray-500' : 'bg-white border-gray-200 text-gray-400'}`}>
                         {d}
                       </button>
                     ))}
@@ -352,14 +408,14 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                 {icps.length < 3 && (
                   <button onClick={() => setStep(0)} className={`flex flex-col items-center gap-3 p-6 rounded-[2rem] border transition-all hover:scale-105 w-48 ${panelClass} hover:border-[#ff851d]`}>
                     <Plus size={32} className="text-[#ff851d]" />
-                    <span className="font-black text-xs uppercase tracking-widest">Agregar Otro ICP</span>
-                    <span className="text-[10px] opacity-40">({icps.length}/3 agregados)</span>
+                    <span className="font-black text-sm uppercase tracking-widest">Agregar Otro ICP</span>
+                    <span className="text-sm opacity-40">({icps.length}/3 agregados)</span>
                   </button>
                 )}
                 <button onClick={() => setStep(3)} className="flex flex-col items-center gap-3 p-6 rounded-[2rem] border transition-all hover:scale-105 w-48 bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white border-transparent shadow-xl shadow-red-500/20">
                   <Zap size={32} />
-                  <span className="font-black text-xs uppercase tracking-widest">Ir a Evaluación</span>
-                  <span className="text-[10px] opacity-80">Finalizar Definición</span>
+                  <span className="font-black text-sm uppercase tracking-widest">Ir a Evaluación</span>
+                  <span className="text-sm opacity-80">Finalizar Definición</span>
                 </button>
               </div>
             </motion.div>
@@ -392,8 +448,8 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                       <div className="mb-4 flex items-center gap-3">
                         <span className="text-xl font-black text-[#ff851d] opacity-20">0{idx+1}</span>
                         <div className="min-w-0">
-                          <h4 className="font-black text-[11px] truncate uppercase tracking-tight">{icp.company.name}</h4>
-                          <p className="text-[9px] opacity-40 font-bold truncate">{icp.company.industry} • {icp.company.size}</p>
+                          <h4 className="font-black text-sm truncate uppercase tracking-tight">{icp.company.name}</h4>
+                          <p className="text-sm opacity-40 font-bold truncate">{icp.company.industry} • {icp.company.size}</p>
                         </div>
                       </div>
 
@@ -404,7 +460,7 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
                       </div>
 
                       <div className={`mt-4 p-3 rounded-[1.5rem] border-t-2 border-dashed flex items-center justify-between ${isDark ? 'bg-black/20 border-white/5' : 'bg-white border-black/5'}`}>
-                        <span className="text-[9px] font-black uppercase tracking-widest opacity-40">ICE SCORE</span>
+                        <span className="text-sm font-black uppercase tracking-widest opacity-40">ICE SCORE</span>
                         <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
                           {score}
                         </span>
@@ -420,9 +476,9 @@ export default function SlideICPTool({ isDark }: { isDark: boolean }) {
               <div className="shrink-0 flex justify-between items-center py-4 px-6 border-t border-gray-500/10 mt-2">
                 <div className="flex items-center gap-3">
                   <RefreshCcw size={16} className="text-[#ff851d]" />
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Presiona el centro del potenciómetro para rotar valor</p>
+                  <p className="text-sm font-black uppercase tracking-[0.2em] opacity-40">Presiona el centro del potenciómetro para rotar valor</p>
                 </div>
-                <button onClick={() => { setIcps([]); setStep(0); }} className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-xs transition-all ${isDark ? 'bg-white/5 border border-white/10 hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'}`}>
+                <button onClick={() => { setIcps([]); setStep(0); }} className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black text-sm transition-all ${isDark ? 'bg-white/5 border border-white/10 hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'}`}>
                   Reiniciar Todo
                 </button>
               </div>

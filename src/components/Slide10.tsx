@@ -23,13 +23,13 @@ function MetricBar({ metric, isDark, delay }: { metric: SkillBar, isDark: boolea
       className="mb-3"
     >
       <div className="flex justify-between items-center mb-1">
-        <span className={`text-xs font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+        <span className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
           {metric.label}
         </span>
       </div>
       {/* Landing bar */}
       <div className="flex items-center gap-2 mb-1">
-        <span className={`text-[10px] font-bold w-20 shrink-0 text-right ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+        <span className={`text-sm font-bold w-20 shrink-0 text-right ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
           Aterrizaje
         </span>
         <div className={`flex-1 h-2 rounded-full overflow-hidden ${isDark ? 'bg-[#3a3a3a]' : 'bg-gray-100'}`}>
@@ -40,13 +40,13 @@ function MetricBar({ metric, isDark, delay }: { metric: SkillBar, isDark: boolea
             transition={{ delay: delay + 0.2, duration: 0.7, ease: 'easeOut' }}
           />
         </div>
-        <span className={`text-[10px] font-bold w-8 shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+        <span className={`text-sm font-bold w-8 shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
           {metric.landing}%
         </span>
       </div>
       {/* Expansion bar */}
       <div className="flex items-center gap-2">
-        <span className={`text-[10px] font-bold w-20 shrink-0 text-right ${isDark ? 'text-[#ef375c]' : 'text-[#ef375c]'}`}>
+        <span className={`text-sm font-bold w-20 shrink-0 text-right ${isDark ? 'text-[#ef375c]' : 'text-[#ef375c]'}`}>
           Expansión
         </span>
         <div className={`flex-1 h-2 rounded-full overflow-hidden ${isDark ? 'bg-[#3a3a3a]' : 'bg-gray-100'}`}>
@@ -57,7 +57,7 @@ function MetricBar({ metric, isDark, delay }: { metric: SkillBar, isDark: boolea
             transition={{ delay: delay + 0.35, duration: 0.7, ease: 'easeOut' }}
           />
         </div>
-        <span className={`text-[10px] font-bold w-8 shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+        <span className={`text-sm font-bold w-8 shrink-0 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
           {metric.expansion}%
         </span>
       </div>
@@ -92,7 +92,7 @@ export default function Slide10({ isDark }: { isDark: boolean }) {
               className={`flex-1 p-3 rounded-2xl border-l-4 border-[#ff851d] ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-orange-50 text-gray-700'}`}
             >
               <h3 className="font-bold text-sm mb-1 text-[#ff851d]">1. Aterrizaje</h3>
-              <p className="text-xs leading-relaxed">Producto de menor valor, ciclo corto. Objetivo: hacer caja rápida y ganar confianza inicial.</p>
+              <p className="text-sm leading-relaxed">Producto de menor valor, ciclo corto. Objetivo: hacer caja rápida y ganar confianza inicial.</p>
             </motion.div>
 
             <motion.div 
@@ -102,22 +102,22 @@ export default function Slide10({ isDark }: { isDark: boolean }) {
               className={`flex-1 p-3 rounded-2xl border-l-4 border-[#ef375c] ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-rose-50 text-gray-700'}`}
             >
               <h3 className="font-bold text-sm mb-1 text-[#ef375c]">2. Expansión</h3>
-              <p className="text-xs leading-relaxed">Desarrollar al Coach interno. Mayor presupuesto, mayor complejidad y tiempos más largos.</p>
+              <p className="text-sm leading-relaxed">Desarrollar al Coach interno. Mayor presupuesto, mayor complejidad y tiempos más largos.</p>
             </motion.div>
           </div>
 
           {/* Skill Bars */}
           <div className={`p-4 rounded-2xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
             <div className="flex items-center gap-4 mb-3">
-              <h4 className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Comparativa de Métricas</h4>
+              <h4 className={`text-sm font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Comparativa de Métricas</h4>
               <div className="flex items-center gap-3 ml-auto shrink-0">
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-1.5 rounded-full bg-[#ff851d]"></div>
-                  <span className={`text-[9px] font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Aterrizaje</span>
+                  <span className={`text-sm font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Aterrizaje</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-1.5 rounded-full bg-[#ef375c]"></div>
-                  <span className={`text-[9px] font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Expansión</span>
+                  <span className={`text-sm font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Expansión</span>
                 </div>
               </div>
             </div>

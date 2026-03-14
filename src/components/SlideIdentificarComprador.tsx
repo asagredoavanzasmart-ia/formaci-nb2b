@@ -107,7 +107,7 @@ export default function SlideIdentificarComprador({ isDark }: { isDark: boolean 
                     </div>
                     <div>
                       <h4 className={`text-sm md:text-base font-bold mb-1 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>{item.title}</h4>
-                      <p className={`text-xs md:text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.desc}</p>
+                      <p className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -137,7 +137,7 @@ export default function SlideIdentificarComprador({ isDark }: { isDark: boolean 
                   <p className={`text-sm md:text-base font-medium italic mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
                     "¿En qué nivel jerárquico dentro de mi propia empresa tendría que tomarse una decisión de este tipo y monto?"
                   </p>
-                  <p className={`text-xs md:text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     (Ajustando siempre por la diferencia de tamaño entre tu empresa y la del cliente).
                   </p>
                 </div>
@@ -157,7 +157,7 @@ export default function SlideIdentificarComprador({ isDark }: { isDark: boolean 
                 </div>
                 <div>
                   <h4 className="text-sm md:text-base font-bold text-yellow-700 dark:text-yellow-500 mb-1">Regla de Oro</h4>
-                  <p className={`text-xs md:text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className={`text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                     Por precaución, intenta cubrir tus bases <strong>un nivel por encima</strong> de donde crees inicialmente que se encuentra el Comprador Económico.
                   </p>
                 </div>
@@ -190,17 +190,17 @@ export default function SlideIdentificarComprador({ isDark }: { isDark: boolean 
                       Preguntas Indirectas
                     </h3>
                   </div>
-                  <p className={`text-[11px] md:text-xs mb-3 flex-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                  <p className={`text-sm mb-3 flex-1 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                     Muchos Compradores Técnicos mienten afirmando tener la decisión final. Para descubrir la verdad sin confrontaciones, haz preguntas sobre el proceso al "sospechoso":
                   </p>
                   <div className={`p-3 rounded-xl space-y-2 ${isDark ? 'bg-[#1a1a1a]' : 'bg-gray-50'}`}>
-                    <p className={`text-[11px] md:text-xs italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <p className={`text-sm italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       "¿De qué presupuesto saldrán los fondos?"
                     </p>
-                    <p className={`text-[11px] md:text-xs italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <p className={`text-sm italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       "¿Cómo funciona el proceso de decisión final?"
                     </p>
-                    <p className={`text-[11px] md:text-xs italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <p className={`text-sm italic font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                       "¿Hay alguien a nivel directivo cuya aprobación necesitemos?"
                     </p>
                   </div>
@@ -218,15 +218,15 @@ export default function SlideIdentificarComprador({ isDark }: { isDark: boolean 
                       Acudir a tu Coach
                     </h3>
                   </div>
-                  <p className={`text-[11px] md:text-xs mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'} relative z-10`}>
+                  <p className={`text-sm mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'} relative z-10`}>
                     <strong>Esta es la mejor ruta.</strong>
                   </p>
-                  <p className={`text-[11px] md:text-xs leading-relaxed flex-1 ${isDark ? 'text-gray-400' : 'text-gray-600'} relative z-10`}>
+                  <p className={`text-sm leading-relaxed flex-1 ${isDark ? 'text-gray-400' : 'text-gray-600'} relative z-10`}>
                     Un buen Coach que tenga credibilidad y que quiera que ganes la venta podrá darte información clara y precisa sobre quién tiene realmente el poder de liberar el dinero.
                   </p>
                   <div className={`mt-3 p-2 rounded-xl flex items-center gap-2 ${isDark ? 'bg-[#3a3a3a] text-gray-200' : 'bg-gray-100 text-gray-700'}`}>
                     <CheckCircle2 size={16} className="shrink-0 text-[#ef375c]" />
-                    <p className="text-[11px] md:text-xs font-medium">
+                    <p className="text-sm font-medium">
                       Evita que pierdas tiempo con falsos tomadores de decisiones.
                     </p>
                   </div>

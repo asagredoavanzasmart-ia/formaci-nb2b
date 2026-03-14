@@ -48,7 +48,7 @@ export default function Slide5({ isDark }: { isDark: boolean }) {
 
   return (
     <div className={`p-8 sm:p-12 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col md:flex-row gap-8 ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
+      {/* Segmento naranja eliminado */}
       
       {/* Left Column: Title and Tabs */}
       <div className="md:w-1/3 flex flex-col h-full z-10">

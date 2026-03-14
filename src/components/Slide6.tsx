@@ -316,7 +316,7 @@ export default function Slide6({ isDark }: { isDark: boolean }) {
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
+      {/* Segmento naranja eliminado */}
       
       <div className="text-center mb-4 shrink-0">
         <h2 className="text-3xl sm:text-4xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
@@ -344,7 +344,7 @@ export default function Slide6({ isDark }: { isDark: boolean }) {
               {isActive && <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${mode.color}`}></div>}
               <div className="relative z-10 flex flex-col items-center gap-1.5">
                 <mode.icon size={20} className={isActive ? mode.cierreColor : (isDark ? 'text-gray-400' : 'text-gray-500')} />
-                <span className={`font-bold text-xs sm:text-sm ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{mode.title}</span>
+                <span className={`font-bold text-sm ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{mode.title}</span>
               </div>
             </button>
           )

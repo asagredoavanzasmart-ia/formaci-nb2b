@@ -5,7 +5,7 @@ import { Anchor, ArrowRight, AlertTriangle, TrendingUp, ShieldAlert, CheckCircle
 export default function Slide11({ isDark }: { isDark: boolean }) {
   return (
     <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
+      {/* Segmento naranja eliminado */}
       
       <div className="mb-6 shrink-0">
         <h2 className="text-3xl sm:text-4xl font-bold flex items-center gap-3">
@@ -110,11 +110,11 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
             >
               <div className="absolute inset-0 bg-[#ff851d] text-white flex flex-col items-center justify-center p-1 text-center" style={{ clipPath: 'polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%)' }}>
                 <h4 className="font-bold text-sm sm:text-base leading-tight">Crecimiento</h4>
-                <p className="text-[10px] sm:text-xs opacity-90 hidden sm:block">(Growth)</p>
+                <p className="text-sm opacity-90 hidden sm:block">(Growth)</p>
               </div>
               <div className="absolute top-full left-0 w-full pt-1 text-center">
-                <p className="text-[10px] sm:text-xs leading-tight">Quieren más/mejor.</p>
-                <p className="text-[10px] sm:text-xs font-bold">(Alta Probabilidad)</p>
+                <p className="text-sm leading-tight">Quieren más/mejor.</p>
+                <p className="text-sm font-bold">(Alta Probabilidad)</p>
               </div>
             </motion.div>
 
@@ -127,11 +127,11 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
             >
               <div className="absolute inset-0 bg-[#ef375c] text-white flex flex-col items-center justify-center p-1 text-center" style={{ clipPath: 'polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%)' }}>
                 <h4 className="font-bold text-sm sm:text-base leading-tight">Problemas</h4>
-                <p className="text-[10px] sm:text-xs opacity-90 hidden sm:block">(Trouble)</p>
+                <p className="text-sm opacity-90 hidden sm:block">(Trouble)</p>
               </div>
               <div className="absolute top-full left-0 w-full pt-1 text-center">
-                <p className="text-[10px] sm:text-xs leading-tight">Necesitan arreglar algo urgente.</p>
-                <p className="text-[10px] sm:text-xs font-bold">(Alta Probabilidad)</p>
+                <p className="text-sm leading-tight">Necesitan arreglar algo urgente.</p>
+                <p className="text-sm font-bold">(Alta Probabilidad)</p>
               </div>
             </motion.div>
 
@@ -144,11 +144,11 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
             >
               <div className="absolute inset-0 bg-gray-400 text-white flex flex-col items-center justify-center p-1 text-center" style={{ clipPath: 'polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%, 10% 50%)' }}>
                 <h4 className="font-bold text-sm sm:text-base leading-tight">Quilla Pareja</h4>
-                <p className="text-[10px] sm:text-xs opacity-90 hidden sm:block">(Even Keel)</p>
+                <p className="text-sm opacity-90 hidden sm:block">(Even Keel)</p>
               </div>
               <div className="absolute top-full left-0 w-full pt-1 text-center">
-                <p className="text-[10px] sm:text-xs leading-tight">Satisfechos.</p>
-                <p className="text-[10px] sm:text-xs font-bold">(Baja Probabilidad)</p>
+                <p className="text-sm leading-tight">Satisfechos.</p>
+                <p className="text-sm font-bold">(Baja Probabilidad)</p>
               </div>
             </motion.div>
 
@@ -161,11 +161,11 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
             >
               <div className="absolute inset-0 bg-gray-600 text-white flex flex-col items-center justify-center p-1 text-center" style={{ clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 10% 50%)' }}>
                 <h4 className="font-bold text-sm sm:text-base leading-tight">Exceso de Confianza</h4>
-                <p className="text-[10px] sm:text-xs opacity-90 hidden sm:block">(Overconfident)</p>
+                <p className="text-sm opacity-90 hidden sm:block">(Overconfident)</p>
               </div>
               <div className="absolute top-full left-0 w-full pt-1 text-center">
-                <p className="text-[10px] sm:text-xs leading-tight">Ignoran riesgos.</p>
-                <p className="text-[10px] sm:text-xs font-bold">(Probabilidad Nula)</p>
+                <p className="text-sm leading-tight">Ignoran riesgos.</p>
+                <p className="text-sm font-bold">(Probabilidad Nula)</p>
               </div>
             </motion.div>
 

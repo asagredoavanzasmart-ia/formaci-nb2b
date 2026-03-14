@@ -104,7 +104,7 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                   <h3 className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
                     {pillar.title}
                   </h3>
-                  <p className={`text-xs mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
                     {pillar.subtitle}
                   </p>
                 </div>

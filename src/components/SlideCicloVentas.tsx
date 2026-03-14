@@ -45,6 +45,16 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
       desc: 'Suma el tiempo de tu volumen regular de ventas y divide. El resultado es tu CICLO NORMAL. Esta es la verdad matemática de tu proceso comercial.',
       color: 'from-[#ef375c] to-[#ff851d]',
       tag: 'FASE 4: RESULTADO'
+    },
+    {
+      id: 's5',
+      num: '05',
+      title: 'Análisis y Valor',
+      icon: Target,
+      short: 'Ejemplos y Utilidad',
+      desc: 'Entender tu ciclo te permite predecir ingresos y gestionar expectativas. No es solo un número, es tu brújula comercial.',
+      color: 'from-[#ff851d] to-[#ef375c]',
+      tag: 'FASE 5: APLICACIÓN'
     }
   ];
 
@@ -122,30 +132,64 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
               </div>
             </div>
 
-            {/* Right Col: Description & Content */}
             <div className="md:col-span-7 space-y-6">
-              <div className={`p-8 rounded-[2.5rem] border backdrop-blur-sm relative overflow-hidden ${
-                isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-xl shadow-gray-100'
-              }`}>
-                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                  <Info size={120} />
+              {activeStep === 4 ? (
+                <div className="space-y-4">
+                  {/* Ejemplo Práctico */}
+                  <div className={`p-6 rounded-[2rem] border ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-xl shadow-gray-100'}`}>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-4 flex items-center gap-2 opacity-50">
+                      <Calculator size={14} className="text-[#ff851d]" /> Ejemplo Práctico
+                    </h4>
+                    <div className="space-y-3">
+                      <div className={`p-4 rounded-2xl border ${isDark ? 'bg-white/5 border-white/5' : 'bg-gray-50 border-black/5'}`}>
+                        <p className="text-[11px] opacity-60 mb-1">Si la mayoría de tus ventas tardan entre 3 y 9 meses...</p>
+                        <p className="text-xs font-black text-[#ef375c]">Tu ciclo normal es de ~6 meses.</p>
+                      </div>
+                      <div className={`p-4 rounded-2xl border ${isDark ? 'bg-white/5 border-white/5' : 'bg-gray-50 border-black/5'}`}>
+                        <p className="text-[11px] opacity-60 mb-1">Si tu proceso toma entre 10 y 20 semanas...</p>
+                        <p className="text-xs font-black text-[#ff851d]">Tu ciclo normal es de ~15 semanas.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Importancia */}
+                  <div className={`p-6 rounded-[2rem] border bg-gradient-to-br ${
+                    isDark 
+                      ? 'from-[#ff851d]/10 to-[#ef375c]/10 border-orange-500/20' 
+                      : 'from-orange-50 to-red-50 border-orange-100'
+                  }`}>
+                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2 text-[#ef375c]">
+                      <Target size={14} /> ¿Por qué es vital conocer este dato?
+                    </h4>
+                    <p className="text-xs leading-relaxed font-medium">
+                      Te ayuda a hacer el <strong>rastreo (tracking) correcto en tu embudo</strong>. Sabrás exactamente cuándo mover un objetivo a la siguiente etapa y evitarás confiarte asumiendo que un trato está cerrado meses antes de tiempo, dejándole la puerta abierta a la competencia.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-lg md:text-xl font-medium leading-relaxed opacity-80 mb-6 italic">
-                  "{steps[activeStep].desc}"
-                </p>
-                
-                <div className="flex flex-wrap gap-3">
-                   {activeStep === 2 ? (
-                     <div className="flex items-center gap-2 text-red-500 font-bold text-sm uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
-                       <Target size={14} /> Cuidado con las anomalías
-                     </div>
-                   ) : (
-                     <div className="flex items-center gap-2 text-[#ff851d] font-bold text-sm uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
-                       <ChevronRight size={14} /> Paso crítico para el ROI
-                     </div>
-                   )}
+              ) : (
+                <div className={`p-8 rounded-[2.5rem] border backdrop-blur-sm relative overflow-hidden ${
+                  isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-xl shadow-gray-100'
+                }`}>
+                  <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                    <Info size={120} />
+                  </div>
+                  <p className="text-lg md:text-xl font-medium leading-relaxed opacity-80 mb-6 italic">
+                    "{steps[activeStep].desc}"
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-3">
+                     {activeStep === 2 ? (
+                       <div className="flex items-center gap-2 text-red-500 font-bold text-sm uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
+                         <Target size={14} /> Cuidado con las anomalías
+                       </div>
+                     ) : (
+                       <div className="flex items-center gap-2 text-[#ff851d] font-bold text-sm uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
+                         <ChevronRight size={14} /> Paso crítico para el ROI
+                       </div>
+                     )}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -175,7 +219,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                  
                  {/* Tooltip on hover */}
                  <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 pointer-events-none">
-                    <div className={`px-4 py-2 rounded-xl text-[10px] font-black whitespace-nowrap shadow-2xl border ${
+                    <div className={`px-4 py-2 rounded-xl text-sm font-black whitespace-nowrap shadow-2xl border ${
                       isDark ? 'bg-[#1a1a1a] border-white/10 text-white' : 'bg-white border-black/5 text-gray-900'
                     }`}>
                       {s.short}
@@ -187,17 +231,17 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
         </div>
         
         <div className="flex justify-between items-center px-4">
-           <p className="text-[10px] font-black opacity-30 tracking-[0.4em] uppercase">Progreso de Auditoría</p>
+           <p className="text-sm font-black opacity-30 tracking-[0.4em] uppercase">Progreso de Auditoría</p>
            <div className="flex gap-4">
               <button 
                 onClick={() => setActiveStep(prev => Math.max(0, prev - 1))}
-                className={`text-xs font-bold transition-all ${activeStep === 0 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ff851d]'}`}
+                className={`text-sm font-bold transition-all ${activeStep === 0 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ff851d]'}`}
               >
                 ← Anterior
               </button>
               <button 
                 onClick={() => setActiveStep(prev => Math.min(steps.length - 1, prev + 1))}
-                className={`text-xs font-bold transition-all ${activeStep === steps.length - 1 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ef375c]'}`}
+                className={`text-sm font-bold transition-all ${activeStep === steps.length - 1 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ef375c]'}`}
               >
                 Siguiente →
               </button>

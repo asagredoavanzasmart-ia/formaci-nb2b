@@ -127,7 +127,7 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
                 <h3 className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
                   {profile.title}
                 </h3>
-                <p className={`text-[10px] mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
                   Ver detalles <ArrowRight size={10} className="inline" />
                 </p>
               </div>
@@ -135,7 +135,7 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
           ))}
           
           <div className={`mt-2 p-3 rounded-2xl border ${isDark ? 'bg-[#1a1a1a] border-[#333]' : 'bg-gray-50 border-gray-200'}`}>
-            <p className={`text-[11px] italic leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className={`text-sm italic leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               <strong>Nota vital:</strong> Aunque los Resultados son comunes por perfil, las Ganancias son únicas para cada individuo.
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
                 <div className={`p-4 rounded-2xl border flex items-center gap-3 shadow-sm ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'}`}>
                   <div className={`w-1.5 h-10 rounded-full bg-gradient-to-b ${activeData.color}`}></div>
                   <div>
-                    <h4 className={`text-xs font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Enfoque Principal</h4>
+                    <h4 className={`text-sm font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Enfoque Principal</h4>
                     <p className={`text-sm md:text-base font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{activeData.focus}</p>
                   </div>
                 </div>

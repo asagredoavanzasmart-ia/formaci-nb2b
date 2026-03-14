@@ -118,14 +118,14 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                 </div>
                 <div className="overflow-hidden">
                   <p
-                    className={`text-[10px] font-black uppercase tracking-wider leading-none mb-0.5 ${
+                    className={`text-sm font-black uppercase tracking-wider leading-none mb-0.5 ${
                       isActive ? 'text-[#ff851d]' : isDark ? 'text-gray-600' : 'text-gray-400'
                     }`}
                   >
                     Perfil {s.num}
                   </p>
                   <p
-                    className={`text-xs font-bold truncate leading-tight ${
+                    className={`text-sm font-bold truncate leading-tight ${
                       isDark ? 'text-gray-200' : 'text-gray-700'
                     }`}
                   >
@@ -169,7 +169,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                   </p>
                 </div>
                 <span
-                  className={`text-[10px] font-black px-3 py-1 rounded-full border tracking-wider ${
+                  className={`text-sm font-black px-3 py-1 rounded-full border tracking-wider ${
                     isDark
                       ? 'border-[#3a3a3a] text-gray-400 bg-black/20'
                       : 'border-gray-200 text-gray-400 bg-white shadow-sm'
@@ -191,7 +191,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                     }`}
                   >
                     <p
-                      className="text-[10px] font-black uppercase tracking-[0.15em] mb-2"
+                      className="text-sm font-black uppercase tracking-[0.15em] mb-2"
                       style={{ color: '#ff851d' }}
                     >
                       Contexto
@@ -212,7 +212,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                     }`}
                   >
                     <p
-                      className="text-[10px] font-black uppercase tracking-[0.15em] mb-2"
+                      className="text-sm font-black uppercase tracking-[0.15em] mb-2"
                       style={{ color: '#ef375c' }}
                     >
                       Estrategia clave
@@ -234,7 +234,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                   }`}
                 >
                   <p
-                    className="text-[10px] font-black uppercase tracking-[0.15em] mb-3 shrink-0"
+                    className="text-sm font-black uppercase tracking-[0.15em] mb-3 shrink-0"
                     style={{ color: '#ff851d' }}
                   >
                     Táctica paso a paso
@@ -243,7 +243,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                     {scenarios[active].steps.map((step, i) => (
                       <div key={i} className="flex gap-3 items-start">
                         <span
-                          className="w-6 h-6 rounded-lg text-white text-[11px] font-black flex items-center justify-center shrink-0 mt-0.5"
+                          className="w-6 h-6 rounded-lg text-white text-sm font-black flex items-center justify-center shrink-0 mt-0.5"
                           style={{
                             background: `linear-gradient(135deg, #ff851d, #ef375c)`,
                           }}
@@ -273,7 +273,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
               >
                 <ShieldAlert size={16} className="text-[#ff851d] shrink-0 mt-0.5" />
                 <p
-                  className={`text-xs leading-snug ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                  className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                 >
                   <strong className="text-[#ff851d] font-black uppercase tracking-tight mr-1">
                     Nota:

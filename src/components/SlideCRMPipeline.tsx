@@ -225,7 +225,7 @@ function DealCard({
         <h3 className={`text-lg font-black tracking-tight text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {deal.contacts[0].name}
         </h3>
-        <p className={`text-[10px] uppercase font-bold tracking-widest mt-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ef375c]'}`}>
+        <p className={`text-sm uppercase font-bold tracking-widest mt-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ef375c]'}`}>
           Oportunidad B2B
         </p>
       </div>
@@ -300,7 +300,7 @@ function DealModal({
             </div>
             <div>
               <h2 className={`text-xl font-black tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>{deal.company}</h2>
-              <p className={`text-xs font-bold uppercase tracking-widest text-[#ff851d]`}>{deal.amount} • {deal.program}</p>
+              <p className={`text-sm font-bold uppercase tracking-widest text-[#ff851d]`}>{deal.amount} • {deal.program}</p>
             </div>
           </div>
           <button
@@ -315,7 +315,7 @@ function DealModal({
         <div className="flex-1 flex overflow-hidden">
           {/* Sidebar: Contacts */}
           <div className={`w-[280px] border-r flex flex-col p-4 gap-3 bg-opacity-30 ${isDark ? 'border-[#2a2a2a] bg-black' : 'border-gray-100 bg-gray-50'}`}>
-            <h3 className={`text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-50 px-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className={`text-sm font-black uppercase tracking-[0.2em] mb-2 opacity-50 px-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               CENTRO DE DECISIÓN
             </h3>
             <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-2.5">
@@ -330,12 +330,12 @@ function DealModal({
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${AVATAR_COLORS[i]} flex items-center justify-center text-white font-black text-xs shrink-0 shadow-md`}>
+                    <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${AVATAR_COLORS[i]} flex items-center justify-center text-white font-black text-sm shrink-0 shadow-md`}>
                       {p.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                     </div>
                     <div className="min-w-0">
                       <p className={`text-sm font-bold truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>{p.name}</p>
-                      <p className={`text-[10px] font-medium opacity-50 truncate`}>{p.role}</p>
+                      <p className={`text-sm font-medium opacity-50 truncate`}>{p.role}</p>
                     </div>
                   </div>
                 </button>
@@ -357,7 +357,7 @@ function DealModal({
                 {/* Profile Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                   <div className="space-y-1">
-                    <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md ${
+                    <span className={`text-sm font-black uppercase tracking-widest px-2 py-0.5 rounded-md ${
                       person.roleFunctional.includes('Económico') ? 'bg-green-500/10 text-green-500' :
                       person.roleFunctional.includes('Técnico') ? 'bg-blue-500/10 text-blue-500' :
                       'bg-orange-500/10 text-orange-500'
@@ -369,13 +369,13 @@ function DealModal({
                   </div>
                   
                   <div className="flex flex-col gap-2">
-                    <div className="flex items-center gap-3 text-xs font-bold">
+                    <div className="flex items-center gap-3 text-sm font-bold">
                       <div className={`p-2 rounded-xl ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
                         <Mail size={14} className="text-[#ff851d]" />
                       </div>
                       <span className="opacity-70">{person.email}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-xs font-bold">
+                    <div className="flex items-center gap-3 text-sm font-bold">
                       <div className={`p-2 rounded-xl ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
                         <Phone size={14} className="text-[#ff851d]" />
                       </div>
@@ -425,8 +425,8 @@ function DealModal({
                           </div>
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-black uppercase tracking-wider">{h.type}</span>
-                              <span className="text-[10px] opacity-40 font-bold">{h.date}</span>
+                              <span className="text-sm font-black uppercase tracking-wider">{h.type}</span>
+                              <span className="text-sm opacity-40 font-bold">{h.date}</span>
                             </div>
                             <p className="text-sm font-medium leading-normal opacity-70">{h.text}</p>
                           </div>
@@ -439,7 +439,7 @@ function DealModal({
                        <div className={`p-4 rounded-3xl mb-4 space-y-3 ${isDark ? 'bg-black/30' : 'bg-white'}`}>
                           <div className="flex justify-start">
                             <div className={`px-4 py-3 rounded-3xl rounded-tl-none text-sm max-w-[85%] ${isDark ? 'bg-[#2a2a2a] text-white' : 'bg-gray-100 text-gray-800'}`}>
-                              <p className="font-black text-[10px] text-[#ff851d] mb-1">{person.name}</p>
+                              <p className="font-black text-sm text-[#ff851d] mb-1">{person.name}</p>
                               ¿Podemos ajustar los términos del SLA antes del viernes?
                             </div>
                           </div>
@@ -575,7 +575,7 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
             >
               {/* Column Header */}
               <div className={`p-3 border-b flex items-center gap-2 ${isDark ? 'border-[#3a3a3a]' : 'border-gray-200'}`}>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
                   selectedStageIndex === index
                     ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white'
                     : isDark ? 'bg-[#3a3a3a] text-gray-400' : 'bg-gray-200 text-gray-600'
@@ -583,8 +583,8 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
                   {stage.num}
                 </div>
                 <div className="overflow-hidden">
-                  <h3 className={`font-bold text-xs truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{stage.name}</h3>
-                  <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full inline-block truncate max-w-full ${
+                  <h3 className={`font-bold text-sm truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{stage.name}</h3>
+                  <span className={`text-sm font-medium px-1.5 py-0.5 rounded-full inline-block truncate max-w-full ${
                     isDark ? 'bg-[#3a3a3a] text-[#ff851d]' : 'bg-orange-50 text-[#ff851d]'
                   }`}>
                     {stage.methodology}
@@ -607,7 +607,7 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
                   <div className={`flex-1 rounded-xl border border-dashed flex items-center justify-center min-h-[72px] ${
                     isDark ? 'border-[#3a3a3a] text-gray-700' : 'border-gray-200 text-gray-300'
                   }`}>
-                    <span className="text-[10px] font-medium">Sin deals</span>
+                    <span className="text-sm font-medium">Sin deals</span>
                   </div>
                 )}
               </div>
@@ -632,9 +632,9 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
             <h3 className={`text-base font-bold flex items-center gap-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
               Etapa {selectedStage.num}: {selectedStage.name}
             </h3>
-            <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{selectedStage.desc}</p>
+            <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{selectedStage.desc}</p>
             {selectedStage.id === 's7' && (
-              <div className={`mt-2 p-2 rounded-lg border text-xs font-medium flex items-start gap-2 ${
+              <div className={`mt-2 p-2 rounded-lg border text-sm font-medium flex items-start gap-2 ${
                 isDark ? 'bg-yellow-900/20 border-yellow-700/50 text-yellow-500' : 'bg-yellow-50 border-yellow-200 text-yellow-700'
               }`}>
                 <AlertTriangle size={14} className="shrink-0 mt-0.5" />
@@ -645,12 +645,12 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
 
           <div className="w-full md:w-2/3 grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className={`p-3 rounded-xl border ${isDark ? 'bg-[#1e1e1e] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 text-[#ef375c]">
+              <h4 className="text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 text-[#ef375c]">
                 <CheckCircle2 size={12} /> Criterios de Salida
               </h4>
               <ul className="space-y-1">
                 {selectedStage.exitCriteria.map((crit, i) => (
-                  <li key={i} className={`text-[10px] flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <li key={i} className={`text-sm flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-[#ff851d] mt-0.5">•</span> {crit}
                   </li>
                 ))}
@@ -658,12 +658,12 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
             </div>
 
             <div className={`p-3 rounded-xl border ${isDark ? 'bg-[#1e1e1e] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
-              <h4 className="text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 text-[#ff851d]">
+              <h4 className="text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 text-[#ff851d]">
                 <Zap size={12} /> Automatizaciones
               </h4>
               <ul className="space-y-1">
                 {selectedStage.automations.map((auto, i) => (
-                  <li key={i} className={`text-[10px] flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <li key={i} className={`text-sm flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-[#ef375c] mt-0.5">•</span> {auto}
                   </li>
                 ))}
@@ -671,17 +671,17 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
             </div>
 
             <div className={`p-3 rounded-xl border ${isDark ? 'bg-[#1e1e1e] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
-              <h4 className={`text-[10px] font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <h4 className={`text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1.5 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 <Clock size={12} /> Seguimiento
               </h4>
               <div className="mb-1">
-                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md ${isDark ? 'bg-[#3a3a3a] text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
+                <span className={`text-sm font-bold px-1.5 py-0.5 rounded-md ${isDark ? 'bg-[#3a3a3a] text-gray-300' : 'bg-gray-200 text-gray-700'}`}>
                   {selectedStage.followUp.interval}
                 </span>
               </div>
               <ul className="space-y-1">
                 {selectedStage.followUp.topics.map((topic, i) => (
-                  <li key={i} className={`text-[10px] flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <li key={i} className={`text-sm flex items-start gap-1.5 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-[#ff851d] mt-0.5">•</span> {topic}
                   </li>
                 ))}

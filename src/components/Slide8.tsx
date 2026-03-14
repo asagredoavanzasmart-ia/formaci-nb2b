@@ -73,13 +73,13 @@ export default function Slide8({ isDark }: { isDark: boolean }) {
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-red-500 to-rose-600"></div>
+      {/* Segmento eliminado */}
       
       <div className="text-center mb-2 sm:mb-4 shrink-0">
         <h2 className="text-2xl sm:text-3xl font-bold mb-1 flex items-center justify-center gap-3 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-600">
           <Flag className="text-red-500" size={28} fill="currentColor" /> Banderas Rojas
         </h2>
-        <p className={`text-[11px] sm:text-xs max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-sm max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
           Haz clic en cada bandera para descubrir la acción recomendada.
         </p>
       </div>
@@ -102,14 +102,14 @@ export default function Slide8({ isDark }: { isDark: boolean }) {
                 {/* Front */}
                 <div className={`absolute inset-0 [backface-visibility:hidden] rounded-2xl p-2 sm:p-3 flex flex-col items-center justify-center text-center border transition-colors ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a] group-hover:border-red-500/50' : 'bg-red-50 border-red-100 group-hover:border-red-300'}`}>
                   <Flag className="text-red-500 mb-1 shrink-0" size={20} />
-                  <h3 className={`font-bold text-[11px] sm:text-xs mb-0.5 leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{flag.title}</h3>
-                  <p className={`text-[10px] leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{flag.desc}</p>
+                  <h3 className={`font-bold text-sm mb-0.5 leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{flag.title}</h3>
+                  <p className={`text-sm leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{flag.desc}</p>
                 </div>
 
                 {/* Back */}
                 <div className={`absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl p-2 sm:p-3 flex flex-col items-center justify-center text-center border ${isDark ? 'bg-gradient-to-br from-red-900/40 to-rose-900/40 border-red-500/30' : 'bg-gradient-to-br from-red-500 to-rose-500 border-red-600 text-white'}`}>
-                  <h3 className={`font-bold text-[11px] sm:text-xs mb-0.5 leading-tight ${isDark ? 'text-red-400' : 'text-white'}`}>{flag.actionTitle}</h3>
-                  <p className={`text-[10px] leading-tight ${isDark ? 'text-gray-300' : 'text-red-50'}`}>{flag.actionDesc}</p>
+                  <h3 className={`font-bold text-sm mb-0.5 leading-tight ${isDark ? 'text-red-400' : 'text-white'}`}>{flag.actionTitle}</h3>
+                  <p className={`text-sm leading-tight ${isDark ? 'text-gray-300' : 'text-red-50'}`}>{flag.actionDesc}</p>
                 </div>
               </motion.div>
             </div>

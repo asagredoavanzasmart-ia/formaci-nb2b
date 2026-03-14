@@ -41,13 +41,13 @@ export default function Slide7({ isDark }: { isDark: boolean }) {
 
   return (
     <div className={`p-6 sm:p-10 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
+      {/* Segmento naranja eliminado */}
       
       <div className="text-center mb-4 shrink-0">
         <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
           Nivel de receptividad
         </h2>
-        <p className={`text-xs sm:text-sm max-w-2xl mx-auto leading-tight ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-sm max-w-2xl mx-auto leading-tight ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
           Antes de intentar vender, diagnostica cómo se siente cada comprador respecto a su situación actual y al cambio.
         </p>
       </div>
@@ -70,7 +70,7 @@ export default function Slide7({ isDark }: { isDark: boolean }) {
               
               <div className="p-3 sm:p-4 flex-1 flex flex-col justify-center gap-2 sm:gap-3 overflow-hidden">
                 {card.content.map((text, idx) => (
-                  <p key={idx} className={`text-center text-[11px] sm:text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+                  <p key={idx} className={`text-center text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
                     {text}
                   </p>
                 ))}

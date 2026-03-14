@@ -47,22 +47,22 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
   }
 
   return (
-    <div className={`w-full h-full flex flex-col md:flex-row items-center p-8 gap-10 overflow-hidden relative ${isDark ? 'bg-[#1e1e1e] text-white' : 'bg-white text-gray-800'}`}>
+    <div className={`w-full h-full flex flex-col md:flex-row items-center p-6 gap-6 overflow-hidden relative ${isDark ? 'bg-[#1e1e1e] text-white' : 'bg-white text-gray-800'}`}>
       {/* Fondo decorativo sutil */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#ef375c]/5 to-transparent pointer-events-none" />
       
       {/* Columna Izquierda: Checklist */}
       <div className="flex-1 w-full max-w-2xl z-10">
-        <div className="mb-6">
-          <h2 className="text-4xl font-black mb-2 tracking-tight">
+        <div className="mb-4">
+          <h2 className="text-3xl font-black mb-1 tracking-tight">
             Lista de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Verificación</span>
           </h2>
-          <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
             Asegura cada pilar estratégico antes de avanzar en el ciclo de venta.
           </p>
         </div>
         
-        <div className="space-y-2.5 max-h-[65vh] overflow-y-auto pr-4 custom-scrollbar">
+        <div className="space-y-2 pr-4 custom-scrollbar">
           {questions.map((q, i) => (
             <motion.div 
               key={i}
@@ -70,7 +70,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
               whileHover={{ x: 8 }}
-              className={`flex items-center gap-4 p-3.5 rounded-2xl cursor-pointer border-2 transition-all duration-300 ${
+              className={`flex items-center gap-3 p-3 rounded-2xl cursor-pointer border-2 transition-all duration-300 ${
                 checkedItems[i] 
                 ? (isDark ? 'bg-white/10 border-[#ef375c]/50 shadow-[0_0_20px_rgba(239,55,92,0.1)]' : 'bg-[#ef375c]/5 border-[#ef375c]/20 shadow-sm')
                 : (isDark ? 'bg-transparent border-white/5 hover:border-white/20' : 'bg-transparent border-gray-100 hover:border-gray-200')
@@ -84,7 +84,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
               }`}>
                 {checkedItems[i] && <Check size={16} className="text-white" strokeWidth={4} />}
               </div>
-              <span className={`text-[15px] leading-tight ${checkedItems[i] ? 'font-bold' : 'font-medium opacity-70'}`}>
+              <span className={`text-[13px] leading-tight ${checkedItems[i] ? 'font-black' : 'font-bold opacity-70'}`}>
                 {q}
               </span>
             </motion.div>
@@ -94,31 +94,31 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
 
       {/* Columna Derecha: Gráfico Circular */}
       <div className="md:w-2/5 flex flex-col items-center justify-center z-10 relative">
-        <div className="relative w-64 h-64 flex items-center justify-center">
+        <div className="relative w-56 h-56 flex items-center justify-center">
           {/* Anillos de fondo decorativos */}
-          <div className={`absolute w-full h-full rounded-full border-[12px] ${isDark ? 'border-white/5' : 'border-gray-50'}`} />
+          <div className={`absolute w-full h-full rounded-full border-[10px] ${isDark ? 'border-white/5' : 'border-gray-50'}`} />
           
           {/* SVG del Gráfico circular */}
           <svg className="w-full h-full transform -rotate-90 drop-shadow-2xl">
             <circle
-              cx="128"
-              cy="128"
-              r="110"
+              cx="112"
+              cy="112"
+              r="100"
               stroke="currentColor"
-              strokeWidth="20"
+              strokeWidth="16"
               fill="transparent"
               className={isDark ? 'text-white/5' : 'text-gray-100'}
             />
             <motion.circle
-              cx="128"
-              cy="128"
-              r="110"
+              cx="112"
+              cy="112"
+              r="100"
               stroke={statusColor}
-              strokeWidth="20"
+              strokeWidth="16"
               fill="transparent"
-              strokeDasharray={2 * Math.PI * 110}
-              initial={{ strokeDashoffset: 2 * Math.PI * 110 }}
-              animate={{ strokeDashoffset: 2 * Math.PI * 110 * (1 - percentage / 100) }}
+              strokeDasharray={2 * Math.PI * 100}
+              initial={{ strokeDashoffset: 2 * Math.PI * 100 }}
+              animate={{ strokeDashoffset: 2 * Math.PI * 100 * (1 - percentage / 100) }}
               transition={{ duration: 1.2, ease: [0.34, 1.56, 0.64, 1] }}
               strokeLinecap="round"
             />
@@ -132,9 +132,9 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
               animate={{ scale: 1, opacity: 1 }}
               className="flex flex-col items-center"
             >
-              <StatusIcon size={32} style={{ color: statusColor }} className="mb-1" />
-              <span className="text-5xl font-black tracking-tighter tabular-nums leading-none">
-                {Math.round(percentage)}<span className="text-xl opacity-50">%</span>
+              <StatusIcon size={24} style={{ color: statusColor }} className="mb-1" />
+              <span className="text-4xl font-black tracking-tighter tabular-nums leading-none">
+                {Math.round(percentage)}<span className="text-lg opacity-50">%</span>
               </span>
               <span className="text-[10px] font-black uppercase tracking-widest mt-2 px-3 py-1 rounded-full shadow-lg transition-colors border" 
                     style={{ 
@@ -149,11 +149,11 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
         </div>
         
         {/* Leyenda sutil */}
-        <div className={`mt-8 p-4 rounded-2xl border flex items-start gap-3 max-w-xs transition-all ${isDark ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-100'}`}>
-          <div className="p-2 rounded-lg bg-orange-500/10 text-orange-500">
-            <Check size={14} />
+        <div className={`mt-6 p-3 rounded-xl border flex items-start gap-3 max-w-xs transition-all ${isDark ? 'bg-white/5 border-white/10' : 'bg-gray-50 border-gray-100'}`}>
+          <div className="p-1.5 rounded-lg bg-orange-500/10 text-orange-500 shrink-0">
+            <Check size={12} />
           </div>
-          <p className="text-[11px] leading-relaxed font-medium opacity-60 italic">
+          <p className="text-[11px] leading-tight font-medium opacity-60 italic">
             "La estrategia no consiste en lo que vas a hacer, sino en lo que estás haciendo hoy para ganar mañana."
           </p>
         </div>

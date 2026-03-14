@@ -44,7 +44,7 @@ const comparisonData = [
 export default function Slide9({ isDark }: { isDark: boolean }) {
   return (
     <div className={`p-4 sm:p-6 rounded-3xl shadow-2xl relative overflow-hidden w-full h-full flex flex-col ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"></div>
+      {/* Segmento naranja eliminado */}
       
       <div className="mb-4 shrink-0">
         <h2 className="text-2xl sm:text-3xl font-bold flex items-center gap-3">
@@ -63,11 +63,11 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
             <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center mb-1 sm:mb-2 ${isDark ? 'bg-[#333]' : 'bg-white shadow-sm'}`}>
               <UserX className="opacity-60" size={16} />
             </div>
-            <h3 className="text-[10px] sm:text-xs font-bold">El Vendedor Tradicional</h3>
+            <h3 className="text-sm font-bold">El Vendedor Tradicional</h3>
           </div>
           
           <div className="w-16 sm:w-20 flex items-center justify-center">
-            <span className={`text-[9px] sm:text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full ${isDark ? 'bg-[#333] text-gray-500' : 'bg-gray-100 text-gray-400'}`}>VS</span>
+            <span className={`text-sm font-bold uppercase tracking-widest px-2 py-1 rounded-full ${isDark ? 'bg-[#333] text-gray-500' : 'bg-gray-100 text-gray-400'}`}>VS</span>
           </div>
 
           <div className={`p-2 sm:p-3 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg relative overflow-hidden transition-transform hover:scale-105 ${isDark ? 'bg-gradient-to-br from-[#ff851d]/20 to-[#ef375c]/20 text-white border border-[#ff851d]/30' : 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white'}`}>
@@ -75,7 +75,7 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 flex items-center justify-center mb-1 sm:mb-2 backdrop-blur-sm">
               <UserCheck size={16} />
             </div>
-            <h3 className="text-[10px] sm:text-xs font-bold relative z-10">Vendedor con estrategia</h3>
+            <h3 className="text-sm font-bold relative z-10">Vendedor con estrategia</h3>
           </div>
         </div>
 
@@ -96,7 +96,7 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
               >
                 {/* Traditional Column */}
                 <div className={`p-2 sm:p-2.5 rounded-xl flex items-center justify-end text-right transition-all duration-300 ${isDark ? 'bg-[#252525] group-hover:bg-[#2a2a2a] border border-transparent group-hover:border-[#333]' : 'bg-white group-hover:bg-gray-50 border border-transparent group-hover:border-gray-100 shadow-sm group-hover:shadow-md'}`}>
-                  <p className={`text-xs sm:text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{row.traditional}</p>
+                  <p className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{row.traditional}</p>
                 </div>
 
                 {/* Center Axis */}
@@ -104,14 +104,14 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
                   <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 group-hover:scale-110 relative z-10 ${isDark ? 'bg-[#1e1e1e] border border-[#333] text-gray-400 group-hover:border-[#ff851d] group-hover:text-[#ff851d]' : 'bg-white border border-gray-100 text-gray-400 group-hover:border-[#ef375c] group-hover:text-[#ef375c]'}`}>
                     <Icon size={12} />
                   </div>
-                  <span className={`text-[7px] sm:text-[8px] font-bold uppercase tracking-wider mt-0.5 px-1.5 py-0.5 rounded-full transition-colors relative z-10 ${isDark ? 'bg-[#1e1e1e] text-gray-500 group-hover:text-gray-300' : 'bg-white text-gray-400 group-hover:text-gray-600'}`}>
+                  <span className={`text-sm font-bold uppercase tracking-wider mt-0.5 px-1.5 py-0.5 rounded-full transition-colors relative z-10 ${isDark ? 'bg-[#1e1e1e] text-gray-500 group-hover:text-gray-300' : 'bg-white text-gray-400 group-hover:text-gray-600'}`}>
                     {row.feature}
                   </span>
                 </div>
 
                 {/* Strategic Column */}
                 <div className={`p-2 sm:p-2.5 rounded-xl flex items-center justify-start text-left transition-all duration-300 ${isDark ? 'bg-[#2a201a]/30 group-hover:bg-[#2a201a]/60 border border-[#ff851d]/10 group-hover:border-[#ff851d]/30' : 'bg-orange-50/50 group-hover:bg-orange-50 border border-orange-100/50 group-hover:border-orange-200 shadow-sm group-hover:shadow-md'}`}>
-                  <p className={`text-xs sm:text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>{row.strategic}</p>
+                  <p className={`text-sm leading-snug ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>{row.strategic}</p>
                 </div>
               </motion.div>
             );

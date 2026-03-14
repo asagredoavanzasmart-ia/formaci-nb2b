@@ -133,10 +133,10 @@ export default function Slide13({ isDark }: { isDark: boolean }) {
                           q.isPrimary ? 'text-white' : isActive ? (isDark ? 'text-white' : 'text-gray-800') : (isDark ? 'text-gray-400' : 'text-gray-500')
                         }`} 
                       />
-                      <span className={`font-bold text-[11px] md:text-sm mb-1 leading-tight transition-colors duration-300 ${
+                      <span className={`font-bold text-sm mb-1 leading-tight transition-colors duration-300 ${
                         q.isPrimary ? 'text-white' : isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-300' : 'text-gray-700')
                       }`} dangerouslySetInnerHTML={{ __html: q.title.replace(' / ', ' /<br/>') }}></span>
-                      <span className={`text-[9px] md:text-xs transition-colors duration-300 ${
+                      <span className={`text-sm transition-colors duration-300 ${
                         q.isPrimary ? 'text-white/90' : isActive ? (isDark ? 'text-gray-300' : 'text-gray-600') : (isDark ? 'text-gray-500' : 'text-gray-400')
                       }`}>({q.subtitle})</span>
                     </div>
@@ -177,7 +177,7 @@ export default function Slide13({ isDark }: { isDark: boolean }) {
                     }`}>
                       {activeQuadrant.title.replace(' / ', ' / ')}
                     </h3>
-                    <span className={`text-xs md:text-sm font-medium ${
+                    <span className={`text-sm font-medium ${
                       activeQuadrant.isPrimary ? 'text-[#ef375c]' : isDark ? 'text-gray-400' : 'text-gray-500'
                     }`}>
                       {activeQuadrant.subtitle}
@@ -198,7 +198,7 @@ export default function Slide13({ isDark }: { isDark: boolean }) {
                 {activeQuadrant.isPrimary && (
                   <div className="mt-4 flex items-start gap-2 p-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/20 dark:border-white/5">
                     <Info size={18} className="text-[#ef375c] shrink-0 mt-0.5" />
-                    <p className={`text-xs md:text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                       Este es el único cuadrante que garantiza el éxito a largo plazo y fomenta referencias positivas.
                     </p>
                   </div>

@@ -212,10 +212,10 @@ const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string |
           style={{ backfaceVisibility: 'hidden' }}
         >
           <item.icon size={24} className="text-[#ff851d] mb-2" />
-          <span className={`text-xs sm:text-sm font-bold text-center leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+          <span className={`text-sm font-bold text-center leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
             {item.label}
           </span>
-          <span className={`text-[10px] mt-2 uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+          <span className={`text-sm mt-2 uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
             Ver detalle
           </span>
         </div>
@@ -225,7 +225,7 @@ const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string |
           className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center p-4 rounded-2xl border shadow-md ${isDark ? 'bg-[#2a2a2a] border-[#ff851d]' : 'bg-orange-50 border-[#ff851d]'}`}
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
-          <p className={`text-[11px] sm:text-xs text-center leading-snug font-medium ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
+          <p className={`text-sm text-center leading-snug font-medium ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
             {item.detailText}
           </p>
         </div>
@@ -316,7 +316,7 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
                 </div>
               </div>
 
-              <p className={`text-xs sm:text-sm leading-relaxed mb-4 shrink-0 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+              <p className={`text-sm leading-relaxed mb-4 shrink-0 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                 {activeRole.description}
               </p>
               

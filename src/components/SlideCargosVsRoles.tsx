@@ -170,7 +170,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '50%', top: '15%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-32 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Crown size={20} className={`mb-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Gerencia</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Gerencia</span>
                   </div>
                 </div>
 
@@ -178,35 +178,35 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '8%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Scale size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Legal</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Legal</span>
                   </div>
                 </div>
 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '26%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Calculator size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Finanzas</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Finanzas</span>
                   </div>
                 </div>
                 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '44%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Settings size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operaciones</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operaciones</span>
                   </div>
                 </div>
 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '62%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <HeartHandshake size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>RRHH</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>RRHH</span>
                   </div>
                 </div>
                 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '80%', top: '45%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Server size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>TI</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>TI</span>
                   </div>
                 </div>
 
@@ -214,14 +214,14 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '44%', top: '75%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Briefcase size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Jefe de Área</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Jefe de Área</span>
                   </div>
                 </div>
                 
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '62%', top: '75%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-2xl shadow-lg w-24 h-20 ${isDark ? 'bg-[#2a2a2a] border border-[#4a4a4a]' : 'bg-white border border-gray-200'}`}>
                     <Wrench size={20} className={`mb-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operadores</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Operadores</span>
                   </div>
                 </div>
 
@@ -229,7 +229,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                 <div className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10" style={{ left: '20%', top: '85%' }}>
                   <div className={`flex flex-col items-center justify-center rounded-full shadow-lg w-24 h-24 ${isDark ? 'bg-[#2a2a2a] border-2 border-[#ff851d]' : 'bg-white border-2 border-[#ff851d]'}`}>
                     <User size={24} className={`mb-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`} />
-                    <span className={`font-bold text-xs text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Vendedor</span>
+                    <span className={`font-bold text-sm text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>Vendedor</span>
                   </div>
                 </div>
 
@@ -316,19 +316,19 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                           >
                             <div className={`absolute top-1/2 -translate-y-1/2 ${role.id === 'vendedor' ? '-left-2 border-b border-l' : '-right-2 border-t border-r'} w-4 h-4 rotate-45 ${isDark ? 'bg-[#3a3a3a] border-[#4a4a4a]' : 'bg-white border-gray-200'}`}></div>
                             
-                            <p className="text-xs relative z-10 font-medium leading-relaxed mb-3">{role.desc}</p>
+                            <p className="text-sm relative z-10 font-medium leading-relaxed mb-3">{role.desc}</p>
                             
                             {role.id !== 'vendedor' && (
                               <div className={`flex flex-col gap-2.5 mt-2 pt-3 border-t relative z-10 ${isDark ? 'border-[#4a4a4a]' : 'border-gray-200'}`}>
                                 <div className="flex items-center justify-between">
-                                  <span className="text-[10px] font-bold uppercase text-[#ff851d]">Influencia</span>
+                                  <span className="text-sm font-bold uppercase text-[#ff851d]">Influencia</span>
                                   <div className="flex gap-1">
                                     {[1, 2, 3, 4, 5].map(star => (
                                       <div key={star} className={`w-3 h-1.5 rounded-full ${star <= role.influencia ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c]' : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'}`} />
                                     ))}
                                   </div>
                                 </div>
-                                <div className="flex flex-col gap-1.5 text-[10px]">
+                                <div className="flex flex-col gap-1.5 text-sm">
                                   <div className="flex justify-between items-center">
                                     <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
                                     <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{role.win}</span>
@@ -365,7 +365,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                   >
                     <div className={`flex flex-col items-center justify-center rounded-full shadow-lg shadow-red-500/40 w-16 h-16 bg-gradient-to-br from-[#ef375c] to-[#d92648] text-white border-2 border-white/20 backdrop-blur-sm relative z-10 transition-transform duration-300 ${hoveredRole === 'detractor' ? 'scale-110' : ''}`}>
                       <AlertOctagon size={18} className="mb-0.5" />
-                      <span className="font-bold text-[8px] text-center uppercase tracking-wider">Detractor</span>
+                      <span className="font-bold text-sm text-center uppercase tracking-wider">Detractor</span>
                     </div>
                   </motion.div>
 
@@ -380,20 +380,20 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                       >
                         <div className={`absolute ${detractorPos.y > 60 ? '-bottom-2 border-b border-r' : '-top-2 border-t border-l'} ${detractorPos.x > 70 ? 'right-8' : detractorPos.x < 30 ? 'left-8' : 'left-1/2 -translate-x-1/2'} w-4 h-4 rotate-45 ${isDark ? 'bg-[#3a3a3a] border-[#4a4a4a]' : 'bg-white border-gray-200'}`}></div>
                         
-                        <p className="text-xs relative z-10 font-medium leading-relaxed mb-3">
+                        <p className="text-sm relative z-10 font-medium leading-relaxed mb-3">
                           Busca bloquear la iniciativa. Puede sentirse amenazado por el cambio o es coach de otra iniciativa.
                         </p>
                         
                         <div className={`flex flex-col gap-2.5 mt-2 pt-3 border-t relative z-10 ${isDark ? 'border-[#4a4a4a]' : 'border-gray-200'}`}>
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-bold uppercase text-[#ef375c]">Influencia</span>
+                            <span className="text-sm font-bold uppercase text-[#ef375c]">Influencia</span>
                             <div className="flex gap-1">
                               {[1, 2, 3, 4, 5].map(star => (
                                 <div key={star} className={`w-3 h-1.5 rounded-full ${star <= 4 ? 'bg-gradient-to-r from-[#ef375c] to-[#d92648]' : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'}`} />
                               ))}
                             </div>
                           </div>
-                          <div className="flex flex-col gap-1.5 text-[10px]">
+                          <div className="flex flex-col gap-1.5 text-sm">
                             <div className="flex justify-between items-center">
                               <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
                               <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Reducir riesgo de amenaza</span>
