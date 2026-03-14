@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useMotionValue } from 'motion/react';
 import {
   ChevronRight, ChevronLeft, Target, Mail, CheckCircle2,
   Building, Clock, Zap, X, Star, FileText,
-  AlertTriangle, Users, GripVertical
+  AlertTriangle, Users, GripVertical, MessageSquare, Phone, User
 } from 'lucide-react';
 
 type PipelineStage = {
@@ -81,12 +81,14 @@ type CrmPerson = {
   id: string;
   name: string;
   role: string;
-  roleFunctional: 'Comprador Económico' | 'Comprador Usuario' | 'Comprador Técnico' | 'Coach';
+  roleFunctional: string;
+  phone: string;
   email: string;
   influenceScore: number;
+  influenceLevel: 'Baja' | 'Media' | 'Alta' | 'Crítica';
   wins: string;
   results: string;
-  history: { date: string; type: 'Meeting' | 'Email'; text: string }[];
+  history: { date: string; type: 'Meeting' | 'Email' | 'Chat'; text: string; sender?: string }[];
 };
 
 type CrmDeal = {
@@ -101,81 +103,62 @@ type CrmDeal = {
 const theDeal: CrmDeal = {
   id: 'deal-1',
   company: 'Grupo Andino S.A.',
-  program: 'Piloto de Resolución de Conflictos en Equipos de Trabajo',
-  amount: '$45,000',
+  program: 'Proyecto de Transformación Digital B2B',
+  amount: '$25,000,000',
   contacts: [
-    {
-      id: 'p1',
-      name: 'Valentina Ríos',
-      role: 'Gerente de Operaciones',
-      roleFunctional: 'Comprador Económico',
-      email: 'v.rios@grupoandino.com',
-      influenceScore: 88,
-      wins: 'Reducir la rotación de personal y los costos asociados al ausentismo',
-      results: 'Ahorro de $80,000 anuales en reclutamiento y reemplazo de talento',
-      history: [
-        { date: '10 Mar', type: 'Meeting', text: 'Presentación ejecutiva del programa piloto.' },
-        { date: '03 Mar', type: 'Email', text: 'Propuesta formal con ROI proyectado enviada.' },
-      ],
-    },
     {
       id: 'p2',
       name: 'Carlos Jiménez',
-      role: 'Jefe de Área',
+      role: 'Director Regional de Operaciones',
       roleFunctional: 'Comprador Usuario',
+      phone: '+56 9 8765 4321',
       email: 'c.jimenez@grupoandino.com',
-      influenceScore: 55,
-      wins: 'Mejorar el clima laboral de su equipo y reducir conflictos internos',
-      results: 'Reducción del 40% en conflictos reportados mensualmente dentro del área',
+      influenceScore: 85,
+      influenceLevel: 'Alta',
+      wins: 'Eliminar el caos operativo y ganar visibilidad total del inventario',
+      results: 'Mejora del 25% en la eficiencia logística y reducción de mermas',
       history: [
-        { date: '08 Mar', type: 'Meeting', text: 'Workshop de diagnóstico con el equipo de 12 personas.' },
-        { date: '28 Feb', type: 'Email', text: 'Envío de encuesta de clima organizacional.' },
+        { date: 'Hoy', type: 'Chat', text: '¿Podemos revisar el presupuesto final mañana?', sender: 'Carlos Jiménez' },
+        { date: '10 Mar', type: 'Meeting', text: 'Workshop de diagnóstico con el equipo regional.' },
+        { date: '03 Mar', type: 'Email', text: 'Resumen de requerimientos técnicos enviado.' },
+      ],
+    },
+    {
+      id: 'p1',
+      name: 'Valentina Ríos',
+      role: 'Gerente de Finanzas (CFO)',
+      roleFunctional: 'Comprador Económico',
+      phone: '+56 2 2345 6789',
+      email: 'v.rios@grupoandino.com',
+      influenceScore: 95,
+      influenceLevel: 'Crítica',
+      wins: 'Asegurar el ROI del proyecto y optimizar el Capex anual',
+      results: 'Ahorro proyectado de $2M en los primeros 18 meses',
+      history: [
+        { date: '12 Mar', type: 'Meeting', text: 'Presentación ejecutiva de retorno de inversión.' },
       ],
     },
     {
       id: 'p3',
       name: 'Ana Morales',
-      role: 'Jefa de Recursos Humanos',
+      role: 'CIO / Directora IT',
       roleFunctional: 'Comprador Técnico',
+      phone: '+56 9 1234 5678',
       email: 'a.morales@grupoandino.com',
-      influenceScore: 72,
-      wins: 'Posicionar a RRHH como líder de iniciativas de bienestar organizacional',
-      results: 'Programa implementado con 80% de adopción en los primeros 3 meses',
+      influenceScore: 78,
+      influenceLevel: 'Alta',
+      wins: 'Modernizar el stack tecnológico sin interrumpir la operación',
+      results: 'Integración certificada con el ERP corporativo',
       history: [
-        { date: '12 Mar', type: 'Meeting', text: 'Revisión metodológica y validación de contenidos.' },
-        { date: '05 Mar', type: 'Email', text: 'Checklist de criterios de evaluación del proveedor.' },
+        { date: '08 Mar', type: 'Email', text: 'Validación de protocolos de seguridad y API.' },
       ],
     },
   ],
 };
 
-// ─── Indicador de influencia ──────────────────────────────────────────────────
-function InfluenceCounter({ score, isDark }: { score: number; isDark: boolean }) {
-  const bars = 5;
-  const filled = Math.round((score / 100) * bars);
-  return (
-    <div className="flex items-center gap-1.5">
-      <span className="text-[9px] font-bold uppercase text-[#ff851d]">Influencia</span>
-      <div className="flex gap-1">
-        {Array.from({ length: bars }).map((_, i) => (
-          <div
-            key={i}
-            className={`w-3 h-1.5 rounded-full transition-all duration-300 ${
-              i < filled
-                ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c]'
-                : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'
-            }`}
-          />
-        ))}
-      </div>
-      <span className={`text-[9px] font-bold tabular-nums ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-        {score}
-      </span>
-    </div>
-  );
-}
+// ... (Indicator components if needed) ...
 
-// ─── Tarjeta del Deal — drag libre framer-motion, sin tooltip ─────────────────
+// ─── Tarjeta del Deal ─────────────────
 const AVATAR_COLORS = [
   'from-[#ff851d] to-[#ef375c]',
   'from-[#ef375c] to-[#c0392b]',
@@ -232,72 +215,31 @@ function DealCard({
         if (!isDragging) onOpenModal();
       }}
       whileHover={isDragging ? {} : { scale: 1.02, y: -2 }}
-      className={`p-3 rounded-xl border shadow-md select-none overflow-hidden relative transition-shadow ${
-        isDark ? 'bg-[#3a3a3a] border-[#4a4a4a] hover:border-[#ef375c]' : 'bg-white border-gray-200 hover:border-[#ef375c]'
+      className={`p-4 rounded-2xl border shadow-lg select-none overflow-hidden relative transition-all duration-300 flex items-center justify-center min-h-[100px] ${
+        isDark ? 'bg-[#2a2a2a] border-[#3a3a3a] hover:border-[#ef375c]' : 'bg-white border-gray-100 hover:border-[#ef375c]'
       } ${isDragging ? (isDark ? 'shadow-2xl border-[#ff851d]' : 'shadow-xl border-[#ff851d]') : ''}`}
     >
-      {/* Borde superior acento */}
-      <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-[#ff851d] to-[#ef375c]" />
+      <div className="absolute top-0 left-0 w-full h-[4px] bg-gradient-to-r from-[#ff851d] to-[#ef375c]" />
+      
+      <div className="flex flex-col items-center">
+        <h3 className={`text-lg font-black tracking-tight text-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          {deal.contacts[0].name}
+        </h3>
+        <p className={`text-[10px] uppercase font-bold tracking-widest mt-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ef375c]'}`}>
+          Oportunidad B2B
+        </p>
+      </div>
 
-      {/* Empresa y programa */}
-      <div className="flex items-start justify-between gap-2 pt-1">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 mb-0.5">
-            <GripVertical size={11} className={isDark ? 'text-gray-600' : 'text-gray-300'} />
-            <span className="text-[10px] font-black uppercase tracking-wider text-[#ff851d]">
-              {deal.company}
-            </span>
-          </div>
-          <p className={`text-[11px] font-semibold leading-snug line-clamp-2 ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
-            {deal.program}
-          </p>
+      <div className="absolute right-2 bottom-2">
+        <div className={`p-1.5 rounded-lg ${isDark ? 'bg-black/20 text-gray-500' : 'bg-gray-50 text-gray-400'}`}>
+          <GripVertical size={14} />
         </div>
-        <span className="text-xs font-black shrink-0 text-[#ff851d]">{deal.amount}</span>
       </div>
-
-      {/* Separador */}
-      <div className={`my-2.5 h-px ${isDark ? 'bg-[#4a4a4a]' : 'bg-gray-100'}`} />
-
-      {/* 3 contactos */}
-      <div className="flex flex-col gap-2">
-        {deal.contacts.map((person, i) => {
-          const initials = person.name.split(' ').map(n => n[0]).join('').slice(0, 2);
-          const filled = Math.round((person.influenceScore / 100) * 5);
-          return (
-            <div key={person.id} className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${AVATAR_COLORS[i]} flex items-center justify-center text-white font-bold text-[9px] shrink-0`}>
-                {initials}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className={`text-[10px] font-bold truncate leading-none ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{person.name}</p>
-                <p className={`text-[9px] truncate ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{person.role}</p>
-              </div>
-              <div className="flex gap-0.5 shrink-0">
-                {Array.from({ length: 5 }).map((_, b) => (
-                  <div
-                    key={b}
-                    className={`w-2 h-1.5 rounded-full ${
-                      b < filled
-                        ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c]'
-                        : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Hint */}
-      <p className={`mt-2.5 text-[9px] text-center ${isDark ? 'text-gray-600' : 'text-gray-300'}`}>
-        Clic para detalle · Arrastra para avanzar etapa
-      </p>
     </motion.div>
   );
 }
 
-// ─── Modal del Deal con tabs por contacto ────────────────────────────────────
+// ─── Modal del Deal ────────────────────────────────────
 function DealModal({
   deal,
   isDark,
@@ -313,6 +255,7 @@ function DealModal({
   const dragStart = useRef({ mx: 0, my: 0, px: 0, py: 0 });
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('button, input')) return;
     setDragging(true);
     dragStart.current = { mx: e.clientX, my: e.clientY, px: modalPos.x, py: modalPos.y };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -332,163 +275,200 @@ function DealModal({
   const person = deal.contacts[activeTab];
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        initial={{ opacity: 0, scale: 0.9, y: 30 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className={`w-full max-w-3xl flex flex-col rounded-3xl shadow-2xl overflow-hidden border select-none ${
-          isDark ? 'bg-[#1e1e1e] border-[#3a3a3a]' : 'bg-white border-gray-200'
+        exit={{ opacity: 0, scale: 0.9, y: 30 }}
+        className={`w-full max-w-5xl h-[600px] flex flex-col rounded-[2.5rem] shadow-2xl overflow-hidden border ${
+          isDark ? 'bg-[#121212] border-[#2a2a2a]' : 'bg-white border-gray-100'
         }`}
-        style={{ transform: `translate(${modalPos.x}px, ${modalPos.y}px)`, cursor: dragging ? 'grabbing' : 'default' }}
+        style={{ transform: `translate(${modalPos.x}px, ${modalPos.y}px)` }}
       >
-        {/* Header arrastrable */}
+        {/* Header */}
         <div
-          className={`p-4 border-b flex justify-between items-start cursor-grab ${
-            isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'
+          className={`p-6 border-b flex justify-between items-center cursor-move shrink-0 ${
+            isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-gray-50/50 border-gray-100'
           }`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] flex items-center justify-center shadow-lg">
-              <Building size={18} className="text-white" />
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] flex items-center justify-center shadow-lg shadow-orange-500/20">
+              <Building size={24} className="text-white" />
             </div>
             <div>
-              <h2 className={`text-lg font-black leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>{deal.company}</h2>
-              <p className={`text-xs font-medium mt-0.5 max-w-md truncate ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{deal.program}</p>
+              <h2 className={`text-xl font-black tracking-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>{deal.company}</h2>
+              <p className={`text-xs font-bold uppercase tracking-widest text-[#ff851d]`}>{deal.amount} • {deal.program}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-black text-[#ff851d]">{deal.amount}</span>
-            <button
-              onClick={onClose}
-              className={`p-2 rounded-full transition-colors ${isDark ? 'hover:bg-[#3a3a3a] text-gray-400' : 'hover:bg-gray-200 text-gray-500'}`}
-            >
-              <X size={18} />
-            </button>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className={`flex border-b relative z-20 ${isDark ? 'border-[#3a3a3a]' : 'border-gray-200'}`}>
-          {deal.contacts.map((p, i) => (
-            <button
-              key={p.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveTab(i);
-              }}
-              className={`flex-1 py-2.5 px-3 flex flex-col items-center gap-0.5 text-[10px] font-bold transition-all border-b-2 relative ${
-                activeTab === i
-                  ? 'border-[#ff851d] text-[#ff851d]'
-                  : `border-transparent ${isDark ? 'text-gray-500 hover:text-gray-300' : 'text-gray-400 hover:text-gray-600'}`
-              }`}
-            >
-              <div className={`w-6 h-6 rounded-full bg-gradient-to-br ${AVATAR_COLORS[i]} flex items-center justify-center text-white font-bold text-[9px] shadow-sm`}>
-                {p.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-              </div>
-              <span className="truncate max-w-[80px]">{p.name.split(' ')[0]}</span>
-              <span className={`text-[8px] px-1.5 rounded-full ${isDark ? 'bg-[#3a3a3a] text-gray-400' : 'bg-gray-100 text-gray-500'}`}>
-                {p.roleFunctional.replace('Comprador ', 'C.')}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Cuerpo animado */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`tab-content-${activeTab}`}
-            initial={{ opacity: 0, x: 12 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -12 }}
-            transition={{ duration: 0.18 }}
-            className="p-5 grid grid-cols-1 md:grid-cols-2 gap-4"
+          <button
+            onClick={onClose}
+            className={`p-2.5 rounded-full transition-all ${isDark ? 'hover:bg-white/10 text-gray-400' : 'hover:bg-black/5 text-gray-500'}`}
           >
-            {/* Col izquierda */}
-            <div className="flex flex-col gap-3">
-              {/* Info persona */}
-              <div className={`p-3 rounded-2xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'}`}>
-                <p className={`text-xs font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{person.role}</p>
-                <p className={`text-[10px] mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{person.email}</p>
-                <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full mt-1.5 inline-block ${isDark ? 'bg-[#ff851d]/20 text-[#ff851d]' : 'bg-orange-50 text-[#ff851d]'}`}>
-                  {person.roleFunctional}
-                </span>
-              </div>
+            <X size={20} />
+          </button>
+        </div>
 
-              {/* Influencia */}
-              <div className={`p-4 rounded-2xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'}`}>
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-3 text-[#ff851d] flex items-center gap-2">
-                  <Star size={12} /> Puntaje de Influencia
-                </h3>
-                <div className="flex items-end gap-3 mb-3">
-                  <span className="text-4xl font-black tabular-nums text-[#ff851d]">{person.influenceScore}</span>
-                  <span className={`text-lg font-bold mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>/100</span>
-                </div>
-                <div className={`w-full h-2 rounded-full overflow-hidden ${isDark ? 'bg-[#4a4a4a]' : 'bg-gray-100'}`}>
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${person.influenceScore}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                  />
-                </div>
-                <div className="mt-2">
-                  <InfluenceCounter score={person.influenceScore} isDark={isDark} />
-                </div>
-              </div>
-
-              {/* Win-Results */}
-              <div className={`p-3 rounded-2xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'}`}>
-                <h3 className="text-xs font-bold uppercase tracking-wider mb-2 text-[#ff851d] flex items-center gap-2">
-                  <Target size={12} /> Win-Results
-                </h3>
-                <div className="space-y-2">
-                  <div>
-                    <span className={`text-[9px] font-bold uppercase ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Win (Beneficio Personal)</span>
-                    <p className={`text-xs font-medium mt-0.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{person.wins}</p>
-                  </div>
-                  <div>
-                    <span className={`text-[9px] font-bold uppercase ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Result (Impacto Empresa)</span>
-                    <p className={`text-xs font-medium mt-0.5 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{person.results}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Col derecha — historial */}
-            <div className={`p-4 rounded-2xl border flex flex-col ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-100 shadow-sm'}`}>
-              <h3 className={`text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                <FileText size={12} /> Historial de Actividad
-              </h3>
-              <div className="relative">
-                <div className="absolute left-3 top-2 bottom-2 w-0.5 bg-gray-200 dark:bg-gray-700" />
-                <div className="space-y-4 relative z-10">
-                  {person.history.map((item, idx) => (
-                    <div key={idx} className="flex gap-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                        item.type === 'Meeting'
-                          ? 'bg-[#ff851d]/10 text-[#ff851d]'
-                          : 'bg-[#ef375c]/10 text-[#ef375c]'
-                      }`}>
-                        {item.type === 'Meeting' ? <Users size={12} /> : <Mail size={12} />}
-                      </div>
-                      <div>
-                        <div className="flex items-baseline gap-2 mb-0.5">
-                          <span className={`text-[10px] font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{item.type}</span>
-                          <span className={`text-[9px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{item.date}</span>
-                        </div>
-                        <p className={`text-[10px] leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{item.text}</p>
-                      </div>
+        {/* Content Area */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Sidebar: Contacts */}
+          <div className={`w-[280px] border-r flex flex-col p-4 gap-3 bg-opacity-30 ${isDark ? 'border-[#2a2a2a] bg-black' : 'border-gray-100 bg-gray-50'}`}>
+            <h3 className={`text-[10px] font-black uppercase tracking-[0.2em] mb-2 opacity-50 px-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+              CENTRO DE DECISIÓN
+            </h3>
+            <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-2.5">
+              {deal.contacts.map((p, i) => (
+                <button
+                  key={p.id}
+                  onClick={() => setActiveTab(i)}
+                  className={`p-3.5 rounded-3xl border transition-all duration-300 text-left group relative ${
+                    activeTab === i
+                      ? (isDark ? 'bg-[#222] border-[#ff851d] shadow-xl scale-[1.02]' : 'bg-white border-[#ff851d] shadow-xl scale-[1.02]')
+                      : (isDark ? 'bg-transparent border-transparent hover:bg-white/5' : 'bg-transparent border-transparent hover:bg-black/5')
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-2xl bg-gradient-to-br ${AVATAR_COLORS[i]} flex items-center justify-center text-white font-black text-xs shrink-0 shadow-md`}>
+                      {p.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <div className="min-w-0">
+                      <p className={`text-sm font-bold truncate ${isDark ? 'text-white' : 'text-gray-900'}`}>{p.name}</p>
+                      <p className={`text-[10px] font-medium opacity-50 truncate`}>{p.role}</p>
+                    </div>
+                  </div>
+                </button>
+              ))}
             </div>
-          </motion.div>
-        </AnimatePresence>
+          </div>
+
+          {/* Main Info Panel */}
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-8"
+              >
+                {/* Profile Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                  <div className="space-y-1">
+                    <span className={`text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-md ${
+                      person.roleFunctional.includes('Económico') ? 'bg-green-500/10 text-green-500' :
+                      person.roleFunctional.includes('Técnico') ? 'bg-blue-500/10 text-blue-500' :
+                      'bg-orange-500/10 text-orange-500'
+                    }`}>
+                      {person.roleFunctional}
+                    </span>
+                    <h2 className={`text-3xl font-black ${isDark ? 'text-white' : 'text-gray-900'}`}>{person.name}</h2>
+                    <p className={`text-base font-medium opacity-60`}>{person.role}</p>
+                  </div>
+                  
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3 text-xs font-bold">
+                      <div className={`p-2 rounded-xl ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
+                        <Mail size={14} className="text-[#ff851d]" />
+                      </div>
+                      <span className="opacity-70">{person.email}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs font-bold">
+                      <div className={`p-2 rounded-xl ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>
+                        <Phone size={14} className="text-[#ff851d]" />
+                      </div>
+                      <span className="opacity-70">{person.phone}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className={`p-6 rounded-[2rem] border ${isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-gray-50/50 border-gray-100'}`}>
+                    <h3 className="text-[11px] font-black uppercase tracking-widest text-[#ff851d] mb-4 flex items-center gap-2">
+                       WIN (PERSONAL)
+                    </h3>
+                    <p className={`text-base font-medium leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {person.wins}
+                    </p>
+                  </div>
+                  <div className={`p-6 rounded-[2rem] border ${isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-gray-50/50 border-gray-100'}`}>
+                    <h3 className="text-[11px] font-black uppercase tracking-widest text-[#ef375c] mb-4 flex items-center gap-2">
+                       RESULT (EMPRESA)
+                    </h3>
+                    <p className={`text-base font-medium leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {person.results}
+                    </p>
+                  </div>
+                </div>
+
+                {/* History & Chat */}
+                <div className="space-y-4">
+                  <h3 className={`text-[11px] font-black uppercase tracking-widest px-2 flex items-center gap-2 ${isDark ? 'text-white/40' : 'text-black/40'}`}>
+                    HISTORIAL Y CANAL DE CHAT
+                  </h3>
+                  
+                  <div className={`rounded-[2.5rem] border overflow-hidden flex flex-col ${isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-gray-50/50 border-gray-100'}`}>
+                    {/* Activity List */}
+                    <div className="p-6 space-y-5 max-h-[220px] overflow-y-auto custom-scrollbar">
+                      {person.history.map((h, i) => (
+                        <div key={i} className="flex gap-4">
+                          <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 ${
+                            h.type === 'Meeting' ? 'bg-orange-500/10 text-orange-500' :
+                            h.type === 'Email' ? 'bg-blue-500/10 text-blue-500' :
+                            'bg-green-500/10 text-green-500'
+                          }`}>
+                            {h.type === 'Meeting' ? <Users size={18} /> : 
+                             h.type === 'Email' ? <Mail size={18} /> : 
+                             <MessageSquare size={18} />}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs font-black uppercase tracking-wider">{h.type}</span>
+                              <span className="text-[10px] opacity-40 font-bold">{h.date}</span>
+                            </div>
+                            <p className="text-sm font-medium leading-normal opacity-70">{h.text}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Chat Box */}
+                    <div className={`p-6 pt-0 ${isDark ? 'bg-black/20' : 'bg-white/50'}`}>
+                       <div className={`p-4 rounded-3xl mb-4 space-y-3 ${isDark ? 'bg-black/30' : 'bg-white'}`}>
+                          <div className="flex justify-start">
+                            <div className={`px-4 py-3 rounded-3xl rounded-tl-none text-sm max-w-[85%] ${isDark ? 'bg-[#2a2a2a] text-white' : 'bg-gray-100 text-gray-800'}`}>
+                              <p className="font-black text-[10px] text-[#ff851d] mb-1">{person.name}</p>
+                              ¿Podemos ajustar los términos del SLA antes del viernes?
+                            </div>
+                          </div>
+                          <div className="flex justify-end">
+                            <div className={`px-4 py-3 rounded-3xl rounded-tr-none text-sm max-w-[85%] bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg`}>
+                              Lo estoy revisando con legal. Te confirmo mañana PM.
+                            </div>
+                          </div>
+                       </div>
+                       <div className="relative">
+                          <input 
+                            type="text" 
+                            placeholder={`Enviar mensaje a ${person.name.split(' ')[0]}...`}
+                            readOnly
+                            className={`w-full h-12 px-6 rounded-2xl border text-sm font-medium transition-all ${
+                              isDark ? 'bg-[#222] border-[#333] text-gray-400' : 'bg-white border-gray-200 text-gray-500'
+                            }`}
+                          />
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-orange-500/10 text-[#ff851d] flex items-center justify-center">
+                            <Zap size={16} />
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

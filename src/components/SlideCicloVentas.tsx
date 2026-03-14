@@ -1,188 +1,207 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Clock, History, Filter, Calculator, Target, AlertTriangle, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Clock, History, Filter, Calculator, Target, Zap, ChevronRight, Info } from 'lucide-react';
 
 export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
-  const [activeStep, setActiveStep] = useState<string | null>(null);
+  const [activeStep, setActiveStep] = useState(0);
 
   const steps = [
     {
       id: 's1',
-      num: '1',
-      title: 'Revisa tu historial',
+      num: '01',
+      title: 'Auditoría de Historial',
       icon: History,
-      desc: 'Analiza las ventas que has realizado en el último año o en los últimos dos años. Necesitas una muestra representativa de tu trabajo.',
-      color: 'from-gray-500 to-gray-600'
+      short: 'Analiza tu pasado',
+      desc: 'Revisa las ventas cerradas en los últimos 12-24 meses. Necesitamos datos reales, no suposiciones, para construir una base estadística sólida.',
+      color: 'from-blue-500 to-indigo-600',
+      tag: 'FASE 1: RECOPILACIÓN'
     },
     {
       id: 's2',
-      num: '2',
-      title: 'Mide el tiempo',
+      num: '02',
+      title: 'Cronometría del Trato',
       icon: Clock,
-      desc: 'Considera cuánto tiempo tomó cada venta desde el primer contacto (prospección) hasta conseguir la firma final (cierre).',
-      color: 'from-gray-400 to-gray-500'
+      short: 'Mide el tiempo real',
+      desc: 'Calcula el intervalo exacto desde la prospección inicial (primer hola) hasta el cierre formal (firma del contrato). El tiempo es tu métrica reina.',
+      color: 'from-purple-500 to-pink-500',
+      tag: 'FASE 2: MEDICIÓN'
     },
     {
       id: 's3',
-      num: '3',
-      title: 'Elimina las anomalías',
+      num: '03',
+      title: 'Filtro de Ruido',
       icon: Filter,
-      desc: 'Descarta renovaciones automáticas sin esfuerzo, pedidos atípicos ultrarrápidos y ventas excesivamente largas por condiciones extraordinarias.',
-      color: 'from-orange-500 to-red-500'
+      short: 'Limpia los datos',
+      desc: 'Elimina anomalías: renovaciones automáticas "sin esfuerzo" o ventas flash fortuitas. Si una venta tardó 2 días pero lo normal son 6 meses, bórrala del promedio.',
+      color: 'from-orange-500 to-red-500',
+      tag: 'FASE 3: DEPURACIÓN'
     },
     {
       id: 's4',
-      num: '4',
-      title: 'Calcula el promedio',
+      num: '04',
+      title: 'Cálculo del Promedio',
       icon: Calculator,
-      desc: 'Toma el tiempo de todas las ventas restantes (tu volumen regular) y saca el promedio. Ese número resultante es tu ciclo normal de ventas.',
-      color: 'from-[#ff851d] to-[#ef375c]'
+      short: 'Obtén tu Número',
+      desc: 'Suma el tiempo de tu volumen regular de ventas y divide. El resultado es tu CICLO NORMAL. Esta es la verdad matemática de tu proceso comercial.',
+      color: 'from-[#ff851d] to-[#ef375c]',
+      tag: 'FASE 4: RESULTADO'
     }
   ];
 
-  const activeStepData = steps.find(s => s.id === activeStep);
-
   return (
-    <div className={`w-full h-full flex flex-col p-6 md:p-8 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
-      {/* Background Elements */}
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none"></div>
-      
-      {/* Header */}
-      <div className="shrink-0 mb-6 z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-            El <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Ciclo Normal</span> de Ventas
+    <div className={`w-full h-full flex flex-col p-6 md:p-10 relative overflow-hidden rounded-[2.5rem] shadow-2xl ${
+      isDark ? 'bg-[#0f0f0f] text-white border border-white/5' : 'bg-gray-50 text-gray-900 border border-black/5'
+    }`}>
+      {/* Background Decals */}
+      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#ff851d]/5 to-transparent blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-[#ef375c]/5 to-transparent blur-[120px] pointer-events-none" />
+
+      {/* Header Section */}
+      <div className="relative z-10 mb-12 flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
+        <div className="space-y-2">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-2"
+          >
+            <div className="h-[2px] w-8 bg-gradient-to-r from-[#ff851d] to-[#ef375c]" />
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ff851d]">MÉTRICA ESTRATÉGICA</span>
+          </motion.div>
+          <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
+            Ciclo <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Normal</span>
           </h2>
-          <p className={`text-sm md:text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-            El tiempo promedio que toma llevar un pedido desde el primer contacto hasta el cierre.
+          <p className={`text-sm md:text-lg max-w-xl font-medium opacity-60 leading-relaxed`}>
+            El latido de tu proceso comercial: el tiempo real que toma transformar un extraño en un cliente recurrente.
           </p>
         </div>
-        <div className={`p-3 rounded-xl flex items-center gap-3 border shadow-sm ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
-          <Clock size={24} className="text-[#ff851d]" />
-          <span className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>
-            Primer Contacto <ArrowRight size={14} className="inline mx-1" /> Firma Final
-          </span>
-        </div>
+
+        <motion.div 
+          whileHover={{ scale: 1.05 }}
+          className={`p-4 rounded-3xl border backdrop-blur-md flex items-center gap-4 shadow-xl ${
+            isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-gray-200'
+          }`}
+        >
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+            <Zap size={24} />
+          </div>
+          <div>
+            <p className="text-[10px] font-black opacity-40 uppercase tracking-widest">Fórmula Clave</p>
+            <p className="text-sm font-bold">Tiempo Total / # Ventas Reales</p>
+          </div>
+        </motion.div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col md:flex-row gap-6 z-10 min-h-0">
-        
-        {/* Left: Interactive Steps List */}
-        <div className="w-full md:w-5/12 flex flex-col gap-3 overflow-y-auto custom-scrollbar pr-2">
-          <p className={`text-xs md:text-sm font-bold uppercase tracking-wider mb-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-            Pasos para calcularlo
-          </p>
-          {steps.map((step) => (
-            <div
-              key={step.id}
-              onMouseEnter={() => setActiveStep(step.id)}
-              onMouseLeave={() => setActiveStep(null)}
-              className={`p-4 rounded-2xl border cursor-pointer transition-all duration-300 flex items-center gap-4 ${
-                activeStep === step.id 
-                  ? (isDark ? 'bg-[#2a2a2a] border-[#ff851d] shadow-md' : 'bg-orange-50 border-[#ff851d] shadow-md')
-                  : (isDark ? 'bg-[#222] border-[#333] hover:border-gray-500' : 'bg-white border-gray-100 hover:border-gray-300')
-              }`}
-            >
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white shadow-md shrink-0 bg-gradient-to-br ${step.color}`}>
-                {step.num}
+      {/* Interactive Main Display */}
+      <div className="flex-1 relative z-10 flex flex-col items-center justify-center min-h-0">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeStep}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 1.05, y: -20 }}
+            transition={{ type: "spring", damping: 20, stiffness: 100 }}
+            className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-12 gap-8 items-center"
+          >
+            {/* Left Col: Big Icon & Label */}
+            <div className="md:col-span-5 flex flex-col items-center md:items-start text-center md:text-left space-y-4">
+              <div className={`w-32 h-32 rounded-[2.5rem] bg-gradient-to-br ${steps[activeStep].color} flex items-center justify-center text-white shadow-2xl relative`}>
+                <div className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white dark:bg-[#1a1a1a] flex items-center justify-center text-xs font-black border-4 border-current">
+                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+                     {steps[activeStep].num}
+                   </span>
+                </div>
+                {React.createElement(steps[activeStep].icon, { size: 64, strokeWidth: 1.5 })}
               </div>
-              <h3 className={`text-sm md:text-base font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                {step.title}
-              </h3>
-            </div>
-          ))}
-        </div>
-
-        {/* Right: Dynamic Info Panel */}
-        <div className="w-full md:w-7/12 flex flex-col min-h-0">
-          <AnimatePresence mode="wait">
-            
-            {/* Default State (Not hovering any step) */}
-            {!activeStep && (
-              <motion.div
-                key="default"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col gap-4 h-full"
-              >
-                {/* Example Card */}
-                <div className={`flex-1 p-4 md:p-5 rounded-3xl border flex flex-col justify-center relative overflow-hidden ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200 shadow-sm'}`}>
-                  <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-gray-400 to-gray-600"></div>
-                  <h4 className={`text-base md:text-lg font-bold mb-3 flex items-center gap-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-                    <Calculator size={18} className="text-gray-500" /> Ejemplo Práctico
-                  </h4>
-                  <div className="space-y-3">
-                    <div className={`p-3 md:p-4 rounded-xl border ${isDark ? 'bg-[#1e1e1e] border-[#333]' : 'bg-gray-50 border-gray-100'}`}>
-                      <p className={`text-xs md:text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Si la mayoría de tus ventas (sin anomalías) tardan entre <strong>3 y 9 meses</strong> en cerrarse...
-                      </p>
-                      <p className="text-sm md:text-base font-bold text-[#ef375c] mt-1.5">
-                        Tu ciclo normal es de ~6 meses.
-                      </p>
-                    </div>
-                    <div className={`p-3 md:p-4 rounded-xl border ${isDark ? 'bg-[#1e1e1e] border-[#333]' : 'bg-gray-50 border-gray-100'}`}>
-                      <p className={`text-xs md:text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                        Si tu proceso generalmente toma entre <strong>10 y 20 semanas</strong>...
-                      </p>
-                      <p className="text-sm md:text-base font-bold text-[#ff851d] mt-1.5">
-                        Tu ciclo normal es de ~15 semanas.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Importance Card */}
-                <div className={`p-4 md:p-5 rounded-3xl border flex gap-3 items-start shadow-md ${isDark ? 'bg-gradient-to-r from-red-900/20 to-orange-900/20 border-[#ef375c]/30' : 'bg-gradient-to-r from-red-50 to-orange-50 border-red-100'}`}>
-                  <div className="p-2.5 rounded-full bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shrink-0 shadow-lg">
-                    <Target size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-sm md:text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c] mb-1.5">
-                      ¿Por qué es vital conocer este dato?
-                    </h4>
-                    <p className={`text-xs md:text-sm leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      Te ayuda a hacer el <strong>rastreo (tracking) correcto en tu embudo</strong>. Sabrás exactamente cuándo mover un objetivo a la siguiente etapa y evitarás confiarte asumiendo que un trato está cerrado meses antes de tiempo, dejándole la puerta abierta a la competencia.
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Hover State (Showing Step Details) */}
-            {activeStep && activeStepData && (
-              <motion.div
-                key={activeStepData.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className={`flex-1 p-8 md:p-10 rounded-3xl border flex flex-col justify-center items-center text-center shadow-xl ${isDark ? 'bg-[#2a2a2a] border-gray-600' : 'bg-white border-gray-300'}`}
-              >
-                <div className={`w-20 h-20 rounded-2xl flex items-center justify-center text-white shadow-lg mb-6 bg-gradient-to-br ${activeStepData.color}`}>
-                  <activeStepData.icon size={40} />
-                </div>
-                <h3 className={`text-2xl md:text-3xl font-bold mb-4 ${isDark ? 'text-gray-100' : 'text-gray-800'}`}>
-                  Paso {activeStepData.num}: {activeStepData.title}
+              <div>
+                <span className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 block px-3 py-1 rounded-full border border-current opacity-40 inline-flex`}>
+                  {steps[activeStep].tag}
+                </span>
+                <h3 className="text-3xl md:text-4xl font-black mt-2 leading-tight">
+                  {steps[activeStep].title}
                 </h3>
-                <p className={`text-base md:text-lg leading-relaxed max-w-md ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                  {activeStepData.desc}
+              </div>
+            </div>
+
+            {/* Right Col: Description & Content */}
+            <div className="md:col-span-7 space-y-6">
+              <div className={`p-8 rounded-[2.5rem] border backdrop-blur-sm relative overflow-hidden ${
+                isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-xl shadow-gray-100'
+              }`}>
+                <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                  <Info size={120} />
+                </div>
+                <p className="text-lg md:text-xl font-medium leading-relaxed opacity-80 mb-6 italic">
+                  "{steps[activeStep].desc}"
                 </p>
                 
-                {activeStepData.id === 's3' && (
-                  <div className={`mt-6 p-4 rounded-xl flex items-start gap-3 text-left max-w-md ${isDark ? 'bg-red-900/20 border border-red-900/50' : 'bg-red-50 border border-red-100'}`}>
-                    <AlertTriangle size={20} className="text-red-500 shrink-0 mt-0.5" />
-                    <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      Las anomalías distorsionan tu promedio. Un cierre de 2 días no es tu ciclo normal, es una excepción.
-                    </p>
-                  </div>
-                )}
-              </motion.div>
-            )}
+                <div className="flex flex-wrap gap-3">
+                   {activeStep === 2 ? (
+                     <div className="flex items-center gap-2 text-red-500 font-bold text-xs uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
+                       <Target size={14} /> Cuidado con las anomalías
+                     </div>
+                   ) : (
+                     <div className="flex items-center gap-2 text-[#ff851d] font-bold text-xs uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
+                       <ChevronRight size={14} /> Paso crítico para el ROI
+                     </div>
+                   )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
-          </AnimatePresence>
+      {/* Stepper Navigation */}
+      <div className="shrink-0 relative z-10 mt-12 mb-4">
+        <div className={`h-[4px] w-full rounded-full relative mb-8 ${isDark ? 'bg-white/10' : 'bg-black/5'}`}>
+           <motion.div 
+             className="absolute h-full left-0 top-0 bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-[0_0_15px_rgba(255,133,29,0.5)]"
+             initial={false}
+             animate={{ width: `${(activeStep / (steps.length - 1)) * 100}%` }}
+             transition={{ type: "spring", damping: 25, stiffness: 120 }}
+           />
+           <div className="absolute top-0 left-0 w-full flex justify-between -translate-y-[45%]">
+             {steps.map((s, i) => (
+               <button
+                 key={s.id}
+                 onClick={() => setActiveStep(i)}
+                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group relative ${
+                   i <= activeStep 
+                    ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] scale-110 shadow-lg shadow-orange-500/20' 
+                    : (isDark ? 'bg-[#222] border border-white/10' : 'bg-white border border-black/10')
+                 }`}
+               >
+                 <span className={`text-xs font-black ${i <= activeStep ? 'text-white' : 'opacity-40'}`}>{s.num}</span>
+                 
+                 {/* Tooltip on hover */}
+                 <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 pointer-events-none">
+                    <div className={`px-4 py-2 rounded-xl text-[10px] font-black whitespace-nowrap shadow-2xl border ${
+                      isDark ? 'bg-[#1a1a1a] border-white/10 text-white' : 'bg-white border-black/5 text-gray-900'
+                    }`}>
+                      {s.short}
+                    </div>
+                 </div>
+               </button>
+             ))}
+           </div>
+        </div>
+        
+        <div className="flex justify-between items-center px-4">
+           <p className="text-[10px] font-black opacity-30 tracking-[0.4em] uppercase">Progreso de Auditoría</p>
+           <div className="flex gap-4">
+              <button 
+                onClick={() => setActiveStep(prev => Math.max(0, prev - 1))}
+                className={`text-xs font-bold transition-all ${activeStep === 0 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ff851d]'}`}
+              >
+                ← Anterior
+              </button>
+              <button 
+                onClick={() => setActiveStep(prev => Math.min(steps.length - 1, prev + 1))}
+                className={`text-xs font-bold transition-all ${activeStep === steps.length - 1 ? 'opacity-20 pointer-events-none' : 'hover:text-[#ef375c]'}`}
+              >
+                Siguiente →
+              </button>
+           </div>
         </div>
       </div>
     </div>

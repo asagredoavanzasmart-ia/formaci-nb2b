@@ -24,13 +24,12 @@ import SlideWinResults from './components/SlideWinResults';
 import SlideWinResultsPerfiles from './components/SlideWinResultsPerfiles';
 import SlideCicloVentas from './components/SlideCicloVentas';
 import SlideGestionarCompradorTecnico from './components/SlideGestionarCompradorTecnico';
-import SlideEvaluacionEstrategica from './components/SlideEvaluacionEstrategica';
 import SlideListaEstrategica from './components/SlideListaEstrategica';
 
 
 // Orden final solicitado por el usuario
 const initialSlides = [
-  { id: 'slide-0', title: 'Título' },
+  { id: 'slide-0', title: 'Inicio' },
   { id: 'slide-simple', title: 'Venta Simple' },
   { id: 'slide-compleja', title: 'Venta Compleja' },
   { id: 'slide-intro', title: 'Introducción' },
@@ -51,7 +50,6 @@ const initialSlides = [
   { id: 'slide-banderas', title: 'Banderas Rojas' },
   { id: 'slide-crm', title: 'Pipeline CRM' },
   { id: 'slide-ciclo', title: 'Ciclo Normal de Ventas' },
-  { id: 'slide-eval-estrategia', title: 'Evaluación Estratégica (Radar)' },
   { id: 'slide-lista-estrategica', title: 'Lista de Verificación Estratégica' },
 
   { id: 'slide-aterrizaje', title: 'Aterrizaje y Expansión' }
@@ -244,17 +242,14 @@ export default function App() {
                 {currentSlideId === 'slide-0' && (
                   <div className="w-full h-full flex flex-col items-center justify-center text-center">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">
-                      La Realidad Actual: <br/>
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
-                        Navegando el Laberinto Corporativo
-                      </span>
+                      Ventas B2B
                     </h1>
                     <div className="h-1.5 w-32 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full"></div>
                   </div>
                 )}
                 {currentSlideId === 'slide-simple' && (
                   <div className="w-full h-full flex items-center justify-center">
-                    <div className="w-full max-w-3xl px-12">
+                    <div className={`w-full max-w-3xl px-12 py-16 rounded-3xl border-2 ${isDark ? 'bg-[#1e1e1e] border-[#2a2a2a]' : 'bg-white border-gray-100 shadow-xl'}`}>
                       <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
                         Venta <span className="text-[#ef375c]">Simple</span>
                       </h2>
@@ -293,7 +288,6 @@ export default function App() {
                 {currentSlideId === 'slide-banderas' && <Slide8 isDark={isDark} />}
                 {currentSlideId === 'slide-crm' && <SlideCRMPipeline isDark={isDark} />}
                 {currentSlideId === 'slide-ciclo' && <SlideCicloVentas isDark={isDark} />}
-                {currentSlideId === 'slide-eval-estrategia' && <SlideEvaluacionEstrategica isDark={isDark} />}
                 {currentSlideId === 'slide-lista-estrategica' && <SlideListaEstrategica isDark={isDark} />}
                 {currentSlideId === 'slide-aterrizaje' && <Slide10 isDark={isDark} />}
 

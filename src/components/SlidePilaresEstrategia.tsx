@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Users, Flag, Activity, Trophy, Clock, ChevronRight } from 'lucide-react';
+import { Users, Flag, Activity, Trophy, Clock, ChevronRight, Target } from 'lucide-react';
 
 const pillars = [
   { 
@@ -27,28 +27,36 @@ const pillars = [
     description: 'Evaluar la receptividad de cada comprador. Las personas solo compran cuando perciben una discrepancia entre su realidad actual y lo que desean.',
     bullets: ['Modo Crecimiento', 'Modo Problemas', 'Modo Equilibrio', 'Exceso de Confianza']
   },
-  { 
-    id: 'ganancias', 
-    title: 'Ganancias-Resultados', 
+  {
+    id: 'ganancias',
+    title: 'Ganancias-Resultados',
     subtitle: 'Win-Results',
-    icon: Trophy, 
+    icon: Trophy,
     description: 'Regla fundamental: "Las empresas obtienen Resultados, pero solo las personas obtienen Ganancias".',
     bullets: ['Entregar impacto medible (Resultado)', 'Satisfacer el ego o seguridad (Ganancia)', 'Alinear objetivos corporativos y personales', 'Crear valor a dos niveles']
   },
-  { 
-    id: 'proceso', 
-    title: 'El Proceso Comercial', 
+  {
+    id: 'proceso',
+    title: 'El Proceso Comercial',
     subtitle: 'Sales Process',
-    icon: Clock, 
+    icon: Clock,
     description: 'La gestión eficiente de tus recursos y tiempo a lo largo de todo el ciclo de vida de la oportunidad.',
     bullets: ['Gestionar el tiempo', 'Priorizar objetivos', 'Clasificar oportunidades', 'Mantenerte vigente durante el ciclo']
+  },
+  {
+    id: 'icp_def',
+    title: 'Definición del ICP',
+    subtitle: 'Ideal Customer Profile',
+    icon: Target,
+    description: 'Identificar con precisión a qué empresas debemos dedicar nuestro esfuerzo estratégico para maximizar la tasa de cierre.',
+    bullets: ['Definir criterios de segmentación', 'Identificar triggers de compra', 'Mapear el ajuste solución-negocio', 'Priorizar cuentas de alto valor']
   }
 ];
 
 export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) {
   const [activeId, setActiveId] = useState(pillars[0].id);
 
-  const activePillar = pillars.find(p => p.id === activeId);
+  const activePillar = pillars.find(p => p.id === activeId) || pillars[0];
 
   return (
     <div className={`w-full h-full flex flex-col p-6 md:p-8 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
@@ -59,7 +67,7 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
       {/* Header */}
       <div className="shrink-0 mb-6 z-10">
         <h2 className="text-2xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-          Los 5 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
+          Los 6 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
         </h2>
         <p className={`text-sm md:text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           Explora los fundamentos para dominar la venta compleja. Selecciona un pilar para ver los detalles.
@@ -68,7 +76,7 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
 
       {/* Main Content - Split Layout */}
       <div className="flex-1 flex flex-col md:flex-row gap-6 z-10 min-h-0">
-        
+
         {/* Left: Vertical Tabs */}
         <div className="w-full md:w-1/3 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-2">
           {pillars.map((pillar) => {
@@ -80,14 +88,14 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                 key={pillar.id}
                 onClick={() => setActiveId(pillar.id)}
                 className={`p-3 rounded-2xl border text-left transition-all duration-300 flex items-center gap-3 ${
-                  isActive 
+                  isActive
                     ? (isDark ? 'bg-[#2a2a2a] border-[#ff851d] shadow-md' : 'bg-orange-50 border-[#ff851d] shadow-md')
                     : (isDark ? 'bg-[#222] border-[#333] hover:border-gray-500' : 'bg-white border-gray-100 hover:border-gray-300')
                 }`}
               >
                 <div className={`p-2 rounded-xl shrink-0 transition-colors duration-300 ${
-                  isActive 
-                    ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-md shadow-red-500/30' 
+                  isActive
+                    ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-md shadow-red-500/30'
                     : isDark ? 'bg-[#3a3a3a] text-gray-400' : 'bg-gray-100 text-gray-500'
                 }`}>
                   <Icon size={20} />
@@ -115,10 +123,10 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className={`flex-1 p-6 md:p-8 rounded-3xl border flex flex-col shadow-lg ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'}`}
+                className="flex-1 flex flex-col justify-center h-full"
               >
-                <div className="flex items-center gap-4 mb-6 shrink-0">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className={`p-4 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg`}>
                     <activePillar.icon size={32} />
                   </div>
                   <div>
@@ -131,15 +139,15 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                   </div>
                 </div>
 
-                <div className="flex-1 overflow-y-auto custom-scrollbar flex flex-col">
-                  <p className={`text-base md:text-lg leading-relaxed mb-8 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <div className="space-y-6">
+                  <p className={`text-base md:text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                     {activePillar.description}
                   </p>
                   
-                  <div className="mt-auto space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {activePillar.bullets.map((bullet, idx) => (
-                      <div key={idx} className="flex items-start gap-3 py-2">
-                        <ChevronRight size={20} className="text-[#ff851d] shrink-0 mt-0.5" />
+                      <div key={idx} className={`flex items-start gap-3 p-3 rounded-xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-100'}`}>
+                        <ChevronRight size={18} className="text-[#ff851d] shrink-0 mt-0.5" />
                         <span className={`text-sm md:text-base font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
                           {bullet}
                         </span>

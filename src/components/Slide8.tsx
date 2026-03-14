@@ -91,7 +91,8 @@ export default function Slide8({ isDark }: { isDark: boolean }) {
             <div 
               key={flag.id}
               className="relative w-full h-full [perspective:1000px] cursor-pointer group"
-              onClick={() => setFlipped(isFlipped ? null : flag.id)}
+              onMouseEnter={() => setFlipped(flag.id)}
+              onMouseLeave={() => setFlipped(null)}
             >
               <motion.div
                 className="w-full h-full relative [transform-style:preserve-3d]"

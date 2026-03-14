@@ -155,60 +155,93 @@ export default function SlideICPContent({ isDark }: { isDark: boolean }) {
               </motion.div>
             )}
 
-            {/* SLIDE 3 — Matriz de Dolores */}
+            {/* SLIDE 3 — Matriz de Dolores (REDISEÑADA) */}
             {currentIndex === 2 && (
               <motion.div key="matriz" initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -40 }} transition={{ duration: 0.25 }}
                 className="flex-1 flex flex-col min-h-0">
-                <div className="flex justify-center mb-1.5 shrink-0">
-                  <span className={`text-[9px] font-bold uppercase tracking-widest ${isDark ? 'text-gray-600' : 'text-gray-300'}`}>← Bajo Impacto · · · Alto Impacto →</span>
-                </div>
-                <div className="flex gap-2 flex-1 min-h-0">
-                  <div className="flex flex-col justify-between py-2 w-4 shrink-0">
-                    <span className={`text-[8px] font-bold ${isDark ? 'text-gray-600' : 'text-gray-300'}`} style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>↑ Urgencia Alta</span>
-                    <span className={`text-[8px] font-bold ${isDark ? 'text-gray-600' : 'text-gray-300'}`} style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Urgencia Baja ↓</span>
+                
+                <div className="flex-1 relative mt-4 mb-2 flex">
+                  {/* Eje Y (Urgencia) */}
+                  <div className="absolute left-10 top-0 bottom-10 w-px bg-gradient-to-b from-gray-500/50 to-transparent flex flex-col justify-between items-end pr-2 text-[8px] font-black uppercase tracking-widest opacity-40">
+                    <span className="rotate-[-90deg] origin-right translate-y-12 whitespace-nowrap">Urgencia Crítica</span>
+                    <span className="rotate-[-90deg] origin-right -translate-y-4 whitespace-nowrap">Sin Urgencia</span>
                   </div>
-                  <div className="flex-1 grid grid-cols-2 gap-2 min-h-0" style={{ gridTemplateRows: '1fr 1fr' }}>
-                    {quadrants.map((q, i) => (
-                      <motion.div key={q.id} initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.07 }}
-                        className={`rounded-2xl border p-3 flex flex-col cursor-default transition-all relative overflow-hidden
-                          ${q.isIdeal
-                            ? isDark ? 'bg-emerald-950/40 border-emerald-500/30 ring-1 ring-emerald-500/20' : 'bg-emerald-50 border-emerald-200'
-                            : isDark ? 'bg-[#1e1e1e] border-[#3a3a3a]' : 'bg-white border-gray-200'
-                          }`}
-                        onMouseEnter={() => setHoveredQuadrant(q.id)}
-                        onMouseLeave={() => setHoveredQuadrant(null)}>
-                        {q.isIdeal && (
-                          <span className="absolute top-2 right-2 text-[8px] font-black text-[#ff851d] bg-[#ff851d]/10 px-1.5 py-0.5 rounded-full">★ IDEAL</span>
-                        )}
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <span className="text-base leading-none">{q.emoji}</span>
-                          <span className={`text-xs font-black ${q.col}`}>{q.label}</span>
+
+                  {/* Eje X (Impacto) */}
+                  <div className="absolute left-10 right-0 bottom-10 h-px bg-gradient-to-r from-transparent to-gray-500/50 flex justify-between items-start pt-2 text-[8px] font-black uppercase tracking-widest opacity-40">
+                    <span className="translate-x-4">Bajo Impacto</span>
+                    <span>Alto Impacto Estratégico</span>
+                  </div>
+
+                  {/* Cuadrantes Background */}
+                  <div className="flex-1 ml-10 mb-10 grid grid-cols-2 grid-rows-2 gap-2 p-1">
+                    <div className={`rounded-xl ${isDark ? 'bg-orange-500/5 transition-colors hover:bg-orange-500/10' : 'bg-orange-50/50'} border border-dashed border-gray-500/10 flex items-start p-2`}>
+                      <span className="text-[9px] font-black opacity-30">REACTIVO</span>
+                    </div>
+                    <div className={`rounded-xl ${isDark ? 'bg-emerald-500/5 transition-colors hover:bg-emerald-500/10' : 'bg-emerald-50/50'} border border-dashed border-emerald-500/10 flex justify-end p-2`}>
+                      <span className="text-[9px] font-black opacity-30 text-emerald-500">ESTRATÉGICO (ZONA ICP)</span>
+                    </div>
+                    <div className={`rounded-xl ${isDark ? 'bg-gray-500/5 transition-colors hover:bg-gray-500/10' : 'bg-gray-50/50'} border border-dashed border-gray-500/10 flex items-end p-2`}>
+                      <span className="text-[9px] font-black opacity-30 text-gray-400">COSMÉTICO</span>
+                    </div>
+                    <div className={`rounded-xl ${isDark ? 'bg-blue-500/5 transition-colors hover:bg-blue-500/10' : 'bg-blue-50/50'} border border-dashed border-blue-500/10 flex items-end justify-end p-2`}>
+                      <span className="text-[9px] font-black opacity-30 text-blue-400">EFICIENCIA</span>
+                    </div>
+                  </div>
+
+                  {/* Puntos (ICPs) */}
+                  <div className="absolute left-10 right-0 top-0 bottom-10 pointer-events-none">
+                    {[
+                      { id: 'icp1', x: '82%', y: '15%', name: 'ICP 1: SaaS Serie A', pain: 'Churn Crítico', risk: 'Supervivencia', color: 'bg-emerald-400' },
+                      { id: 'icp2', x: '75%', y: '35%', name: 'ICP 2: Fintech', pain: 'CAC Insostenible', risk: 'Rentabilidad', color: 'bg-emerald-400' },
+                      { id: 'icp3', x: '25%', y: '20%', name: 'Segmento: Retail', pain: 'Uso de Herramienta', risk: 'Bajo', color: 'bg-gray-400' },
+                      { id: 'icp4', x: '45%', y: '70%', name: 'Segmento: Industrial', pain: 'Reportes manuales', risk: 'Medio', color: 'bg-blue-400' },
+                    ].map((dot) => (
+                      <motion.div
+                        key={dot.id}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        className="absolute pointer-events-auto group"
+                        style={{ left: dot.x, top: dot.y }}
+                      >
+                        <motion.button
+                          whileHover={{ scale: 1.5 }}
+                          className={`w-4 h-4 rounded-full ${dot.color} shadow-lg ring-4 ring-white/20 dark:ring-black/20 flex items-center justify-center cursor-pointer`}
+                        >
+                           <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        </motion.button>
+                        
+                        {/* Ficha (Tooltip Expandido) */}
+                        <div className="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none translate-x-2 group-hover:translate-x-0 z-50">
+                          <div className={`w-48 p-3 rounded-2xl border shadow-2xl backdrop-blur-xl ${isDark ? 'bg-[#1a1a1a]/90 border-white/10' : 'bg-white/90 border-gray-200'}`}>
+                            <p className="text-[10px] font-black text-[#ff851d] uppercase tracking-widest mb-1">{dot.name}</p>
+                            <p className="text-[11px] font-bold mb-2">Dolor: <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>{dot.pain}</span></p>
+                            <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-500/10">
+                              <span className="text-[9px] font-black opacity-40 uppercase">Riesgo</span>
+                              <span className={`text-[9px] font-black px-2 py-0.5 rounded-full ${dot.color} text-white`}>{dot.risk}</span>
+                            </div>
+                          </div>
                         </div>
-                        <p className={`text-[9px] font-bold mb-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>{q.desc}</p>
-                        <AnimatePresence mode="wait">
-                          {hoveredQuadrant === q.id ? (
-                            <motion.ul key="ex" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-0.5 mt-auto">
-                              {q.ex.map((e, j) => (
-                                <li key={j} className={`text-[9px] flex items-center gap-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-                                  <span className={`w-1 h-1 rounded-full shrink-0 ${q.isIdeal ? 'bg-emerald-400' : 'bg-gray-400'}`} />{e}
-                                </li>
-                              ))}
-                            </motion.ul>
-                          ) : (
-                            <motion.p key="verdict" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                              className={`text-[9px] italic mt-auto ${isDark ? 'text-gray-600' : 'text-gray-400'}`}>{q.verdict}
-                            </motion.p>
-                          )}
-                        </AnimatePresence>
                       </motion.div>
                     ))}
                   </div>
                 </div>
-                <div className={`mt-2 rounded-xl p-2.5 border flex items-center gap-2 shrink-0 ${isDark ? 'bg-emerald-900/10 border-emerald-900/30' : 'bg-emerald-50 border-emerald-100'}`}>
-                  <CheckCircle size={13} className="text-emerald-400 shrink-0" />
-                  <p className={`text-[10px] ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                    Tu ICP ideal tiene dolores <strong className="text-emerald-400">estratégicos</strong>: pierden dinero, clientes o crecimiento. Ahí está la urgencia real.
-                  </p>
+
+                <div className={`rounded-2xl p-4 border flex items-center gap-4 shrink-0 overflow-hidden relative ${isDark ? 'bg-emerald-950/20 border-emerald-900/30' : 'bg-emerald-50 border-emerald-100'}`}>
+                  <div className="absolute top-0 right-0 p-4 opacity-5 rotate-12">
+                    <CheckCircle size={80} />
+                  </div>
+                  <div className={`p-2 rounded-xl text-white shadow-lg shadow-emerald-500/20 bg-emerald-500`}>
+                    <CheckCircle size={18} />
+                  </div>
+                  <div className="flex-1">
+                    <p className={`text-xs font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                      Enfoque en la "Zona de Impacto Estratégico"
+                    </p>
+                    <p className={`text-[10px] leading-relaxed italic ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Tu ICP no es solo quien tiene el problema, sino aquel donde el problema pone en riesgo su crecimiento o supervivencia.
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             )}
