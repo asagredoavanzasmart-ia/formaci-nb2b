@@ -5,7 +5,7 @@ import { Handshake, TrendingDown, Swords, XCircle, Info } from 'lucide-react';
 const quadrants = [
   {
     id: 'win-win',
-    title: 'YO GANO / TÚ GANAS',
+    title: 'Yo gano / Tú ganas',
     subtitle: 'Estable / Lealtad',
     description: 'Ambas partes obtienen valor. Se construye una relación a largo plazo basada en la confianza. Es crucial conocer el "Win" personal de cada influenciador, que no siempre es dinero (puede ser reconocimiento, menor riesgo, eficiencia). Es el único modelo sostenible.',
     gradient: 'from-[#ff851d] to-[#ef375c]',
@@ -18,7 +18,7 @@ const quadrants = [
   },
   {
     id: 'lose-win',
-    title: 'YO PIERDO / TÚ GANAS',
+    title: 'Yo pierdo / Tú ganas',
     subtitle: 'Insostenible',
     description: 'Cedes demasiado para cerrar el trato. A corto plazo parece una victoria para el cliente, pero a largo plazo daña tu rentabilidad y capacidad de servicio.',
     gradient: 'from-gray-600 to-gray-700',
@@ -31,7 +31,7 @@ const quadrants = [
   },
   {
     id: 'win-lose',
-    title: 'YO GANO / TÚ PIERDES',
+    title: 'Yo gano / Tú pierdes',
     subtitle: 'Venganza futura',
     description: 'Maximizas tu beneficio a expensas del cliente. Genera resentimiento, daña la reputación y asegura que el cliente buscará alternativas en el futuro.',
     gradient: 'from-gray-600 to-gray-700',
@@ -44,7 +44,7 @@ const quadrants = [
   },
   {
     id: 'lose-lose',
-    title: 'YO PIERDO / TÚ PIERDES',
+    title: 'Yo pierdo / Tú pierdes',
     subtitle: 'Sin trato',
     description: 'Ninguna de las partes obtiene lo que necesita. Suele ocurrir cuando las negociaciones se vuelven adversariales o se pierde el enfoque en el valor mutuo.',
     gradient: 'from-gray-600 to-gray-700',

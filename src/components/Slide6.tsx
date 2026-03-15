@@ -365,18 +365,18 @@ export default function Slide6({ isDark }: { isDark: boolean }) {
               className="flex flex-col gap-4 h-full"
             >
               <div className={`p-4 rounded-xl border-l-4 ${isDark ? 'bg-[#3a3a3a]/80 border-l-gray-500' : 'bg-white shadow-sm border-l-gray-400'}`} style={{ borderLeftColor: activeMode === 'crecimiento' ? '#3b82f6' : activeMode === 'problemas' ? '#ef4444' : activeMode === 'equilibrio' ? '#10b981' : '#a855f7' }}>
-                <h4 className="text-xs font-bold uppercase tracking-wider mb-1 text-gray-500">Percepción</h4>
+                <h4 className="text-sm font-black mb-1 text-gray-500">Percepción</h4>
                 <p className={`text-sm md:text-base ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{activeData.percepcion}</p>
               </div>
               
               <div className={`p-4 rounded-xl border-l-4 ${isDark ? 'bg-[#3a3a3a]/80 border-l-gray-500' : 'bg-white shadow-sm border-l-gray-400'}`} style={{ borderLeftColor: activeMode === 'crecimiento' ? '#3b82f6' : activeMode === 'problemas' ? '#ef4444' : activeMode === 'equilibrio' ? '#10b981' : '#a855f7' }}>
-                <h4 className="text-xs font-bold uppercase tracking-wider mb-1 text-gray-500">Actitud</h4>
+                <h4 className="text-sm font-black mb-1 text-gray-500">Actitud</h4>
                 <p className={`text-sm md:text-base ${isDark ? 'text-gray-200' : 'text-gray-700'}`}>{activeData.actitud}</p>
               </div>
               
               <div className={`p-4 rounded-xl flex items-center justify-between ${isDark ? 'bg-[#3a3a3a]/80' : 'bg-white shadow-sm'}`}>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-gray-500">Probabilidad de Cierre</h4>
-                <span className={`text-2xl font-black uppercase ${activeData.cierreColor}`}>{activeData.cierre}</span>
+                <h4 className="text-sm font-black text-gray-500">Probabilidad de cierre</h4>
+                <span className={`text-2xl font-black ${activeData.cierreColor}`}>{activeData.cierre}</span>
               </div>
             </motion.div>
           </AnimatePresence>

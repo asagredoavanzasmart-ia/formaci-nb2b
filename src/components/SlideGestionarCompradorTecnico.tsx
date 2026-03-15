@@ -118,7 +118,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                 </div>
                 <div className="overflow-hidden">
                   <p
-                    className={`text-sm font-black uppercase tracking-wider leading-none mb-0.5 ${
+                    className={`text-sm font-black leading-none mb-0.5 ${
                       isActive ? 'text-[#ff851d]' : isDark ? 'text-gray-600' : 'text-gray-400'
                     }`}
                   >
@@ -169,7 +169,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                   </p>
                 </div>
                 <span
-                  className={`text-sm font-black px-3 py-1 rounded-full border tracking-wider ${
+                  className={`text-sm font-black px-3 py-1 rounded-full border ${
                     isDark
                       ? 'border-[#3a3a3a] text-gray-400 bg-black/20'
                       : 'border-gray-200 text-gray-400 bg-white shadow-sm'
@@ -191,7 +191,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                     }`}
                   >
                     <p
-                      className="text-sm font-black uppercase tracking-[0.15em] mb-2"
+                      className="text-sm font-black mb-2"
                       style={{ color: '#ff851d' }}
                     >
                       Contexto
@@ -212,7 +212,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                     }`}
                   >
                     <p
-                      className="text-sm font-black uppercase tracking-[0.15em] mb-2"
+                      className="text-sm font-black mb-2"
                       style={{ color: '#ef375c' }}
                     >
                       Estrategia clave
@@ -234,7 +234,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                   }`}
                 >
                   <p
-                    className="text-sm font-black uppercase tracking-[0.15em] mb-3 shrink-0"
+                    className="text-sm font-black mb-3 shrink-0"
                     style={{ color: '#ff851d' }}
                   >
                     Táctica paso a paso
@@ -275,7 +275,7 @@ export default function SlideGestionarCompradorTecnico({ isDark }: { isDark: boo
                 <p
                   className={`text-sm leading-snug ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
                 >
-                  <strong className="text-[#ff851d] font-black uppercase tracking-tight mr-1">
+                  <strong className="text-[#ff851d] font-black mr-1">
                     Nota:
                   </strong>
                   El C. Técnico puede camuflarse como C. Económico. Valida siempre el presupuesto con un{' '}

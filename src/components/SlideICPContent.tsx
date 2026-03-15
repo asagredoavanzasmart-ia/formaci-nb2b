@@ -110,7 +110,7 @@ export default function SlideICPContent({ isDark }: { isDark: boolean }) {
                 <div className={`rounded-xl p-3 border flex items-start gap-2.5 ${isDark ? 'bg-red-900/10 border-red-900/30' : 'bg-red-50 border-red-100'}`}>
                   <AlertTriangle size={13} className="text-red-400 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-black text-red-400 mb-0.5">ERROR #1</p>
+                    <p className="text-sm font-black text-red-400 mb-0.5">Error #1</p>
                     <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                       "Nuestro cliente es <strong>cualquier empresa que necesite X</strong>". Más específico = más respuestas = más ventas.
                     </p>
@@ -162,30 +162,30 @@ export default function SlideICPContent({ isDark }: { isDark: boolean }) {
                 
                 <div className="flex-1 relative mt-4 mb-2 flex">
                   {/* Eje Y (Urgencia) */}
-                  <div className="absolute left-10 top-0 bottom-10 w-px bg-gradient-to-b from-gray-500/50 to-transparent flex flex-col justify-between items-end pr-2 text-sm font-black uppercase tracking-widest opacity-40">
-                    <span className="rotate-[-90deg] origin-right translate-y-12 whitespace-nowrap">Urgencia Crítica</span>
-                    <span className="rotate-[-90deg] origin-right -translate-y-4 whitespace-nowrap">Sin Urgencia</span>
+                  <div className="absolute left-10 top-0 bottom-10 w-px bg-gradient-to-b from-gray-500/50 to-transparent flex flex-col justify-between items-end pr-2 text-sm font-black opacity-40">
+                    <span className="rotate-[-90deg] origin-right translate-y-12 whitespace-nowrap">Urgencia crítica</span>
+                    <span className="rotate-[-90deg] origin-right -translate-y-4 whitespace-nowrap">Sin urgencia</span>
                   </div>
 
                   {/* Eje X (Impacto) */}
-                  <div className="absolute left-10 right-0 bottom-10 h-px bg-gradient-to-r from-transparent to-gray-500/50 flex justify-between items-start pt-2 text-sm font-black uppercase tracking-widest opacity-40">
-                    <span className="translate-x-4">Bajo Impacto</span>
-                    <span>Alto Impacto Estratégico</span>
+                  <div className="absolute left-10 right-0 bottom-10 h-px bg-gradient-to-r from-transparent to-gray-500/50 flex justify-between items-start pt-2 text-sm font-black opacity-40">
+                    <span className="translate-x-4">Bajo impacto</span>
+                    <span>Alto impacto estratégico</span>
                   </div>
 
                   {/* Cuadrantes Background */}
                   <div className="flex-1 ml-10 mb-10 grid grid-cols-2 grid-rows-2 gap-2 p-1">
                     <div className={`rounded-xl ${isDark ? 'bg-orange-500/5 transition-colors hover:bg-orange-500/10' : 'bg-orange-50/50'} border border-dashed border-gray-500/10 flex items-start p-2`}>
-                      <span className="text-sm font-black opacity-30">REACTIVO</span>
+                      <span className="text-sm font-black opacity-30">Reactivo</span>
                     </div>
                     <div className={`rounded-xl ${isDark ? 'bg-emerald-500/5 transition-colors hover:bg-emerald-500/10' : 'bg-emerald-50/50'} border border-dashed border-emerald-500/10 flex justify-end p-2`}>
-                      <span className="text-sm font-black opacity-30 text-emerald-500">ESTRATÉGICO (ZONA ICP)</span>
+                      <span className="text-sm font-black opacity-30 text-emerald-500">Estratégico (Zona Icp)</span>
                     </div>
                     <div className={`rounded-xl ${isDark ? 'bg-gray-500/5 transition-colors hover:bg-gray-500/10' : 'bg-gray-50/50'} border border-dashed border-gray-500/10 flex items-end p-2`}>
-                      <span className="text-sm font-black opacity-30 text-gray-400">COSMÉTICO</span>
+                      <span className="text-sm font-black opacity-30 text-gray-400">Cosmético</span>
                     </div>
                     <div className={`rounded-xl ${isDark ? 'bg-blue-500/5 transition-colors hover:bg-blue-500/10' : 'bg-blue-50/50'} border border-dashed border-blue-500/10 flex items-end justify-end p-2`}>
-                      <span className="text-sm font-black opacity-30 text-blue-400">EFICIENCIA</span>
+                      <span className="text-sm font-black opacity-30 text-blue-400">Eficiencia</span>
                     </div>
                   </div>
 
@@ -214,10 +214,10 @@ export default function SlideICPContent({ isDark }: { isDark: boolean }) {
                         {/* Ficha (Tooltip Expandido) */}
                         <div className="absolute left-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none translate-x-2 group-hover:translate-x-0 z-50">
                           <div className={`w-48 p-3 rounded-2xl border shadow-2xl backdrop-blur-xl ${isDark ? 'bg-[#1a1a1a]/90 border-white/10' : 'bg-white/90 border-gray-200'}`}>
-                            <p className="text-sm font-black text-[#ff851d] uppercase tracking-widest mb-1">{dot.name}</p>
+                            <p className="text-sm font-black text-[#ff851d] mb-1">{dot.name}</p>
                             <p className="text-sm font-bold mb-2">Dolor: <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>{dot.pain}</span></p>
                             <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-500/10">
-                              <span className="text-sm font-black opacity-40 uppercase">Riesgo</span>
+                              <span className="text-sm font-black opacity-40">Riesgo</span>
                               <span className={`text-sm font-black px-2 py-0.5 rounded-full ${dot.color} text-white`}>{dot.risk}</span>
                             </div>
                           </div>

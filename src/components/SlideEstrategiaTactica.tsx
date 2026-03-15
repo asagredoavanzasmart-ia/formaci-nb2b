@@ -23,11 +23,11 @@ export default function SlideEstrategiaTactica({ isDark }: { isDark: boolean }) 
         <div className="w-full md:w-1/2 h-full flex items-center justify-center relative shrink-0 max-w-sm">
           
           {/* HTML Labels to avoid SVG text overlap */}
-          <div className={`absolute top-[15%] left-[10%] font-bold text-sm md:text-base tracking-widest transition-opacity duration-300 ${activeSection === 'tactica' ? 'opacity-100 text-[#ef375c]' : 'opacity-40 text-gray-500'}`}>
-            TÁCTICA
+          <div className={`absolute top-[15%] left-[10%] font-bold text-sm md:text-base transition-opacity duration-300 ${activeSection === 'tactica' ? 'opacity-100 text-[#ef375c]' : 'opacity-40 text-gray-500'}`}>
+            Táctica
           </div>
-          <div className={`absolute bottom-[20%] right-[5%] font-bold text-sm md:text-base tracking-widest transition-opacity duration-300 ${activeSection === 'estrategia' ? 'opacity-100 text-gray-800 dark:text-gray-200' : 'opacity-40 text-gray-500'}`}>
-            ESTRATEGIA
+          <div className={`absolute bottom-[20%] right-[5%] font-bold text-sm md:text-base transition-opacity duration-300 ${activeSection === 'estrategia' ? 'opacity-100 text-gray-800 dark:text-gray-200' : 'opacity-40 text-gray-500'}`}>
+            Estrategia
           </div>
 
           <svg viewBox="0 0 300 350" className="w-full h-full drop-shadow-2xl overflow-visible">

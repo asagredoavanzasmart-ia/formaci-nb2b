@@ -55,11 +55,11 @@ export default function Slide12({ isDark }: { isDark: boolean }) {
             <span className={`text-2xl md:text-3xl font-black tabular-nums transition-colors duration-500 ${status.color}`}>
               {Math.max(0, totalScore)}
             </span>
-            <span className={`text-sm block uppercase font-bold ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Puntaje</span>
+            <span className={`text-sm block font-bold ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Puntaje</span>
           </div>
           <div className="w-px h-10 bg-gray-200 dark:bg-[#3a3a3a]"></div>
           <div>
-            <div className={`flex items-center gap-1.5 font-bold text-sm uppercase tracking-wider ${status.color}`}>
+            <div className={`flex items-center gap-1.5 font-bold text-sm ${status.color}`}>
               <status.icon size={14} /> {status.text}
             </div>
           </div>

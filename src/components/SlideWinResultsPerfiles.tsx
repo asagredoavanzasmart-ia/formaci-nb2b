@@ -157,7 +157,7 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
                 <div className={`p-4 rounded-2xl border flex items-center gap-3 shadow-sm ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'}`}>
                   <div className={`w-1.5 h-10 rounded-full bg-gradient-to-b ${activeData.color}`}></div>
                   <div>
-                    <h4 className={`text-sm font-bold uppercase tracking-wider mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Enfoque Principal</h4>
+                    <h4 className={`text-sm font-bold mb-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Enfoque principal</h4>
                     <p className={`text-sm md:text-base font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{activeData.focus}</p>
                   </div>
                 </div>

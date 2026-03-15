@@ -14,7 +14,7 @@ const metrics: SkillBar[] = [
   { label: 'Velocidad de facturación', landing: 90, expansion: 35 },
 ];
 
-function MetricBar({ metric, isDark, delay }: { metric: SkillBar, isDark: boolean, delay: number }) {
+function MetricBar({ metric, isDark, delay }: { metric: SkillBar, isDark: boolean, delay: number, key?: React.Key }) {
   return (
     <motion.div
       initial={{ opacity: 0, x: -16 }}
@@ -109,7 +109,7 @@ export default function Slide10({ isDark }: { isDark: boolean }) {
           {/* Skill Bars */}
           <div className={`p-4 rounded-2xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-200'}`}>
             <div className="flex items-center gap-4 mb-3">
-              <h4 className={`text-sm font-bold uppercase tracking-wider ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Comparativa de Métricas</h4>
+              <h4 className={`text-sm font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Comparativa de métricas</h4>
               <div className="flex items-center gap-3 ml-auto shrink-0">
                 <div className="flex items-center gap-1">
                   <div className="w-3 h-1.5 rounded-full bg-[#ff851d]"></div>

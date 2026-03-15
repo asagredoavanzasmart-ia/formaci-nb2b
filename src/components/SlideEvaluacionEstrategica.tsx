@@ -190,7 +190,7 @@ function RadarChart({
             y={labelY.toFixed(2)}
             textAnchor="middle"
             dominantBaseline="middle"
-            fontSize="10"
+            fontSize="14"
             fontWeight="600"
             fill={isDark ? '#9ca3af' : '#6b7280'}
           >
@@ -285,7 +285,7 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
               : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-800 border border-gray-200'
           }`}
         >
-          <RefreshCw size={11} /> Reiniciar
+          <RefreshCw size={14} /> Reiniciar
         </button>
       </div>
 
@@ -422,8 +422,8 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
               isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'
             }`}>
               <div className="flex justify-between items-center mb-2">
-                <h3 className={`text-sm font-bold uppercase tracking-wider flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  <BarChart2 size={11} /> Puntaje
+                <h3 className={`text-sm font-bold flex items-center gap-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <BarChart2 size={14} /> Puntaje
                 </h3>
                 <span className="text-sm font-bold" style={{ color: nivel.color }}>
                   {nivel.emoji} {nivel.label}
@@ -485,8 +485,8 @@ export default function SlideEvaluacionEstrategica({ isDark }: { isDark: boolean
           <div className={`flex-1 p-3 rounded-2xl border overflow-hidden ${
             isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-white border-gray-200'
           }`}>
-            <h3 className={`text-sm font-bold uppercase tracking-wider mb-2 flex items-center gap-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
-              <Lightbulb size={11} /> Acciones Prioritarias
+            <h3 className={`text-sm font-bold mb-2 flex items-center gap-1 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+              <Lightbulb size={14} /> Acciones prioritarias
             </h3>
 
             {recomendaciones.length === 0 ? (

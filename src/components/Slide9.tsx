@@ -67,7 +67,7 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
           </div>
           
           <div className="w-16 sm:w-20 flex items-center justify-center">
-            <span className={`text-sm font-bold uppercase tracking-widest px-2 py-1 rounded-full ${isDark ? 'bg-[#333] text-gray-500' : 'bg-gray-100 text-gray-400'}`}>VS</span>
+            <span className={`text-sm font-bold px-2 py-1 rounded-full ${isDark ? 'bg-[#333] text-gray-500' : 'bg-gray-100 text-gray-400'}`}>vs</span>
           </div>
 
           <div className={`p-2 sm:p-3 rounded-2xl flex flex-col items-center justify-center text-center shadow-lg relative overflow-hidden transition-transform hover:scale-105 ${isDark ? 'bg-gradient-to-br from-[#ff851d]/20 to-[#ef375c]/20 text-white border border-[#ff851d]/30' : 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white'}`}>
@@ -104,7 +104,7 @@ export default function Slide9({ isDark }: { isDark: boolean }) {
                   <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-sm transition-all duration-300 group-hover:scale-110 relative z-10 ${isDark ? 'bg-[#1e1e1e] border border-[#333] text-gray-400 group-hover:border-[#ff851d] group-hover:text-[#ff851d]' : 'bg-white border border-gray-100 text-gray-400 group-hover:border-[#ef375c] group-hover:text-[#ef375c]'}`}>
                     <Icon size={12} />
                   </div>
-                  <span className={`text-sm font-bold uppercase tracking-wider mt-0.5 px-1.5 py-0.5 rounded-full transition-colors relative z-10 ${isDark ? 'bg-[#1e1e1e] text-gray-500 group-hover:text-gray-300' : 'bg-white text-gray-400 group-hover:text-gray-600'}`}>
+                  <span className={`text-sm font-bold mt-0.5 px-1.5 py-0.5 rounded-full transition-colors relative z-10 ${isDark ? 'bg-[#1e1e1e] text-gray-500 group-hover:text-gray-300' : 'bg-white text-gray-400 group-hover:text-gray-600'}`}>
                     {row.feature}
                   </span>
                 </div>

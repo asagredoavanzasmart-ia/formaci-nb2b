@@ -215,7 +215,7 @@ const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string |
           <span className={`text-sm font-bold text-center leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
             {item.label}
           </span>
-          <span className={`text-sm mt-2 uppercase tracking-wider font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+          <span className={`text-sm mt-2 font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
             Ver detalle
           </span>
         </div>
@@ -282,7 +282,7 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
                   <h3 className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
                     {role.title}
                   </h3>
-                  <p className={`text-[11px] mt-0.5 leading-tight ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <p className={`text-sm mt-0.5 leading-tight ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
                     {role.subtitle}
                   </p>
                 </div>
@@ -310,7 +310,7 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
                   <h3 className={`text-lg md:text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
                     {activeRole.title}
                   </h3>
-                  <p className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                     {activeRole.subtitle}
                   </p>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Clock, History, Filter, Calculator, Target, Zap, ChevronRight, Info } from 'lucide-react';
 
 export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
@@ -75,7 +75,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
             className="flex items-center gap-2"
           >
             {/* Segmento naranja eliminado */}
-            <span className="text-sm font-black uppercase tracking-[0.3em] text-[#ff851d]">MÉTRICA ESTRATÉGICA</span>
+            <span className="text-sm font-black text-[#ff851d]">Métrica estratégica</span>
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter">
             Ciclo <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Normal</span>
@@ -95,7 +95,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
             <Zap size={24} />
           </div>
           <div>
-            <p className="text-sm font-black opacity-40 uppercase tracking-widest">Fórmula Clave</p>
+            <p className="text-sm font-black opacity-40">Fórmula clave</p>
             <p className="text-sm font-bold">Tiempo Total / # Ventas Reales</p>
           </div>
         </motion.div>
@@ -123,7 +123,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                 {React.createElement(steps[activeStep].icon, { size: 64, strokeWidth: 1.5 })}
               </div>
               <div>
-                <span className={`text-sm font-black uppercase tracking-[0.2em] mb-1 block px-3 py-1 rounded-full border border-current opacity-40 inline-flex`}>
+                <span className={`text-sm font-black mb-1 block px-3 py-1 rounded-full border border-current opacity-40 inline-flex`}>
                   {steps[activeStep].tag}
                 </span>
                 <h3 className="text-3xl md:text-4xl font-black mt-2 leading-tight">
@@ -137,17 +137,17 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                 <div className="space-y-4">
                   {/* Ejemplo Práctico */}
                   <div className={`p-6 rounded-[2rem] border ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-black/5 shadow-xl shadow-gray-100'}`}>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-4 flex items-center gap-2 opacity-50">
-                      <Calculator size={14} className="text-[#ff851d]" /> Ejemplo Práctico
+                    <h4 className="text-sm font-black mb-4 flex items-center gap-2 opacity-50">
+                      <Calculator size={14} className="text-[#ff851d]" /> Ejemplo práctico
                     </h4>
                     <div className="space-y-3">
                       <div className={`p-4 rounded-2xl border ${isDark ? 'bg-white/5 border-white/5' : 'bg-gray-50 border-black/5'}`}>
-                        <p className="text-[11px] opacity-60 mb-1">Si la mayoría de tus ventas tardan entre 3 y 9 meses...</p>
-                        <p className="text-xs font-black text-[#ef375c]">Tu ciclo normal es de ~6 meses.</p>
+                        <p className="text-sm opacity-60 mb-1">Si la mayoría de tus ventas tardan entre 3 y 9 meses...</p>
+                        <p className="text-sm font-black text-[#ef375c]">Tu ciclo normal es de ~6 meses.</p>
                       </div>
                       <div className={`p-4 rounded-2xl border ${isDark ? 'bg-white/5 border-white/5' : 'bg-gray-50 border-black/5'}`}>
-                        <p className="text-[11px] opacity-60 mb-1">Si tu proceso toma entre 10 y 20 semanas...</p>
-                        <p className="text-xs font-black text-[#ff851d]">Tu ciclo normal es de ~15 semanas.</p>
+                        <p className="text-sm opacity-60 mb-1">Si tu proceso toma entre 10 y 20 semanas...</p>
+                        <p className="text-sm font-black text-[#ff851d]">Tu ciclo normal es de ~15 semanas.</p>
                       </div>
                     </div>
                   </div>
@@ -158,10 +158,10 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                       ? 'from-[#ff851d]/10 to-[#ef375c]/10 border-orange-500/20' 
                       : 'from-orange-50 to-red-50 border-orange-100'
                   }`}>
-                    <h4 className="text-[10px] font-black uppercase tracking-widest mb-2 flex items-center gap-2 text-[#ef375c]">
+                    <h4 className="text-sm font-black mb-2 flex items-center gap-2 text-[#ef375c]">
                       <Target size={14} /> ¿Por qué es vital conocer este dato?
                     </h4>
-                    <p className="text-xs leading-relaxed font-medium">
+                    <p className="text-sm leading-relaxed font-medium">
                       Te ayuda a hacer el <strong>rastreo (tracking) correcto en tu embudo</strong>. Sabrás exactamente cuándo mover un objetivo a la siguiente etapa y evitarás confiarte asumiendo que un trato está cerrado meses antes de tiempo, dejándole la puerta abierta a la competencia.
                     </p>
                   </div>
@@ -179,11 +179,11 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
                   
                   <div className="flex flex-wrap gap-3">
                      {activeStep === 2 ? (
-                       <div className="flex items-center gap-2 text-red-500 font-bold text-sm uppercase tracking-wider bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
+                       <div className="flex items-center gap-2 text-red-500 font-bold text-sm bg-red-500/10 px-4 py-2 rounded-full border border-red-500/20">
                          <Target size={14} /> Cuidado con las anomalías
                        </div>
                      ) : (
-                       <div className="flex items-center gap-2 text-[#ff851d] font-bold text-sm uppercase tracking-wider bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
+                       <div className="flex items-center gap-2 text-[#ff851d] font-bold text-sm bg-[#ff851d]/10 px-4 py-2 rounded-full border border-[#ff851d]/20">
                          <ChevronRight size={14} /> Paso crítico para el ROI
                        </div>
                      )}
@@ -231,7 +231,7 @@ export default function SlideCicloVentas({ isDark }: { isDark: boolean }) {
         </div>
         
         <div className="flex justify-between items-center px-4">
-           <p className="text-sm font-black opacity-30 tracking-[0.4em] uppercase">Progreso de Auditoría</p>
+           <p className="text-sm font-black opacity-30">Progreso de auditoría</p>
            <div className="flex gap-4">
               <button 
                 onClick={() => setActiveStep(prev => Math.max(0, prev - 1))}

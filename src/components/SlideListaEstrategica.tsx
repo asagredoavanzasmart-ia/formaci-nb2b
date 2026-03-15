@@ -57,7 +57,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
           <h2 className="text-3xl font-black mb-1 tracking-tight">
             Lista de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Verificación</span>
           </h2>
-          <p className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          <p className={`text-sm font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
             Asegura cada pilar estratégico antes de avanzar en el ciclo de venta.
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
               }`}>
                 {checkedItems[i] && <Check size={16} className="text-white" strokeWidth={4} />}
               </div>
-              <span className={`text-[13px] leading-tight ${checkedItems[i] ? 'font-black' : 'font-bold opacity-70'}`}>
+              <span className={`text-base leading-tight ${checkedItems[i] ? 'font-black' : 'font-bold opacity-70'}`}>
                 {q}
               </span>
             </motion.div>
@@ -136,7 +136,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
               <span className="text-4xl font-black tracking-tighter tabular-nums leading-none">
                 {Math.round(percentage)}<span className="text-lg opacity-50">%</span>
               </span>
-              <span className="text-[10px] font-black uppercase tracking-widest mt-2 px-3 py-1 rounded-full shadow-lg transition-colors border" 
+              <span className="text-sm font-black mt-2 px-3 py-1.5 rounded-full shadow-lg transition-colors border" 
                     style={{ 
                       backgroundColor: statusBg, 
                       color: statusColor,
@@ -153,7 +153,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
           <div className="p-1.5 rounded-lg bg-orange-500/10 text-orange-500 shrink-0">
             <Check size={12} />
           </div>
-          <p className="text-[11px] leading-tight font-medium opacity-60 italic">
+          <p className="text-sm leading-tight font-bold opacity-60 italic">
             "La estrategia no consiste en lo que vas a hacer, sino en lo que estás haciendo hoy para ganar mañana."
           </p>
         </div>

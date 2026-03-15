@@ -321,7 +321,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                             {role.id !== 'vendedor' && (
                               <div className={`flex flex-col gap-2.5 mt-2 pt-3 border-t relative z-10 ${isDark ? 'border-[#4a4a4a]' : 'border-gray-200'}`}>
                                 <div className="flex items-center justify-between">
-                                  <span className="text-sm font-bold uppercase text-[#ff851d]">Influencia</span>
+                                  <span className="text-sm font-bold text-[#ff851d]">Influencia</span>
                                   <div className="flex gap-1">
                                     {[1, 2, 3, 4, 5].map(star => (
                                       <div key={star} className={`w-3 h-1.5 rounded-full ${star <= role.influencia ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c]' : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'}`} />
@@ -330,11 +330,11 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                                 </div>
                                 <div className="flex flex-col gap-1.5 text-sm">
                                   <div className="flex justify-between items-center">
-                                    <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
+                                    <span className={`font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
                                     <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{role.win}</span>
                                   </div>
                                   <div className="flex justify-between items-center">
-                                    <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Resultado:</span>
+                                    <span className={`font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Resultado:</span>
                                     <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{role.resultado}</span>
                                   </div>
                                 </div>
@@ -365,7 +365,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                   >
                     <div className={`flex flex-col items-center justify-center rounded-full shadow-lg shadow-red-500/40 w-16 h-16 bg-gradient-to-br from-[#ef375c] to-[#d92648] text-white border-2 border-white/20 backdrop-blur-sm relative z-10 transition-transform duration-300 ${hoveredRole === 'detractor' ? 'scale-110' : ''}`}>
                       <AlertOctagon size={18} className="mb-0.5" />
-                      <span className="font-bold text-sm text-center uppercase tracking-wider">Detractor</span>
+                      <span className="font-bold text-sm text-center">Detractor</span>
                     </div>
                   </motion.div>
 
@@ -386,7 +386,7 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                         
                         <div className={`flex flex-col gap-2.5 mt-2 pt-3 border-t relative z-10 ${isDark ? 'border-[#4a4a4a]' : 'border-gray-200'}`}>
                           <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold uppercase text-[#ef375c]">Influencia</span>
+                            <span className="text-sm font-bold text-[#ef375c]">Influencia</span>
                             <div className="flex gap-1">
                               {[1, 2, 3, 4, 5].map(star => (
                                 <div key={star} className={`w-3 h-1.5 rounded-full ${star <= 4 ? 'bg-gradient-to-r from-[#ef375c] to-[#d92648]' : isDark ? 'bg-[#4a4a4a]' : 'bg-gray-200'}`} />
@@ -395,12 +395,12 @@ export default function SlideCargosVsRoles({ isDark }: { isDark: boolean }) {
                           </div>
                           <div className="flex flex-col gap-1.5 text-sm">
                             <div className="flex justify-between items-center">
-                              <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
+                              <span className={`font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Win:</span>
                               <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Reducir riesgo de amenaza</span>
                             </div>
                             <div className="flex justify-between items-center">
-                              <span className={`font-bold uppercase ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Resultado:</span>
-                              <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Mantener Status Quo</span>
+                              <span className={`font-bold ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Resultado:</span>
+                              <span className={`font-medium text-right ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Mantener status quo</span>
                             </div>
                           </div>
                         </div>

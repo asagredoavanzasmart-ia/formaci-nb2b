@@ -29,10 +29,10 @@ const IntroCard = ({ title, description, icon: Icon, isDark, delay }: any) => {
           <div className={`p-4 rounded-2xl mb-4 ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
             <Icon size={40} className="text-[#ff851d]" />
           </div>
-          <h3 className={`text-xl sm:text-2xl font-bold text-center uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]`}>
+          <h3 className={`text-xl sm:text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]`}>
             {title}
           </h3>
-          <span className={`mt-6 text-sm uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+          <span className={`mt-6 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
             Descubrir
           </span>
         </div>

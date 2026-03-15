@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize } from 'lucide-react';
-import ComplexVenta from './components/ComplexVenta';
+import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize } from 'lucide-react';
+
 import Slide5 from './components/Slide5';
 import Slide6 from './components/Slide6';
 import Slide7 from './components/Slide7';
@@ -25,13 +25,18 @@ import SlideWinResultsPerfiles from './components/SlideWinResultsPerfiles';
 import SlideCicloVentas from './components/SlideCicloVentas';
 import SlideGestionarCompradorTecnico from './components/SlideGestionarCompradorTecnico';
 import SlideListaEstrategica from './components/SlideListaEstrategica';
+import SlideConstructorCRM from './components/SlideConstructorCRM';
+import SlideVentaSimpleVsCompleja from './components/SlideVentaSimpleVsCompleja';
+import SlideOfferTool from './components/SlideOfferTool';
+import SlideOfferIntro from './components/SlideOfferIntro';
+import SlideFlowConstructor from './components/SlideFlowConstructor';
+import { CompleteICP } from './types';
 
 
-// Orden final solicitado por el usuario
+
 const initialSlides = [
   { id: 'slide-0', title: 'Inicio' },
-  { id: 'slide-simple', title: 'Venta Simple' },
-  { id: 'slide-compleja', title: 'Venta Compleja' },
+  { id: 'slide-simple-vs-compleja', title: 'Evolución de la Venta' },
   { id: 'slide-intro', title: 'Introducción' },
   { id: 'slide-cargos-roles', title: 'Cargos vs Roles' },
   { id: 'slide-estrategia', title: 'Estrategia vs Táctica' },
@@ -39,6 +44,8 @@ const initialSlides = [
   { id: 'slide-pilares', title: 'Pilares de la Estrategia' },
   { id: 'slide-icp', title: 'Perfil del Cliente Ideal (ICP)' },
   { id: 'slide-icp-tool', title: 'Herramienta ICP' },
+  { id: 'slide-offer-intro', title: 'Creación de la Oferta' },
+  { id: 'slide-offer-tool', title: 'Herramienta de Oferta' },
   { id: 'slide-roles', title: 'Roles de Compra' },
   { id: 'slide-ident-comprador', title: 'Identificar Comprador' },
   { id: 'slide-gest-tecnico', title: 'Gestionar Comprador Técnico' },
@@ -49,9 +56,10 @@ const initialSlides = [
   { id: 'slide-modos', title: 'Modos de Respuesta' },
   { id: 'slide-banderas', title: 'Banderas Rojas' },
   { id: 'slide-crm', title: 'Pipeline CRM' },
+  { id: 'slide-constructor-crm', title: 'Constructor de Proceso CRM' },
   { id: 'slide-ciclo', title: 'Ciclo Normal de Ventas' },
   { id: 'slide-lista-estrategica', title: 'Lista de Verificación Estratégica' },
-
+  { id: 'slide-flow-constructor', title: 'Constructor de flujo' },
   { id: 'slide-aterrizaje', title: 'Aterrizaje y Expansión' }
 ];
 
@@ -59,6 +67,7 @@ export default function App() {
   const [isDark, setIsDark] = useState(false);
   const [slidesOrder, setSlidesOrder] = useState(initialSlides);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [createdIcps, setCreatedIcps] = useState<CompleteICP[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [windowSize, setWindowSize] = useState({ 
@@ -149,8 +158,8 @@ export default function App() {
           maxHeight: '80vh',
         }}
       >
-        <div className="p-3 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
-          <h2 className="font-bold text-xs uppercase tracking-widest opacity-50 px-2 pb-0.5">Contenido</h2>
+        <div className="p-4 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
+          <h2 className="font-black text-sm opacity-50 px-2 pb-0.5">Contenido</h2>
           <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
             <X size={14} />
           </button>
@@ -169,10 +178,10 @@ export default function App() {
                     : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
                 }`}
               >
-                <span className={`text-[10px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d]' : 'opacity-30'}`}>
+                <span className={`text-sm w-6 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-30 font-bold'}`}>
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <span className="text-[11px] truncate">{slide.title}</span>
+                <span className="text-sm font-bold truncate">{slide.title}</span>
                 
                 {currentSlideIndex === index && (
                   <motion.div 
@@ -216,7 +225,14 @@ export default function App() {
               Diseñamos sobre 1280x720 (16:9) y escalamos para llenar el contenedor.
             */}
             <div 
-              style={{
+              style={currentSlideId === 'slide-flow-constructor' ? {
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                pointerEvents: 'auto'
+              } : {
                 width: '1280px',
                 height: '720px',
                 position: 'absolute',
@@ -247,59 +263,22 @@ export default function App() {
                     <div className="h-1.5 w-32 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full"></div>
                   </div>
                 )}
-                {currentSlideId === 'slide-simple' && (
-                  <div className="w-full h-full flex items-center justify-center p-12">
-                    <div className={`w-full h-full flex flex-col items-center justify-center rounded-[3rem] border-2 relative overflow-hidden ${isDark ? 'bg-[#1e1e1e] border-[#2a2a2a]' : 'bg-white border-gray-100 shadow-2xl'}`}>
-                      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#ff851d]/5 to-transparent blur-[120px] pointer-events-none" />
-                      <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-[#ef375c]/5 to-transparent blur-[120px] pointer-events-none" />
-                      
-                      <h2 className="text-5xl md:text-6xl font-black mb-20 text-center tracking-tighter">
-                        Venta <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Simple</span>
-                      </h2>
-                      
-                      <div className="flex items-center justify-center w-full max-w-4xl px-10">
-                        <motion.div 
-                          initial={{ x: -50, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          className={`flex flex-col items-center justify-center rounded-3xl shadow-xl w-48 h-48 shrink-0 relative z-10 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-white border border-gray-100'}`}
-                        >
-                          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ff851d]/10 to-[#ff851d]/20 flex items-center justify-center mb-3">
-                            <User size={48} className="text-[#ff851d]" />
-                          </div>
-                          <span className="font-black text-lg uppercase tracking-widest opacity-80">Vendedor</span>
-                        </motion.div>
-
-                        <div className="flex-1 mx-10 relative">
-                          <div className="h-4 w-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-lg shadow-red-500/20" />
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 border-t-8 border-r-8 border-[#ef375c] rotate-45 rounded-sm" />
-                          <div className="absolute left-1/2 -translate-x-1/2 -top-12 flex flex-col items-center">
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-40 mb-2">Transacción Directa</span>
-                            <div className="h-1 w-12 bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full" />
-                          </div>
-                        </div>
-
-                        <motion.div 
-                          initial={{ x: 50, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          className={`flex flex-col items-center justify-center rounded-3xl shadow-xl w-48 h-48 shrink-0 relative z-10 ${isDark ? 'bg-[#2a2a2a] border border-[#3a3a3a]' : 'bg-white border border-gray-100'}`}
-                        >
-                          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ef375c]/10 to-[#ef375c]/20 flex items-center justify-center mb-3">
-                            <User size={48} className="text-[#ef375c]" />
-                          </div>
-                          <span className="font-black text-lg uppercase tracking-widest opacity-80">Comprador</span>
-                        </motion.div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-                {currentSlideId === 'slide-compleja' && <ComplexVenta isDark={isDark} />}
+                {currentSlideId === 'slide-simple-vs-compleja' && <SlideVentaSimpleVsCompleja isDark={isDark} />}
                 {currentSlideId === 'slide-intro' && <SlideIntroduccion isDark={isDark} />}
                 {currentSlideId === 'slide-cargos-roles' && <SlideCargosVsRoles isDark={isDark} />}
                 {currentSlideId === 'slide-estrategia' && <SlideEstrategiaTactica isDark={isDark} />}
                 {currentSlideId === 'slide-comp-vendedores' && <Slide9 isDark={isDark} />}
                 {currentSlideId === 'slide-pilares' && <SlidePilaresEstrategia isDark={isDark} />}
                 {currentSlideId === 'slide-icp' && <SlideICPContent isDark={isDark} />}
-                {currentSlideId === 'slide-icp-tool' && <SlideICPTool isDark={isDark} />}
+                {currentSlideId === 'slide-icp-tool' && (
+                  <SlideICPTool 
+                    isDark={isDark} 
+                    onIcpCreated={(icp) => setCreatedIcps(prev => [...prev, icp])}
+                    savedIcps={createdIcps}
+                  />
+                )}
+                {currentSlideId === 'slide-offer-intro' && <SlideOfferIntro isDark={isDark} />}
+                {currentSlideId === 'slide-offer-tool' && <SlideOfferTool isDark={isDark} icps={createdIcps} />}
                 {currentSlideId === 'slide-roles' && <SlideRolesCompra isDark={isDark} />}
                 {currentSlideId === 'slide-ident-comprador' && <SlideIdentificarComprador isDark={isDark} />}
                 {currentSlideId === 'slide-gest-tecnico' && <SlideGestionarCompradorTecnico isDark={isDark} />}
@@ -310,8 +289,10 @@ export default function App() {
                 {currentSlideId === 'slide-modos' && <Slide6 isDark={isDark} />}
                 {currentSlideId === 'slide-banderas' && <Slide8 isDark={isDark} />}
                 {currentSlideId === 'slide-crm' && <SlideCRMPipeline isDark={isDark} />}
+                {currentSlideId === 'slide-constructor-crm' && <SlideConstructorCRM isDark={isDark} />}
                 {currentSlideId === 'slide-ciclo' && <SlideCicloVentas isDark={isDark} />}
                 {currentSlideId === 'slide-lista-estrategica' && <SlideListaEstrategica isDark={isDark} />}
+                {currentSlideId === 'slide-flow-constructor' && <SlideFlowConstructor isDark={isDark} />}
                 {currentSlideId === 'slide-aterrizaje' && <Slide10 isDark={isDark} />}
 
                 </motion.div>

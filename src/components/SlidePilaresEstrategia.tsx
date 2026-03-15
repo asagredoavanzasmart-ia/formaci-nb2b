@@ -3,25 +3,25 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Users, Flag, Activity, Trophy, Clock, ChevronRight, Target } from 'lucide-react';
 
 const pillars = [
+  {
+    id: 'icp_def',
+    title: 'I. ICP + OFERTA',
+    subtitle: 'Ideal Customer Profile & Offer',
+    icon: Target,
+    description: 'Identificar con precisión a qué empresas debemos dedicar nuestro esfuerzo estratégico y diseñar una propuesta de valor irresistible.',
+    bullets: ['Definir criterios de segmentación', 'Identificar triggers de compra', 'Alinear solución con el negocio', 'Construir oferta de alto impacto']
+  },
   { 
     id: 'influencias', 
-    title: 'Influencias de Compra', 
+    title: 'II. Influencias de Compra', 
     subtitle: 'Buying Influences',
     icon: Users, 
     description: 'Consiste en identificar y cubrir a todas las personas que pueden aprobar o vetar la venta. En cada venta compleja existen cuatro roles que deben ser convencidos:',
     bullets: ['Comprador Económico (libera fondos)', 'Compradores Usuarios (juzgan impacto)', 'Compradores Técnicos (filtran opciones)', 'Coach (te guía internamente)']
   },
   { 
-    id: 'banderas', 
-    title: 'Banderas Rojas y Fortalezas', 
-    subtitle: 'Red Flags / Leverage',
-    icon: Flag, 
-    description: 'Es un sistema de alerta temprana. Consiste en identificar cualquier área de incertidumbre, peligro o falta de información en tu venta (Bandera Roja).',
-    bullets: ['Identificar áreas de peligro', 'Reconocer falta de información', 'Utilizar puntos fuertes estratégicamente', 'Eliminar o reducir riesgos']
-  },
-  { 
     id: 'modos', 
-    title: 'Modos de Respuesta', 
+    title: 'III. Modos de Respuesta', 
     subtitle: 'Response Modes',
     icon: Activity, 
     description: 'Evaluar la receptividad de cada comprador. Las personas solo compran cuando perciben una discrepancia entre su realidad actual y lo que desean.',
@@ -29,27 +29,27 @@ const pillars = [
   },
   {
     id: 'ganancias',
-    title: 'Ganancias-Resultados',
+    title: 'IV. Ganancias-Resultados',
     subtitle: 'Win-Results',
     icon: Trophy,
     description: 'Regla fundamental: "Las empresas obtienen Resultados, pero solo las personas obtienen Ganancias".',
     bullets: ['Entregar impacto medible (Resultado)', 'Satisfacer el ego o seguridad (Ganancia)', 'Alinear objetivos corporativos y personales', 'Crear valor a dos niveles']
   },
+  { 
+    id: 'banderas', 
+    title: 'V. Red Flag', 
+    subtitle: 'Banderas Rojas y Fortalezas',
+    icon: Flag, 
+    description: 'Es un sistema de alerta temprana. Consiste en identificar cualquier área de incertidumbre, peligro o falta de información en tu venta (Bandera Roja).',
+    bullets: ['Identificar áreas de peligro', 'Reconocer falta de información', 'Utilizar puntos fuertes estratégicamente', 'Eliminar o reducir riesgos']
+  },
   {
     id: 'proceso',
-    title: 'El Proceso Comercial',
+    title: 'VI. El Proceso Comercial',
     subtitle: 'Sales Process',
     icon: Clock,
     description: 'La gestión eficiente de tus recursos y tiempo a lo largo de todo el ciclo de vida de la oportunidad.',
     bullets: ['Gestionar el tiempo', 'Priorizar objetivos', 'Clasificar oportunidades', 'Mantenerte vigente durante el ciclo']
-  },
-  {
-    id: 'icp_def',
-    title: 'Definición del ICP',
-    subtitle: 'Ideal Customer Profile',
-    icon: Target,
-    description: 'Identificar con precisión a qué empresas debemos dedicar nuestro esfuerzo estratégico para maximizar la tasa de cierre.',
-    bullets: ['Definir criterios de segmentación', 'Identificar triggers de compra', 'Mapear el ajuste solución-negocio', 'Priorizar cuentas de alto valor']
   }
 ];
 

@@ -21,7 +21,7 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
         {/* Top Graphic: The Discrepancy Model */}
         <div className={`flex-[2] rounded-2xl border-2 flex flex-col items-center justify-center relative overflow-hidden ${isDark ? 'border-[#3a3a3a] bg-[#252525]' : 'border-gray-200 bg-gray-50'}`}>
           <div className="absolute top-4 left-0 w-full text-center z-10">
-            <h3 className="text-2xl font-bold tracking-widest uppercase opacity-80 bg-black/80 text-white inline-block px-8 py-1">PROBLEMAS</h3>
+            <h3 className="text-2xl font-bold opacity-80 bg-black/80 text-white inline-block px-8 py-1">Problemas</h3>
           </div>
 
           <div className="relative w-full max-w-3xl h-full flex items-center justify-center mt-4">
@@ -67,17 +67,17 @@ export default function Slide11({ isDark }: { isDark: boolean }) {
                 <motion.line x1="250" y1="100" x2="500" y2="100" stroke={isDark ? '#9ca3af' : '#4b5563'} strokeWidth="2" strokeDasharray="6,6" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.5 }} />
                 <motion.polygon points="500,95 510,100 500,105" fill={isDark ? '#9ca3af' : '#4b5563'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} />
                 
-                <motion.text x="250" y="90" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>CAUSA X</motion.text>
-                <motion.text x="520" y="105" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>RESULTADOS deseados</motion.text>
+                <motion.text x="250" y="90" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>Causa X</motion.text>
+                <motion.text x="520" y="105" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}>Resultados deseados</motion.text>
 
                 {/* Vertical Discrepancy Line */}
                 <motion.line x1="500" y1="120" x2="500" y2="220" stroke={isDark ? '#9ca3af' : '#4b5563'} strokeWidth="2" strokeDasharray="6,6" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 1.8 }} />
                 <motion.polygon points="495,220 500,230 505,220" fill={isDark ? '#9ca3af' : '#4b5563'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }} />
                 
-                <motion.text x="520" y="175" fill={isDark ? '#ef375c' : '#ef375c'} fontSize="16" fontWeight="bold" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 2.2 }}>DISCREPANCIA</motion.text>
+                <motion.text x="520" y="175" fill={isDark ? '#ef375c' : '#ef375c'} fontSize="16" fontWeight="bold" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 2.2 }}>Discrepancia</motion.text>
 
                 {/* REALITY today */}
-                <motion.text x="520" y="240" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }}>REALIDAD actual</motion.text>
+                <motion.text x="520" y="240" fill={isDark ? '#d1d5db' : '#1f2937'} fontSize="16" fontWeight="bold" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2.8 }}>Realidad actual</motion.text>
                 
                 {/* Diagonal line from Cause X to Reality */}
                 <motion.line x1="300" y1="100" x2="480" y2="230" stroke={isDark ? '#6b7280' : '#9ca3af'} strokeWidth="3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 3 }} />
