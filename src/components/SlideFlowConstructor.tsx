@@ -788,12 +788,6 @@ function FlowContent({ isDark }: { isDark: boolean }) {
               {/* Opción de Grupo */}
               <div
                 draggable
-                onDragStart={(e) => e.dataTransfer.setData('application/reactflow', JSON.stringify({ name: 'Contenedor', type: 'group' }))}
-                onClick={() => {
-                  const color = PASTEL_COLORS[0];
-                  setNodes((nds) => nds.concat({
-                    id: `group-${Date.now()}`,
-                    type: 'groupNode',
                 onDragStart={(e) => e.dataTransfer.setData('application/reactflow', JSON.stringify({ type: 'group' }))}
                 onClick={() => onAddNode({ type: 'group' })}
                 className={`flex items-center gap-3 p-3 rounded-2xl transition-all cursor-grab active:cursor-grabbing ${isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50'}`}
