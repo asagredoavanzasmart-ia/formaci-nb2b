@@ -22,7 +22,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText } from 'lucide-react';
+import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText, Trash2 } from 'lucide-react';
 import { INITIAL_NODES, INITIAL_EDGES } from './initialFlowData';
 import { toJpeg } from 'html-to-image';
 import logoHorizontalDark from '../Logos/logo horizontal dark.png';
@@ -558,17 +558,17 @@ const CustomEdge = ({
   );
 };
 
-const nodeTypes = { 
-  custom: CustomNode,
-  groupNode: CustomGroupNode,
-  budgetNode: BudgetNode 
-};
-const edgeTypes = { custom: CustomEdge };
-
-
-
-
 function FlowContent({ isDark }: { isDark: boolean }) {
+  const nodeTypes = React.useMemo(() => ({ 
+    custom: CustomNode,
+    groupNode: CustomGroupNode,
+    budgetNode: BudgetNode 
+  }), []);
+
+  const edgeTypes = React.useMemo(() => ({ 
+    custom: CustomEdge 
+  }), []);
+
   const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES as any);
   const [edges, setEdges, onEdgesChange] = useEdgesState(INITIAL_EDGES as any);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -577,28 +577,33 @@ function FlowContent({ isDark }: { isDark: boolean }) {
 
   // --- CARGA INICIAL ---
   React.useEffect(() => {
-    const savedNodes = localStorage.getItem('flow-constructor-nodes-v4');
-    const savedEdges = localStorage.getItem('flow-constructor-edges-v4');
-    
-    if (savedNodes && savedEdges) {
-      try {
-        const parsedNodes = JSON.parse(savedNodes);
-        const parsedEdges = JSON.parse(savedEdges);
-        if (parsedNodes.length > 5) {
-          setNodes(parsedNodes);
-          setEdges(parsedEdges);
-          setTimeout(() => fitView({ padding: 100 }), 50);
-          return;
+    const loadData = () => {
+      const savedNodes = localStorage.getItem('flow-constructor-nodes-v4');
+      const savedEdges = localStorage.getItem('flow-constructor-edges-v4');
+      
+      if (savedNodes && savedEdges) {
+        try {
+          const parsedNodes = JSON.parse(savedNodes);
+          const parsedEdges = JSON.parse(savedEdges);
+          if (parsedNodes && Array.isArray(parsedNodes) && parsedNodes.length > 5) {
+            setNodes(parsedNodes);
+            setEdges(parsedEdges);
+            setTimeout(() => fitView({ padding: 100 }), 100);
+            return;
+          }
+        } catch (e) {
+          console.error("Error loading saved flow:", e);
+          localStorage.removeItem('flow-constructor-nodes-v4');
+          localStorage.removeItem('flow-constructor-edges-v4');
         }
-      } catch (e) {
-        console.error("Error loading saved flow:", e);
       }
-    }
-    
-    // Si no hay datos guardados o están vacíos, usar iniciales
-    setNodes(INITIAL_NODES as any);
-    setEdges(INITIAL_EDGES as any);
-    setTimeout(() => fitView({ padding: 100 }), 100);
+      
+      setNodes(INITIAL_NODES as any);
+      setEdges(INITIAL_EDGES as any);
+      setTimeout(() => fitView({ padding: 100 }), 200);
+    };
+
+    loadData();
   }, [setNodes, setEdges, fitView]);
 
   const onConnect = useCallback(

@@ -192,20 +192,25 @@ export default function App() {
                     isH1 
                       ? 'mt-6 mb-1' 
                       : 'ml-4'
-                  } ${
-                    currentSlideIndex === index 
-                      ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/10 to-transparent' 
-                      : isH1
-                        ? (isDark ? 'text-white' : 'text-gray-950 font-black')
-                        : (isDark ? 'text-white/60 hover:text-white' : 'text-gray-800 hover:text-[#ef375c] hover:bg-gray-50')
                   }`}
+                  style={{
+                    backgroundColor: currentSlideIndex === index ? (isDark ? 'rgba(255,133,29,0.1)' : '#fff7ed') : 'transparent',
+                    borderRadius: '12px',
+                    marginRight: '12px'
+                  }}
                 >
                   {!isH1 && (
-                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : (isDark ? 'text-white/30' : 'text-gray-400 font-bold')}`}>
+                    <span 
+                      className={`text-[11px] w-5 shrink-0 tabular-nums font-bold`}
+                      style={{ color: currentSlideIndex === index ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.3)' : '#666') }}
+                    >
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   )}
-                  <span className={`${isH1 ? 'text-xs uppercase tracking-wider' : 'text-sm'} font-bold truncate`}>
+                  <span 
+                    className={`${isH1 ? 'text-xs uppercase tracking-wider' : 'text-sm'} font-bold truncate`}
+                    style={{ color: currentSlideIndex === index ? '#ef375c' : isH1 ? (isDark ? '#fff' : '#000') : (isDark ? '#aaa' : '#333') }}
+                  >
                     {slide.title}
                   </span>
                   
