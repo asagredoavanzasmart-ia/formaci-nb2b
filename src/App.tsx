@@ -194,14 +194,14 @@ export default function App() {
                       : 'ml-4'
                   } ${
                     currentSlideIndex === index 
-                      ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/5 to-transparent' 
+                      ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/10 to-transparent' 
                       : isH1
-                        ? 'text-gray-900 dark:text-white font-black'
-                        : 'text-gray-900 dark:text-white/60 hover:text-[#ef375c] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
+                        ? (isDark ? 'text-white' : 'text-gray-950 font-black')
+                        : (isDark ? 'text-white/60 hover:text-white' : 'text-gray-800 hover:text-[#ef375c] hover:bg-gray-50')
                   }`}
                 >
                   {!isH1 && (
-                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-60 dark:opacity-30 font-bold'}`}>
+                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : (isDark ? 'text-white/30' : 'text-gray-400 font-bold')}`}>
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   )}
