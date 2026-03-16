@@ -209,12 +209,12 @@ const CustomNode = ({ data, id }: any) => {
             onBlur={handleBlur}
             onKeyDown={(e) => e.key === 'Enter' && handleBlur()}
             autoFocus
-            className={`w-full text-[12px] font-black tracking-tight text-center bg-transparent border-b-2 border-orange-500 outline-none text-gray-900 dark:text-white`}
+            className={`w-full text-[12px] font-black tracking-tight text-center bg-transparent border-b-2 border-orange-500 outline-none ${isDark ? 'text-white' : 'text-gray-900'}`}
           />
         ) : (
           <span 
             onDoubleClick={() => setIsEditing(true)}
-            className={`text-[12px] font-black tracking-tight leading-tight block cursor-text select-none text-gray-900 dark:text-white`}
+            className={`text-[12px] font-black tracking-tight leading-tight block cursor-text select-none ${isDark ? 'text-white' : 'text-gray-900'}`}
           >
             {label}
           </span>
@@ -587,7 +587,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         if (parsedNodes.length > 5) {
           setNodes(parsedNodes);
           setEdges(parsedEdges);
-          setTimeout(() => fitView({ padding: 100, duration: 1000 }), 100);
+          setTimeout(() => fitView({ padding: 100 }), 50);
           return;
         }
       } catch (e) {
@@ -598,7 +598,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
     // Si no hay datos guardados o están vacíos, usar iniciales
     setNodes(INITIAL_NODES as any);
     setEdges(INITIAL_EDGES as any);
-    setTimeout(() => fitView({ padding: 100, duration: 1000 }), 500);
+    setTimeout(() => fitView({ padding: 100 }), 100);
   }, [setNodes, setEdges, fitView]);
 
   const onConnect = useCallback(
@@ -865,14 +865,14 @@ function FlowContent({ isDark }: { isDark: boolean }) {
 
         {/* Dashboard de Presupuesto Mensual */}
       <div className={`absolute top-8 left-8 z-[200] backdrop-blur-md p-4 rounded-2xl shadow-xl border flex flex-col gap-1 min-w-[200px] ${isDark ? 'bg-black/80 border-white/10' : 'bg-white/95 border-gray-100'}`}>
-        <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Inversión Estimada</span>
+        <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-800'}`}>Inversión Estimada</span>
         <div className="flex flex-col">
-          <span className={`text-2xl font-black tabular-nums ${isDark ? 'text-white' : 'text-slate-800'}`}>
+          <span className={`text-2xl font-black tabular-nums ${isDark ? 'text-white' : 'text-slate-900'}`}>
             ${(nodes.filter(n => n.type === 'budgetNode')
                  .reduce((acc, n) => acc + (parseInt(n.data.label) || 0), 0) * 30.4)
                  .toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
           </span>
-          <span className={`text-[11px] font-bold mt-[-2px] ${isDark ? 'text-white/60' : 'text-slate-500'}`}>
+          <span className={`text-[11px] font-bold mt-[-2px] ${isDark ? 'text-white/60' : 'text-slate-700'}`}>
             AL MES <span className="opacity-60">+ IVA</span>
           </span>
         </div>
@@ -1006,7 +1006,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
                   className={`flex flex-col items-center gap-1 cursor-grab active:cursor-grabbing p-2 rounded-xl transition-all ${isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50'}`}
                 >
                   <img src={getIconUrl(icon.file)} alt="" className="w-10 h-10 object-contain" />
-                  <span className="text-[9px] font-bold opacity-60 text-center leading-none">{icon.name}</span>
+                  <span className={`text-[9px] font-black text-center leading-none ${isDark ? 'text-white/60' : 'text-gray-900 !text-gray-900'}`}>{icon.name}</span>
                 </div>
               ))}
             </div>

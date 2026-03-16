@@ -197,11 +197,11 @@ export default function App() {
                       ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/5 to-transparent' 
                       : isH1
                         ? 'text-gray-900 dark:text-white font-black'
-                        : 'text-gray-700 hover:text-gray-900 dark:text-white/60 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
+                        : 'text-gray-900 dark:text-white/60 hover:text-[#ef375c] dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
                   }`}
                 >
                   {!isH1 && (
-                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-30 font-bold'}`}>
+                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-60 dark:opacity-30 font-bold'}`}>
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   )}
@@ -291,7 +291,7 @@ export default function App() {
                       className={`p-16 rounded-[4rem] border-4 ${isDark ? 'bg-[#111111] border-[#2a2a2a] shadow-2xl' : 'bg-white border-gray-100 shadow-xl'}`}
                     >
                       <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter flex flex-wrap justify-center gap-x-4">
-                        <span className={isDark ? 'text-white/50' : 'text-gray-500'}>
+                        <span className={isDark ? 'text-white/50' : 'text-gray-900'}>
                           {slidesOrder[currentSlideIndex].title.split(' ').slice(0, Math.ceil(slidesOrder[currentSlideIndex].title.split(' ').length / 2)).join(' ')}
                         </span>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
@@ -397,7 +397,7 @@ export default function App() {
                 ? 'opacity-0 pointer-events-none' 
                 : isDark 
                   ? 'bg-[#181818] text-white border border-[#4a4a4a] hover:bg-[#3a3a3a] shadow-lg' 
-                  : 'bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 shadow-md'
+                  : 'bg-white text-gray-900 border border-gray-200 hover:bg-gray-50 shadow-md font-bold'
             }`}
           >
             <ChevronLeft size={18} className="transition-transform group-hover:-translate-x-1" />
