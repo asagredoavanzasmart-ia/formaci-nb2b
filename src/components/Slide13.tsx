@@ -80,7 +80,7 @@ export default function Slide13({ isDark }: { isDark: boolean }) {
           transition={{ duration: 0.6 }}
           className="text-center mb-4 md:mb-6 shrink-0"
         >
-          <h2 className="text-2xl md:text-4xl font-bold mb-2">
+          <h2 className={`text-2xl md:text-4xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
             La Filosofía <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Ganar-Ganar</span>
           </h2>
           <p className={`text-sm md:text-base max-w-4xl mx-auto font-medium leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>

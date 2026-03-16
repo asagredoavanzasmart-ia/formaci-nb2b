@@ -47,7 +47,7 @@ export default function SlideListaEstrategica({ isDark }: SlideProps) {
   }
 
   return (
-    <div className={`w-full h-full flex flex-col md:flex-row items-center p-6 gap-6 overflow-hidden relative ${isDark ? 'bg-[#1e1e1e] text-white' : 'bg-white text-gray-800'}`}>
+    <div className={`w-full h-full flex flex-col md:flex-row items-center p-6 gap-6 overflow-hidden relative ${isDark ? 'bg-[#111111] text-white' : 'bg-white text-gray-800'}`}>
       {/* Fondo decorativo sutil */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#ef375c]/5 to-transparent pointer-events-none" />
       

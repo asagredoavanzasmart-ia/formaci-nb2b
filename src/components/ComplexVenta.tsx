@@ -45,7 +45,7 @@ export default function ComplexVenta({ isDark }: { isDark: boolean }) {
   };
 
   return (
-    <div className={`p-6 sm:p-10 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
+    <div className={`p-6 sm:p-10 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#111111] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="flex justify-between items-start mb-4 z-30 relative shrink-0">

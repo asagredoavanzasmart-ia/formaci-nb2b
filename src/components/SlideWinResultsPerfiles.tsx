@@ -92,12 +92,12 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
   const activeData = profiles.find(p => p.id === activeProfile);
 
   return (
-    <div className={`w-full h-full flex flex-col p-6 md:p-8 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
+    <div className={`w-full h-full flex flex-col p-6 md:p-8 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#111111] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       {/* Header */}
       <div className="shrink-0 mb-6 z-10">
-        <h2 className="text-2xl md:text-4xl font-bold mb-2">
+        <h2 className={`text-2xl md:text-4xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Resultados y Ganancias <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">por Perfil</span>
         </h2>
         <p className={`text-sm md:text-base max-w-4xl leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -124,10 +124,10 @@ export default function SlideWinResultsPerfiles({ isDark }: { isDark: boolean })
                 <profile.icon size={20} />
               </div>
               <div>
-                <h3 className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                <h3 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
                   {profile.title}
                 </h3>
-                <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                <p className={`text-sm mt-0.5 ${isDark ? 'text-white/40' : 'text-gray-400'}`}>
                   Ver detalles <ArrowRight size={10} className="inline" />
                 </p>
               </div>

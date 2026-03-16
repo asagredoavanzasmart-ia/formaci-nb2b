@@ -258,8 +258,8 @@ export default function SlideVentaSimpleVsCompleja({ isDark }: { isDark: boolean
                 exit={{ opacity: 0, y: -5 }}
                 className="flex flex-col items-center"
               >
-                {React.createElement(isComplex ? currentComplex.sellerIcon : User, { size: 28, className: `mb-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}` })}
-                <span className="font-ubuntu font-bold text-center px-4 leading-tight">
+                {React.createElement(isComplex ? currentComplex.sellerIcon : User, { size: 28, className: `mb-2 ${isDark ? 'text-white/80' : 'text-gray-600'}` })}
+                <span className={`font-ubuntu font-bold text-center px-4 leading-tight ${isDark ? 'text-white' : 'text-gray-900'}`}>
                   {isComplex ? currentComplex.sellerLabel : 'Vendedor'}
                 </span>
               </motion.div>
@@ -280,8 +280,8 @@ export default function SlideVentaSimpleVsCompleja({ isDark }: { isDark: boolean
               style={{ left: `${node.x}%`, top: `${node.y}%` }}
             >
               <div className={`flex flex-col items-center justify-center rounded-full shadow-xl ${node.isTarget ? 'w-28 h-28 sm:w-32 sm:h-32 text-white border-2 border-white/20 shadow-[#ef375c]/40 bg-gradient-to-br from-[#ff851d] to-[#ef375c]' : `w-24 h-24 sm:w-28 sm:h-28 text-sm ${isDark ? 'bg-gradient-to-br from-[#3a3a3a] to-[#2a2a2a] shadow-black/60 border border-[#4a4a4a]' : 'bg-gradient-to-br from-gray-50 to-gray-200 shadow-gray-300/60 border border-gray-300'}`}`}>
-                <node.icon size={node.isTarget ? 28 : 20} className={`mb-1 ${node.isTarget ? 'text-white' : (isDark ? 'text-gray-300' : 'text-gray-600')}`} />
-                <span className={`font-ubuntu font-bold text-center px-2 leading-tight ${node.isTarget ? 'text-white' : ''}`}>
+                <node.icon size={node.isTarget ? 28 : 20} className={`mb-1 ${node.isTarget ? 'text-white' : (isDark ? 'text-white/80' : 'text-gray-600')}`} />
+                <span className={`font-ubuntu font-bold text-center px-2 leading-tight ${node.isTarget ? 'text-white' : (isDark ? 'text-white' : 'text-gray-900')}`}>
                   {node.label}
                 </span>
               </div>

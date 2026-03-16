@@ -3,49 +3,41 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Users, Flag, Activity, Trophy, Clock, ChevronRight, Target } from 'lucide-react';
 
 const pillars = [
+  { 
+    id: 'influencias', 
+    title: 'I. Roles de Influencia', 
+    subtitle: 'Buying Influences',
+    icon: Users, 
+    description: 'Consiste en identificar y cubrir a todas las personas que pueden aprobar o vetar la venta. En cada venta compleja existen cuatro roles que deben ser convencidos:',
+    bullets: ['Comprador Económico (libera fondos)', 'Compradores Usuarios (juzgan impacto)', 'Compradores Técnicos (filtran opciones)', 'Coach (te guía internamente)']
+  },
   {
     id: 'icp_def',
-    title: 'I. ICP + OFERTA',
+    title: 'II. ICP + OFERTA',
     subtitle: 'Ideal Customer Profile & Offer',
     icon: Target,
     description: 'Identificar con precisión a qué empresas debemos dedicar nuestro esfuerzo estratégico y diseñar una propuesta de valor irresistible.',
     bullets: ['Definir criterios de segmentación', 'Identificar triggers de compra', 'Alinear solución con el negocio', 'Construir oferta de alto impacto']
   },
   { 
-    id: 'influencias', 
-    title: 'II. Influencias de Compra', 
-    subtitle: 'Buying Influences',
-    icon: Users, 
-    description: 'Consiste en identificar y cubrir a todas las personas que pueden aprobar o vetar la venta. En cada venta compleja existen cuatro roles que deben ser convencidos:',
-    bullets: ['Comprador Económico (libera fondos)', 'Compradores Usuarios (juzgan impacto)', 'Compradores Técnicos (filtran opciones)', 'Coach (te guía internamente)']
+    id: 'banderas', 
+    title: 'III. Red Flags y Problemas', 
+    subtitle: 'Banderas Rojas y Fortalezas',
+    icon: Flag, 
+    description: 'Es un sistema de alerta temprana. Consiste en identificar cualquier área de incertidumbre, peligro o falta de información en tu venta (Bandera Roja).',
+    bullets: ['Identificar áreas de peligro', 'Reconocer falta de información', 'Utilizar puntos fuertes estratégicamente', 'Eliminar o reducir riesgos']
   },
   { 
     id: 'modos', 
-    title: 'III. Modos de Respuesta', 
+    title: 'IV. Modos de Respuesta', 
     subtitle: 'Response Modes',
     icon: Activity, 
     description: 'Evaluar la receptividad de cada comprador. Las personas solo compran cuando perciben una discrepancia entre su realidad actual y lo que desean.',
     bullets: ['Modo Crecimiento', 'Modo Problemas', 'Modo Equilibrio', 'Exceso de Confianza']
   },
   {
-    id: 'ganancias',
-    title: 'IV. Ganancias-Resultados',
-    subtitle: 'Win-Results',
-    icon: Trophy,
-    description: 'Regla fundamental: "Las empresas obtienen Resultados, pero solo las personas obtienen Ganancias".',
-    bullets: ['Entregar impacto medible (Resultado)', 'Satisfacer el ego o seguridad (Ganancia)', 'Alinear objetivos corporativos y personales', 'Crear valor a dos niveles']
-  },
-  { 
-    id: 'banderas', 
-    title: 'V. Red Flag', 
-    subtitle: 'Banderas Rojas y Fortalezas',
-    icon: Flag, 
-    description: 'Es un sistema de alerta temprana. Consiste en identificar cualquier área de incertidumbre, peligro o falta de información en tu venta (Bandera Roja).',
-    bullets: ['Identificar áreas de peligro', 'Reconocer falta de información', 'Utilizar puntos fuertes estratégicamente', 'Eliminar o reducir riesgos']
-  },
-  {
     id: 'proceso',
-    title: 'VI. El Proceso Comercial',
+    title: 'V. El Proceso Comercial',
     subtitle: 'Sales Process',
     icon: Clock,
     description: 'La gestión eficiente de tus recursos y tiempo a lo largo de todo el ciclo de vida de la oportunidad.',
@@ -66,8 +58,8 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
 
       {/* Header */}
       <div className="shrink-0 mb-6 z-10">
-        <h2 className="text-2xl md:text-4xl font-bold mb-2 flex items-center gap-3">
-          Los 6 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
+        <h2 className={`text-2xl md:text-4xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+          Los 5 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
         </h2>
         <p className={`text-sm md:text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           Explora los fundamentos para dominar la venta compleja. Selecciona un pilar para ver los detalles.
@@ -101,10 +93,10 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                   <Icon size={20} />
                 </div>
                 <div>
-                  <h3 className={`text-sm font-bold ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+                  <h3 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-800'}`}>
                     {pillar.title}
                   </h3>
-                  <p className={`text-sm mt-0.5 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                  <p className={`text-sm mt-0.5 ${isDark ? 'text-white/50' : 'text-gray-400'}`}>
                     {pillar.subtitle}
                   </p>
                 </div>

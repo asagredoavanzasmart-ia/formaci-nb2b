@@ -240,7 +240,7 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
   const activeRole = roles.find(r => r.id === activeTab) || roles[0];
 
   return (
-    <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
+    <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#111111] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="shrink-0 mb-6 z-10">
@@ -267,8 +267,8 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
                 onClick={() => setActiveTab(role.id)}
                 className={`p-3 rounded-2xl border text-left transition-all duration-300 flex items-center gap-3 ${
                   isActive 
-                    ? (isDark ? 'bg-[#2a2a2a] border-[#ff851d] shadow-md' : 'bg-white border-[#ff851d] shadow-md')
-                    : (isDark ? 'bg-[#222] border-[#333] hover:border-gray-500' : 'bg-gray-50 border-gray-200 hover:border-gray-300')
+                    ? (isDark ? 'bg-[#181818] border-[#ff851d] shadow-md' : 'bg-white border-[#ff851d] shadow-md')
+                    : (isDark ? 'bg-[#0f0f0f] border-[#222] hover:border-gray-500' : 'bg-gray-50 border-gray-200 hover:border-gray-300')
                 }`}
               >
                 <div className={`p-2.5 rounded-xl shrink-0 transition-colors duration-300 ${

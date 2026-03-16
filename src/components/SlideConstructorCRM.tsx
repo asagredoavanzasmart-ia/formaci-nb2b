@@ -291,14 +291,14 @@ export default function SlideConstructorCRM({ isDark }: { isDark: boolean }) {
 
                  <div className="space-y-1.5">
                     <label className="text-[10px] font-black opacity-40 flex items-center gap-2">
-                      <User size={12} className="text-blue-500" /> RESPONSABLE
+                      <User size={12} className="text-orange-500" /> RESPONSABLE
                     </label>
                     <select
                       value={stage.responsible}
                       disabled={isFinalized}
                       onChange={(e) => updateStage(stage.id, 'responsible', e.target.value)}
                       className={`w-full h-10 px-4 rounded-xl text-[12px] font-medium border transition-all cursor-pointer appearance-none ${
-                          isDark ? 'bg-[#1a1a1a] border-[#3a3a3a] focus:border-blue-500/50 text-white' : 'bg-white border-gray-200 focus:border-blue-500/50 shadow-sm text-gray-700'
+                          isDark ? 'bg-[#1a1a1a] border-[#3a3a3a] focus:border-orange-500/50 text-white' : 'bg-white border-gray-200 focus:border-orange-500/50 shadow-sm text-gray-700'
                       }`}
                     >
                       {RESPONSIBLE_OPTIONS.map(opt => (
@@ -422,14 +422,14 @@ export default function SlideConstructorCRM({ isDark }: { isDark: boolean }) {
                  </div>
                  <div className="space-y-1.5">
                     <label className="text-[10px] font-black opacity-40 flex items-center gap-2">
-                      <User size={12} className="text-blue-500" /> RESPONSABLE
+                      <User size={12} className="text-orange-500" /> RESPONSABLE
                     </label>
                     <select
                       value={stage.responsible}
                       disabled={isFinalized}
                       onChange={(e) => updateStage(stage.id, 'responsible', e.target.value)}
                       className={`w-full h-10 px-4 rounded-xl text-[12px] font-medium border transition-all cursor-pointer appearance-none ${
-                          isDark ? 'bg-[#1a1a1a] border-[#3a3a3a] focus:border-blue-500/50 text-white' : 'bg-white border-gray-200 focus:border-blue-500/50 shadow-sm text-gray-700'
+                          isDark ? 'bg-[#1a1a1a] border-[#3a3a3a] focus:border-orange-500/50 text-white' : 'bg-white border-gray-200 focus:border-orange-500/50 shadow-sm text-gray-700'
                       }`}
                     >
                       {RESPONSIBLE_OPTIONS.map(opt => (

@@ -455,7 +455,7 @@ function DealModal({
                         <div key={i} className="flex items-start gap-3 pb-2 last:pb-0">
                           <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
                             h.type === 'Meeting' ? 'bg-orange-500' :
-                            h.type === 'Email' ? 'bg-blue-500' :
+                            h.type === 'Email' ? 'bg-zinc-500' :
                             'bg-green-500'
                           }`} />
                           <div className="min-w-0">
@@ -596,12 +596,18 @@ export default function SlideCRMPipeline({ isDark }: { isDark: boolean }) {
               onClick={() => setSelectedStageIndex(index)}
             >
               <div className={`p-3 border-b flex items-center gap-3 ${isDark ? 'border-[#3a3a3a]' : 'border-gray-200'}`}>
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 transition-all duration-300 ${
                   selectedStageIndex === index
-                    ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white'
+                    ? isDark ? 'bg-white shadow-[0_0_15px_rgba(255,133,29,0.5)] scale-110' : 'bg-white shadow-lg border border-orange-100 scale-110'
                     : isDark ? 'bg-[#3a3a3a] text-gray-400' : 'bg-gray-200 text-gray-600'
                 }`}>
-                  {stage.num}
+                  {selectedStageIndex === index ? (
+                    <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#ff851d] to-[#ef375c]">
+                      {stage.num}
+                    </span>
+                  ) : (
+                    stage.num
+                  )}
                 </div>
                 <div className="overflow-hidden">
                   <h3 className={`font-black text-sm truncate ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{stage.name}</h3>

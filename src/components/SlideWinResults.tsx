@@ -67,7 +67,7 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
 
       {/* Header */}
       <div className="shrink-0 mb-4 z-10 text-center">
-        <h2 className="text-xl md:text-3xl font-bold mb-1">
+        <h2 className={`text-xl md:text-3xl font-bold mb-1 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           Descubriendo <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Resultados y Ganancias</span>
         </h2>
         <p className={`text-sm max-w-4xl mx-auto leading-tight ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -108,7 +108,7 @@ export default function SlideWinResults({ isDark }: { isDark: boolean }) {
                   <Icon size={18} />
                 </div>
                 <div>
-                  <h3 className={`font-bold text-sm ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-gray-400' : 'text-gray-600')}`}>
+                  <h3 className={`font-bold text-sm ${isActive ? (isDark ? 'text-white' : 'text-gray-900') : (isDark ? 'text-white/60' : 'text-gray-600')}`}>
                     {q.title}
                   </h3>
                 </div>

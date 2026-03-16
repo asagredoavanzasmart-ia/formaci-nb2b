@@ -31,36 +31,47 @@ import SlideOfferTool from './components/SlideOfferTool';
 import SlideOfferIntro from './components/SlideOfferIntro';
 import SlideFlowConstructor from './components/SlideFlowConstructor';
 import { CompleteICP } from './types';
+import logoLight from './Logos/logo horizontal ligth.png';
+import logoDark from './Logos/logo horizontal dark.png';
 
 
 
 const initialSlides = [
-  { id: 'slide-0', title: 'Inicio' },
-  { id: 'slide-simple-vs-compleja', title: 'Evolución de la Venta' },
-  { id: 'slide-intro', title: 'Introducción' },
-  { id: 'slide-cargos-roles', title: 'Cargos vs Roles' },
-  { id: 'slide-estrategia', title: 'Estrategia vs Táctica' },
-  { id: 'slide-comp-vendedores', title: 'Comparación Vendedores' },
-  { id: 'slide-pilares', title: 'Pilares de la Estrategia' },
-  { id: 'slide-icp', title: 'Perfil del Cliente Ideal (ICP)' },
-  { id: 'slide-icp-tool', title: 'Herramienta ICP' },
-  { id: 'slide-offer-intro', title: 'Creación de la Oferta' },
-  { id: 'slide-offer-tool', title: 'Herramienta de Oferta' },
-  { id: 'slide-roles', title: 'Roles de Compra' },
-  { id: 'slide-ident-comprador', title: 'Identificar Comprador' },
-  { id: 'slide-gest-tecnico', title: 'Gestionar Comprador Técnico' },
-  { id: 'slide-win-perfiles', title: 'Win-Results por Perfil' },
-  { id: 'slide-win-preguntas', title: 'Win-Results (Preguntas)' },
-  { id: 'slide-superar', title: 'Superar Problemas' },
-  { id: 'slide-receptibilidad', title: 'Nivel de Receptividad' },
-  { id: 'slide-modos', title: 'Modos de Respuesta' },
-  { id: 'slide-banderas', title: 'Banderas Rojas' },
-  { id: 'slide-crm', title: 'Pipeline CRM' },
-  { id: 'slide-constructor-crm', title: 'Constructor de Proceso CRM' },
-  { id: 'slide-ciclo', title: 'Ciclo Normal de Ventas' },
-  { id: 'slide-lista-estrategica', title: 'Lista de Verificación Estratégica' },
-  { id: 'slide-flow-constructor', title: 'Constructor de flujo' },
-  { id: 'slide-aterrizaje', title: 'Aterrizaje y Expansión' }
+  { id: 'slide-0', title: 'Inicio', level: 2 },
+  { id: 'slide-simple-vs-compleja', title: 'Evolución de la Venta', level: 2 },
+  { id: 'slide-intro', title: 'Introducción', level: 2 },
+  { id: 'slide-estrategia', title: 'Estrategia vs Táctica', level: 2 },
+  { id: 'slide-comp-vendedores', title: 'Comparación Vendedores', level: 2 },
+  { id: 'slide-pilares', title: 'Pilares de la Estrategia', level: 2 },
+  
+  { id: 'header-roles', title: 'I. Roles de Influencia', level: 1 },
+  { id: 'slide-roles', title: 'Roles de Compra', level: 2 },
+  { id: 'slide-ident-comprador', title: 'Identificar Comprador', level: 2 },
+  { id: 'slide-gest-tecnico', title: 'Gestionar Comprador técnico', level: 2 },
+  { id: 'slide-win-perfiles', title: 'Win-Results por Perfil', level: 2 },
+  { id: 'slide-win-preguntas', title: 'Win-Results (Preguntas)', level: 2 },
+  
+  { id: 'header-icp', title: 'II. ICP + Oferta', level: 1 },
+  { id: 'slide-aterrizaje', title: 'Aterrizaje y Expansión', level: 2 },
+  { id: 'slide-icp', title: 'Perfil del Cliente Ideal (ICP)', level: 2 },
+  { id: 'slide-icp-tool', title: 'Herramienta ICP', level: 2 },
+  { id: 'slide-offer-intro', title: 'Creación de la Oferta', level: 2 },
+  { id: 'slide-offer-tool', title: 'Herramienta de Oferta', level: 2 },
+  
+  { id: 'header-redflags', title: 'III. Red Flags y Problemas', level: 1 },
+  { id: 'slide-banderas', title: 'Banderas Rojas', level: 2 },
+  { id: 'slide-superar', title: 'Superar Problemas', level: 2 },
+  
+  { id: 'header-modos', title: 'IV. Modos de Respuesta', level: 1 },
+  { id: 'slide-receptibilidad', title: 'Nivel de Receptividad', level: 2 },
+  { id: 'slide-modos', title: 'Modos de Respuesta', level: 2 },
+  
+  { id: 'header-proceso', title: 'V. Proceso comercial', level: 1 },
+  { id: 'slide-ciclo', title: 'Ciclo Normal de Ventas', level: 2 },
+  { id: 'slide-flow-constructor', title: 'Creador de flujos', level: 2 },
+  { id: 'slide-crm', title: 'Pipeline CRM', level: 2 },
+  { id: 'slide-constructor-crm', title: 'Constructor de Procesos', level: 2 },
+  { id: 'slide-lista-estrategica', title: 'Lista de Verificación Estratégica', level: 2 }
 ];
 
 export default function App() {
@@ -149,48 +160,64 @@ export default function App() {
 
   const currentSlideId = slidesOrder[currentSlideIndex].id;
   return (
-    <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#0a0a0a] text-[#f8f9fa]' : 'bg-[#e5e7eb] text-[#4f4f4f]'}`}>
+    <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#000000] text-[#f8f9fa]' : 'bg-[#e5e7eb] text-[#111827]'}`}>
       
-      {/* Sidebar - Índice convencional y minimalista */}
+      {/* Sidebar - Ocupa altura completa y empuja el contenido */}
       <aside 
-        className={`transition-all duration-300 z-50 fixed left-0 top-1/2 -translate-y-1/2 ml-4 flex flex-col rounded-2xl border shadow-xl overflow-hidden ${isDark ? 'bg-[#1a1a1a] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-60 opacity-100 translate-x-0' : 'w-0 opacity-0 -translate-x-full pointer-events-none'}`}
-        style={{ 
-          maxHeight: '80vh',
-        }}
+        className={`transition-all duration-300 z-50 flex flex-col h-screen border-r shadow-xl overflow-hidden ${isDark ? 'bg-[#111111] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
       >
-        <div className="p-4 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
-          <h2 className="font-black text-sm opacity-50 px-2 pb-0.5">Contenido</h2>
+        <div className="p-5 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
+          <div className="px-1">
+            <img 
+              src={isDark ? logoDark : logoLight} 
+              alt="Logo Avanza Smart" 
+              className="h-7 object-contain"
+            />
+          </div>
           <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
-            <X size={14} />
+            <X size={16} />
           </button>
         </div>
         
         {/* Lista de diapositivas tipo link simple */}
-        <div className="flex-1 overflow-y-auto py-2 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto py-4 custom-scrollbar">
           <div className="flex flex-col">
-            {slidesOrder.map((slide, index) => (
-              <button 
-                key={slide.id}
-                onClick={() => setCurrentSlideIndex(index)}
-                className={`flex items-center gap-3 px-4 py-1.5 text-left transition-all relative ${
-                  currentSlideIndex === index 
-                    ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/5 to-transparent' 
-                    : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
-                }`}
-              >
-                <span className={`text-sm w-6 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-30 font-bold'}`}>
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-sm font-bold truncate">{slide.title}</span>
-                
-                {currentSlideIndex === index && (
-                  <motion.div 
-                    layoutId="activePointer"
-                    className="absolute left-0 w-0.5 h-3 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full"
-                  />
-                )}
-              </button>
-            ))}
+            {slidesOrder.map((slide, index) => {
+              const isH1 = slide.level === 1;
+              return (
+                <button 
+                  key={slide.id}
+                  onClick={() => setCurrentSlideIndex(index)}
+                  className={`flex items-center gap-3 px-5 py-2 text-left transition-all relative ${
+                    isH1 
+                      ? 'mt-6 mb-1' 
+                      : 'ml-4'
+                  } ${
+                    currentSlideIndex === index 
+                      ? 'text-[#ef375c] font-bold bg-gradient-to-r from-[#ff851d]/5 to-transparent' 
+                      : isH1
+                        ? 'text-gray-900 dark:text-white font-black'
+                        : 'text-gray-700 hover:text-gray-900 dark:text-white/60 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5'
+                  }`}
+                >
+                  {!isH1 && (
+                    <span className={`text-[11px] w-5 shrink-0 tabular-nums ${currentSlideIndex === index ? 'text-[#ff851d] font-black' : 'opacity-30 font-bold'}`}>
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  )}
+                  <span className={`${isH1 ? 'text-xs uppercase tracking-wider' : 'text-sm'} font-bold truncate`}>
+                    {slide.title}
+                  </span>
+                  
+                  {currentSlideIndex === index && (
+                    <motion.div 
+                      layoutId="activePointer"
+                      className="absolute left-0 w-1 h-4 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full"
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </aside>
@@ -255,17 +282,48 @@ export default function App() {
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="w-full h-full"
                 >
+                {/* Renderizado de Slides de Nivel 1 (Encabezados) */}
+                {slidesOrder[currentSlideIndex].level === 1 && (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-center p-12">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className={`p-16 rounded-[4rem] border-4 ${isDark ? 'bg-[#111111] border-[#2a2a2a] shadow-2xl' : 'bg-white border-gray-100 shadow-xl'}`}
+                    >
+                      <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight tracking-tighter flex flex-wrap justify-center gap-x-4">
+                        <span className={isDark ? 'text-white/50' : 'text-gray-500'}>
+                          {slidesOrder[currentSlideIndex].title.split(' ').slice(0, Math.ceil(slidesOrder[currentSlideIndex].title.split(' ').length / 2)).join(' ')}
+                        </span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+                          {slidesOrder[currentSlideIndex].title.split(' ').slice(Math.ceil(slidesOrder[currentSlideIndex].title.split(' ').length / 2)).join(' ')}
+                        </span>
+                      </h1>
+                      <div className="h-2 w-48 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full"></div>
+                    </motion.div>
+                  </div>
+                )}
+
                 {currentSlideId === 'slide-0' && (
                   <div className="w-full h-full flex flex-col items-center justify-center text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">
-                      Ventas B2B
+                    <motion.img 
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      src={isDark ? logoDark : logoLight} 
+                      alt="Logo Avanza Smart" 
+                      className="h-20 md:h-24 object-contain mb-8"
+                    />
+                    <h1 className={`text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      FORMACIÓN ESTRATÉGICA
                     </h1>
-                    <div className="h-1.5 w-32 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full"></div>
+                    <h2 className={`text-2xl md:text-4xl font-bold mb-12 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
+                      Ventas B2B de Alto Impacto
+                    </h2>
+                    <div className="h-1.5 w-48 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-lg shadow-red-500/20"></div>
                   </div>
                 )}
                 {currentSlideId === 'slide-simple-vs-compleja' && <SlideVentaSimpleVsCompleja isDark={isDark} />}
                 {currentSlideId === 'slide-intro' && <SlideIntroduccion isDark={isDark} />}
-                {currentSlideId === 'slide-cargos-roles' && <SlideCargosVsRoles isDark={isDark} />}
                 {currentSlideId === 'slide-estrategia' && <SlideEstrategiaTactica isDark={isDark} />}
                 {currentSlideId === 'slide-comp-vendedores' && <Slide9 isDark={isDark} />}
                 {currentSlideId === 'slide-pilares' && <SlidePilaresEstrategia isDark={isDark} />}
@@ -290,9 +348,9 @@ export default function App() {
                 {currentSlideId === 'slide-banderas' && <Slide8 isDark={isDark} />}
                 {currentSlideId === 'slide-crm' && <SlideCRMPipeline isDark={isDark} />}
                 {currentSlideId === 'slide-constructor-crm' && <SlideConstructorCRM isDark={isDark} />}
+                {currentSlideId === 'slide-flow-constructor' && <SlideFlowConstructor isDark={isDark} />}
                 {currentSlideId === 'slide-ciclo' && <SlideCicloVentas isDark={isDark} />}
                 {currentSlideId === 'slide-lista-estrategica' && <SlideListaEstrategica isDark={isDark} />}
-                {currentSlideId === 'slide-flow-constructor' && <SlideFlowConstructor isDark={isDark} />}
                 {currentSlideId === 'slide-aterrizaje' && <Slide10 isDark={isDark} />}
 
                 </motion.div>
@@ -302,24 +360,26 @@ export default function App() {
         </div>
 
         {/* Top Bar - Reubicada al final para estar encima del contenido pero fija a la pantalla */}
-        <div className="fixed top-4 left-4 right-4 z-[100] flex justify-between items-center pointer-events-none">
-          <button 
-            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className={`pointer-events-auto p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 border ${isDark ? 'bg-[#1e1e1e]/80 backdrop-blur-md text-white border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-[#4f4f4f] border-gray-200'} ${isSidebarOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}
-          >
-            <Menu size={20} />
-          </button>
+        <div className="fixed top-6 left-6 right-6 z-[100] flex justify-between items-center pointer-events-none">
+          <div className="flex items-center gap-4 pointer-events-auto">
+            <button 
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 border ${isDark ? 'bg-[#111111]/80 backdrop-blur-md text-white border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-[#111827] border-gray-200'} ${isSidebarOpen ? 'opacity-0 scale-0 pointer-events-none' : 'opacity-100 scale-100'}`}
+            >
+              <Menu size={20} />
+            </button>
+          </div>
           <div className="flex items-center gap-3 pointer-events-auto">
             <button 
               onClick={toggleFullscreen}
-              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#1e1e1e]/80 backdrop-blur-md text-gray-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-gray-500 border-gray-100'}`}
+              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#111111]/80 backdrop-blur-md text-gray-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-gray-500 border-gray-100'}`}
               title="Pantalla Completa"
             >
               {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
             </button>
             <button 
               onClick={() => setIsDark(!isDark)}
-              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#1e1e1e]/80 backdrop-blur-md text-orange-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-orange-500 border-gray-100'}`}
+              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#111111]/80 backdrop-blur-md text-orange-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-orange-500 border-gray-100'}`}
               title={isDark ? "Modo Claro" : "Modo Oscuro"}
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -336,7 +396,7 @@ export default function App() {
               currentSlideIndex === 0 
                 ? 'opacity-0 pointer-events-none' 
                 : isDark 
-                  ? 'bg-[#2a2a2a] text-white border border-[#4a4a4a] hover:bg-[#3a3a3a] shadow-lg' 
+                  ? 'bg-[#181818] text-white border border-[#4a4a4a] hover:bg-[#3a3a3a] shadow-lg' 
                   : 'bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 shadow-md'
             }`}
           >
@@ -345,14 +405,18 @@ export default function App() {
           </button>
 
           <div className="flex items-center gap-2">
-            {slidesOrder.map((_, i) => (
+            {slidesOrder.map((slide, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentSlideIndex(i)}
-                className={`transition-all duration-300 rounded-full ${
-                  currentSlideIndex === i 
-                    ? 'w-8 h-2 bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-sm' 
-                    : `w-2 h-2 ${isDark ? 'bg-gray-700 hover:bg-gray-500' : 'bg-gray-300 hover:bg-gray-400'}`
+                className={`transition-all duration-300 ${
+                  slide.level === 1 
+                    ? currentSlideIndex === i 
+                      ? 'w-4 h-4 rounded-md bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-lg' 
+                      : `w-3 h-3 rounded-md border-2 ${isDark ? 'border-gray-700 bg-transparent' : 'border-gray-300 bg-transparent'}`
+                    : currentSlideIndex === i 
+                      ? 'w-8 h-2 rounded-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-lg' 
+                      : `w-2 h-2 rounded-full ${isDark ? 'bg-white/20 hover:bg-white/40' : 'bg-gray-300 hover:bg-gray-400'}`
                 }`}
               />
             ))}

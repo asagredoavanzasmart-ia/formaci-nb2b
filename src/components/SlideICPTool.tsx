@@ -425,7 +425,7 @@ export default function SlideICPTool({ isDark, onIcpCreated, savedIcps = [] }: S
             <motion.div key="s2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                <div className={`p-10 rounded-[3.5rem] border ${panelClass}`}>
                   <div className="flex justify-between items-center mb-8">
-                    <SectionHeader icon={Layers} title="Módulo 2: Segmentos del ICP" isDark={isDark} color="blue" />
+                    <SectionHeader icon={Layers} title="Módulo 2: Segmentos del ICP" isDark={isDark} color="orange" />
                     <button onClick={addSegment} className="bg-[#ff851d]/10 text-[#ff851d] px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-2 hover:bg-[#ff851d] hover:text-white transition-all">
                        <Plus size={16} /> Añadir Segmento
                     </button>
