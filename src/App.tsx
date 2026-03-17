@@ -158,9 +158,19 @@ export default function App() {
     }
   };
 
-  const currentSlideId = slidesOrder[currentSlideIndex].id;
+  if (!slidesOrder || slidesOrder.length === 0) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  const currentSlide = slidesOrder[currentSlideIndex] || slidesOrder[0];
+  const currentSlideId = currentSlide.id;
+
   return (
-    <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#000000] text-[#f8f9fa]' : 'bg-[#e5e7eb] text-[#111827]'}`}>
+    <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#000000] text-[#f8f9fa]' : 'bg-[#f0f2f5] text-[#111827]'}`}>
       
       {/* Sidebar - Ocupa altura completa y empuja el contenido */}
       <aside 
@@ -202,14 +212,17 @@ export default function App() {
                   {!isH1 && (
                     <span 
                       className={`text-[11px] w-5 shrink-0 tabular-nums font-bold`}
-                      style={{ color: currentSlideIndex === index ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.3)' : '#666') }}
+                      style={{ color: currentSlideIndex === index ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.3)' : '#000000') }}
                     >
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   )}
                   <span 
-                    className={`${isH1 ? 'text-xs uppercase tracking-wider' : 'text-sm'} font-bold truncate`}
-                    style={{ color: currentSlideIndex === index ? '#ef375c' : isH1 ? (isDark ? '#fff' : '#000') : (isDark ? '#aaa' : '#333') }}
+                    className={`${isH1 ? 'text-[11px] uppercase tracking-[0.1em]' : 'text-[14px]'} font-bold truncate`}
+                    style={{ 
+                      color: currentSlideIndex === index ? '#ef375c' : (isH1 ? (isDark ? '#ffffff' : '#000000') : (isDark ? 'rgba(255,255,255,0.7)' : '#000000')),
+                      letterSpacing: isH1 ? '0.05em' : 'normal'
+                    }}
                   >
                     {slide.title}
                   </span>

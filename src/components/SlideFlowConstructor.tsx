@@ -22,7 +22,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText, Trash2 } from 'lucide-react';
+import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText, Trash2, LogOut, Check, Calculator, Sliders } from 'lucide-react';
 import { INITIAL_NODES, INITIAL_EDGES } from './initialFlowData';
 import { toJpeg } from 'html-to-image';
 import logoHorizontalDark from '../Logos/logo horizontal dark.png';
@@ -71,11 +71,14 @@ const getIconUrl = (file: string) => {
 };
 
 // --- COMPONENTE DE NODO PERSONALIZADO ---
-// Se eliminaron marcos blancos y sombras. El puerto de salida es el signo (+).
-const CustomNode = ({ data, id }: any) => {
-  const { setNodes } = useReactFlow();
+const CustomNode = ({ data, id, isDark: propIsDark }: any) => {
+  const { isExporting } = React.useContext(ExportContext);
+  const { setNodes, setEdges } = useReactFlow();
   const [isEditing, setIsEditing] = useState(false);
-  const [label, setLabel] = useState(data.label);
+  const [label, setLabel] = useState(data?.label || '');
+  const [isDropTarget, setIsDropTarget] = useState(false);
+  
+  const isDark = propIsDark;
 
   const onDelete = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
@@ -123,26 +126,31 @@ const CustomNode = ({ data, id }: any) => {
     }));
   };
 
-  // Detectar si este nodo tiene un presupuesto como hijo para elevar los controles
-  const nodes = useReactFlow().getNodes();
-  const hasBudgetChild = nodes.some(n => n.parentId === id);
 
   return (
-    <div className="relative group flex flex-col items-center">
-      {/* Controles rápidos: Suben si hay un presupuesto pegado */}
-      <div 
-        className={`absolute left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100 z-[110] pointer-events-auto`}
-        style={{ top: hasBudgetChild ? '-60px' : '-40px' }}
-      >
-        <button onClick={onDuplicate} title="Duplicar" className="p-1 w-[22px] h-[22px] bg-zinc-900 text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center border border-white/10">
-          <Copy size={10} />
-        </button>
-        <button onClick={onDelete} title="Eliminar" className="p-1 w-[22px] h-[22px] bg-red-500 text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center border border-white/10">
-          <X size={10} />
-        </button>
-      </div>
+    <div 
+      className={`relative group flex flex-col items-center transition-opacity duration-200 ${isDropTarget ? 'opacity-30' : 'opacity-100'}`}
+      onDragEnter={() => setIsDropTarget(true)}
+      onDragLeave={() => setIsDropTarget(false)}
+      onDrop={() => setIsDropTarget(false)}
+    >
+      {!isExporting && (
+        <div 
+          className={`absolute left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100 z-[110] pointer-events-auto -top-6 export-hide invisible group-hover:visible`}
+        >
+          <button onClick={onDuplicate} title="Duplicar" className="p-1 w-[22px] h-[22px] bg-zinc-900 text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center border border-white/10">
+            <Copy size={10} />
+          </button>
+          <button onClick={onDelete} title="Eliminar" className="p-1 w-[22px] h-[22px] bg-red-500 text-white rounded-full shadow-lg hover:scale-110 transition-all flex items-center justify-center border border-white/10">
+            <X size={10} />
+          </button>
+        </div>
+      )}
 
-      <div className="relative flex items-center justify-center bg-transparent" style={{ width: '60px', height: '60px' }}>
+      <div className="relative flex items-center justify-center" style={{ width: '60px', height: '60px' }}>
+        {/* Halo de luz blanco 100% opaco para máximo contraste */}
+        <div className={`absolute inset-0 rounded-full blur-xl scale-100 ${isDark ? 'bg-white/20' : 'bg-white'} -z-10`} />
+        
         {/* Puerto de Entrada (Target) con Magnética alta */}
         <Handle
           type="target"
@@ -162,9 +170,10 @@ const CustomNode = ({ data, id }: any) => {
         />
         
         <img 
-          src={getIconUrl(data.icon ?? 'CRM.png')} 
-          alt={data.label}
-          className="w-12 h-12 object-contain transition-all group-hover:scale-110 pointer-events-none drop-shadow-sm" 
+          src={getIconUrl(data?.icon ?? 'CRM.png')} 
+          alt={data?.label}
+          className="w-13 h-13 object-contain transition-all group-hover:scale-110 pointer-events-none drop-shadow-2xl filter" 
+          style={{ filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'drop-shadow(0 4px 15px rgba(0,0,0,0.3)) drop-shadow(0 0 2px white)' }}
         />
 
         {/* Botón visual del signo (+) Siempre Visible y Forzado con Efecto Over */}
@@ -209,12 +218,12 @@ const CustomNode = ({ data, id }: any) => {
             onBlur={handleBlur}
             onKeyDown={(e) => e.key === 'Enter' && handleBlur()}
             autoFocus
-            className={`w-full text-[12px] font-black tracking-tight text-center bg-transparent border-b-2 border-orange-500 outline-none ${isDark ? 'text-white' : 'text-gray-900'}`}
+            className={`w-full text-[13px] font-black tracking-tight text-center bg-transparent border-b-2 border-orange-500 outline-none ${isDark ? 'text-white' : 'text-[#333333]'}`}
           />
         ) : (
           <span 
             onDoubleClick={() => setIsEditing(true)}
-            className={`text-[12px] font-black tracking-tight leading-tight block cursor-text select-none ${isDark ? 'text-white' : 'text-gray-900'}`}
+            className={`text-[13px] font-black tracking-tight leading-tight block cursor-text select-none ${isDark ? 'text-white' : 'text-[#333333]'} drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]`}
           >
             {label}
           </span>
@@ -225,11 +234,11 @@ const CustomNode = ({ data, id }: any) => {
 };
 
 // --- COMPONENTE DE GRUPO ---
-const CustomGroupNode = ({ id, data, selected }: any) => {
+const CustomGroupNode = ({ id, data, selected, isDark }: any) => {
   const { setNodes } = useReactFlow();
   const [isEditing, setIsEditing] = useState(false);
-  const [label, setLabel] = useState(data.label || 'Grupo');
-  const currentColor = PASTEL_COLORS.find(c => c.stroke === data.stroke) || PASTEL_COLORS[0];
+  const [label, setLabel] = useState(data?.label || 'Grupo');
+  const currentColor = PASTEL_COLORS.find(c => c.stroke === data?.stroke) || PASTEL_COLORS[0];
 
   const onColorSelect = (color: typeof PASTEL_COLORS[0]) => {
     setNodes((nds) => nds.map((node) => {
@@ -285,32 +294,41 @@ const CustomGroupNode = ({ id, data, selected }: any) => {
     }));
   };
 
-  const nodesList = useReactFlow().getNodes();
-  const hasBudgetChild = nodesList.some(n => n.parentId === id);
 
   return (
     <div 
-      className="group relative w-full h-full rounded-[2rem] transition-all duration-300"
+      className="group relative w-full h-full rounded-[2rem] transition-all duration-300 shadow-sm hover:shadow-md"
       style={{ 
-        backgroundColor: data.bg || currentColor.bg, 
-        borderColor: data.stroke || currentColor.stroke,
+        backgroundColor: `${data?.stroke || currentColor.stroke}70`, // Más opacidad
+        borderColor: data?.stroke || currentColor.stroke,
         borderStyle: 'solid',
-        borderWidth: '1px'
+        borderWidth: '5px' // Borde Ultra grueso
       }}
     >
+      {/* Conectores Universales (Entrada/Salida en las 4 caras) */}
+      <Handle type="target" position={Position.Left} id="left-target" style={{ background: data?.stroke || currentColor.stroke, borderRadius: '4px', width: '12px', height: '12px', left: '-6px', border: '2px solid white' }} />
+      <Handle type="source" position={Position.Left} id="left-source" style={{ background: 'transparent', width: '20px', height: '20px', left: '-10px', top: '50%', transform: 'translateY(-50%)', border: 'none', zIndex: 120 }} />
+      
+      <Handle type="target" position={Position.Right} id="right-target" style={{ background: data?.stroke || currentColor.stroke, borderRadius: '4px', width: '12px', height: '12px', right: '-6px', border: '2px solid white' }} />
+      <Handle type="source" position={Position.Right} id="right-source" style={{ background: 'transparent', width: '20px', height: '20px', right: '-10px', top: '50%', transform: 'translateY(-50%)', border: 'none', zIndex: 120 }} />
+      
+      <Handle type="target" position={Position.Top} id="top-target" style={{ background: data?.stroke || currentColor.stroke, borderRadius: '4px', width: '12px', height: '12px', top: '-6px', border: '2px solid white' }} />
+      <Handle type="source" position={Position.Top} id="top-source" style={{ background: 'transparent', width: '20px', height: '20px', top: '-10px', left: '50%', transform: 'translateX(-50%)', border: 'none', zIndex: 120 }} />
+      
+      <Handle type="target" position={Position.Bottom} id="bottom-target" style={{ background: data?.stroke || currentColor.stroke, borderRadius: '4px', width: '12px', height: '12px', bottom: '-6px', border: '2px solid white' }} />
+      <Handle type="source" position={Position.Bottom} id="bottom-source" style={{ background: 'transparent', width: '20px', height: '20px', bottom: '-10px', left: '50%', transform: 'translateX(-50%)', border: 'none', zIndex: 120 }} />
+      
       <NodeResizer 
-        color={data.stroke || currentColor.stroke} 
+        color={data?.stroke || currentColor.stroke} 
         isVisible={selected} 
-        minWidth={100} 
         minHeight={100} 
         lineClassName="!border"
         handleClassName="!w-2.5 !h-2.5 !bg-white !border !rounded-full shadow-sm"
       />
 
-      {/* Controles: Suben si hay un presupuesto pegado */}
+      {/* Controles */}
       <div 
-        className="absolute left-0 flex items-center gap-2 px-1 opacity-0 group-hover:opacity-100 transition-all duration-200 z-[110]"
-        style={{ top: hasBudgetChild ? '-50px' : '-40px' }}
+        className="absolute left-0 flex items-center gap-2 px-1 opacity-0 group-hover:opacity-100 transition-all duration-200 z-[110] -top-10 export-hide"
       >
         <div className="flex gap-1 p-1 bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-gray-100">
           {PASTEL_COLORS.map((color, i) => (
@@ -338,8 +356,8 @@ const CustomGroupNode = ({ id, data, selected }: any) => {
         </button>
       </div>
 
-      {/* Etiqueta: Abajo, sin fondo */}
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-full text-center">
+      {/* Etiqueta: Exterior alineada a la derecha */}
+      <div className="absolute -bottom-6 right-0 w-full text-right px-2">
         {isEditing ? (
           <input
             type="text"
@@ -348,28 +366,48 @@ const CustomGroupNode = ({ id, data, selected }: any) => {
             onBlur={handleBlur}
             onKeyDown={(e) => e.key === 'Enter' && handleBlur()}
             autoFocus
-            className="bg-transparent border-b border-orange-500 text-[11px] font-black px-2 py-0.5 outline-none text-center min-w-[80px]"
+            className="bg-white/50 backdrop-blur-sm border-b border-orange-500 text-[11px] font-black px-2 py-0.5 outline-none text-right min-w-[80px] rounded"
             style={{ color: data.stroke || currentColor.stroke }}
           />
         ) : (
           <span 
             onDoubleClick={() => setIsEditing(true)}
-            className="text-[10px] font-black tracking-widest uppercase cursor-text select-none"
+            className="text-[10px] font-black tracking-widest uppercase cursor-text select-none opacity-80"
             style={{ color: data.stroke || currentColor.stroke }}
           >
             {label}
           </span>
         )}
       </div>
+
+      {/* Botones visuales (+) en las caras */}
+      {[Position.Right, Position.Left, Position.Top, Position.Bottom].map((pos) => (
+        <div 
+          key={pos}
+          className={`absolute w-5 h-5 rounded-full shadow-lg flex items-center justify-center z-[110] transition-all transform scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 pointer-events-none`}
+          style={{ 
+            background: 'linear-gradient(135deg, #ff851d 0%, #ef375c 100%)',
+            border: '2px solid white',
+            right: pos === Position.Right ? '-12px' : (pos === Position.Left ? 'auto' : 'calc(50% - 10px)'),
+            left: pos === Position.Left ? '-12px' : 'auto',
+            top: pos === Position.Top ? '-12px' : (pos === Position.Bottom ? 'auto' : 'calc(50% - 10px)'),
+            bottom: pos === Position.Bottom ? '-12px' : 'auto',
+          }}
+        >
+          <Plus size={12} color="white" strokeWidth={4} />
+        </div>
+      ))}
+        <Plus size={14} color="white" strokeWidth={4} />
+      </div>
     </div>
   );
 };
 
 // --- COMPONENTE DE PRESUPUESTO (ETIQUETA MAGNÉTICA) ---
-const BudgetNode = ({ data, id }: any) => {
+const BudgetNode = ({ data, id, isDark }: any) => {
   const { setNodes, getNode } = useReactFlow();
   const [isEditing, setIsEditing] = useState(false);
-  const [amount, setAmount] = useState(data.label || '0');
+  const [amount, setAmount] = useState(data?.label || '0');
   
   const selfNode = getNode(id);
   const hasParent = !!selfNode?.parentId;
@@ -410,10 +448,10 @@ const BudgetNode = ({ data, id }: any) => {
   };
 
   return (
-    <div className={`relative group flex items-center gap-1 px-3 py-0.5 rounded-full transition-all duration-300 ${data.isDark ? 'bg-[#10b981]' : 'bg-[#10b981]'} text-white`}>
+    <div className={`relative group flex items-center gap-1 px-3 py-0.5 rounded-full transition-all duration-300 ${data?.isDark ? 'bg-[#10b981]' : 'bg-[#10b981]'} text-white`}>
       
       {!hasParent && (
-        <div className="absolute -top-7 left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-90 z-[100] pointer-events-auto">
+        <div className="absolute -top-7 left-1/2 -translate-x-1/2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-90 z-[100] pointer-events-auto export-hide">
           <button onClick={onDuplicate} className="w-[22px] h-[22px] bg-slate-800 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 border border-white/10"><Copy size={10}/></button>
           <button onClick={onDelete} className="w-[22px] h-[22px] bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 border border-white/10"><X size={10}/></button>
         </div>
@@ -446,6 +484,43 @@ const BudgetNode = ({ data, id }: any) => {
   );
 };
 
+// --- COMPONENTE DE UNIÓN (JOINT) ---
+const JointNode = ({ id }: any) => {
+  const { setNodes } = useReactFlow();
+  const onDelete = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setNodes((nds) => nds.filter((n) => n.id !== id));
+  }, [id, setNodes]);
+
+  return (
+    <div className="group relative w-3 h-3 rounded-full bg-slate-500 border-2 border-white shadow-lg flex items-center justify-center hover:scale-125 transition-all cursor-crosshair">
+      {/* Puertos invisibles que cubren todo el nodo para recibir desde cualquier lado */}
+      <Handle type="target" position={Position.Left} style={{ background: 'transparent', border: 'none', width: '100%', height: '100%', left: 0, top: 0, transform: 'none', borderRadius: '100%' }} />
+      <Handle type="target" position={Position.Top} style={{ background: 'transparent', border: 'none', width: '100%', height: '100%', left: 0, top: 0, transform: 'none', borderRadius: '100%' }} />
+      <Handle type="target" position={Position.Bottom} style={{ background: 'transparent', border: 'none', width: '100%', height: '100%', left: 0, top: 0, transform: 'none', borderRadius: '100%' }} />
+      <Handle type="source" position={Position.Right} style={{ background: 'transparent', border: 'none', width: '100%', height: '100%', left: 0, top: 0, transform: 'none', borderRadius: '100%' }} />
+      
+      {/* Botón visual del signo (+) */}
+      <div 
+        className="absolute right-[-10px] top-1/2 -translate-y-1/2 w-4 h-4 rounded-full shadow-md flex items-center justify-center z-[110] transition-all transform scale-0 group-hover:scale-100 opacity-0 group-hover:opacity-100 pointer-events-none"
+        style={{ 
+          background: 'linear-gradient(135deg, #ff851d 0%, #ef375c 100%)',
+          border: '1px solid white'
+        }}
+      >
+        <Plus size={10} color="white" strokeWidth={4} />
+      </div>
+
+      <button 
+        onClick={onDelete}
+        className="absolute -top-6 left-1/2 -translate-x-1/2 w-4 h-4 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center p-0.5 export-hide"
+      >
+        <X size={8} />
+      </button>
+    </div>
+  );
+};
+
 // --- COLORES DINÁMICOS POR DESTINO ---
 const getEdgeColor = (label: string = '') => {
   const l = label.toLowerCase();
@@ -453,6 +528,8 @@ const getEdgeColor = (label: string = '') => {
   if (l.includes('crm')) return '#a855f7';     // Morado
   if (l.includes('email')) return '#ef4444';   // Rojo
   if (l.includes('whatsapp')) return '#22c55e'; // Verde
+  if (l.includes('mailer')) return '#00ad6a';   // Verde MailerLite
+  if (l.includes('messenger')) return '#00b2ff'; // Celeste Messenger
   return '#ff851d';                             // Naranja (Default)
 };
 
@@ -496,6 +573,7 @@ const CustomEdge = ({
   markerEnd,
   target,
 }: EdgeProps) => {
+  const { isExporting } = React.useContext(ExportContext);
   const { setEdges, getNode } = useReactFlow();
   const targetNode = getNode(target);
   const edgeColor = getEdgeColor(targetNode?.data?.label as string);
@@ -518,92 +596,161 @@ const CustomEdge = ({
     <g className="group cursor-pointer">
       <path
         id={id}
-        style={{ ...style, stroke: edgeColor, strokeWidth: 2.5, fill: 'none' }}
-        className="react-flow__edge-path transition-all group-hover:stroke-width-4"
+        style={{ ...style, stroke: edgeColor, strokeWidth: 5, fill: 'none' }}
+        className="react-flow__edge-path transition-all group-hover:stroke-width-7"
         d={edgePath}
         markerEnd={markerEnd}
       />
       
-      {/* Invisible wider path for easier hovering/clicking */}
-      <path
-        d={edgePath}
-        fill="none"
-        stroke="transparent"
-        strokeWidth={30}
-      />
+      <path d={edgePath} fill="none" stroke="transparent" strokeWidth={30} />
 
-      <circle r="4" fill="white" className="drop-shadow-md pointer-events-none shadow-sm">
-        <animateMotion dur="2s" repeatCount="indefinite" path={edgePath} />
-      </circle>
+      {/* Partícula de flujo (SIEMPRE VISIBLE POR ENCIMA) */}
+      <g style={{ isolate: 'auto' }}>
+        <circle r="6" fill="white" className="drop-shadow-[0_0_8px_rgba(255,255,255,1)] pointer-events-none" style={{ zIndex: 9999 }}>
+          <animateMotion dur="2s" repeatCount="indefinite" path={edgePath} />
+        </circle>
+      </g>
 
-      <foreignObject
-        width={40}
-        height={40}
-        x={labelX - 20}
-        y={labelY - 20}
-        className="opacity-0 group-hover:opacity-100 transition-all duration-200"
-        requiredExtensions="http://www.w3.org/1999/xhtml"
-      >
-        <div className="w-full h-full flex items-center justify-center">
-          <button 
-            onClick={onEdgeClick}
-            className="p-2 transition-all duration-200 bg-red-500 text-white rounded-full flex items-center justify-center cursor-pointer shadow-xl hover:scale-125 active:scale-95"
-            title="Eliminar enlace"
+      {/* Botón de eliminación de borde (SÓLO SI NO ES EXPORTACIÓN) */}
+      {!isExporting && (
+        <g
+          transform={`translate(${labelX}, ${labelY})`}
+          className="opacity-0 group-hover:opacity-100 transition-all duration-200 export-hide cursor-pointer"
+          onClick={onEdgeClick}
+        >
+          <circle
+            r="12"
+            fill="#ef4444"
+            className="drop-shadow-lg"
+          />
+          <text
+            x="0"
+            y="0"
+            textAnchor="middle"
+            dominantBaseline="central"
+            fill="white"
+            fontSize="14"
+            fontWeight="bold"
+            style={{ pointerEvents: 'none', userSelect: 'none' }}
           >
-            <X size={16} />
-          </button>
-        </div>
-      </foreignObject>
+            ×
+          </text>
+        </g>
+      )}
     </g>
   );
 };
+// --- DEFINICIÓN DE TIPOS (ESTABLES) ---
+const NODE_TYPES = { 
+  custom: CustomNode,
+  groupNode: CustomGroupNode,
+  budgetNode: BudgetNode,
+  jointNode: JointNode
+};
+
+const EDGE_TYPES = { 
+  custom: CustomEdge 
+};
+
+// --- ERROR BOUNDARY INTERNO ---
+class FlowErrorBoundary extends React.Component<{ children: React.ReactNode, isDark: boolean }, { hasError: boolean, error: string }> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: '' };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true, error: error.toString() };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("CRITICAL FLOW ERROR:", error, errorInfo);
+  }
+
+  resetFlow = () => {
+    localStorage.removeItem('flow-constructor-nodes-v4');
+    localStorage.removeItem('flow-constructor-edges-v4');
+    window.location.reload();
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className={`flex flex-col items-center justify-center w-full h-full p-10 text-center ${this.props.isDark ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
+          <div className="p-8 rounded-3xl border-2 border-red-500/20 bg-red-500/5 max-w-md">
+            <h2 className="text-2xl font-black mb-4 flex items-center justify-center gap-2">
+              <span className="text-red-500">⚠️</span> Error en el Diagrama
+            </h2>
+            <p className="text-sm opacity-70 mb-6">Se ha detectado un problema en los datos del flujo. Esto puede ocurrir por datos guardados corruptos.</p>
+            <div className="flex flex-col gap-3">
+              <button 
+                onClick={this.resetFlow}
+                className="px-6 py-3 bg-red-600 text-white rounded-xl font-bold hover:bg-red-700 transition-all flex items-center justify-center gap-2"
+              >
+                <Trash2 size={18} />
+                Limpiar Datos y Reiniciar
+              </button>
+            </div>
+            <div className="mt-6 p-3 bg-black/5 rounded-lg text-[10px] text-left font-mono opacity-50 overflow-auto max-h-24">
+              {this.state.error}
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 function FlowContent({ isDark }: { isDark: boolean }) {
-  const nodeTypes = React.useMemo(() => ({ 
-    custom: CustomNode,
-    groupNode: CustomGroupNode,
-    budgetNode: BudgetNode 
-  }), []);
 
-  const edgeTypes = React.useMemo(() => ({ 
-    custom: CustomEdge 
-  }), []);
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(INITIAL_NODES as any);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(INITIAL_EDGES as any);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
+  const isLoaded = useRef(false);
   const { screenToFlowPosition, fitView, getNodes, getEdges } = useReactFlow();
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  // --- CARGA INICIAL ---
+  // --- CARGA INICIAL (PROTEGIDA CON REF) ---
   React.useEffect(() => {
-    const loadData = () => {
-      const savedNodes = localStorage.getItem('flow-constructor-nodes-v4');
-      const savedEdges = localStorage.getItem('flow-constructor-edges-v4');
-      
+    if (isLoaded.current) return;
+    isLoaded.current = true;
+
+    const savedNodes = localStorage.getItem('flow-constructor-nodes-v4');
+    const savedEdges = localStorage.getItem('flow-constructor-edges-v4');
+    const savedViewport = localStorage.getItem('flow-constructor-viewport-v4');
+    
+    try {
       if (savedNodes && savedEdges) {
-        try {
-          const parsedNodes = JSON.parse(savedNodes);
-          const parsedEdges = JSON.parse(savedEdges);
-          if (parsedNodes && Array.isArray(parsedNodes) && parsedNodes.length > 5) {
-            setNodes(parsedNodes);
-            setEdges(parsedEdges);
-            setTimeout(() => fitView({ padding: 100 }), 100);
-            return;
+        const parsedNodes = JSON.parse(savedNodes);
+        const parsedEdges = JSON.parse(savedEdges);
+        if (Array.isArray(parsedNodes)) {
+          setNodes(parsedNodes);
+          setEdges(parsedEdges || []);
+          
+          if (savedViewport) {
+            const viewport = JSON.parse(savedViewport);
+            const flowContainer = document.querySelector('.react-flow') as HTMLElement;
+            if (flowContainer) {
+              // Restauramos el zoom y posición guardados
+              setTimeout(() => {
+                const { setViewport } = (window as any).reactFlowInstance || {};
+                if (setViewport) setViewport(viewport);
+              }, 100);
+            }
           }
-        } catch (e) {
-          console.error("Error loading saved flow:", e);
-          localStorage.removeItem('flow-constructor-nodes-v4');
-          localStorage.removeItem('flow-constructor-edges-v4');
+          return;
         }
       }
-      
-      setNodes(INITIAL_NODES as any);
-      setEdges(INITIAL_EDGES as any);
-      setTimeout(() => fitView({ padding: 100 }), 200);
-    };
-
-    loadData();
+    } catch (e) {
+      console.error("Error loading saved flow:", e);
+    }
+    
+    // Carga inicial por defecto
+    setNodes(INITIAL_NODES as any);
+    setEdges(INITIAL_EDGES as any);
+    setTimeout(() => fitView({ padding: 100 }), 100);
   }, [setNodes, setEdges, fitView]);
 
   const onConnect = useCallback(
@@ -611,15 +758,24 @@ function FlowContent({ isDark }: { isDark: boolean }) {
     [setEdges]
   );
 
-  // --- GUARDADO ---
+  // --- GUARDADO AUTOMÁTICO ---
+  const { getViewport } = useReactFlow();
+  React.useEffect(() => {
+    if (isLoaded.current && nodes.length > 0) {
+      localStorage.setItem('flow-constructor-nodes-v4', JSON.stringify(nodes));
+      localStorage.setItem('flow-constructor-edges-v4', JSON.stringify(edges));
+      localStorage.setItem('flow-constructor-viewport-v4', JSON.stringify(getViewport()));
+    }
+  }, [nodes, edges, getViewport]);
+
   const onSave = useCallback(() => {
     localStorage.setItem('flow-constructor-nodes-v4', JSON.stringify(getNodes()));
     localStorage.setItem('flow-constructor-edges-v4', JSON.stringify(getEdges()));
-    alert("Progreso guardado");
-  }, [getNodes, getEdges, fitView]);
+  }, [getNodes, getEdges]);
 
   const onExport = useCallback((format: 'jpg' | 'pdf') => {
-    // Cerrar el menú de herramientas para la exportación
+    // Activar modo exportación para limpiar UI
+    setIsExporting(true);
     setIsSidebarOpen(false);
     
     // Deseleccionar todo para evitar marcos de selección
@@ -692,9 +848,10 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         })
         .finally(() => {
           element.classList.remove('is-exporting');
+          setIsExporting(false); // Desactivar modo exportación
         });
-    }, 800);
-  }, [fitView, setNodes, setEdges]);
+    }, 1500); // Un poco más de tiempo para estar seguros
+  }, [fitView, setNodes, setEdges, isDark]);
 
   const onAddNode = useCallback((icon: any) => {
     // Calculamos el centro de la pantalla en coordenadas de Flow
@@ -817,19 +974,68 @@ function FlowContent({ isDark }: { isDark: boolean }) {
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
-  }, []);
+    // Añadimos feedback visual al contenedor al pasar por encima
+    if (canvasRef.current) {
+      canvasRef.current.style.backgroundColor = isDark ? '#1a1a1a' : '#f8f8f8';
+      canvasRef.current.style.transition = 'background-color 0.2s ease';
+    }
+  }, [isDark]);
+
+  const onDragLeave = useCallback(() => {
+    if (canvasRef.current) {
+      canvasRef.current.style.backgroundColor = isDark ? '#0d0d0d' : '#ffffff';
+    }
+  }, [isDark]);
 
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault();
+      
+      // Restauramos el fondo del lienzo
+      if (canvasRef.current) {
+        canvasRef.current.style.backgroundColor = isDark ? '#0d0d0d' : '#ffffff';
+      }
+
       const dataStr = event.dataTransfer.getData('application/reactflow');
       if (!dataStr) return;
       
       const icon = JSON.parse(dataStr);
+      
+      // Cálculo de posición ultra-preciso
+      const reactFlowBounds = canvasRef.current?.getBoundingClientRect();
+      if (!reactFlowBounds) return;
+
       const position = screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
+
+      // LÓGICA DE REEMPLAZO: Detectar si se soltó sobre un nodo existente
+      const targetNode = getNodes().find((node) => {
+        const nodeWidth = 60; // Ancho estimado del nodo custom
+        const nodeHeight = 60;
+        return (
+          position.x >= node.position.x &&
+          position.x <= node.position.x + nodeWidth &&
+          position.y >= node.position.y &&
+          position.y <= node.position.y + nodeHeight &&
+          node.type === 'custom'
+        );
+      });
+
+      if (targetNode && icon.file) {
+        // Reemplazar el icono y el label del nodo existente
+        setNodes((nds) => nds.map((n) => {
+          if (n.id === targetNode.id) {
+            return {
+              ...n,
+              data: { ...n.data, icon: icon.file, label: icon.name }
+            };
+          }
+          return n;
+        }));
+        return;
+      }
 
       if (icon.type === 'group') {
         const color = PASTEL_COLORS[0];
@@ -848,6 +1054,13 @@ function FlowContent({ isDark }: { isDark: boolean }) {
           position,
           data: { label: '0' },
         }));
+      } else if (icon.type === 'joint') {
+        setNodes((nds) => nds.concat({
+          id: `joint-${Date.now()}`,
+          type: 'jointNode',
+          position,
+          data: {},
+        }));
       } else {
         setNodes((nds) => nds.concat({
           id: `node-${Date.now()}`,
@@ -857,11 +1070,12 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         }));
       }
     },
-    [screenToFlowPosition, setNodes, isDark]
+    [screenToFlowPosition, setNodes, getNodes, isDark]
   );
 
   return (
-    <div className="w-full h-full flex overflow-hidden">
+    <ExportContext.Provider value={{ isExporting }}>
+      <div className="w-full h-full flex overflow-hidden">
       <div ref={canvasRef} className="flex-1 relative h-full order-1 bg-white">
         {/* Logo de Agencia - Solo visible en Exportación */}
         <div className="absolute top-8 right-8 z-[200] export-only">
@@ -869,16 +1083,19 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         </div>
 
         {/* Dashboard de Presupuesto Mensual */}
-      <div className={`absolute top-8 left-8 z-[200] backdrop-blur-md p-4 rounded-2xl shadow-xl border flex flex-col gap-1 min-w-[200px] ${isDark ? 'bg-black/80 border-white/10' : 'bg-white/95 border-gray-100'}`}>
+      <div className={`absolute top-8 left-8 z-[200] ${isExporting ? (isDark ? 'bg-black border-white/20' : 'bg-white border-gray-200') : (isDark ? 'bg-black/80 backdrop-blur-md border-white/10' : 'bg-white/95 backdrop-blur-md border-gray-100')} p-4 rounded-2xl shadow-xl border flex flex-col gap-1 min-w-[200px]`}>
         <span className={`text-[10px] font-black uppercase tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-800'}`}>Inversión Estimada</span>
         <div className="flex flex-col">
           <span className={`text-2xl font-black tabular-nums ${isDark ? 'text-white' : 'text-slate-900'}`}>
             ${(nodes.filter(n => n.type === 'budgetNode')
-                 .reduce((acc, n) => acc + (parseInt(n.data.label) || 0), 0) * 30.4)
+                 .reduce((acc, n) => {
+                   const val = parseInt(n?.data?.label || '0');
+                   return acc + (isNaN(val) ? 0 : val);
+                 }, 0) * 30.4)
                  .toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
           </span>
-          <span className={`text-[11px] font-bold mt-[-2px] ${isDark ? 'text-white/60' : 'text-slate-700'}`}>
-            AL MES <span className="opacity-60">+ IVA</span>
+          <span className={`text-[11px] font-bold mt-[-2px] ${isDark ? 'text-white/60' : 'text-slate-700'}`} style={{ opacity: 1, visibility: 'visible', display: 'flex', gap: '4px' }}>
+            AL MES <span style={{ color: isDark ? '#888' : '#666', fontWeight: 900 }}>+ IVA</span>
           </span>
         </div>
         <div className={`mt-2 h-1 w-full rounded-full overflow-hidden ${isDark ? 'bg-white/10' : 'bg-slate-100'}`}>
@@ -904,36 +1121,38 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         </button>
       </div>
 
-      <ReactFlow
+          <ReactFlow
         nodes={nodes}
         edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onNodeDrag={onNodeDrag}
-          onNodeDragStop={onNodeDragStop}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          connectionLineComponent={CustomConnectionLine}
-          connectionMode={ConnectionMode.Loose}
-          colorMode={isDark ? 'dark' : 'light'}
-          defaultEdgeOptions={{
-            type: 'custom',
-            style: { strokeWidth: 2.5, stroke: '#ff851d' },
-          }}
-          snapToGrid={true}
-          snapGrid={[10, 10]}
-          fitView
-          selectionKeyCode="Control"
-          elevateNodesOnSelect={false}
-          className="bg-transparent"
-          minZoom={0.2}
-          maxZoom={2}
-        >
-          <Background color={isDark ? '#ff851d' : '#94a3b8'} variant="grid" style={{ opacity: 0.05 }} gap={25} />
-          <Controls position="bottom-right" className="!bg-white !shadow-2xl !border-none !rounded-xl overflow-hidden mb-20 export-hide" />
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onNodeDragStop={onNodeDragStop}
+        nodeTypes={NODE_TYPES}
+        edgeTypes={EDGE_TYPES}
+        onInit={(instance) => {
+          (window as any).reactFlowInstance = instance;
+        }}
+        connectionLineComponent={CustomConnectionLine}
+        connectionMode={ConnectionMode.Loose}
+        colorMode={isDark ? 'dark' : 'light'}
+        defaultEdgeOptions={{
+          type: 'custom',
+          style: { strokeWidth: 2.5, stroke: '#ff851d' },
+        }}
+        snapToGrid={true}
+        snapGrid={[10, 10]}
+        selectionKeyCode="Control"
+        elevateNodesOnSelect={false}
+        className="bg-transparent"
+        minZoom={0.2}
+        maxZoom={2}
+      >
+        <Background color={isDark ? '#ff851d' : '#94a3b8'} variant="grid" style={{ opacity: 0.05 }} gap={25} />
+        <Controls position="bottom-left" className="!bg-white !shadow-2xl !border-none !rounded-xl overflow-hidden mb-8 ml-8 export-hide" />
           
           <Panel position="top-right" className="z-[110] flex flex-col items-end gap-6 export-hide">
              <div className="flex gap-2">
@@ -943,12 +1162,6 @@ function FlowContent({ isDark }: { isDark: boolean }) {
                    <span>Herramientas</span>
                  </button>
                )}
-               <div className={`flex items-center gap-2 p-2 rounded-2xl shadow-xl backdrop-blur-md border ${isDark ? 'bg-black/50 border-white/10' : 'bg-white/90 border-gray-100'}`}>
-                 <div className="flex gap-1">
-                    <button onClick={() => fitView()} className={`p-1.5 hover:bg-black/5 rounded-lg transition-colors ${isDark ? 'text-white/70' : 'text-gray-600'}`} title="Centrar Vista"><Maximize size={16}/></button>
-                    <button onClick={onSave} className={`p-1.5 hover:bg-black/5 rounded-lg transition-colors ${isDark ? 'text-white/70' : 'text-gray-600'}`} title="Guardar Progreso"><Save size={16}/></button>
-                 </div>
-               </div>
              </div>
           </Panel>
         </ReactFlow>
@@ -976,8 +1189,24 @@ function FlowContent({ isDark }: { isDark: boolean }) {
             <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-4 custom-scrollbar">
               {/* Opción de Grupo */}
               <div
+                key="group-tool"
                 draggable
-                onDragStart={(e) => e.dataTransfer.setData('application/reactflow', JSON.stringify({ type: 'group' }))}
+                onDragStart={(e) => {
+                  e.dataTransfer.setData('application/reactflow', JSON.stringify({ type: 'group' }));
+                  e.dataTransfer.effectAllowed = 'move';
+                  
+                  // Crear una imagen de arrastre de tamaño exacto
+                  const img = new Image();
+                  img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='36' height='36' x='2' y='2' rx='8' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-dasharray='4'/%3E%3C/svg%3E";
+                  e.dataTransfer.setDragImage(img, 20, 20);
+
+                  // Ocultar el elemento original de la "vitrina"
+                  const target = e.currentTarget as HTMLElement;
+                  setTimeout(() => { target.style.opacity = '0'; }, 0);
+                }}
+                onDragEnd={(e) => {
+                  (e.currentTarget as HTMLElement).style.opacity = '1';
+                }}
                 onClick={() => onAddNode({ type: 'group' })}
                 className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all cursor-grab active:cursor-grabbing ${isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50'}`}
               >
@@ -1000,13 +1229,40 @@ function FlowContent({ isDark }: { isDark: boolean }) {
                 <span className="text-[8px] font-black uppercase text-center text-green-700">Presup</span>
               </div>
 
+              {/* Opción de Unión (Nodo) */}
+              <div
+                draggable
+                onDragStart={(e) => e.dataTransfer.setData('application/reactflow', JSON.stringify({ type: 'joint' }))}
+                onClick={() => onAddNode({ type: 'joint' })}
+                className={`flex flex-col items-center gap-1 p-2 rounded-xl transition-all cursor-grab active:cursor-grabbing ${isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50'}`}
+              >
+                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center border-2 border-slate-300 border-dotted">
+                   <div className="w-2 h-2 rounded-full bg-slate-400" />
+                </div>
+                <span className="text-[8px] font-black uppercase text-center text-slate-500">Unión</span>
+              </div>
+
               <div className="h-px bg-gray-100 my-1 mx-2" />
 
               {AVAILABLE_ICONS.map((icon, idx) => (
                 <div
                   key={idx}
                   draggable
-                  onDragStart={(e) => e.dataTransfer.setData('application/reactflow', JSON.stringify(icon))}
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData('application/reactflow', JSON.stringify(icon));
+                    e.dataTransfer.effectAllowed = 'move';
+                    
+                    // Configuramos la imagen de arrastre para que sea EXACTAMENTE el icono pequeño
+                    // Usamos el mismo elemento que se está dragueando para mantener el estilo
+                    const target = e.currentTarget as HTMLElement;
+                    e.dataTransfer.setDragImage(target, 20, 20);
+
+                    // Lo "quitamos" de la vitrina visualmente después de capturar la imagen de arrastre
+                    setTimeout(() => { target.style.opacity = '0'; }, 0);
+                  }}
+                  onDragEnd={(e) => {
+                    (e.currentTarget as HTMLElement).style.opacity = '1';
+                  }}
                   onClick={() => onAddNode(icon)}
                   className={`flex flex-col items-center gap-1 cursor-grab active:cursor-grabbing p-2 rounded-xl transition-all ${isDark ? 'hover:bg-white/5' : 'hover:bg-gray-50'}`}
                 >
@@ -1045,17 +1301,41 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         .is-exporting .react-flow__node-resizer,
         .is-exporting .react-flow__selection,
         .is-exporting .react-flow__nodesselection-rect,
-        .is-exporting .react-flow__edge-path-selector {
+        .is-exporting .react-flow__edge-path-selector,
+        .is-exporting .react-flow__edge-path-selector + g,
+        .is-exporting button,
+        .is-exporting .group button,
+        .is-exporting .react-flow__controls,
+        .is-exporting .react-flow__attribution,
+        .is-exporting .react-flow__minimap,
+        .is-exporting .react-flow__panel,
+        .is-exporting g[onClick],
+        .is-exporting g.cursor-pointer g {
           display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          pointer-events: none !important;
         }
-        .is-exporting .react-flow__controls {
+        /* Específico para los botones × en los cables */
+        .is-exporting g.export-hide {
           display: none !important;
         }
         .is-exporting .react-flow__background {
           opacity: 0 !important;
         }
         @media print {
-          .react-flow__panel, .react-flow__controls, .export-hide { display: none !important; }
+          .export-hide, 
+          .react-flow__handle,
+          .react-flow__handle-source,
+          .react-flow__handle-target,
+          .react-flow__controls,
+          .react-flow__attribution,
+          .react-flow__minimap,
+          .react-flow__panel {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+          }
         }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(155, 155, 155, 0.2); border-radius: 10px; }
@@ -1068,15 +1348,17 @@ export default function SlideFlowConstructor({ isDark }: { isDark: boolean }) {
   return (
     <div 
       key="slide-flow-constructor"
-      className={`relative w-full h-[600px] md:h-full rounded-[3rem] border overflow-hidden ${isDark ? 'border-[#333] bg-[#0d0d0d]' : 'border-gray-200 bg-[#ebebeb]'}`}
+      className={`relative w-full h-[600px] md:h-full rounded-[3rem] overflow-hidden ${isDark ? 'bg-[#0d0d0d]' : 'bg-[#ffffff]'}`}
       style={{
         boxShadow: isDark 
           ? 'inset 0 10px 40px rgba(0,0,0,0.8), inset 0 -10px 40px rgba(0,0,0,0.8)'
-          : 'inset 0 10px 40px rgba(0,0,0,0.08), inset 0 -10px 40px rgba(0,0,0,0.08)'
+          : 'inset 0 10px 40px rgba(0,0,0,0.15), inset 0 -10px 40px rgba(0,0,0,0.15)'
       }}
     >
       <ReactFlowProvider>
-        <FlowContent isDark={isDark} />
+        <FlowErrorBoundary isDark={isDark}>
+          <FlowContent isDark={isDark} />
+        </FlowErrorBoundary>
       </ReactFlowProvider>
     </div>
   );
