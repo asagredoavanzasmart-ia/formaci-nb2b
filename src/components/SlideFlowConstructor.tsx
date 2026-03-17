@@ -1343,8 +1343,8 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(155, 155, 155, 0.2); border-radius: 10px; }
       `}</style>
     </div>
+    </ExportContext.Provider>
   );
-}
 }
 
 export default function SlideFlowConstructor({ isDark }: { isDark: boolean }) {
