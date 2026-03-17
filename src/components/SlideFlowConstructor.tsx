@@ -28,6 +28,10 @@ import { toJpeg } from 'html-to-image';
 import logoHorizontalDark from '../Logos/logo horizontal dark.png';
 import logoHorizontalLight from '../Logos/logo horizontal ligth.png';
 
+// --- CONTEXTO DE EXPORTACIÓN ---
+const ExportContext = React.createContext({ isExporting: false });
+
+
 // --- CONFIGURACIÓN DE ICONOS ---
 const AVAILABLE_ICONS = [
   { name: 'Agente IA', file: 'Agente IA.png' },
@@ -397,8 +401,7 @@ const CustomGroupNode = ({ id, data, selected, isDark }: any) => {
           <Plus size={12} color="white" strokeWidth={4} />
         </div>
       ))}
-        <Plus size={14} color="white" strokeWidth={4} />
-      </div>
+      ))}
     </div>
   );
 };
