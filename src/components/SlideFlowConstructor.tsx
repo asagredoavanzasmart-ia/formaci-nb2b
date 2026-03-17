@@ -401,7 +401,6 @@ const CustomGroupNode = ({ id, data, selected, isDark }: any) => {
           <Plus size={12} color="white" strokeWidth={4} />
         </div>
       ))}
-      ))}
     </div>
   );
 };
@@ -1345,6 +1344,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
       `}</style>
     </div>
   );
+}
 }
 
 export default function SlideFlowConstructor({ isDark }: { isDark: boolean }) {
