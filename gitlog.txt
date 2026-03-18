@@ -1,2 +1,0 @@
-Error: Command failed: git log -p src/components/SlideCRMPipeline.tsx
-fatal: not a git repository (or any of the parent directories): .git
