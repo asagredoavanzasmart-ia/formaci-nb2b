@@ -1,0 +1,112 @@
+/*
+ * Tokens semánticos de la portada del repositorio.
+ * Se adaptan solos a Light/Dark gracias a la clase `.dark` que App.tsx pone en <html>.
+ */
+:root {
+  --portada-brand-orange: #ff851d;
+  --portada-brand-pink: #ef375c;
+  --portada-bg: #f0f2f5;
+  --portada-surface: #ffffff;
+  --portada-surface-hover: #fff7ed;
+  --portada-border: #e5e7eb;
+  --portada-text: #111827;
+  --portada-text-muted: #4b5563;
+  --portada-blob-opacity: 0.18;
+  --portada-shadow: 0 10px 30px -12px rgba(17, 24, 39, 0.18);
+  --portada-shadow-hover: 0 24px 50px -16px rgba(239, 55, 92, 0.35);
+}
+
+.dark {
+  --portada-bg: #000000;
+  --portada-surface: #111111;
+  --portada-surface-hover: #181818;
+  --portada-border: #2a2a2a;
+  --portada-text: #f8f9fa;
+  --portada-text-muted: rgba(248, 249, 250, 0.72);
+  --portada-blob-opacity: 0.22;
+  --portada-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.8);
+  --portada-shadow-hover: 0 24px 50px -16px rgba(255, 133, 29, 0.35);
+}
+
+.portada-root {
+  background-color: var(--portada-bg);
+  color: var(--portada-text);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.portada-text-muted {
+  color: var(--portada-text-muted);
+}
+
+.portada-gradient {
+  background-image: linear-gradient(
+    to right,
+    var(--portada-brand-orange),
+    var(--portada-brand-pink)
+  );
+}
+
+.portada-gradient-text {
+  background-image: linear-gradient(
+    to right,
+    var(--portada-brand-orange),
+    var(--portada-brand-pink)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.portada-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: var(--portada-blob-opacity);
+  pointer-events: none;
+}
+
+.portada-card {
+  background-color: var(--portada-surface);
+  border: 1px solid var(--portada-border);
+  box-shadow: var(--portada-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.portada-card:hover,
+.portada-card:focus-visible {
+  transform: translateY(-6px);
+  background-color: var(--portada-surface-hover);
+  border-color: var(--portada-brand-orange);
+  box-shadow: var(--portada-shadow-hover);
+  outline: none;
+}
+
+.portada-card-empty {
+  border: 2px dashed var(--portada-border);
+  background-color: transparent;
+}
+
+.portada-chip {
+  border: 1px solid var(--portada-border);
+  color: var(--portada-text-muted);
+}
+
+.portada-icon-button {
+  background-color: var(--portada-surface);
+  border: 1px solid var(--portada-border);
+  color: var(--portada-text);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.portada-icon-button:hover {
+  transform: scale(1.08);
+  border-color: var(--portada-brand-orange);
+}
+
+.portada-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -34,24 +34,24 @@ const roles: RoleData[] = [
       },
       {
         id: 'q2',
-        label: '¿Estabilidad organizacional?',
+        label: 'Concentración o diversificación de proveedores',
         icon: Shield,
         detailTitle: 'Lo que debes demostrar',
-        detailText: 'Que la solución es un uso discrecional de recursos justificado y no representa un riesgo inmanejable.'
+        detailText: 'Dependiendo del estilo de gerencia, se preferirá un tipo de proveedor u otro.'
       },
       {
         id: 'q3',
-        label: '¿Podemos encontrar el dinero?',
+        label: 'Han realizado este trabajo anteriormente con éxito',
         icon: Search,
         detailTitle: 'Lo que debes demostrar',
-        detailText: 'Que el rendimiento justifica el costo y el riesgo sobre otras opciones prioritarias.'
+        detailText: 'Deben poder demostrar que tienen experiencia prestando esta solución con éxito y con referencias en otras empresas.'
       },
       {
         id: 'f1',
-        label: 'Monto y Condiciones',
+        label: 'Montos y condiciones',
         icon: Briefcase,
         detailTitle: 'Factores de Jerarquía',
-        detailText: 'A mayor inversión, más arriba reside el rol. En tiempos de recesión, la aprobación sube a niveles de CEO.'
+        detailText: 'La solución se adecua al presupuesto; determinar si lo excede o no.'
       },
       {
         id: 'f2',
@@ -59,6 +59,13 @@ const roles: RoleData[] = [
         icon: Target,
         detailTitle: 'Factores de Riesgo',
         detailText: 'Si no hay confianza histórica o el producto es nuevo, el rol sube. Proyectos que alteran la cultura requieren la firma del nivel más alto.'
+      },
+      {
+        id: 'f3',
+        label: 'Es la opción más económica posible',
+        icon: Calculator,
+        detailTitle: 'Lo que debes demostrar',
+        detailText: 'Sabemos que hay decisores que solo buscan precio. No vayamos contra la corriente, sino que ajustemos nuestro trabajo.'
       }
     ]
   },
@@ -189,7 +196,17 @@ const roles: RoleData[] = [
   }
 ];
 
-const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string | number }) => {
+import EditableText from './EditableText';
+
+const FlipCard = ({
+  item,
+  isDark,
+  onSaveField,
+}: {
+  item: any;
+  isDark: boolean;
+  onSaveField: (field: 'label' | 'detailText', val: string) => void;
+}) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
@@ -211,23 +228,34 @@ const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string |
           className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center p-3 rounded-2xl border shadow-sm transition-colors ${isDark ? 'bg-[#1e1e1e] border-[#333] group-hover:border-[#ff851d]/50' : 'bg-gray-50 border-gray-200 group-hover:border-[#ff851d]/50'}`}
           style={{ backfaceVisibility: 'hidden' }}
         >
-          <item.icon size={24} className="text-[#ff851d] mb-2" />
-          <span className={`text-sm font-bold text-center leading-tight ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
-            {item.label}
+          <item.icon size={24} className="text-[#ff851d] mb-2 shrink-0" />
+          <span className={`text-sm font-bold text-center leading-tight w-full ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+            <EditableText
+              value={item.label}
+              onSave={(val) => onSaveField('label', val)}
+              isDark={isDark}
+              className="w-full text-center"
+            />
           </span>
-          <span className={`text-sm mt-2 font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
+          <span className={`text-sm mt-1 font-bold opacity-0 group-hover:opacity-100 transition-opacity shrink-0 ${isDark ? 'text-[#ff851d]' : 'text-[#ff851d]'}`}>
             Ver detalle
           </span>
         </div>
 
         {/* Back of Card */}
         <div 
-          className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center p-4 rounded-2xl border shadow-md ${isDark ? 'bg-[#2a2a2a] border-[#ff851d]' : 'bg-orange-50 border-[#ff851d]'}`}
+          className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center p-4 rounded-2xl border shadow-md overflow-y-auto ${isDark ? 'bg-[#2a2a2a] border-[#ff851d]' : 'bg-orange-50 border-[#ff851d]'}`}
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
-          <p className={`text-sm text-center leading-snug font-medium ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
-            {item.detailText}
-          </p>
+          <div className={`text-sm text-center leading-snug font-medium w-full ${isDark ? 'text-gray-300' : 'text-gray-800'}`}>
+            <EditableText
+              value={item.detailText}
+              onSave={(val) => onSaveField('detailText', val)}
+              isDark={isDark}
+              isTextArea={true}
+              className="w-full text-center"
+            />
+          </div>
         </div>
       </motion.div>
     </div>
@@ -235,9 +263,34 @@ const FlipCard = ({ item, isDark }: { item: any, isDark: boolean, key?: string |
 };
 
 export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
+  const [rolesList, setRolesList] = useState(roles);
   const [activeTab, setActiveTab] = useState(roles[0].id);
 
-  const activeRole = roles.find(r => r.id === activeTab) || roles[0];
+  const activeRole = rolesList.find(r => r.id === activeTab) || rolesList[0];
+
+  const updateActiveRoleField = (field: 'title' | 'subtitle' | 'description', newValue: string) => {
+    setRolesList(prev => prev.map(r => {
+      if (r.id === activeTab) {
+        return { ...r, [field]: newValue };
+      }
+      return r;
+    }));
+  };
+
+  const updateRoleItemField = (itemId: string, field: 'label' | 'detailText', newValue: string) => {
+    setRolesList(prev => prev.map(r => {
+      if (r.id === activeTab) {
+        const newItems = r.items.map(item => {
+          if (item.id === itemId) {
+            return { ...item, [field]: newValue };
+          }
+          return item;
+        });
+        return { ...r, items: newItems };
+      }
+      return r;
+    }));
+  };
 
   return (
     <div className={`p-6 sm:p-8 rounded-3xl shadow-2xl relative overflow-hidden flex flex-col w-full h-full ${isDark ? 'bg-[#111111] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
@@ -257,7 +310,7 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
         
         {/* Left: Vertical Tabs */}
         <div className="w-full md:w-1/3 flex flex-col gap-2 shrink-0 justify-center">
-          {roles.map((role) => {
+          {rolesList.map((role) => {
             const isActive = activeTab === role.id;
             const Icon = role.icon;
 
@@ -306,25 +359,46 @@ export default function SlideRolesCompra({ isDark }: { isDark: boolean }) {
                 <div className="p-2.5 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30">
                   <activeRole.icon size={24} />
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <h3 className={`text-lg md:text-xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                    {activeRole.title}
+                    <EditableText
+                      value={activeRole.title}
+                      onSave={(val) => updateActiveRoleField('title', val)}
+                      isDark={isDark}
+                      className="w-full"
+                    />
                   </h3>
                   <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    {activeRole.subtitle}
+                    <EditableText
+                      value={activeRole.subtitle}
+                      onSave={(val) => updateActiveRoleField('subtitle', val)}
+                      isDark={isDark}
+                      className="w-full"
+                    />
                   </p>
                 </div>
               </div>
 
-              <p className={`text-sm leading-relaxed mb-4 shrink-0 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {activeRole.description}
-              </p>
+              <div className={`text-sm leading-relaxed mb-4 shrink-0 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <EditableText
+                  value={activeRole.description}
+                  onSave={(val) => updateActiveRoleField('description', val)}
+                  isDark={isDark}
+                  isTextArea={true}
+                  className="w-full"
+                />
+              </div>
               
               {/* Flip Cards Grid - Completely eliminates vertical scroll */}
               <div className="flex-1 flex flex-col justify-center min-h-0">
                 <div className={`grid gap-2 sm:gap-3 ${activeRole.items.length > 4 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2'}`}>
                   {activeRole.items.map((item, idx) => (
-                    <FlipCard key={item.id || idx} item={item} isDark={isDark} />
+                    <FlipCard
+                      key={item.id || idx}
+                      item={item}
+                      isDark={isDark}
+                      onSaveField={(field, val) => updateRoleItemField(item.id, field, val)}
+                    />
                   ))}
                 </div>
               </div>

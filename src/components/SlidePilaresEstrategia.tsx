@@ -27,17 +27,9 @@ const pillars = [
     description: 'Es un sistema de alerta temprana. Consiste en identificar cualquier área de incertidumbre, peligro o falta de información en tu venta (Bandera Roja).',
     bullets: ['Identificar áreas de peligro', 'Reconocer falta de información', 'Utilizar puntos fuertes estratégicamente', 'Eliminar o reducir riesgos']
   },
-  { 
-    id: 'modos', 
-    title: 'IV. Modos de Respuesta', 
-    subtitle: 'Response Modes',
-    icon: Activity, 
-    description: 'Evaluar la receptividad de cada comprador. Las personas solo compran cuando perciben una discrepancia entre su realidad actual y lo que desean.',
-    bullets: ['Modo Crecimiento', 'Modo Problemas', 'Modo Equilibrio', 'Exceso de Confianza']
-  },
   {
     id: 'proceso',
-    title: 'V. El Proceso Comercial',
+    title: 'IV. El Proceso Comercial',
     subtitle: 'Sales Process',
     icon: Clock,
     description: 'La gestión eficiente de tus recursos y tiempo a lo largo de todo el ciclo de vida de la oportunidad.',
@@ -45,10 +37,33 @@ const pillars = [
   }
 ];
 
+import EditableText from './EditableText';
+
 export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) {
+  const [pillarsList, setPillarsList] = useState(pillars);
   const [activeId, setActiveId] = useState(pillars[0].id);
 
-  const activePillar = pillars.find(p => p.id === activeId) || pillars[0];
+  const activePillar = pillarsList.find(p => p.id === activeId) || pillarsList[0];
+
+  const updateActivePillarField = (field: 'title' | 'subtitle' | 'description', newValue: string) => {
+    setPillarsList(prev => prev.map(p => {
+      if (p.id === activeId) {
+        return { ...p, [field]: newValue };
+      }
+      return p;
+    }));
+  };
+
+  const updateActivePillarBullet = (bulletIndex: number, newValue: string) => {
+    setPillarsList(prev => prev.map(p => {
+      if (p.id === activeId) {
+        const newBullets = [...p.bullets];
+        newBullets[bulletIndex] = newValue;
+        return { ...p, bullets: newBullets };
+      }
+      return p;
+    }));
+  };
 
   return (
     <div className={`w-full h-full flex flex-col p-6 md:p-8 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#1e1e1e] shadow-black/60 border border-[#2a2a2a]' : 'bg-white shadow-gray-300/60 border border-gray-100'}`}>
@@ -59,7 +74,7 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
       {/* Header */}
       <div className="shrink-0 mb-6 z-10">
         <h2 className={`text-2xl md:text-4xl font-bold mb-2 flex items-center gap-3 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-          Los 5 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
+          Los 4 Pilares de la <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Estrategia</span>
         </h2>
         <p className={`text-sm md:text-base ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
           Explora los fundamentos para dominar la venta compleja. Selecciona un pilar para ver los detalles.
@@ -71,7 +86,7 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
 
         {/* Left: Vertical Tabs */}
         <div className="w-full md:w-1/3 flex flex-col gap-2 overflow-y-auto custom-scrollbar pr-2">
-          {pillars.map((pillar) => {
+          {pillarsList.map((pillar) => {
             const isActive = activeId === pillar.id;
             const Icon = pillar.icon;
 
@@ -121,27 +136,48 @@ export default function SlidePilaresEstrategia({ isDark }: { isDark: boolean }) 
                   <div className={`p-4 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg`}>
                     <activePillar.icon size={32} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
-                      {activePillar.title}
+                      <EditableText
+                        value={activePillar.title}
+                        onSave={(val) => updateActivePillarField('title', val)}
+                        isDark={isDark}
+                        className="w-full"
+                      />
                     </h3>
                     <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {activePillar.subtitle}
+                      <EditableText
+                        value={activePillar.subtitle}
+                        onSave={(val) => updateActivePillarField('subtitle', val)}
+                        isDark={isDark}
+                        className="w-full"
+                      />
                     </p>
                   </div>
                 </div>
 
                 <div className="space-y-6">
-                  <p className={`text-base md:text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                    {activePillar.description}
-                  </p>
+                  <div className={`text-base md:text-lg leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <EditableText
+                      value={activePillar.description}
+                      onSave={(val) => updateActivePillarField('description', val)}
+                      isDark={isDark}
+                      isTextArea={true}
+                      className="w-full"
+                    />
+                  </div>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {activePillar.bullets.map((bullet, idx) => (
                       <div key={idx} className={`flex items-start gap-3 p-3 rounded-xl border ${isDark ? 'bg-[#2a2a2a] border-[#3a3a3a]' : 'bg-gray-50 border-gray-100'}`}>
                         <ChevronRight size={18} className="text-[#ff851d] shrink-0 mt-0.5" />
-                        <span className={`text-sm md:text-base font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                          {bullet}
+                        <span className={`text-sm md:text-base font-medium flex-1 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                          <EditableText
+                            value={bullet}
+                            onSave={(val) => updateActivePillarBullet(idx, val)}
+                            isDark={isDark}
+                            className="w-full"
+                          />
                         </span>
                       </div>
                     ))}

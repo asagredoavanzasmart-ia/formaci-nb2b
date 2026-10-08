@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize } from 'lucide-react';
+import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize, Save, LayoutGrid, NotebookPen, Presentation } from 'lucide-react';
 
 import Slide5 from './components/Slide5';
 import Slide6 from './components/Slide6';
@@ -30,57 +30,47 @@ import SlideVentaSimpleVsCompleja from './components/SlideVentaSimpleVsCompleja'
 import SlideOfferTool from './components/SlideOfferTool';
 import SlideOfferIntro from './components/SlideOfferIntro';
 import SlideFlowConstructor from './components/SlideFlowConstructor';
+import PortadaRepositorio from './components/PortadaRepositorio';
+import ClaseMetodologias from './components/ClaseMetodologias';
+import ClaseArquitecturaEquipos from './components/ClaseArquitecturaEquipos';
+import ClaseMeddpicc from './components/ClaseMeddpicc';
+import ClaseSpin from './components/ClaseSpin';
+import ClaseKahneman from './components/ClaseKahneman';
+import ClaseChallenger from './components/ClaseChallenger';
+import ClaseTrampas from './components/ClaseTrampas';
+import NotasDocente from './components/NotasDocente';
+import { catalogoClases } from './data/catalogoClases';
+import { initialSlides, slidesByClass, slideCountByClassId } from './data/slidesByClass';
+import { presenterBus } from './lib/presenterBus';
 import { CompleteICP } from './types';
 import logoLight from './Logos/logo horizontal ligth.png';
 import logoDark from './Logos/logo horizontal dark.png';
 
 
 
-const initialSlides = [
-  { id: 'slide-0', title: 'Inicio', level: 2 },
-  { id: 'slide-simple-vs-compleja', title: 'Evolución de la Venta', level: 2 },
-  { id: 'slide-intro', title: 'Introducción', level: 2 },
-  { id: 'slide-estrategia', title: 'Estrategia vs Táctica', level: 2 },
-  { id: 'slide-comp-vendedores', title: 'Comparación Vendedores', level: 2 },
-  { id: 'slide-pilares', title: 'Pilares de la Estrategia', level: 2 },
-  
-  { id: 'header-roles', title: 'I. Roles de Influencia', level: 1 },
-  { id: 'slide-roles', title: 'Roles de Compra', level: 2 },
-  { id: 'slide-ident-comprador', title: 'Identificar Comprador', level: 2 },
-  { id: 'slide-gest-tecnico', title: 'Gestionar Comprador técnico', level: 2 },
-  { id: 'slide-win-perfiles', title: 'Win-Results por Perfil', level: 2 },
-  { id: 'slide-win-preguntas', title: 'Win-Results (Preguntas)', level: 2 },
-  
-  { id: 'header-icp', title: 'II. ICP + Oferta', level: 1 },
-  { id: 'slide-aterrizaje', title: 'Aterrizaje y Expansión', level: 2 },
-  { id: 'slide-icp', title: 'Perfil del Cliente Ideal (ICP)', level: 2 },
-  { id: 'slide-icp-tool', title: 'Herramienta ICP', level: 2 },
-  { id: 'slide-offer-intro', title: 'Creación de la Oferta', level: 2 },
-  { id: 'slide-offer-tool', title: 'Herramienta de Oferta', level: 2 },
-  
-  { id: 'header-redflags', title: 'III. Red Flags y Problemas', level: 1 },
-  { id: 'slide-banderas', title: 'Banderas Rojas', level: 2 },
-  { id: 'slide-superar', title: 'Superar Problemas', level: 2 },
-  
-  { id: 'header-modos', title: 'IV. Modos de Respuesta', level: 1 },
-  { id: 'slide-receptibilidad', title: 'Nivel de Receptividad', level: 2 },
-  { id: 'slide-modos', title: 'Modos de Respuesta', level: 2 },
-  
-  { id: 'header-proceso', title: 'V. Proceso comercial', level: 1 },
-  { id: 'slide-ciclo', title: 'Ciclo Normal de Ventas', level: 2 },
-  { id: 'slide-flow-constructor', title: 'Creador de flujos', level: 2 },
-  { id: 'slide-crm', title: 'Pipeline CRM', level: 2 },
-  { id: 'slide-constructor-crm', title: 'Constructor de Procesos', level: 2 },
-  { id: 'slide-lista-estrategica', title: 'Lista de Verificación Estratégica', level: 2 }
-];
-
 export default function App() {
   const [isDark, setIsDark] = useState(false);
+  // null = se muestra la portada del repositorio; con id = se muestra esa clase
+  const [activeClassId, setActiveClassId] = useState<string | null>(null);
   const [slidesOrder, setSlidesOrder] = useState(initialSlides);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [createdIcps, setCreatedIcps] = useState<CompleteICP[]>([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isNotesOpen, setIsNotesOpen] = useState(false);
+  // Índice fijado por la ventana de presentador: evita reenviar el cambio en bucle.
+  const lastRemoteIndex = useRef<number | null>(null);
+  
+  const [editedTexts, setEditedTexts] = useState<Record<string, string>>(() => {
+    try {
+      const saved = localStorage.getItem('B2B_EDITED_TEXTS');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      return {};
+    }
+  });
+  const [pendingChanges, setPendingChanges] = useState<Record<string, string>>({});
+  const [isSavedFeedback, setIsSavedFeedback] = useState(false);
   const [windowSize, setWindowSize] = useState({ 
     width: typeof window !== 'undefined' ? window.innerWidth : 1280, 
     height: typeof window !== 'undefined' ? window.innerHeight : 720 
@@ -127,6 +117,39 @@ export default function App() {
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
+  // --- Sincronización con la ventana de "Modo presentador" ---
+  // Responde al estado que pide la ventana presentador y acepta su navegación.
+  useEffect(() => {
+    const unsub = presenterBus.subscribe((msg) => {
+      if (msg.type === 'request-state') {
+        presenterBus.post({ type: 'state', activeClassId, slideIndex: currentSlideIndex, isDark });
+      } else if (msg.type === 'navigate') {
+        setCurrentSlideIndex((prev) => {
+          if (prev === msg.slideIndex) return prev;
+          lastRemoteIndex.current = msg.slideIndex;
+          return msg.slideIndex;
+        });
+      }
+    });
+    return unsub;
+  }, [activeClassId, currentSlideIndex, isDark]);
+
+  // Difunde el cambio de diapositiva a la ventana presentador (salvo que el cambio
+  // haya venido de ella, para no reenviarlo en bucle).
+  useEffect(() => {
+    if (lastRemoteIndex.current === currentSlideIndex) {
+      lastRemoteIndex.current = null;
+      return;
+    }
+    presenterBus.post({ type: 'navigate', slideIndex: currentSlideIndex });
+  }, [currentSlideIndex]);
+
+  // Difunde la clase activa y el tema cuando cambian.
+  useEffect(() => {
+    presenterBus.post({ type: 'state', activeClassId, slideIndex: currentSlideIndex, isDark });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeClassId, isDark]);
+
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -135,12 +158,178 @@ export default function App() {
     }
   }, [isDark]);
 
+  // Habilitar la edición por doble clic en todos los elementos de texto de forma global
+  useEffect(() => {
+    const handleDblClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      
+      // Lista de etiquetas de texto elegibles
+      const textTags = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LI', 'STRONG', 'EM', 'B', 'I', 'TD', 'TH'];
+      
+      // Verificar si el elemento es elegible para ser editado
+      if (
+        !target ||
+        !textTags.includes(target.tagName) ||
+        target.contentEditable === 'true' ||
+        target.closest('[pointer-events="none"]') ||
+        target.closest('button') ||
+        target.closest('a') ||
+        target.closest('input') ||
+        target.closest('textarea') ||
+        target.closest('.react-flow') ||
+        target.closest('.notas-docente-modal')
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const originalHTML = target.innerHTML;
+      
+      // Intentar obtener el texto de fábrica
+      let originalText = target.getAttribute('data-original-text');
+      if (!originalText) {
+        originalText = target.innerText.trim();
+        target.setAttribute('data-original-text', originalText);
+      }
+
+      // Hacer editable
+      target.contentEditable = 'true';
+      target.setAttribute('spellcheck', 'false');
+
+      // Poner el foco en el elemento
+      target.focus();
+      
+      // Seleccionar todo el texto para edición rápida
+      const range = document.createRange();
+      range.selectNodeContents(target);
+      const selection = window.getSelection();
+      if (selection) {
+        selection.removeAllRanges();
+        selection.addRange(range);
+      }
+
+      const finishEditing = (save: boolean) => {
+        target.contentEditable = 'false';
+
+        if (!save) {
+          target.innerHTML = originalHTML; // revertir
+        } else {
+          const newText = target.innerText.trim();
+          if (newText === '') {
+            target.innerHTML = originalHTML;
+          } else if (newText !== originalText) {
+            // Guardar en cambios pendientes
+            setPendingChanges(prev => ({
+              ...prev,
+              [originalText!]: newText
+            }));
+          }
+        }
+
+        // Remover event listeners temporales
+        target.removeEventListener('blur', handleBlur);
+        target.removeEventListener('keydown', handleKeyDown);
+      };
+
+      const handleBlur = () => {
+        finishEditing(true);
+      };
+
+      const handleKeyDown = (keyEvent: KeyboardEvent) => {
+        if (keyEvent.key === 'Enter') {
+          // Si es un párrafo largo o descripción (H1-H2 o P), no cancelar el enter a menos que sea una sola línea o se presione Shift
+          const singleLineTags = ['SPAN', 'LI', 'STRONG', 'B', 'I', 'TD', 'TH', 'H3', 'H4', 'H5', 'H6'];
+          if (singleLineTags.includes(target.tagName) || !keyEvent.shiftKey) {
+            keyEvent.preventDefault();
+            finishEditing(true);
+          }
+        } else if (keyEvent.key === 'Escape') {
+          keyEvent.preventDefault();
+          finishEditing(false);
+        }
+      };
+
+      target.addEventListener('blur', handleBlur);
+      target.addEventListener('keydown', handleKeyDown);
+    };
+
+    window.addEventListener('dblclick', handleDblClick);
+    return () => {
+      window.removeEventListener('dblclick', handleDblClick);
+    };
+  }, [isDark]);
+
+  // Aplicar las ediciones de texto guardadas en todo el DOM
+  useEffect(() => {
+    const applySavedTexts = (root: Node) => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let node: Text | null;
+      while ((node = walker.nextNode() as Text | null)) {
+        const textVal = node.nodeValue?.trim();
+        if (textVal && editedTexts[textVal]) {
+          node.nodeValue = node.nodeValue.replace(textVal, editedTexts[textVal]);
+        }
+      }
+    };
+
+    applySavedTexts(document.body);
+
+    // Observer para elementos dinámicos
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          applySavedTexts(node);
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, [editedTexts, currentSlideIndex]);
+
+  const saveChangesToDisk = () => {
+    const merged = { ...editedTexts, ...pendingChanges };
+    setEditedTexts(merged);
+    setPendingChanges({});
+    localStorage.setItem('B2B_EDITED_TEXTS', JSON.stringify(merged));
+    
+    setIsSavedFeedback(true);
+    setTimeout(() => setIsSavedFeedback(false), 2000);
+  };
+
   const nextSlide = () => {
     if (currentSlideIndex < slidesOrder.length - 1) setCurrentSlideIndex(prev => prev + 1);
   };
 
   const prevSlide = () => {
     if (currentSlideIndex > 0) setCurrentSlideIndex(prev => prev - 1);
+  };
+
+  // Abre una clase: carga su guion de diapositivas y empieza desde el inicio.
+  const openClass = (classId: string) => {
+    setSlidesOrder(slidesByClass[classId] ?? initialSlides);
+    setCurrentSlideIndex(0);
+    setActiveClassId(classId);
+  };
+
+  // Abre la ventana de "Modo presentador" en una segunda pantalla.
+  const openPresenter = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set('present', '1');
+    const win = window.open(
+      url.toString(),
+      'clase-presenter',
+      'width=1180,height=800,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes',
+    );
+    if (win) {
+      win.focus();
+      // Reenvía el estado por si la ventana aún no se había suscrito al pedirlo.
+      window.setTimeout(() => {
+        presenterBus.post({ type: 'state', activeClassId, slideIndex: currentSlideIndex, isDark });
+      }, 600);
+    }
   };
 
   const moveSlide = (index: number, direction: number) => {
@@ -166,6 +355,19 @@ export default function App() {
     );
   }
 
+  if (activeClassId === null) {
+    return (
+      <PortadaRepositorio
+        isDark={isDark}
+        logoSrc={isDark ? logoDark : logoLight}
+        catalog={catalogoClases}
+        slideCountByClassId={slideCountByClassId}
+        onToggleTheme={() => setIsDark(prev => !prev)}
+        onOpenClass={openClass}
+      />
+    );
+  }
+
   const currentSlide = slidesOrder[currentSlideIndex] || slidesOrder[0];
   const currentSlideId = currentSlide.id;
 
@@ -184,9 +386,20 @@ export default function App() {
               className="h-7 object-contain"
             />
           </div>
-          <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
-            <X size={16} />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              id="btn-volver-portada"
+              onClick={() => setActiveClassId(null)}
+              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors"
+              title="Volver a la portada"
+              aria-label="Volver a la portada"
+            >
+              <LayoutGrid size={16} />
+            </button>
+            <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
+              <X size={16} />
+            </button>
+          </div>
         </div>
         
         {/* Lista de diapositivas tipo link simple */}
@@ -238,6 +451,30 @@ export default function App() {
             })}
           </div>
         </div>
+
+        {/* Acceso al guion del docente (apuntes por diapositiva) */}
+        <div className={`shrink-0 p-4 border-t flex flex-col gap-2 ${isDark ? 'border-[#2a2a2a]' : 'border-gray-100'}`}>
+          <button
+            id="btn-modo-presentador"
+            onClick={openPresenter}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-white bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-lg shadow-red-500/20 hover:shadow-xl hover:scale-[1.02] transition-all"
+            title="Abrir el guion en una segunda pantalla (modo presentador)"
+          >
+            <Presentation size={16} />
+            Modo presentador
+          </button>
+          <button
+            id="btn-guion-docente"
+            onClick={() => setIsNotesOpen(true)}
+            className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold border transition-all ${
+              isDark ? 'border-[#3a3a3a] text-gray-300 hover:bg-[#2a2a2a]' : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+            title="Ver el guión en esta misma pantalla"
+          >
+            <NotebookPen size={16} />
+            Ver guión aquí
+          </button>
+        </div>
       </aside>
 
 
@@ -250,20 +487,10 @@ export default function App() {
           Utilizamos un sistema de escalado (transform: scale) para que el contenido
           interno se diseñe sobre una base de 1280x720 y se adapte al espacio disponible.
         */}
-        <div className="flex-1 flex items-center justify-center p-4 md:p-8 min-h-0 relative">
+        <div className="flex-1 flex items-center justify-center p-0 md:p-8 min-h-0 relative">
           
-          {/* Contenedor Externo (Solo posicionamiento, sin marco visual) */}
           <div 
-            className="relative transition-all duration-500 ease-out"
-            style={{
-              aspectRatio: '16 / 9',
-              width: '100%',
-              maxWidth: `calc((100vh - 160px) * 16 / 9)`,
-              maxHeight: `calc(100vh - 160px)`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
+            className="relative transition-all duration-500 ease-out w-full h-full flex items-center justify-center p-0"
           >
             {/* 
               Contenedor de Escalado (Capa de Contenido):
@@ -284,8 +511,8 @@ export default function App() {
                 top: '50%',
                 left: '50%',
                 transform: `translate(-50%, -50%) scale(${Math.min(
-                  (windowSize.width - (isSidebarOpen ? 360 : 100)) / 1280,
-                  (windowSize.height - 180) / 720
+                  (windowSize.width - (windowSize.width < 768 ? 40 : (isSidebarOpen ? 320 : 80))) / 1280,
+                  (windowSize.height - (windowSize.width < 768 ? 60 : 120)) / 720
                 )})`,
                 transformOrigin: 'center center',
                 pointerEvents: 'auto'
@@ -371,14 +598,48 @@ export default function App() {
                 {currentSlideId === 'slide-lista-estrategica' && <SlideListaEstrategica isDark={isDark} />}
                 {currentSlideId === 'slide-aterrizaje' && <Slide10 isDark={isDark} />}
 
+                {/* Clase "La Ciencia de Vender": todas las diapositivas de contenido (mv-*) */}
+                {currentSlideId.startsWith('mv-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseMetodologias slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "Arquitectura de Equipos de Ventas": diapositivas de contenido (eq-*) */}
+                {currentSlideId.startsWith('eq-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseArquitecturaEquipos slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "MEDDPICC: calificar con rigor": diapositivas de contenido (md-*) */}
+                {currentSlideId.startsWith('md-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseMeddpicc slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "SPIN Selling": diapositivas de contenido (sp-*) */}
+                {currentSlideId.startsWith('sp-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseSpin slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "Pensar rápido, pensar despacio": diapositivas de contenido (kn-*) */}
+                {currentSlideId.startsWith('kn-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseKahneman slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "El Vendedor Desafiante": diapositivas de contenido (ch-*) */}
+                {currentSlideId.startsWith('ch-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseChallenger slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "Las Trampas del Deseo": diapositivas de contenido (td-*) */}
+                {currentSlideId.startsWith('td-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseTrampas slideId={currentSlideId} isDark={isDark} />
+                )}
+
                 </motion.div>
               </AnimatePresence>
             </div>
           </div>
         </div>
 
-        {/* Top Bar - Reubicada al final para estar encima del contenido pero fija a la pantalla */}
-        <div className="fixed top-6 left-6 right-6 z-[100] flex justify-between items-center pointer-events-none">
+        <div className="fixed top-6 left-6 right-6 z-[100] flex justify-between items-start pointer-events-none">
           <div className="flex items-center gap-4 pointer-events-auto">
             <button 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -387,26 +648,61 @@ export default function App() {
               <Menu size={20} />
             </button>
           </div>
-          <div className="flex items-center gap-3 pointer-events-auto">
+          <div className="flex flex-col items-center gap-3 pointer-events-auto">
             <button 
               onClick={toggleFullscreen}
-              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#111111]/80 backdrop-blur-md text-gray-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-gray-500 border-gray-100'}`}
+              className="p-2.5 rounded-full shadow-md bg-white hover:bg-gray-50 border border-gray-100 text-gray-500 hover:text-gray-700 transition-all duration-300 hover:scale-110"
               title="Pantalla Completa"
             >
-              {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+              {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
             </button>
+            {/* Botón de Guardar Cambios */}
             <button 
-              onClick={() => setIsDark(!isDark)}
-              className={`p-2.5 rounded-full shadow-2xl transition-all duration-300 hover:scale-110 border ${isDark ? 'bg-[#111111]/80 backdrop-blur-md text-orange-400 border-[#3a3a3a]' : 'bg-white/80 backdrop-blur-md text-orange-500 border-gray-100'}`}
-              title={isDark ? "Modo Claro" : "Modo Oscuro"}
+              onClick={saveChangesToDisk}
+              className={`p-2.5 rounded-full shadow-md bg-white hover:bg-gray-50 border border-gray-100 transition-all duration-300 hover:scale-110 ${
+                isSavedFeedback
+                  ? 'text-green-500'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+              title="Guardar todos los cambios"
+              id="btn-save-changes"
             >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              <Save size={18} />
             </button>
           </div>
         </div>
 
-        {/* Footer Navigation */}
-        <div className="h-16 shrink-0 z-40 px-6 flex items-center justify-between">
+        {/* Botones de Navegación Flotantes (Solo en Móvil/Responsive) */}
+        <div className="md:hidden contents">
+          <button 
+            onClick={prevSlide} 
+            disabled={currentSlideIndex === 0}
+            className={`fixed left-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full shadow-2xl transition-all border ${
+              currentSlideIndex === 0 
+                ? 'opacity-0 pointer-events-none' 
+                : isDark 
+                  ? 'bg-[#111111]/90 backdrop-blur-md text-white border-[#3a3a3a]' 
+                  : 'bg-white/90 backdrop-blur-md text-[#111827] border-gray-200'
+            }`}
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          <button 
+            onClick={nextSlide} 
+            disabled={currentSlideIndex === slidesOrder.length - 1}
+            className={`fixed right-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full shadow-2xl transition-all border ${
+              currentSlideIndex === slidesOrder.length - 1
+                ? 'opacity-0 pointer-events-none' 
+                : 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white border-transparent'
+            }`}
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+
+        {/* Footer Navigation (Oculto en móvil, visible en Desktop) */}
+        <div className="hidden md:flex h-16 shrink-0 z-40 px-6 items-center justify-between">
           <button 
             onClick={prevSlide} 
             disabled={currentSlideIndex === 0}
@@ -454,6 +750,16 @@ export default function App() {
           </button>
         </div>
       </div>
+
+      {/* Modal flotante con el guion del docente para la diapositiva actual */}
+      <NotasDocente
+        isOpen={isNotesOpen}
+        onClose={() => setIsNotesOpen(false)}
+        slideId={currentSlideId}
+        slideTitle={currentSlide.title}
+        isDark={isDark}
+      />
+
     </div>
   );
 }

@@ -15,6 +15,7 @@ import {
   useReactFlow,
   BaseEdge,
   getBezierPath,
+  getSmoothStepPath,
   EdgeProps,
   ConnectionMode,
   ConnectionLineComponentProps,
@@ -22,7 +23,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText, Trash2, LogOut, Check, Calculator, Sliders } from 'lucide-react';
+import { Plus, Copy, Minimize2, Maximize2, X, ChevronRight, Download, Zap, Play, Save, Menu, Maximize, FileText, Trash2, LogOut, Check, Calculator, Sliders, Settings2, Spline, Waypoints, CornerDownRight } from 'lucide-react';
 import { INITIAL_NODES, INITIAL_EDGES } from './initialFlowData';
 import { toJpeg } from 'html-to-image';
 import logoHorizontalDark from '../Logos/logo horizontal dark.png';
@@ -30,6 +31,65 @@ import logoHorizontalLight from '../Logos/logo horizontal ligth.png';
 
 // --- CONTEXTO DE EXPORTACIÓN ---
 const ExportContext = React.createContext({ isExporting: false });
+
+/* --- Configuración del trazado de las conexiones --- */
+export type EdgeShape = 'curva' | 'scurva' | 'srecta';
+const EDGE_DEFAULTS = { shape: 'curva' as EdgeShape, width: 5 };
+const EdgeStyleContext = React.createContext(EDGE_DEFAULTS);
+
+/* Valores de partida de cada ajuste por conexión. */
+export const CURVATURA_DEF = 0.3;
+export const DESVIO_DEF = 20;
+
+/* Vector unitario que sale del nodo por un lado. */
+const normalDeLado = (pos: Position) => {
+  switch (pos) {
+    case Position.Left: return { x: -1, y: 0 };
+    case Position.Right: return { x: 1, y: 0 };
+    case Position.Top: return { x: 0, y: -1 };
+    default: return { x: 0, y: 1 };
+  }
+};
+
+/**
+ * Puntos de control de la curva en S: se separan PERPENDICULARES al lado por
+ * el que la línea sale y entra, no hacia el otro nodo. Por eso el trazo nace
+ * recto del bloque y llega recto al otro, en vez de entrar de costado.
+ * El tirón es proporcional a la distancia, así se ve igual de proporcionado
+ * en conexiones cortas y largas.
+ */
+const controlesEse = (a: any, curvatura: number) => {
+  const dist = Math.hypot(a.targetX - a.sourceX, a.targetY - a.sourceY) || 1;
+  const tiron = Math.max(8, dist * curvatura);
+  const n1 = normalDeLado(a.sourcePosition);
+  const n2 = normalDeLado(a.targetPosition);
+  return {
+    c1: { x: a.sourceX + n1.x * tiron, y: a.sourceY + n1.y * tiron },
+    c2: { x: a.targetX + n2.x * tiron, y: a.targetY + n2.y * tiron },
+  };
+};
+
+/* Devuelve el trazado según la forma elegida y los ajustes de la conexión. */
+const buildEdgePath = (
+  shape: EdgeShape,
+  args: any,
+  ajustes?: { curvatura?: number; desvio?: number },
+): [string, number, number] => {
+  if (shape === 'curva') {
+    const { c1, c2 } = controlesEse(args, ajustes?.curvatura ?? CURVATURA_DEF);
+    const d = `M${args.sourceX},${args.sourceY} C${c1.x},${c1.y} ${c2.x},${c2.y} ${args.targetX},${args.targetY}`;
+    // Punto medio de la cúbica (t = 0.5): ahí va la etiqueta y el botón.
+    const lx = (args.sourceX + 3 * c1.x + 3 * c2.x + args.targetX) / 8;
+    const ly = (args.sourceY + 3 * c1.y + 3 * c2.y + args.targetY) / 8;
+    return [d, lx, ly];
+  }
+  const [d, lx, ly] = getSmoothStepPath({
+    ...args,
+    borderRadius: shape === 'scurva' ? 24 : 0,
+    offset: ajustes?.desvio ?? DESVIO_DEF,
+  });
+  return [d, lx, ly];
+};
 
 
 // --- CONFIGURACIÓN DE ICONOS ---
@@ -542,13 +602,32 @@ const CustomConnectionLine = ({
   toX,
   toY,
 }: ConnectionLineComponentProps) => {
+  const { shape: previewShape, width: previewWidth } = React.useContext(EdgeStyleContext);
+  const previewPath =
+    previewShape === 'curva'
+      ? buildEdgePath('curva', {
+          sourceX: fromX,
+          sourceY: fromY,
+          sourcePosition: Position.Right,
+          targetX: toX,
+          targetY: toY,
+          targetPosition: Position.Left,
+        })[0]
+      : buildEdgePath(previewShape, {
+          sourceX: fromX,
+          sourceY: fromY,
+          sourcePosition: Position.Right,
+          targetX: toX,
+          targetY: toY,
+          targetPosition: Position.Left,
+        })[0];
   return (
     <g>
       <path
         fill="none"
         stroke="#ff851d"
-        strokeWidth={2.5}
-        d={`M${fromX},${fromY} C${fromX + 40},${fromY} ${toX - 40},${toY} ${toX},${toY}`}
+        strokeWidth={Math.max(2, previewWidth * 0.6)}
+        d={previewPath}
         className="pointer-events-none"
       />
       <circle 
@@ -574,20 +653,84 @@ const CustomEdge = ({
   style = {},
   markerEnd,
   target,
+  data,
+  selected,
 }: EdgeProps) => {
   const { isExporting } = React.useContext(ExportContext);
-  const { setEdges, getNode } = useReactFlow();
+  const { setEdges, getNode, screenToFlowPosition } = useReactFlow();
   const targetNode = getNode(target);
   const edgeColor = getEdgeColor(targetNode?.data?.label as string);
 
-  const [edgePath, labelX, labelY] = getBezierPath({
-    sourceX,
-    sourceY,
-    sourcePosition,
-    targetX,
-    targetY,
-    targetPosition,
-  });
+  const { shape, width } = React.useContext(EdgeStyleContext);
+  const [hover, setHover] = React.useState(false);
+  const [arrastrando, setArrastrando] = React.useState(false);
+
+  // Ajuste propio de ESTA conexión. Se guarda como valor RELATIVO (un escalar),
+  // no como coordenadas: así el retoque sobrevive a mover los nodos, porque la
+  // ruta se recalcula y el ajuste se vuelve a aplicar encima.
+  const curvatura = typeof (data as any)?.curvatura === 'number' ? (data as any).curvatura : CURVATURA_DEF;
+  const desvio = typeof (data as any)?.desvio === 'number' ? (data as any).desvio : DESVIO_DEF;
+
+  const args = { sourceX, sourceY, sourcePosition, targetX, targetY, targetPosition };
+  const [edgePath, labelX, labelY] = buildEdgePath(shape, args, { curvatura, desvio });
+
+  const guardarAjuste = React.useCallback((patch: Record<string, number>) => {
+    setEdges((edges) => edges.map((e) => (e.id === id ? { ...e, data: { ...e.data, ...patch } } : e)));
+  }, [id, setEdges]);
+
+  /** Arrastrar un tirador: se proyecta el movimiento sobre la normal del lado
+   *  y de ahí sale el escalar. Es la misma matemática que dibuja la curva, así
+   *  que el tirador no se puede desincronizar del trazo. */
+  const onTiradorDown = (ev: React.PointerEvent) => {
+    ev.stopPropagation();
+    ev.preventDefault();
+    setArrastrando(true);
+    const base = { x: (sourceX + targetX) / 2, y: (sourceY + targetY) / 2 };
+    const n = normalDeLado(sourcePosition);
+    const escala = shape === 'curva' ? 46 : 0.42;
+
+    const mover = (e: PointerEvent) => {
+      const pf = screenToFlowPosition({ x: e.clientX, y: e.clientY });
+      // Se proyecta el arrastre sobre la normal del lado de salida: esa es la
+      // misma dirección que separa los puntos de control, así que el trazo
+      // responde exactamente a donde está el dedo.
+      const proy = (pf.x - base.x) * n.x + (pf.y - base.y) * n.y;
+      const v = (proy - 30) / escala;
+      if (shape === 'curva') {
+        guardarAjuste({ curvatura: Math.max(0, Math.min(2, v)) });
+      } else {
+        guardarAjuste({ desvio: Math.max(0, Math.min(260, v)) });
+      }
+    };
+    const soltar = () => {
+      setArrastrando(false);
+      window.removeEventListener('pointermove', mover);
+      window.removeEventListener('pointerup', soltar);
+    };
+    window.addEventListener('pointermove', mover);
+    window.addEventListener('pointerup', soltar);
+  };
+
+  /** Doble clic sobre un tirador: vuelve al valor por defecto. */
+  const onTiradorReset = (ev: React.MouseEvent) => {
+    ev.stopPropagation();
+    guardarAjuste(shape === 'curva' ? { curvatura: CURVATURA_DEF } : { desvio: DESVIO_DEF });
+  };
+
+  // El tirador vive junto al botón de borrar, en el centro de la conexión, y se
+  // separa de él en la dirección por la que sale la línea. Esa separación crece
+  // con el ajuste, así que el control sigue al dedo mientras se arrastra.
+  const anclaTirador = { x: (sourceX + targetX) / 2, y: (sourceY + targetY) / 2 };
+  const normalSalida = normalDeLado(sourcePosition);
+  const SEP_TIRADOR = 30;
+  const ESCALA_TIRADOR = shape === 'curva' ? 46 : 0.42;
+  const valorAjuste = shape === 'curva' ? curvatura : desvio;
+  const tiradorPos = {
+    x: anclaTirador.x + normalSalida.x * (SEP_TIRADOR + valorAjuste * ESCALA_TIRADOR),
+    y: anclaTirador.y + normalSalida.y * (SEP_TIRADOR + valorAjuste * ESCALA_TIRADOR),
+  };
+
+  const mostrarTiradores = !isExporting && (hover || selected || arrastrando);
 
   const onEdgeClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -595,10 +738,10 @@ const CustomEdge = ({
   };
 
   return (
-    <g className="group cursor-pointer">
+    <g className="group cursor-pointer" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <path
         id={id}
-        style={{ ...style, stroke: edgeColor, strokeWidth: 5, fill: 'none' }}
+        style={{ ...style, stroke: edgeColor, strokeWidth: width, fill: 'none' }}
         className="react-flow__edge-path transition-all group-hover:stroke-width-7"
         d={edgePath}
         markerEnd={markerEnd}
@@ -608,10 +751,55 @@ const CustomEdge = ({
 
       {/* Partícula de flujo (SIEMPRE VISIBLE POR ENCIMA) */}
       <g style={{ isolate: 'auto' }}>
-        <circle r="6" fill="white" className="drop-shadow-[0_0_8px_rgba(255,255,255,1)] pointer-events-none" style={{ zIndex: 9999 }}>
+        <circle key={shape + '-' + width} r={Math.max(3.5, width * 0.9)} fill="white" className="drop-shadow-[0_0_8px_rgba(255,255,255,1)] pointer-events-none" style={{ zIndex: 9999 }}>
           <animateMotion dur="2s" repeatCount="indefinite" path={edgePath} />
         </circle>
       </g>
+
+      {/* Control de curvatura: junto al botón de borrar, en el centro del trazo */}
+      {mostrarTiradores && (
+        <g className="export-hide">
+          <line
+            x1={anclaTirador.x}
+            y1={anclaTirador.y}
+            x2={tiradorPos.x}
+            y2={tiradorPos.y}
+            stroke={edgeColor}
+            strokeWidth={2}
+            strokeDasharray="3 3"
+            opacity={0.55}
+            style={{ pointerEvents: 'none' }}
+          />
+          <circle
+            cx={tiradorPos.x}
+            cy={tiradorPos.y}
+            r={16}
+            fill="transparent"
+            style={{ cursor: arrastrando ? 'grabbing' : 'grab' }}
+            onPointerDown={onTiradorDown}
+            onDoubleClick={onTiradorReset}
+          >
+            <title>Arrastra para ajustar la curva · doble clic para restablecer</title>
+          </circle>
+          <circle
+            cx={tiradorPos.x}
+            cy={tiradorPos.y}
+            r={arrastrando ? 11 : 9}
+            fill="white"
+            stroke={edgeColor}
+            strokeWidth={3}
+            className="drop-shadow-lg transition-all"
+            style={{ pointerEvents: 'none' }}
+          />
+          <circle
+            cx={tiradorPos.x}
+            cy={tiradorPos.y}
+            r={3}
+            fill={edgeColor}
+            style={{ pointerEvents: 'none' }}
+          />
+        </g>
+      )}
 
       {/* Botón de eliminación de borde (SÓLO SI NO ES EXPORTACIÓN) */}
       {!isExporting && (
@@ -710,6 +898,25 @@ function FlowContent({ isDark }: { isDark: boolean }) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isExporting, setIsExporting] = useState(false);
+  const [isEdgePanelOpen, setIsEdgePanelOpen] = useState(false);
+  const [edgeStyle, setEdgeStyle] = useState(() => {
+    try {
+      const saved = localStorage.getItem('flow-constructor-edge-style-v1');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const shape: EdgeShape = ['curva', 'scurva', 'srecta'].includes(parsed?.shape) ? parsed.shape : EDGE_DEFAULTS.shape;
+        const width = Number.isFinite(parsed?.width) ? Math.min(12, Math.max(1, parsed.width)) : EDGE_DEFAULTS.width;
+        return { shape, width };
+      }
+    } catch { /* si falla, se usan los valores por defecto */ }
+    return EDGE_DEFAULTS;
+  });
+
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('flow-constructor-edge-style-v1', JSON.stringify(edgeStyle));
+    } catch { /* modo privado o almacenamiento lleno: no es critico */ }
+  }, [edgeStyle]);
   const isLoaded = useRef(false);
   const { screenToFlowPosition, fitView, getNodes, getEdges } = useReactFlow();
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -1077,6 +1284,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
 
   return (
     <ExportContext.Provider value={{ isExporting }}>
+      <EdgeStyleContext.Provider value={edgeStyle}>
       <div className="w-full h-full flex overflow-hidden">
       <div ref={canvasRef} className="flex-1 relative h-full order-1 bg-white">
         {/* Logo de Agencia - Solo visible en Exportación */}
@@ -1156,8 +1364,16 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         <Background color={isDark ? '#ff851d' : '#94a3b8'} variant="grid" style={{ opacity: 0.05 }} gap={25} />
         <Controls position="bottom-left" className="!bg-white !shadow-2xl !border-none !rounded-xl overflow-hidden mb-8 ml-8 export-hide" />
           
-          <Panel position="top-right" className="z-[110] flex flex-col items-end gap-6 export-hide">
+          <Panel position="top-right" className="z-[110] flex flex-col items-end gap-3 export-hide">
              <div className="flex gap-2">
+               <button
+                 onClick={() => setIsEdgePanelOpen((v) => !v)}
+                 title="Configurar las conexiones"
+                 className={`p-3 rounded-2xl shadow-xl hover:scale-105 transition-all flex items-center gap-2 font-bold text-xs uppercase tracking-tighter ${isEdgePanelOpen ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border border-slate-200'}`}
+               >
+                 <Settings2 size={20} />
+                 <span>Conexiones</span>
+               </button>
                {!isSidebarOpen && (
                  <button onClick={() => setIsSidebarOpen(true)} className="p-3 rounded-2xl bg-orange-500 text-white shadow-xl hover:scale-105 transition-all flex items-center gap-2 font-bold text-xs uppercase tracking-tighter">
                    <Menu size={20}/>
@@ -1165,6 +1381,73 @@ function FlowContent({ isDark }: { isDark: boolean }) {
                  </button>
                )}
              </div>
+
+             <AnimatePresence>
+               {isEdgePanelOpen && (
+                 <motion.div
+                   initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                   animate={{ opacity: 1, y: 0, scale: 1 }}
+                   exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                   transition={{ duration: 0.18 }}
+                   className="w-72 p-4 rounded-2xl bg-white shadow-2xl border border-slate-200 flex flex-col gap-4"
+                 >
+                   <div>
+                     <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 mb-2">Forma del camino</p>
+                     <div className="grid grid-cols-3 gap-2">
+                       {([
+                         { id: 'curva' as EdgeShape, label: 'Curva', Icon: Spline },
+                         { id: 'scurva' as EdgeShape, label: 'S curva', Icon: Waypoints },
+                         { id: 'srecta' as EdgeShape, label: 'S recta', Icon: CornerDownRight },
+                       ]).map(({ id, label, Icon }) => {
+                         const on = edgeStyle.shape === id;
+                         return (
+                           <button
+                             key={id}
+                             onClick={() => setEdgeStyle((prev) => ({ ...prev, shape: id }))}
+                             className={`py-2.5 px-1 rounded-xl flex flex-col items-center gap-1 transition-all ${on ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30 scale-105' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                           >
+                             <Icon size={18} />
+                             <span className="text-[10px] font-bold">{label}</span>
+                           </button>
+                         );
+                       })}
+                     </div>
+                     <p className="text-[11px] leading-snug text-slate-400 mt-2">
+                       {edgeStyle.shape === 'curva' && 'Trazo libre entre los nodos.'}
+                       {edgeStyle.shape === 'scurva' && 'Tramos rectos con las esquinas redondeadas.'}
+                       {edgeStyle.shape === 'srecta' && 'Tramos rectos con las esquinas en angulo.'}
+                     </p>
+                   </div>
+
+                   <div>
+                     <div className="flex items-center justify-between mb-1.5">
+                       <p className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400">Grosor de la linea</p>
+                       <span className="text-xs font-black text-orange-500">{edgeStyle.width} px</span>
+                     </div>
+                     <input
+                       type="range"
+                       min={1}
+                       max={12}
+                       step={0.5}
+                       value={edgeStyle.width}
+                       onChange={(e) => setEdgeStyle((prev) => ({ ...prev, width: Number(e.target.value) }))}
+                       className="w-full accent-orange-500"
+                       aria-label="Grosor de las conexiones"
+                     />
+                     <svg viewBox="0 0 240 24" className="w-full h-5 mt-1" aria-hidden="true">
+                       <path d="M4 12 C 70 12, 90 12, 120 12 S 180 12, 236 12" fill="none" stroke="#ff851d" strokeWidth={edgeStyle.width} strokeLinecap="round" />
+                     </svg>
+                   </div>
+
+                   <button
+                     onClick={() => setEdgeStyle(EDGE_DEFAULTS)}
+                     className="text-[11px] font-bold text-slate-400 hover:text-slate-700 transition-colors self-start"
+                   >
+                     Restablecer
+                   </button>
+                 </motion.div>
+               )}
+             </AnimatePresence>
           </Panel>
         </ReactFlow>
       </div>
@@ -1343,6 +1626,7 @@ function FlowContent({ isDark }: { isDark: boolean }) {
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(155, 155, 155, 0.2); border-radius: 10px; }
       `}</style>
     </div>
+      </EdgeStyleContext.Provider>
     </ExportContext.Provider>
   );
 }
