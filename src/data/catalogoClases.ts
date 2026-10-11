@@ -93,9 +93,9 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
   {
     id: 'revops',
     title: 'RevOps',
-    subtitle: 'Certificación de Revenue Operations',
+    subtitle: 'Revenue Operations · operaciones de ingresos',
     description:
-      'Alinea ventas, marketing y operaciones: procesos consistentes, datos confiables e incentivos alineados. Mapeo de flujos, SLA, sistemas y equipos. Estructura modular con 4 módulos y 9 lecciones.',
+      'Diez lecciones para alinear marketing, ventas y servicio: crecer a escala, flywheel con fuerza y fricción, SLA y rama judicial, proceso de ventas, gobierno de datos, cómo convencer a la gerencia, y cómo estructurar, contratar e iterar el equipo.',
     category: 'Liderazgo',
     iconKey: 'liderazgo',
   },

@@ -315,24 +315,72 @@ export const trampasSlides: SlideMeta[] = [
   { id: 'td-test-avanzado', title: 'Test 2 · Avanzado', level: 2 },
 ];
 
-// Clase "RevOps" — Revenue Operations (4 módulos, 9 lecciones).
+// Clase "RevOps" — Revenue Operations. Cada encabezado es una lección que el
+// índice muestra como grupo colapsable.
 export const revopsSlides: SlideMeta[] = [
-  { id: 'ro-header-1', title: 'Módulo 1: Fundamentos de RevOps', level: 1 },
-  { id: 'ro-1-bienvenida', title: 'Lección 1: Bienvenida a la Certificación', level: 2 },
-  { id: 'ro-2-introduccion', title: 'Lección 2: Introducción a RevOps', level: 2 },
+  { id: 'ro-header-1', title: 'Lección 1: Bienvenida', level: 1 },
+  { id: 'ro-1-portada', title: 'RevOps', level: 2 },
+  { id: 'ro-1-definicion', title: 'Qué es Revenue Operations', level: 2 },
+  { id: 'ro-1-ruta', title: 'La ruta: diez lecciones', level: 2 },
 
-  { id: 'ro-header-2', title: 'Módulo 2: Estrategia y Operaciones', level: 1 },
-  { id: 'ro-3-embudo', title: 'Lección 3: RevOps al Flywheel', level: 2 },
-  { id: 'ro-4-sla', title: 'Lección 4: Responsabilidad con SLA', level: 2 },
-  { id: 'ro-5-proceso', title: 'Lección 5: Mapear un Proceso de Ventas', level: 2 },
-  { id: 'ro-6-sistemas', title: 'Lección 6: Gestión de Sistemas para RevOps', level: 2 },
+  { id: 'ro-header-2', title: 'Lección 2: Introducción a RevOps', level: 1 },
+  { id: 'ro-2-escala', title: 'Crecer lineal o a escala', level: 2 },
+  { id: 'ro-2-diagnostico', title: 'Diagnóstico de tu RevOps', level: 2 },
+  { id: 'ro-2-empezar', title: 'Por dónde empezar', level: 2 },
+  { id: 'ro-2-velocidad', title: 'Velocidad, no rapidez', level: 2 },
+  { id: 'ro-2-casos', title: 'Crecer sin gastar más', level: 2 },
 
-  { id: 'ro-header-3', title: 'Módulo 3: Construcción y Gestión de Equipo', level: 1 },
-  { id: 'ro-7-estructura', title: 'Lección 7: Estructurando tu Equipo de RevOps', level: 2 },
-  { id: 'ro-8-contratacion', title: 'Lección 8: Contratación de Miembros del Equipo', level: 2 },
+  { id: 'ro-header-3', title: 'Lección 3: El flywheel', level: 1 },
+  { id: 'ro-3-flywheel', title: 'Del embudo al flywheel', level: 2 },
+  { id: 'ro-3-fuerza', title: 'Fuerza y fricción', level: 2 },
+  { id: 'ro-3-friccion', title: 'Dónde está la fricción', level: 2 },
+  { id: 'ro-3-friccion-util', title: 'Cuando la fricción suma valor', level: 2 },
+  { id: 'ro-3-mapa', title: 'Mapea tu flywheel', level: 2 },
 
-  { id: 'ro-header-4', title: 'Módulo 4: Evaluación y Mejora Continua', level: 1 },
-  { id: 'ro-9-evaluacion', title: 'Lección 9-10: Evaluando e Iterando tu Estrategia', level: 2 },
+  { id: 'ro-header-4', title: 'Lección 4: Responsabilidad con SLA', level: 1 },
+  { id: 'ro-4-porque', title: 'Por qué un SLA', level: 2 },
+  { id: 'ro-4-calculadora', title: 'Calcula tu SLA', level: 2 },
+  { id: 'ro-4-valor', title: 'Valor del lead', level: 2 },
+  { id: 'ro-4-contacto', title: 'Qué tan rápido contactar', level: 2 },
+  { id: 'ro-4-judicial', title: 'Problemas y rama judicial', level: 2 },
+  { id: 'ro-4-velocidades', title: 'Velocidad de marketing y ventas', level: 2 },
+
+  { id: 'ro-header-5', title: 'Lección 5: Mapear el proceso de ventas', level: 1 },
+  { id: 'ro-5-paradoja', title: 'La paradoja del proceso', level: 2 },
+  { id: 'ro-5-comprador', title: 'Vender es ayudar a comprar', level: 2 },
+  { id: 'ro-5-filtros', title: 'Los cuatro filtros', level: 2 },
+  { id: 'ro-5-salida', title: 'Criterios de salida y posventa', level: 2 },
+  { id: 'ro-5-playbook', title: 'El playbook', level: 2 },
+  { id: 'ro-5-estados', title: 'Funciona, experimenta o se agita', level: 2 },
+
+  { id: 'ro-header-6', title: 'Lección 6: Gestión de sistemas', level: 1 },
+  { id: 'ro-6-proceso', title: 'Primero el proceso', level: 2 },
+  { id: 'ro-6-gobierno', title: 'Gobierno de datos', level: 2 },
+  { id: 'ro-6-indicadores', title: 'Indicadores adelantados', level: 2 },
+  { id: 'ro-6-stack', title: 'Administrar el stack', level: 2 },
+
+  { id: 'ro-header-7', title: 'Lección 7: Comunicar el valor', level: 1 },
+  { id: 'ro-7-lenguaje', title: 'El idioma del negocio', level: 2 },
+  { id: 'ro-7-copq', title: 'El costo de la mala calidad', level: 2 },
+  { id: 'ro-7-a3', title: 'El informe A3', level: 2 },
+  { id: 'ro-7-prewiring', title: 'Honestidad, aliados y pre-wiring', level: 2 },
+  { id: 'ro-7-monroe', title: 'La secuencia de Monroe', level: 2 },
+  { id: 'ro-7-objeciones', title: 'Trece objeciones', level: 2 },
+  { id: 'ro-7-retroceso', title: 'Evitar el retroceso', level: 2 },
+
+  { id: 'ro-header-8', title: 'Lección 8: Estructurar el equipo', level: 1 },
+  { id: 'ro-8-silos', title: 'Del organigrama actual al ideal', level: 2 },
+  { id: 'ro-8-capas', title: 'Cómo crece el equipo', level: 2 },
+
+  { id: 'ro-header-9', title: 'Lección 9: Contratar al equipo', level: 1 },
+  { id: 'ro-9-necesidad', title: '¿Hay que contratar?', level: 2 },
+  { id: 'ro-9-cuadrante', title: 'Qué candidato buscar', level: 2 },
+  { id: 'ro-9-entrevista', title: 'Evaluar candidatos', level: 2 },
+
+  { id: 'ro-header-10', title: 'Lección 10: Evaluar e iterar', level: 1 },
+  { id: 'ro-10-ciclo', title: 'Los tres elementos', level: 2 },
+  { id: 'ro-10-metas', title: 'Metas trimestrales', level: 2 },
+  { id: 'ro-10-diario', title: 'Prioridades diarias', level: 2 },
 ];
 
 // Guion por clase: cada id del catálogo apunta a su orden de diapositivas.
