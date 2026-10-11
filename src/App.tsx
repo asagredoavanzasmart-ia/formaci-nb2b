@@ -59,6 +59,8 @@ export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
+  // Módulos expandidos para clases con estructura modular (e.g. RevOps)
+  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set(['ro-header-1']));
   // Índice fijado por la ventana de presentador: evita reenviar el cambio en bucle.
   const lastRemoteIndex = useRef<number | null>(null);
   
@@ -150,6 +152,24 @@ export default function App() {
     presenterBus.post({ type: 'state', activeClassId, slideIndex: currentSlideIndex, isDark });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeClassId, isDark]);
+
+  // Auto-expande el módulo padre cuando se navega a una lección en clases modulares
+  useEffect(() => {
+    if (activeClassId !== 'revops') return;
+    let parentId: string | null = null;
+    for (let i = 0; i < slidesOrder.length; i++) {
+      if (slidesOrder[i].level === 1) { parentId = slidesOrder[i].id; }
+      else if (i === currentSlideIndex && parentId) {
+        setExpandedModules(prev => {
+          if (prev.has(parentId!)) return prev;
+          const next = new Set(prev);
+          next.add(parentId!);
+          return next;
+        });
+        break;
+      }
+    }
+  }, [currentSlideIndex, activeClassId, slidesOrder]);
 
   useEffect(() => {
     if (isDark) {
@@ -403,53 +423,96 @@ export default function App() {
           </div>
         </div>
         
-        {/* Lista de diapositivas tipo link simple */}
+        {/* Lista de diapositivas — con módulos colapsables para clases modulares (ro-*) */}
         <div className="flex-1 overflow-y-auto py-4 custom-scrollbar">
           <div className="flex flex-col">
-            {slidesOrder.map((slide, index) => {
-              const isH1 = slide.level === 1;
-              return (
-                <button 
-                  key={slide.id}
-                  onClick={() => setCurrentSlideIndex(index)}
-                  className={`flex items-center gap-3 px-5 py-2 text-left transition-all relative ${
-                    isH1 
-                      ? 'mt-6 mb-1' 
-                      : 'ml-4'
-                  }`}
-                  style={{
-                    backgroundColor: currentSlideIndex === index ? (isDark ? 'rgba(255,133,29,0.1)' : '#fff7ed') : 'transparent',
-                    borderRadius: '12px',
-                    marginRight: '12px'
-                  }}
-                >
-                  {!isH1 && (
-                    <span 
-                      className={`text-[11px] w-5 shrink-0 tabular-nums font-bold`}
-                      style={{ color: currentSlideIndex === index ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.3)' : '#000000') }}
+            {(() => {
+              const isModular = activeClassId === 'revops';
+              if (!isModular) {
+                // Renderizado plano normal
+                return slidesOrder.map((slide, index) => {
+                  const isH1 = slide.level === 1;
+                  return (
+                    <button
+                      key={slide.id}
+                      onClick={() => setCurrentSlideIndex(index)}
+                      className={`flex items-center gap-3 px-5 py-2 text-left transition-all relative ${isH1 ? 'mt-6 mb-1' : 'ml-4'}`}
+                      style={{ backgroundColor: currentSlideIndex === index ? (isDark ? 'rgba(255,133,29,0.1)' : '#fff7ed') : 'transparent', borderRadius: '12px', marginRight: '12px' }}
                     >
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  )}
-                  <span 
-                    className={`${isH1 ? 'text-[11px] uppercase tracking-[0.1em]' : 'text-[14px]'} font-bold truncate`}
-                    style={{ 
-                      color: currentSlideIndex === index ? '#ef375c' : (isH1 ? (isDark ? '#ffffff' : '#000000') : (isDark ? 'rgba(255,255,255,0.7)' : '#000000')),
-                      letterSpacing: isH1 ? '0.05em' : 'normal'
+                      {!isH1 && (
+                        <span className="text-[11px] w-5 shrink-0 tabular-nums font-bold" style={{ color: currentSlideIndex === index ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.3)' : '#000000') }}>
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                      )}
+                      <span className={`${isH1 ? 'text-[11px] uppercase tracking-[0.1em]' : 'text-[14px]'} font-bold truncate`} style={{ color: currentSlideIndex === index ? '#ef375c' : (isH1 ? (isDark ? '#ffffff' : '#000000') : (isDark ? 'rgba(255,255,255,0.7)' : '#000000')), letterSpacing: isH1 ? '0.05em' : 'normal' }}>
+                        {slide.title}
+                      </span>
+                      {currentSlideIndex === index && (
+                        <motion.div layoutId="activePointer" className="absolute left-0 w-1 h-4 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full" />
+                      )}
+                    </button>
+                  );
+                });
+              }
+              // Renderizado modular con toggles colapsables
+              // Pre-calcular qué módulo contiene la lección activa
+              let activeModuleId: string | null = null;
+              let tmpModId: string | null = null;
+              slidesOrder.forEach((s, si) => {
+                if (s.level === 1) { tmpModId = s.id; }
+                else if (si === currentSlideIndex) { activeModuleId = tmpModId; }
+              });
+
+              const items: React.ReactNode[] = [];
+              let currentModuleId: string | null = null;
+              let lecCountInModule = 0;
+              slidesOrder.forEach((slide, index) => {
+                if (slide.level === 1) {
+                  currentModuleId = slide.id;
+                  lecCountInModule = 0;
+                  const isExpanded = expandedModules.has(slide.id);
+                  const hasActive = activeModuleId === slide.id;
+                  items.push(
+                    <button key={slide.id} onClick={() => {
+                      setExpandedModules(prev => {
+                        const next = new Set(prev);
+                        if (next.has(slide.id)) next.delete(slide.id); else next.add(slide.id);
+                        return next;
+                      });
                     }}
-                  >
-                    {slide.title}
-                  </span>
-                  
-                  {currentSlideIndex === index && (
-                    <motion.div 
-                      layoutId="activePointer"
-                      className="absolute left-0 w-1 h-4 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full"
-                    />
-                  )}
-                </button>
-              );
-            })}
+                    className="flex items-center justify-between gap-2 px-4 py-2.5 mx-2 mt-4 mb-0.5 rounded-xl text-left transition-all"
+                    style={{ backgroundColor: hasActive ? (isDark ? 'rgba(255,133,29,0.08)' : '#fff7ed') : 'transparent' }}
+                    >
+                      <span className="text-[10.5px] uppercase tracking-[0.08em] font-black" style={{ color: hasActive ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.5)' : '#6b7280') }}>
+                        {slide.title}
+                      </span>
+                      <ChevronRight size={13} className="shrink-0 transition-transform duration-200" style={{ color: isDark ? 'rgba(255,255,255,0.3)' : '#9ca3af', transform: isExpanded ? 'rotate(90deg)' : 'rotate(0deg)' }} />
+                    </button>
+                  );
+                } else {
+                  lecCountInModule += 1;
+                  const parentModuleExpanded = currentModuleId ? expandedModules.has(currentModuleId) : true;
+                  if (!parentModuleExpanded) return;
+                  const isActive = currentSlideIndex === index;
+                  const lecNum = lecCountInModule;
+                  items.push(
+                    <button key={slide.id} onClick={() => setCurrentSlideIndex(index)}
+                      className="flex items-center gap-3 pl-7 pr-4 py-2 text-left transition-all relative"
+                      style={{ backgroundColor: isActive ? (isDark ? 'rgba(255,133,29,0.1)' : '#fff7ed') : 'transparent', borderRadius: '12px', marginLeft: '8px', marginRight: '12px' }}
+                    >
+                      <span className="text-[11px] w-5 shrink-0 tabular-nums font-bold" style={{ color: isActive ? '#ff851d' : (isDark ? 'rgba(255,255,255,0.25)' : '#d1d5db') }}>
+                        {String(lecNum).padStart(2, '0')}
+                      </span>
+                      <span className="text-[13px] font-semibold truncate leading-tight" style={{ color: isActive ? '#ef375c' : (isDark ? 'rgba(255,255,255,0.65)' : '#374151') }}>
+                        {slide.title.replace(/^Lección \d+[-\d]*:\s*/, '')}
+                      </span>
+                      {isActive && <motion.div layoutId="activePointer" className="absolute left-0 w-1 h-4 bg-gradient-to-b from-[#ff851d] to-[#ef375c] rounded-full" />}
+                    </button>
+                  );
+                }
+              });
+              return items;
+            })()}
           </div>
         </div>
 
