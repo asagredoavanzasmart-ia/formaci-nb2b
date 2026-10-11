@@ -38,6 +38,7 @@ import ClaseSpin from './components/ClaseSpin';
 import ClaseKahneman from './components/ClaseKahneman';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
+import ClaseRevOps from './components/ClaseRevOps';
 import NotasDocente from './components/NotasDocente';
 import { catalogoClases } from './data/catalogoClases';
 import { initialSlides, slidesByClass, slideCountByClassId } from './data/slidesByClass';
@@ -631,6 +632,11 @@ export default function App() {
                 {/* Clase "Las Trampas del Deseo": diapositivas de contenido (td-*) */}
                 {currentSlideId.startsWith('td-') && slidesOrder[currentSlideIndex].level !== 1 && (
                   <ClaseTrampas slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "RevOps": diapositivas de contenido (ro-*) */}
+                {currentSlideId.startsWith('ro-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseRevOps slideId={currentSlideId} isDark={isDark} />
                 )}
 
                 </motion.div>

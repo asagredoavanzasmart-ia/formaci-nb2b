@@ -315,6 +315,26 @@ export const trampasSlides: SlideMeta[] = [
   { id: 'td-test-avanzado', title: 'Test 2 · Avanzado', level: 2 },
 ];
 
+// Clase "RevOps" — Revenue Operations (4 módulos, 9 lecciones).
+export const revopsSlides: SlideMeta[] = [
+  { id: 'ro-header-1', title: 'Módulo 1: Fundamentos de RevOps', level: 1 },
+  { id: 'ro-1-bienvenida', title: 'Lección 1: Bienvenida a la Certificación', level: 2 },
+  { id: 'ro-2-introduccion', title: 'Lección 2: Introducción a RevOps', level: 2 },
+
+  { id: 'ro-header-2', title: 'Módulo 2: Estrategia y Operaciones', level: 1 },
+  { id: 'ro-3-embudo', title: 'Lección 3: Aplicando RevOps al Embudo de Ventas', level: 2 },
+  { id: 'ro-4-sla', title: 'Lección 4: Responsabilidad con SLA', level: 2 },
+  { id: 'ro-5-proceso', title: 'Lección 5: Mapear un Proceso de Ventas', level: 2 },
+  { id: 'ro-6-sistemas', title: 'Lección 6: Gestión de Sistemas para RevOps', level: 2 },
+
+  { id: 'ro-header-3', title: 'Módulo 3: Construcción y Gestión de Equipo', level: 1 },
+  { id: 'ro-7-estructura', title: 'Lección 7: Estructurando tu Equipo de RevOps', level: 2 },
+  { id: 'ro-8-contratacion', title: 'Lección 8: Contratación de Miembros del Equipo', level: 2 },
+
+  { id: 'ro-header-4', title: 'Módulo 4: Evaluación y Mejora Continua', level: 1 },
+  { id: 'ro-9-evaluacion', title: 'Lección 9-10: Evaluando e Iterando tu Estrategia', level: 2 },
+];
+
 // Guion por clase: cada id del catálogo apunta a su orden de diapositivas.
 export const slidesByClass: Record<string, SlideMeta[]> = {
   'ventas-b2b': initialSlides,
@@ -325,6 +345,7 @@ export const slidesByClass: Record<string, SlideMeta[]> = {
   kahneman: kahnemanSlides,
   challenger: challengerSlides,
   'trampas-deseo': trampasSlides,
+  revops: revopsSlides,
 };
 
 // Cantidad de diapositivas (nivel 2) de cada clase del repositorio.
@@ -337,4 +358,5 @@ export const slideCountByClassId: Record<string, number> = {
   kahneman: kahnemanSlides.filter((slide) => slide.level === 2).length,
   challenger: challengerSlides.filter((slide) => slide.level === 2).length,
   'trampas-deseo': trampasSlides.filter((slide) => slide.level === 2).length,
+  revops: revopsSlides.filter((slide) => slide.level === 2).length,
 };

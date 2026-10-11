@@ -3,6 +3,7 @@ import { notasSpin } from './notasSpin';
 import { notasKahneman } from './notasKahneman';
 import { notasChallenger } from './notasChallenger';
 import { notasTrampas } from './notasTrampas';
+import { notasRevOps } from './notasRevOps';
 import { notasEquipos } from './notasEquipos';
 
 /**
@@ -146,4 +147,5 @@ export const notasPorDiapositiva: Record<string, string> = {
   ...notasKahneman,
   ...notasChallenger,
   ...notasTrampas,
+  ...notasRevOps,
 };
