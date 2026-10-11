@@ -142,41 +142,22 @@ const RUTA = [
 ];
 
 export function Ruta({ isDark }: SlideProps) {
-  const t = sceneTone(isDark);
   const [i, setI] = useState(0);
   const r = RUTA[i];
-  const B = 236;
   return (
     <Shell isDark={isDark} title="La ruta:" highlight="diez lecciones, un plan propio" subtitle="Cada lección deja una pieza de tu estrategia de RevOps. Al final tendrás un plan completo, aplicable a cualquier tamaño de empresa e industria.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
-        <div className="lg:w-[46%] flex flex-col items-center justify-center">
-          <svg viewBox="0 0 460 262" className="w-full max-h-[300px] overflow-visible" role="img" aria-label="Escalera de diez lecciones">
-            <SceneDefs id="ror" isDark={isDark} />
-            <Piso cx={230} cy={B + 4} s={222} fill={t.floor} />
-            {RUTA.map((l, k) => {
-              const x = 32 + k * 44;
-              const h = 18 + k * 15;
-              const cy = B - h - 8;
-              const on = k === i;
-              return (
-                <g key={l.n} onClick={() => setI(k)} style={{ cursor: 'pointer', outline: 'none' }}>
-                  <Lift on={on} dimmed={k > i && !on} lift={10}>
-                    <g filter="url(#ror-sh)"><IsoBox cx={x} cy={cy} s={16} h={h} f={on ? BRAND : k < i ? PEACH : NEUTRAL(isDark)} /></g>
-                  </Lift>
-                  <text x={x} y={cy - 8 - (on ? 22 : 12)} textAnchor="middle" fontSize={on ? 14 : 11} fontWeight={900} fill={on ? ORANGE : t.muted}>{l.n}</text>
-                </g>
-              );
-            })}
-          </svg>
-          <p className={`text-xs ${textMuted(isDark)}`}>Cada escalón es una lección; el activo se eleva.</p>
+        <div className="lg:w-[52%] grid grid-cols-2 gap-2 content-center">
+          {RUTA.map((l, k) => <Opcion key={l.n} isDark={isDark} on={k === i} onClick={() => setI(k)}>{l.n}. {l.t}</Opcion>)}
         </div>
-        <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-          <div className="grid grid-cols-2 gap-1.5">
-            {RUTA.map((l, k) => <Opcion key={l.n} isDark={isDark} on={k === i} onClick={() => setI(k)}>{l.n}. {l.t}</Opcion>)}
-          </div>
+        <div className="lg:w-[48%] flex flex-col gap-2.5 justify-center">
           <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-2.5">
-              <Nota isDark={isDark} label={`Lección ${r.n} · qué aprendes`}>{r.aprendes}</Nota>
+            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
+              <div className={`p-4 rounded-3xl flex items-center gap-4 ${panelClass(isDark)}`}>
+                <span className="text-5xl font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">{r.n}</span>
+                <span className={`text-xl font-black leading-tight ${heading(isDark)}`}>{r.t}</span>
+              </div>
+              <Nota isDark={isDark} label="Qué aprendes">{r.aprendes}</Nota>
               <Nota isDark={isDark} label="Qué construyes" destacada>{r.construyes}</Nota>
             </motion.div>
           </AnimatePresence>
@@ -521,76 +502,139 @@ export function Casos({ isDark }: SlideProps) {
 
 const FASES = [
   {
-    k: 'Atraer', a0: 210, a1: 330, top: '#ffd2a8', side: '#f0875a',
+    k: 'Atraer', a0: -150, a1: -33,
     def: 'Traer a las personas correctas con contenido y conversaciones valiosas que te posicionan como asesor de confianza.',
     preguntas: 'Qué propiedades usas para atraer (sitio web, redes sociales, directorios, tácticas en tienda) y qué métricas dicen si funcionan.',
   },
   {
-    k: 'Involucrar', a0: 330, a1: 450, top: ORANGE, side: '#c45c00',
+    k: 'Interactuar', a0: -30, a1: 87,
     def: 'Presentar ideas y soluciones alineadas con los dolores y metas de la persona, para que sea más probable que te compre.',
     preguntas: 'Qué tan fácil es encontrar respuestas, si se puede comprar sin hablar con alguien y cuánto tardas en responder.',
   },
   {
-    k: 'Deleitar', a0: 90, a1: 210, top: PINK, side: '#a01435',
+    k: 'Deleitar', a0: 90, a1: 207,
     def: 'Dar ayuda y soporte para que el cliente tenga éxito con lo que compró, y quiera recomendarte.',
     preguntas: 'Qué tan felices están (encuestas NPS), por qué algunos vuelven a comprar y qué reclamos hay.',
   },
 ];
 
+const EMBUDO = [
+  { k: 'Atraer', c: '#0d2a4a', w0: 340, w1: 290 },
+  { k: 'Interactuar', c: '#13808c', w0: 280, w1: 230 },
+  { k: 'Capturar', c: '#5ccfd8', w0: 220, w1: 170 },
+  { k: 'Nutrir', c: '#fbae3c', w0: 150, w1: 150 },
+  { k: 'Convertir', c: '#f4834f', w0: 130, w1: 130 },
+];
+
 const rad = (g: number) => (g * Math.PI) / 180;
 
-export function Flywheel({ isDark }: SlideProps) {
+function Embudo({ isDark }: { isDark: boolean }) {
   const t = sceneTone(isDark);
-  const [i, setI] = useState(0);
-  const cx = 200, cy = 124, R = 120, r = 64, K = 0.5, H = 14;
-  const pt = (rr: number, g: number, dy = 0) => `${(cx + rr * Math.cos(rad(g))).toFixed(1)},${(cy + K * rr * Math.sin(rad(g)) + dy).toFixed(1)}`;
-  const arco = (rr: number, a0: number, a1: number, dy = 0) => Array.from({ length: 25 }, (_, k) => pt(rr, a0 + ((a1 - a0) * k) / 24, dy));
-  const cuna = (a0: number, a1: number) => [...arco(R, a0, a1), ...arco(r, a0, a1).reverse()].join(' ');
-  const lado = (a0: number, a1: number) => {
-    const lo = Math.max(a0, 0), hi = Math.min(a1, 180);
-    const segs: string[] = [];
-    const add = (x0: number, x1: number) => { if (x1 > x0) segs.push([...arco(R, x0, x1), ...arco(R, x0, x1, H).reverse()].join(' ')); };
-    add(lo, hi);
-    if (a1 > 360) add(0, Math.min(a1 - 360, 180));
-    return segs;
+  return (
+    <svg viewBox="0 0 400 320" className="w-full max-h-[310px] overflow-visible" role="img" aria-label="Embudo: atraer, interactuar, capturar, nutrir y convertir; el cliente es el fondo del embudo">
+      {EMBUDO.map((e, k) => {
+        const y = 14 + k * 50;
+        const pts = `${200 - e.w0 / 2},${y} ${200 + e.w0 / 2},${y} ${200 + e.w1 / 2},${y + 44} ${200 - e.w1 / 2},${y + 44}`;
+        return (
+          <motion.g key={e.k} initial={{ opacity: 0, y: -14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: k * 0.12, type: 'spring', stiffness: 90, damping: 14 }}>
+            <polygon points={pts} fill={e.c} />
+            <text x={200} y={y + 28} textAnchor="middle" fontSize={16} fontWeight={800} fill="#fff">{e.k}</text>
+          </motion.g>
+        );
+      })}
+      <motion.circle r={6} fill={ORANGE} cx={200} initial={{ cy: 0, opacity: 0 }} animate={{ cy: [0, 270, 300], opacity: [0, 1, 0] }} transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 0.6, ease: 'easeIn' }} />
+      <text x={200} y={306} textAnchor="middle" fontSize={15} fontWeight={900} fill={t.text}>Cliente = fondo del embudo</text>
+    </svg>
+  );
+}
+
+function RuedaFlywheel({ isDark, i, setI }: { isDark: boolean; i: number; setI: (k: number) => void }) {
+  const c = 200, R = 146, r = 84, M = (R + r) / 2;
+  const P = (rr: number, g: number) => `${(c + rr * Math.cos(rad(g))).toFixed(1)} ${(c + rr * Math.sin(rad(g))).toFixed(1)}`;
+  const flecha = (a0: number, a1: number) => {
+    const big = a1 - a0 > 180 ? 1 : 0;
+    return `M ${P(R, a0)} A ${R} ${R} 0 ${big} 1 ${P(R, a1)} L ${P(M, a1 + 9)} L ${P(r, a1)} A ${r} ${r} 0 ${big} 0 ${P(r, a0)} L ${P(M, a0 + 9)} Z`;
   };
-  const orbita: [number, number][] = Array.from({ length: 13 }, (_, k) => [cx + 92 * Math.cos(rad(-90 + k * 30)), cy + K * 92 * Math.sin(rad(-90 + k * 30))]);
+  const arcoTexto = (a0: number, a1: number, invertir: boolean) =>
+    invertir ? `M ${P(M, a1 - 4)} A ${M} ${M} 0 0 0 ${P(M, a0 + 12)}` : `M ${P(M, a0 + 12)} A ${M} ${M} 0 0 1 ${P(M, a1 - 4)}`;
+  const suave = isDark ? '#4a3426' : '#ffe3cc';
+  const fondo = isDark ? '#2a1d16' : '#fff3ea';
+  const orbita: [number, number][] = Array.from({ length: 13 }, (_, k) => [c + 156 * Math.cos(rad(-90 + k * 30)), c + 156 * Math.sin(rad(-90 + k * 30))]);
+  const exteriores = [
+    { t: 'Desconocidos', x: c, y: c - 177, rot: 0 },
+    { t: 'Prospectos', x: c + 177, y: c, rot: 90 },
+    { t: 'Clientes', x: c, y: c + 177, rot: 0 },
+    { t: 'Promotores', x: c - 177, y: c, rot: -90 },
+  ];
+  return (
+    <svg viewBox="0 0 400 400" className="w-full max-h-[330px] overflow-visible" role="img" aria-label="Flywheel: atraer, interactuar y deleitar alrededor del crecimiento">
+      <defs>
+        <linearGradient id="rofw-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor={ORANGE} />
+          <stop offset="100%" stopColor={PINK} />
+        </linearGradient>
+        {FASES.map((f, k) => <path key={k} id={`rofw-t${k}`} d={arcoTexto(f.a0, f.a1, k === 2)} />)}
+      </defs>
+      <path d={`M ${c - 194} ${c} a 194 194 0 1 0 388 0 a 194 194 0 1 0 -388 0 Z M ${c - 160} ${c} a 160 160 0 1 1 320 0 a 160 160 0 1 1 -320 0 Z`} fill={ORANGE} fillRule="evenodd" />
+      <circle cx={c} cy={c} r={160} fill={fondo} />
+      {exteriores.map((e) => (
+        <text key={e.t} x={e.x} y={e.y + 5} textAnchor="middle" fontSize={14} fontWeight={800} fill="#fff" transform={`rotate(${e.rot} ${e.x} ${e.y})`}>{e.t}</text>
+      ))}
+      <Traveler id="rofw" path={orbita} dur={6} r={4} color={ORANGE} />
+      {FASES.map((f, k) => {
+        const on = k === i;
+        return (
+          <g key={f.k} onClick={() => setI(k)} style={{ cursor: 'pointer', outline: 'none' }}>
+            <motion.path d={flecha(f.a0, f.a1)} initial={false} animate={{ fill: on ? PINK : suave }} transition={{ duration: 0.35 }} />
+            <text fontSize={24} fontWeight={900} fill={on ? '#fff' : isDark ? '#f3e2d4' : '#3b2a20'}>
+              <textPath href={`#rofw-t${k}`} startOffset="50%" textAnchor="middle" dominantBaseline="middle">{f.k}</textPath>
+            </text>
+          </g>
+        );
+      })}
+      <motion.circle cx={c} cy={c} fill={ORANGE} initial={{ r: 70, opacity: 0.35 }} animate={{ r: [70, 82], opacity: [0.35, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }} />
+      <circle cx={c} cy={c} r={70} fill="url(#rofw-g)" />
+      <text x={c} y={c + 7} textAnchor="middle" fontSize={20} fontWeight={900} fill="#fff">Crecimiento</text>
+    </svg>
+  );
+}
+
+export function Flywheel({ isDark }: SlideProps) {
+  const [modo, setModo] = useState<'embudo' | 'flywheel'>('embudo');
+  const [i, setI] = useState(0);
   const f = FASES[i];
   return (
     <Shell isDark={isDark} title="Del embudo" highlight="al flywheel" subtitle="El embudo tiene un final: los leads entran arriba y los clientes salen abajo. El flywheel es un ciclo: los clientes deleitados atraen a los siguientes.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] flex flex-col items-center justify-center gap-2">
-          <svg viewBox="0 0 400 262" className="w-full max-h-[300px] overflow-visible" role="img" aria-label="Flywheel: atraer, involucrar y deleitar">
-            <SceneDefs id="rof" isDark={isDark} />
-            <ellipse cx={cx} cy={cy + 30} rx={150} ry={66} fill={t.floor} />
-            {FASES.map((fa, k) => (
-              <g key={fa.k} onClick={() => setI(k)} style={{ cursor: 'pointer', outline: 'none' }} opacity={k === i ? 1 : 0.5}>
-                {lado(fa.a0, fa.a1).map((s, j) => <polygon key={j} points={s} fill={fa.side} />)}
-              </g>
-            ))}
-            {FASES.map((fa, k) => (
-              <g key={fa.k + 't'} onClick={() => setI(k)} style={{ cursor: 'pointer', outline: 'none' }} opacity={k === i ? 1 : 0.5}>
-                <polygon points={cuna(fa.a0, fa.a1)} fill={fa.top} />
-              </g>
-            ))}
-            <Persona id="rof" cx={cx} cy={cy + 22} s={0.82} body={SLATE(isDark)} accessory="heart" />
-            <Traveler id="rof" path={orbita} dur={4} r={5} color={isDark ? '#fff' : '#ffffff'} />
-            <text x={cx} y={cy - K * R - 12} textAnchor="middle" fontSize={13} fontWeight={900} fill={i === 0 ? ORANGE : t.muted}>Atraer</text>
-            <text x={cx + R * 0.87 + 16} y={cy + K * R * 0.5 + 18} fontSize={13} fontWeight={900} fill={i === 1 ? ORANGE : t.muted}>Involucrar</text>
-            <text x={cx - R * 0.87 - 16} y={cy + K * R * 0.5 + 18} textAnchor="end" fontSize={13} fontWeight={900} fill={i === 2 ? PINK : t.muted}>Deleitar</text>
-            <text x={cx} y={254} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>El cliente al centro; el ciclo nunca termina</text>
-          </svg>
-          <div className="flex gap-2">{FASES.map((fa, k) => <Pill key={fa.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{fa.k}</Pill>)}</div>
+          <div className="flex gap-2">
+            <Pill isDark={isDark} on={modo === 'embudo'} onClick={() => setModo('embudo')}>El embudo</Pill>
+            <Pill isDark={isDark} on={modo === 'flywheel'} onClick={() => setModo('flywheel')}>El flywheel</Pill>
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.div key={modo} initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} className="w-full flex justify-center">
+              {modo === 'embudo' ? <Embudo isDark={isDark} /> : <RuedaFlywheel isDark={isDark} i={i} setI={setI} />}
+            </motion.div>
+          </AnimatePresence>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
           <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
-              <Nota isDark={isDark} label={`${f.k} · qué significa`} destacada>{f.def}</Nota>
-              <Nota isDark={isDark} label="Preguntas para mapear tu empresa">{f.preguntas}</Nota>
-            </motion.div>
+            {modo === 'embudo' ? (
+              <motion.div key="e" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
+                <Nota isDark={isDark} label="Cómo razona el embudo" destacada>Los prospectos entran arriba y, etapa por etapa, se filtran hasta convertirse en clientes. El cliente es el <strong>fondo del embudo</strong>: el resultado final del proceso.</Nota>
+                <Nota isDark={isDark} label="Lo que queda fuera">Todo lo que pasa después de la compra: renovaciones, recomendaciones y referidos. En el embudo, la energía de un cliente feliz no vuelve a entrar al sistema.</Nota>
+              </motion.div>
+            ) : (
+              <motion.div key={`f${i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
+                <div className="flex gap-2">{FASES.map((fa, k) => <Pill key={fa.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{fa.k}</Pill>)}</div>
+                <Nota isDark={isDark} label={`${f.k} · qué significa`} destacada>{f.def}</Nota>
+                <Nota isDark={isDark} label="Preguntas para mapear tu empresa">{f.preguntas}</Nota>
+                <Nota isDark={isDark} label="El anillo exterior">Desconocidos que se vuelven prospectos, prospectos que se vuelven clientes y clientes que se vuelven promotores. Los promotores atraen a nuevos desconocidos y la rueda gana impulso.</Nota>
+              </motion.div>
+            )}
           </AnimatePresence>
           <Cita isDark={isDark} autor="Emmanuelle Skala">Creo que ya no es un embudo; es un círculo. Los embudos, por definición, tienen un final. En SaaS no hay final: hay renovaciones, recomendaciones y referidos. Si separas ventas de éxito del cliente, ¿quién mira el ciclo completo?</Cita>
-          <p className={`text-[11px] ${textMuted(isDark)}`}><strong>NPS</strong> · Net Promoter Score: mide qué tan probable es que un cliente te recomiende.</p>
+          {modo === 'flywheel' && <p className={`text-[11px] ${textMuted(isDark)}`}><strong>NPS</strong> · Net Promoter Score: mide qué tan probable es que un cliente te recomiende.</p>}
         </div>
       </div>
     </Shell>
@@ -787,7 +831,7 @@ export function FriccionUtil({ isDark }: SlideProps) {
 
 const MAPA = [
   { fase: 'Atraer', herramienta: 'Anuncios', equipo: 'Marketing', metrica: 'MQL, retorno de la inversión' },
-  { fase: 'Involucrar', herramienta: 'Prospección de ventas', equipo: 'Ventas', metrica: 'Negocios cerrados-ganados' },
+  { fase: 'Interactuar', herramienta: 'Prospección de ventas', equipo: 'Ventas', metrica: 'Negocios cerrados-ganados' },
   { fase: 'Deleitar', herramienta: 'Chat en vivo', equipo: 'Ventas y servicio', metrica: 'Tiempo de respuesta, satisfacción del cliente' },
 ];
 

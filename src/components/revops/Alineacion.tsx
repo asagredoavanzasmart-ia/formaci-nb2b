@@ -533,6 +533,100 @@ const AREAS = [
   { k: 'Qué mostrar', d: 'Menos decks y más pizarra, video y contenido visual que genere emoción.' },
 ];
 
+type Pieza = { tipo: 'Caso' | 'Pregunta' | 'Frase' | 'Correo' | 'Guion'; t: string };
+type Fila = { persona: string; contexto: string; dolores: { d: string; funciones: { f: string; contenido: Pieza[] }[] }[] };
+
+const MATRIZ: Fila[] = [
+  {
+    persona: 'Gerente de personas', contexto: 'Empresa mediana, 300 trabajadores',
+    dolores: [
+      { d: 'La rotación subió y no sabe por qué', funciones: [
+        { f: 'Encuesta semanal de clima', contenido: [{ tipo: 'Caso', t: 'Cliente del mismo rubro que bajó su rotación en un año' }, { tipo: 'Pregunta', t: '¿Cómo te enteras hoy de que alguien está pensando en irse?' }] },
+        { f: 'Alertas de riesgo de fuga', contenido: [{ tipo: 'Frase', t: '«Te avisamos antes de la carta de renuncia.»' }, { tipo: 'Correo', t: 'Seguimiento tras la demo con el costo de reemplazar a una persona' }] },
+      ] },
+      { d: 'No logra mostrar resultados a la gerencia', funciones: [
+        { f: 'Reporte de clima por área', contenido: [{ tipo: 'Guion', t: 'Cómo presentar el clima en el comité ejecutivo' }, { tipo: 'Caso', t: 'Informe trimestral real de un cliente' }] },
+      ] },
+    ],
+  },
+  {
+    persona: 'Gerente de operaciones', contexto: 'Equipos en terreno y turnos',
+    dolores: [
+      { d: 'Ausentismo alto en ciertos turnos', funciones: [
+        { f: 'Pulso por turno y equipo', contenido: [{ tipo: 'Pregunta', t: '¿Qué turno te preocupa más y por qué?' }, { tipo: 'Caso', t: 'Planta que redujo licencias al detectar un jefe conflictivo' }] },
+      ] },
+      { d: 'Los supervisores no saben dar feedback', funciones: [
+        { f: 'Guías de conversación para jefaturas', contenido: [{ tipo: 'Frase', t: '«Cada respuesta llega con una sugerencia de qué hacer.»' }, { tipo: 'Correo', t: 'Plantilla con tres ejemplos de guías' }] },
+      ] },
+    ],
+  },
+  {
+    persona: 'CEO de empresa en crecimiento', contexto: 'Pasó de 50 a 200 personas',
+    dolores: [
+      { d: 'Siente que la cultura se está perdiendo', funciones: [
+        { f: 'Tablero de cultura para la dirección', contenido: [{ tipo: 'Caso', t: 'Startup que mantuvo su cultura al triplicar el equipo' }, { tipo: 'Pregunta', t: '¿Qué valor de los inicios sientes que se está diluyendo?' }] },
+        { f: 'Preguntas anónimas al CEO', contenido: [{ tipo: 'Guion', t: 'Cómo responder preguntas difíciles en la reunión mensual' }] },
+      ] },
+    ],
+  },
+];
+
+function MatrizPPFC({ isDark }: { isDark: boolean }) {
+  const [p, setP] = useState(0);
+  const [d, setD] = useState(0);
+  const [f, setF] = useState(0);
+  const fila = MATRIZ[p];
+  const dolor = fila.dolores[Math.min(d, fila.dolores.length - 1)];
+  const func = dolor.funciones[Math.min(f, dolor.funciones.length - 1)];
+  const colorTipo: Record<Pieza['tipo'], string> = { Caso: '#10b981', Pregunta: ORANGE, Frase: PINK, Correo: '#6366f1', Guion: '#0ea5e9' };
+  const columna = (n: number, titulo: string, hijos: React.ReactNode) => (
+    <div className="flex flex-col gap-1.5 min-w-0">
+      <span className={microLabel(isDark)}>{n}. {titulo}</span>
+      {hijos}
+    </div>
+  );
+  const flecha = <span className="self-center text-xl font-black text-[#ff851d] opacity-70">→</span>;
+  return (
+    <div className="flex flex-col gap-3">
+      <div className={`rounded-3xl p-3.5 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1.25fr] gap-2.5 ${panelClass(isDark)}`}>
+        {columna(1, 'Persona', MATRIZ.map((x, k) => (
+          <Opcion key={x.persona} isDark={isDark} on={k === p} onClick={() => { setP(k); setD(0); setF(0); }}>
+            {x.persona}<span className={`block text-[10.5px] font-semibold ${k === p ? 'text-white/80' : textMuted(isDark)}`}>{x.contexto}</span>
+          </Opcion>
+        )))}
+        {flecha}
+        <AnimatePresence mode="wait">
+          <motion.div key={`d${p}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+            {columna(2, 'Dolor', fila.dolores.map((x, k) => <Opcion key={x.d} isDark={isDark} on={k === d} onClick={() => { setD(k); setF(0); }}>{x.d}</Opcion>))}
+          </motion.div>
+        </AnimatePresence>
+        {flecha}
+        <AnimatePresence mode="wait">
+          <motion.div key={`f${p}${d}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+            {columna(3, 'Función', dolor.funciones.map((x, k) => <Opcion key={x.f} isDark={isDark} on={k === f} onClick={() => setF(k)}>{x.f}</Opcion>))}
+          </motion.div>
+        </AnimatePresence>
+        {flecha}
+        <AnimatePresence mode="wait">
+          <motion.div key={`c${p}${d}${f}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+            {columna(4, 'Contenido', func.contenido.map((c) => (
+              <div key={c.t} className={`p-2.5 rounded-xl ${featuredClass(isDark)}`}>
+                <span className="inline-block px-2 py-0.5 rounded-full text-[9.5px] font-black uppercase text-white mb-1" style={{ background: colorTipo[c.tipo] }}>{c.tipo}</span>
+                <p className={`text-[12.5px] font-semibold leading-snug ${heading(isDark)}`}>{c.t}</p>
+              </div>
+            )))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <Nota isDark={isDark} label="Para qué sirve">Por cada persona, sus dolores; por cada dolor, las funciones que lo resuelven; por cada función, el contenido que lo explica: casos, preguntas, frases, plantillas de correo y guiones.</Nota>
+        <Cita isDark={isDark} autor="Cory Bray y Hilmon Sorey">Una empresa decía que le faltaban casos de clientes. El problema real: no había un circuito cerrado entre éxito del cliente y ventas, y las historias nunca llegaban a los vendedores.</Cita>
+      </div>
+      <p className={`text-[11px] ${textMuted(isDark)}`}>Matriz de ejemplo ilustrativa, basada en el caso TINYpulse del curso (medición de clima organizacional).</p>
+    </div>
+  );
+}
+
 export function Playbook({ isDark }: SlideProps) {
   const [tab, setTab] = useState(0);
   const [m, setM] = useState(0);
@@ -567,25 +661,7 @@ export function Playbook({ isDark }: SlideProps) {
                 </div>
               </div>
             )}
-            {tab === 2 && (
-              <div className="flex flex-col gap-3">
-                <div className={`rounded-3xl p-3.5 ${featuredClass(isDark)}`}>
-                  <div className="grid grid-cols-4 gap-3">
-                    {[['Persona', 'Gerente de personas de una empresa mediana'], ['Dolor', 'La rotación subió y no sabe por qué'], ['Función', 'Encuesta semanal de clima con alertas'], ['Contenido', 'Caso de un cliente que bajó su rotación y la frase que lo resume']].map(([k, v], j) => (
-                      <div key={k} className="flex flex-col gap-1">
-                        <span className={microLabel(isDark)}>{j + 1}. {k}</span>
-                        <span className={`text-sm font-semibold leading-snug ${heading(isDark)}`}>{v}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <Nota isDark={isDark} label="Para qué sirve">Por cada persona, sus dolores; por cada dolor, las funciones que lo resuelven; por cada función, el contenido que lo explica. Puede incluir preguntas, frases, plantillas de correo y guiones.</Nota>
-                  <Cita isDark={isDark} autor="Cory Bray y Hilmon Sorey">Una empresa decía que le faltaban casos de clientes. El problema real: no había un circuito cerrado entre éxito del cliente y ventas, y las historias nunca llegaban a los vendedores.</Cita>
-                </div>
-                <p className={`text-[11px] ${textMuted(isDark)}`}>La fila de la matriz es un ejemplo ilustrativo.</p>
-              </div>
-            )}
+            {tab === 2 && <MatrizPPFC isDark={isDark} />}
           </motion.div>
         </AnimatePresence>
       </div>

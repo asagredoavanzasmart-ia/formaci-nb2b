@@ -103,7 +103,23 @@ export function Capas({ isDark }: SlideProps) {
               const f = r === 'Tú' ? BRAND : r === 'Sistemas' ? PEACH : SLATE(isDark);
               return (
                 <motion.g key={k + r} initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: k * 0.12, type: 'spring', stiffness: 90, damping: 13 }}>
-                  <Float amp={3} dur={2.3 + k * 0.2} delay={k * 0.2}><Persona id="rca" cx={x} cy={160} s={0.85} body={f} accessory={r === 'Tú' ? 'compass' : r === 'Sistemas' ? 'gear' : 'star'} /></Float>
+                  <Float amp={3} dur={2.3 + k * 0.2} delay={k * 0.2}>
+                    {r === 'Sistemas' ? (
+                      <g>
+                        <ellipse cx={x} cy={162} rx={24} ry={7} fill="#000" opacity={0.18} />
+                        {[0, 1, 2].map((j) => (
+                          <g key={j}>
+                            <IsoBox cx={x} cy={137 - j * 15} s={19} h={14} f={j === 2 ? PEACH : SLATE(isDark)} />
+                            {[0, 1].map((d) => (
+                              <motion.circle key={d} cx={x - 14 + d * 6} cy={137 - j * 15 + 6 + d * 3} r={1.8} fill={d ? ORANGE : '#34d399'} animate={{ opacity: [1, 0.25, 1] }} transition={{ duration: 1 + j * 0.3 + d * 0.4, repeat: Infinity }} />
+                            ))}
+                          </g>
+                        ))}
+                      </g>
+                    ) : (
+                      <Persona id="rca" cx={x} cy={160} s={0.85} body={f} accessory={r === 'Tú' ? 'compass' : 'star'} />
+                    )}
+                  </Float>
                   <text x={x} y={194} textAnchor="middle" fontSize={12} fontWeight={900} fill={r === 'Tú' ? ORANGE : t.muted}>{r}</text>
                 </motion.g>
               );
