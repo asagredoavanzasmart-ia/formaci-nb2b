@@ -322,7 +322,7 @@ export const revopsSlides: SlideMeta[] = [
   { id: 'ro-2-introduccion', title: 'Lección 2: Introducción a RevOps', level: 2 },
 
   { id: 'ro-header-2', title: 'Módulo 2: Estrategia y Operaciones', level: 1 },
-  { id: 'ro-3-embudo', title: 'Lección 3: Aplicando RevOps al Embudo de Ventas', level: 2 },
+  { id: 'ro-3-embudo', title: 'Lección 3: RevOps al Flywheel', level: 2 },
   { id: 'ro-4-sla', title: 'Lección 4: Responsabilidad con SLA', level: 2 },
   { id: 'ro-5-proceso', title: 'Lección 5: Mapear un Proceso de Ventas', level: 2 },
   { id: 'ro-6-sistemas', title: 'Lección 6: Gestión de Sistemas para RevOps', level: 2 },
