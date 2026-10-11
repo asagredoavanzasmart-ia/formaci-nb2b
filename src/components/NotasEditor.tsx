@@ -16,6 +16,7 @@ import { presenterBus } from '../lib/presenterBus';
  */
 
 const STORAGE_KEY = 'CLASE_NOTAS_DOCENTE_V1';
+const ENDPOINT_GUIONES = '/formaci-nb2b/__guiones';
 
 const HIGHLIGHTS: { name: string; color: string }[] = [
   { name: 'Amarillo', color: '#fde68a' },
@@ -51,6 +52,23 @@ export default function NotasEditor({ slideId, slideTitle, isDark, big = false }
   const [saved, setSaved] = useState(false);
 
   const noteFor = (id: string) => notes[id] ?? notasPorDiapositiva[id] ?? '';
+
+  // Trae los guiones guardados en guiones/guiones-editados.json (solo en desarrollo).
+  useEffect(() => {
+    fetch(ENDPOINT_GUIONES)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((desdeArchivo: Record<string, string> | null) => {
+        if (!desdeArchivo || typeof desdeArchivo !== 'object') return;
+        setNotes((prev) => ({ ...prev, ...desdeArchivo }));
+        if (editorRef.current && document.activeElement !== editorRef.current && desdeArchivo[slideId]) {
+          editorRef.current.innerHTML = desdeArchivo[slideId];
+        }
+      })
+      .catch(() => {
+        /* sin servidor de desarrollo: se usa solo localStorage */
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Cargar el guion al montar o al cambiar de diapositiva. El editor es "no
   // controlado": solo fijamos su HTML aquí, nunca en cada render.
@@ -129,6 +147,13 @@ export default function NotasEditor({ slideId, slideTitle, isDark, big = false }
     } catch {
       /* almacenamiento no disponible */
     }
+    fetch(ENDPOINT_GUIONES, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slideId, html }),
+    }).catch(() => {
+      /* sin servidor de desarrollo (p. ej. en la versión publicada): solo queda localStorage */
+    });
     presenterBus.post({ type: 'notes-saved', slideId });
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
