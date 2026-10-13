@@ -39,6 +39,9 @@ import ClaseKahneman from './components/ClaseKahneman';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
 import ClaseRevOps from './components/ClaseRevOps';
+import ClaseSalesEnablement from './components/ClaseSalesEnablement';
+import { AudioSrcContext } from './components/slideKit';
+import { audioBySlide } from './data/audioBySlide';
 import NotasDocente from './components/NotasDocente';
 import { catalogoClases } from './data/catalogoClases';
 import { initialSlides, slidesByClass, slideCountByClassId } from './data/slidesByClass';
@@ -56,11 +59,12 @@ export default function App() {
   const [slidesOrder, setSlidesOrder] = useState(initialSlides);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [createdIcps, setCreatedIcps] = useState<CompleteICP[]>([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  // En pantallas angostas el menú parte cerrado para no tapar la diapositiva.
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window === 'undefined' || Math.min(window.innerWidth, window.innerHeight) >= 768);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   // Módulos expandidos para clases con estructura modular (e.g. RevOps)
-  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set(['ro-header-1']));
+  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set(['ro-header-1', 'se-header-1']));
   // Índice fijado por la ventana de presentador: evita reenviar el cambio en bucle.
   const lastRemoteIndex = useRef<number | null>(null);
   
@@ -88,33 +92,56 @@ export default function App() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Forzar horizontal en móviles mediante API de orientación si es posible
-  useEffect(() => {
-    const lockOrientation = async () => {
-      try {
-        if (screen.orientation && (screen.orientation as any).lock) {
-          await (screen.orientation as any).lock('landscape');
-        }
-      } catch (e) {
-        console.log('Orientation lock not supported or failed');
-      }
-    };
-    lockOrientation();
-  }, []);
+  // Móvil: pantalla táctil con lado corto menor a 768px (vale en vertical y en horizontal).
+  const isMobile = typeof window !== 'undefined'
+    && window.matchMedia('(pointer: coarse)').matches
+    && Math.min(windowSize.width, windowSize.height) < 768;
+  // Disposición compacta: sin pie de navegación y con el menú superpuesto.
+  const isCompact = isMobile || windowSize.width < 768;
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = async () => {
+    const root = document.documentElement;
+    const orientation = screen.orientation as any;
+    // iPhone no tiene la API de pantalla completa: se alterna solo la disposición.
+    if (!root.requestFullscreen) {
+      setIsFullscreen(prev => !prev);
+      if (isCompact) setIsSidebarOpen(false);
+      return;
+    }
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(e => {
-        console.error(`Error attempting to enable full-screen mode: ${e.message}`);
-      });
-      setIsFullscreen(true);
+      try {
+        await root.requestFullscreen();
+        if (isCompact) setIsSidebarOpen(false);
+        // En móvil la pantalla completa queda siempre en vertical.
+        if (isMobile && orientation?.lock) await orientation.lock('portrait');
+      } catch (e) {
+        console.log('Pantalla completa u orientación no disponible');
+      }
     } else {
+      try { orientation?.unlock?.(); } catch (e) { /* sin soporte */ }
       document.exitFullscreen();
-      setIsFullscreen(false);
     }
   };
 
+  // Deslizar con el dedo para cambiar de diapositiva (solo móvil).
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const target = e.target as HTMLElement;
+    const blocked = e.touches.length !== 1 || !!target.closest('input, textarea, select, [contenteditable="true"], .react-flow');
+    touchStart.current = blocked ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const dx = e.changedTouches[0].clientX - start.x;
+    const dy = e.changedTouches[0].clientY - start.y;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    setCurrentSlideIndex(prev => Math.min(slidesOrder.length - 1, Math.max(0, prev + (dx < 0 ? 1 : -1))));
+  };
+
   useEffect(() => {
+    if (!document.documentElement.requestFullscreen) return;
     const handleFsChange = () => setIsFullscreen(!!document.fullscreenElement);
     document.addEventListener('fullscreenchange', handleFsChange);
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
@@ -155,7 +182,7 @@ export default function App() {
 
   // Auto-expande el módulo padre cuando se navega a una lección en clases modulares
   useEffect(() => {
-    if (activeClassId !== 'revops') return;
+    if (activeClassId !== 'revops' && activeClassId !== 'sales-enablement') return;
     let parentId: string | null = null;
     for (let i = 0; i < slidesOrder.length; i++) {
       if (slidesOrder[i].level === 1) { parentId = slidesOrder[i].id; }
@@ -330,8 +357,11 @@ export default function App() {
 
   // Abre una clase: carga su guion de diapositivas y empieza desde el inicio.
   const openClass = (classId: string) => {
-    setSlidesOrder(slidesByClass[classId] ?? initialSlides);
-    setCurrentSlideIndex(0);
+    const slides = slidesByClass[classId] ?? initialSlides;
+    setSlidesOrder(slides);
+    // Si la clase es modular (empieza con un header de nivel 1), salta al primer slide de nivel 2.
+    const firstContentIndex = slides.findIndex((s) => s.level === 2);
+    setCurrentSlideIndex(firstContentIndex >= 0 ? firstContentIndex : 0);
     setActiveClassId(classId);
   };
 
@@ -397,7 +427,7 @@ export default function App() {
       
       {/* Sidebar - Ocupa altura completa y empuja el contenido */}
       <aside 
-        className={`transition-all duration-300 z-50 flex flex-col h-screen border-r shadow-xl overflow-hidden ${isDark ? 'bg-[#111111] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
+        className={`transition-all duration-300 flex flex-col h-dvh border-r shadow-xl overflow-hidden ${isCompact ? 'fixed inset-y-0 left-0 z-[120]' : 'z-50'} ${isDark ? 'bg-[#111111] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
       >
         <div className="p-5 flex items-center justify-between shrink-0 border-b border-gray-100 dark:border-[#2a2a2a]">
           <div className="px-1">
@@ -427,7 +457,7 @@ export default function App() {
         <div className="flex-1 overflow-y-auto py-4 custom-scrollbar">
           <div className="flex flex-col">
             {(() => {
-              const isModular = activeClassId === 'revops';
+              const isModular = activeClassId === 'revops' || activeClassId === 'sales-enablement';
               if (!isModular) {
                 // Renderizado plano normal
                 return slidesOrder.map((slide, index) => {
@@ -543,7 +573,7 @@ export default function App() {
 
 
       {/* Main Content */}
-      <div className="flex-1 relative flex flex-col h-screen overflow-hidden">
+      <div className="flex-1 relative flex flex-col h-dvh overflow-hidden">
         
         {/* 
           Escenario de la Diapositiva:
@@ -551,7 +581,11 @@ export default function App() {
           Utilizamos un sistema de escalado (transform: scale) para que el contenido
           interno se diseñe sobre una base de 1280x720 y se adapte al espacio disponible.
         */}
-        <div className="flex-1 flex items-center justify-center p-0 md:p-8 min-h-0 relative">
+        <div
+          className="flex-1 flex items-center justify-center p-0 md:p-8 min-h-0 relative"
+          onTouchStart={isMobile ? handleTouchStart : undefined}
+          onTouchEnd={isMobile ? handleTouchEnd : undefined}
+        >
           
           <div 
             className="relative transition-all duration-500 ease-out w-full h-full flex items-center justify-center p-0"
@@ -575,8 +609,8 @@ export default function App() {
                 top: '50%',
                 left: '50%',
                 transform: `translate(-50%, -50%) scale(${Math.min(
-                  (windowSize.width - (windowSize.width < 768 ? 40 : (isSidebarOpen ? 320 : 80))) / 1280,
-                  (windowSize.height - (windowSize.width < 768 ? 60 : 120)) / 720
+                  (windowSize.width - (isCompact ? 16 : (isSidebarOpen ? 320 : 80))) / 1280,
+                  (windowSize.height - (isCompact ? 16 : 120)) / 720
                 )})`,
                 transformOrigin: 'center center',
                 pointerEvents: 'auto'
@@ -699,7 +733,16 @@ export default function App() {
 
                 {/* Clase "RevOps": diapositivas de contenido (ro-*) */}
                 {currentSlideId.startsWith('ro-') && slidesOrder[currentSlideIndex].level !== 1 && (
-                  <ClaseRevOps slideId={currentSlideId} isDark={isDark} />
+                  <AudioSrcContext.Provider value={audioBySlide[currentSlideId]}>
+                    <ClaseRevOps slideId={currentSlideId} isDark={isDark} />
+                  </AudioSrcContext.Provider>
+                )}
+
+                {/* Clase "Sales Enablement": diapositivas de contenido (se-*) */}
+                {currentSlideId.startsWith('se-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <AudioSrcContext.Provider value={audioBySlide[currentSlideId]}>
+                    <ClaseSalesEnablement slideId={currentSlideId} isDark={isDark} />
+                  </AudioSrcContext.Provider>
                 )}
 
                 </motion.div>
@@ -742,11 +785,11 @@ export default function App() {
         </div>
 
         {/* Botones de Navegación Flotantes (Solo en Móvil/Responsive) */}
-        <div className="md:hidden contents">
+        <div className={isCompact ? 'contents' : 'hidden'}>
           <button 
             onClick={prevSlide} 
             disabled={currentSlideIndex === 0}
-            className={`fixed left-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full shadow-2xl transition-all border ${
+            className={`fixed left-4 ${windowSize.height > windowSize.width ? 'bottom-5' : 'top-1/2 -translate-y-1/2'} z-[110] p-3 rounded-full shadow-2xl transition-all border ${
               currentSlideIndex === 0 
                 ? 'opacity-0 pointer-events-none' 
                 : isDark 
@@ -760,7 +803,7 @@ export default function App() {
           <button 
             onClick={nextSlide} 
             disabled={currentSlideIndex === slidesOrder.length - 1}
-            className={`fixed right-4 top-1/2 -translate-y-1/2 z-[110] p-3 rounded-full shadow-2xl transition-all border ${
+            className={`fixed right-4 ${windowSize.height > windowSize.width ? 'bottom-5' : 'top-1/2 -translate-y-1/2'} z-[110] p-3 rounded-full shadow-2xl transition-all border ${
               currentSlideIndex === slidesOrder.length - 1
                 ? 'opacity-0 pointer-events-none' 
                 : 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white border-transparent'
@@ -770,8 +813,8 @@ export default function App() {
           </button>
         </div>
 
-        {/* Footer Navigation (Oculto en móvil, visible en Desktop) */}
-        <div className="hidden md:flex h-16 shrink-0 z-40 px-6 items-center justify-between">
+        {/* Footer Navigation (sin puntos de avance ni pie en móvil, visible en Desktop) */}
+        <div className={`${isCompact ? 'hidden' : 'flex'} h-16 shrink-0 z-40 px-6 items-center justify-between`}>
           <button 
             onClick={prevSlide} 
             disabled={currentSlideIndex === 0}

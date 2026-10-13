@@ -47,7 +47,7 @@ export function Cifra({ isDark, n, dec = 0, sufijo = '', prefijo = '', titulo, l
 /* Cita de un experto con su rol. */
 export function Cita({ isDark, autor, rol, children }: { isDark: boolean; autor: string; rol?: string; children: React.ReactNode }) {
   return (
-    <div className={`p-3.5 rounded-2xl ${panelClass(isDark)}`}>
+    <div className={`p-3.5 my-1 rounded-2xl ${isDark ? "bg-white/10" : "bg-gray-200/80"}`}>
       <p className={`text-sm leading-snug italic ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>«{children}»</p>
       <p className="mt-1.5 text-[11px] font-black text-[#ff851d]">{autor}{rol && <span className={`font-semibold ${isDark ? 'text-gray-500' : 'text-gray-400'}`}> · {rol}</span>}</p>
     </div>

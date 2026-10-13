@@ -99,4 +99,13 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
     category: 'Liderazgo',
     iconKey: 'liderazgo',
   },
+  {
+    id: 'sales-enablement',
+    title: 'Sales Enablement: el ecosistema de ventas',
+    subtitle: 'Cory Bray & Hilmon Sorey',
+    description:
+      'El ecosistema que conecta a todos los departamentos en torno al prospecto: proceso y metodología, personas de comprador, herramientas y contenido, ICP, negociación, éxito del cliente, talento y gerencia. 25 lecciones + 2 tests.',
+    category: 'Ventas',
+    iconKey: 'ventas',
+  },
 ];

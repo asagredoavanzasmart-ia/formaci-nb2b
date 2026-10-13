@@ -5,6 +5,7 @@ import { notasChallenger } from './notasChallenger';
 import { notasTrampas } from './notasTrampas';
 import { notasRevOps } from './notasRevOps';
 import { notasEquipos } from './notasEquipos';
+import { notasSalesEnablement } from './notasSalesEnablement';
 
 /**
  * Guión del presentador para la clase "La Ciencia de Vender" (ventas avanzado).
@@ -148,4 +149,5 @@ export const notasPorDiapositiva: Record<string, string> = {
   ...notasChallenger,
   ...notasTrampas,
   ...notasRevOps,
+  ...notasSalesEnablement,
 };

@@ -1,6 +1,11 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, XCircle } from 'lucide-react';
+import { AudioPlayer } from './AudioPlayer';
+
+/** Contexto que provee la URL de audio para la diapositiva activa.
+ *  App.tsx lo provee; Shell lo consume si hay URL disponible. */
+export const AudioSrcContext = React.createContext<string | undefined>(undefined);
 
 /**
  * Kit visual compartido por las clases (diapositivas de contenido).
@@ -31,6 +36,8 @@ export function Shell({
   subtitle?: string;
   children: React.ReactNode;
 }) {
+  const audioSrc = React.useContext(AudioSrcContext);
+
   return (
     <div
       className={`w-full h-full flex flex-col p-6 md:p-10 relative overflow-hidden rounded-3xl shadow-2xl ${
@@ -48,6 +55,8 @@ export function Shell({
       </div>
 
       <div className="flex-1 min-h-0 z-10 flex flex-col justify-center">{children}</div>
+
+      {audioSrc && <AudioPlayer src={audioSrc} isDark={isDark} />}
     </div>
   );
 }

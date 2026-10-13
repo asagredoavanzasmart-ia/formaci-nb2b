@@ -335,7 +335,7 @@ export const revopsSlides: SlideMeta[] = [
   { id: 'ro-3-fuerza', title: 'Fuerza y fricción', level: 2 },
   { id: 'ro-3-friccion', title: 'Dónde está la fricción', level: 2 },
   { id: 'ro-3-friccion-util', title: 'Cuando la fricción suma valor', level: 2 },
-  { id: 'ro-3-mapa', title: 'Mapea tu flywheel', level: 2 },
+  { id: 'ro-3-mapa', title: 'Un flywheel de ejemplo', level: 2 },
 
   { id: 'ro-header-4', title: 'Lección 4: Responsabilidad con SLA', level: 1 },
   { id: 'ro-4-porque', title: 'Por qué un SLA', level: 2 },
@@ -383,6 +383,45 @@ export const revopsSlides: SlideMeta[] = [
   { id: 'ro-10-diario', title: 'Prioridades diarias', level: 2 },
 ];
 
+export const seSlides: SlideMeta[] = [
+  { id: 'se-header-1', title: 'Lección 1: Qué es Sales Enablement', level: 1 },
+  { id: 'se-1-portada',     title: 'Sales Enablement',       level: 2 },
+  { id: 'se-2-definicion',  title: 'Es un ecosistema',        level: 2 },
+  { id: 'se-3-evolucion',   title: 'Evolución histórica',     level: 2 },
+  { id: 'se-header-2', title: 'Lección 2: El proceso de ventas', level: 1 },
+  { id: 'se-4-paradoja',    title: 'La paradoja del proceso', level: 2 },
+  { id: 'se-5-madurez',     title: 'Los tres estados',        level: 2 },
+  { id: 'se-6-etapas',      title: 'Tipos y etapas',          level: 2 },
+  { id: 'se-7-crm',         title: 'Inteligencia accionable', level: 2 },
+  { id: 'se-header-3', title: 'Lección 3: Incorporar y entrenar', level: 1 },
+  { id: 'se-8-onboarding',  title: 'Onboarding 2×2',          level: 2 },
+  { id: 'se-9-metodologia', title: 'Metodología de ventas',   level: 2 },
+  { id: 'se-10-errores',    title: '16 señales de entrenamiento', level: 2 },
+  { id: 'se-header-4', title: 'Lección 4: Personas, producto y precio', level: 1 },
+  { id: 'se-11-persona',    title: 'Persona de comprador',    level: 2 },
+  { id: 'se-12-producto',   title: 'Vitaminas, dulces y analgésicos', level: 2 },
+  { id: 'se-13-contenido',  title: 'Matriz de contenido',     level: 2 },
+  { id: 'se-header-5', title: 'Lección 5: Herramientas y contenido', level: 1 },
+  { id: 'se-14-herramientas',   title: 'Por qué fallan las herramientas', level: 2 },
+  { id: 'se-15-microcontenido', title: 'Micro-contenido',     level: 2 },
+  { id: 'se-16-objeciones',     title: 'Objeciones como preguntas', level: 2 },
+  { id: 'se-header-6', title: 'Lección 6: ICP, especialización y negociación', level: 1 },
+  { id: 'se-17-icp',           title: 'ICP: los 5 segmentos', level: 2 },
+  { id: 'se-18-especializacion',title: 'Investigación vs. alcance', level: 2 },
+  { id: 'se-19-negociacion',    title: 'Marco BATNA',          level: 2 },
+  { id: 'se-header-7', title: 'Lección 7: Éxito del cliente y talento', level: 1 },
+  { id: 'se-20-referidos',   title: 'Referidos vs. recomendaciones', level: 2 },
+  { id: 'se-21-renovacion',  title: 'Upsell, cross-sell y renovaciones', level: 2 },
+  { id: 'se-22-talento',     title: 'Por qué renuncian los mejores', level: 2 },
+  { id: 'se-header-8', title: 'Lección 8: Gerencia y organización', level: 1 },
+  { id: 'se-23-gerente',  title: '5 competencias del gerente', level: 2 },
+  { id: 'se-24-posicion', title: 'Nadie puede hacerlo todo',   level: 2 },
+  { id: 'se-25-cliente',  title: 'El cliente como herramienta #1', level: 2 },
+  { id: 'se-header-tests', title: 'Tests de conocimiento', level: 1 },
+  { id: 'se-test-basico',   title: 'Test básico',    level: 2 },
+  { id: 'se-test-avanzado', title: 'Test avanzado',  level: 2 },
+];
+
 // Guion por clase: cada id del catálogo apunta a su orden de diapositivas.
 export const slidesByClass: Record<string, SlideMeta[]> = {
   'ventas-b2b': initialSlides,
@@ -394,6 +433,7 @@ export const slidesByClass: Record<string, SlideMeta[]> = {
   challenger: challengerSlides,
   'trampas-deseo': trampasSlides,
   revops: revopsSlides,
+  'sales-enablement': seSlides,
 };
 
 // Cantidad de diapositivas (nivel 2) de cada clase del repositorio.
@@ -407,4 +447,5 @@ export const slideCountByClassId: Record<string, number> = {
   challenger: challengerSlides.filter((slide) => slide.level === 2).length,
   'trampas-deseo': trampasSlides.filter((slide) => slide.level === 2).length,
   revops: revopsSlides.filter((slide) => slide.level === 2).length,
+  'sales-enablement': seSlides.filter((slide) => slide.level === 2).length,
 };

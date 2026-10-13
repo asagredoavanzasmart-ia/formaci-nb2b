@@ -63,6 +63,7 @@ const PILARES = [
     resumen: 'Cómo se hace el trabajo en el escritorio: enrutar un lead, cotizar, traspasar un cliente. Un mismo trabajo debería hacerse de la misma forma en todos los equipos.',
     cita: 'Cotizar no es un proceso abstracto: te sientas, armas la cotización y se la envías a una persona. ¿Deberíamos tener procesos distintos para la venta nueva y el upsell? Probablemente no.',
     autor: 'Ross Nibur',
+    leyenda: 'Cada barra es la conversión inbound: antes del cambio (1×) y después (2×). Es una escala relativa, no un porcentaje.',
   },
   {
     nombre: 'Sistemas',
@@ -313,6 +314,7 @@ const INICIO = [
     txt: '"Primero busca entender" (Stephen Covey). Antes de tocar nada, comprende qué pasa en la organización, empezando por la base de cuentas: quién ingresa datos, qué está duplicado, qué está limpio.',
     cita: 'Siempre habrá una base de datos desordenada. Y si no tienes datos limpios, marketing no está feliz, los BDR no están felices: nadie está feliz.',
     autor: 'Sandy Robinson',
+    leyenda: 'Barra alta: clientes contactados dentro de 5 días, que implementan. Barra baja: clientes que pasan 6 días o más sin contacto, que casi no implementan. Muestra el patrón descrito, no porcentajes exactos.',
   },
   {
     t: 'Dar consistencia',
@@ -444,6 +446,7 @@ const CASOS = [
     txt: 'El análisis por cohortes mostró que los MQL casi no convertían después del día 4 o 5, pero los SDR los seguían trabajando hasta el día 9 o 10. La regla nueva: soltar todo MQL de más de cinco días y concentrarse en los que acaban de entrar.',
     resultado: 'La conversión MQL→SQL subió de 33% a 45% en un trimestre, sin gastar un peso más.',
     autor: 'Matt Volm',
+    leyenda: 'Cada barra es el porcentaje de MQL que se convierten en SQL: 33% antes de soltar los leads de más de cinco días y 45% después.',
     barras: [{ name: 'MQL→SQL antes', value: 33, label: '33%', tone: 'neutral' as const }, { name: 'MQL→SQL después', value: 45, label: '45%', hl: true }],
     max: 50,
   },
@@ -453,6 +456,7 @@ const CASOS = [
     txt: 'Mira tus cuentas objetivo por número de contacto: el primero, el segundo, el tercero… y busca dónde salta la tasa de reuniones agendadas. Puede tomar 15 o 16 contactos. Luego compara con tus secuencias de prospección: casi siempre tienen demasiados pasos o, más a menudo, muy pocos.',
     resultado: 'Mejorar 5 puntos la conversión MQL→SQL en un trimestre se compone en todo el embudo sin gastar más.',
     autor: 'Matt Volm',
+    leyenda: 'Compara los pasos de una secuencia corta típica (8 es un ejemplo, la fuente no da una cifra media) con el contacto donde los datos muestran el salto en reuniones agendadas (15 o 16).',
     barras: [{ name: 'Secuencia actual', value: 8, label: '8 pasos', tone: 'neutral' as const }, { name: 'Lo que dicen los datos', value: 16, label: '15-16', hl: true }],
     max: 16,
   },
@@ -480,13 +484,12 @@ export function Casos({ isDark }: SlideProps) {
           <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
             <div className="lg:w-[42%] flex flex-col items-center justify-center">
               <div className="w-full max-w-[380px] h-[250px]"><BarrasIso id={`roc${i}`} isDark={isDark} items={c.barras} max={c.max} W={380} hMax={130} /></div>
+              <p className={`mt-2 max-w-[380px] text-center text-[11.5px] leading-snug ${textMuted(isDark)}`}>{c.leyenda}</p>
             </div>
             <div className="lg:w-[58%] flex flex-col gap-2.5 justify-center">
               <Nota isDark={isDark} label={`Caso · ${c.autor}`}><strong className={heading(isDark)}>{c.titulo}.</strong> {c.txt}</Nota>
               <Nota isDark={isDark} label="Resultado" destacada>{c.resultado}</Nota>
               {i === 1 && <Verificado isDark={isDark} tipo="corregido">Pasar de 33% a 45% son 12 puntos, es decir, 36% más SQL. La fuente atribuye a este cambio 33% más ingresos en el trimestre.</Verificado>}
-              {i === 3 && <p className={`text-[11px] ${textMuted(isDark)}`}>Las barras muestran el patrón descrito por la fuente; no se publicaron porcentajes exactos.</p>}
-              {i === 2 && <p className={`text-[11px] ${textMuted(isDark)}`}>«8 pasos» es un ejemplo de secuencia corta; la fuente no da una cifra media.</p>}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -503,16 +506,19 @@ export function Casos({ isDark }: SlideProps) {
 const FASES = [
   {
     k: 'Atraer', a0: -150, a1: -33,
+    quien: 'Un prospecto atraído es alguien que se interesó en tu forma de resolver su problema y te dejó sus datos a cambio de algo útil.',
     def: 'Traer a las personas correctas con contenido y conversaciones valiosas que te posicionan como asesor de confianza.',
     preguntas: 'Qué propiedades usas para atraer (sitio web, redes sociales, directorios, tácticas en tienda) y qué métricas dicen si funcionan.',
   },
   {
     k: 'Interactuar', a0: -30, a1: 87,
+    quien: 'Un prospecto interactuado ya considera tu solución y quiere conectar con alguien de tu empresa.',
     def: 'Presentar ideas y soluciones alineadas con los dolores y metas de la persona, para que sea más probable que te compre.',
     preguntas: 'Qué tan fácil es encontrar respuestas, si se puede comprar sin hablar con alguien y cuánto tardas en responder.',
   },
   {
     k: 'Deleitar', a0: 90, a1: 207,
+    quien: 'Un cliente deleitado recurre a soporte para resolver problemas y a éxito del cliente para sacar más provecho.',
     def: 'Dar ayuda y soporte para que el cliente tenga éxito con lo que compró, y quiera recomendarte.',
     preguntas: 'Qué tan felices están (encuestas NPS), por qué algunos vuelven a comprar y qué reclamos hay.',
   },
@@ -531,7 +537,11 @@ const rad = (g: number) => (g * Math.PI) / 180;
 function Embudo({ isDark }: { isDark: boolean }) {
   const t = sceneTone(isDark);
   return (
-    <svg viewBox="0 0 400 320" className="w-full max-h-[310px] overflow-visible" role="img" aria-label="Embudo: atraer, interactuar, capturar, nutrir y convertir; el cliente es el fondo del embudo">
+    <svg viewBox="0 -34 400 354" className="w-full max-h-[330px] overflow-visible" role="img" aria-label="Embudo: atraer, interactuar, capturar, nutrir y convertir; el cliente es el fondo del embudo">
+      {[-120, -70, -20, 30, 80, 125].map((x0, k) => (
+        <motion.circle key={k} r={5} fill={isDark ? "#9ca3af" : "#8b93a1"} initial={{ cx: 200 + x0, cy: -30, opacity: 0 }} animate={{ cx: [200 + x0, 200 + x0 * 0.5, 200, 200], cy: [-30, 120, 250, 262], opacity: [0, 1, 1, 0] }} transition={{ duration: 4, repeat: Infinity, delay: k * 0.55, ease: "linear", times: [0, 0.45, 0.93, 1] }} />
+      ))}
+      <motion.circle r={6} fill={ORANGE} initial={{ cx: 200, cy: -30, opacity: 0 }} animate={{ cx: 200, cy: [-30, 300], opacity: [0, 1, 1] }} transition={{ duration: 4, repeat: Infinity, delay: 3.3, ease: "linear" }} />
       {EMBUDO.map((e, k) => {
         const y = 14 + k * 50;
         const pts = `${200 - e.w0 / 2},${y} ${200 + e.w0 / 2},${y} ${200 + e.w1 / 2},${y + 44} ${200 - e.w1 / 2},${y + 44}`;
@@ -542,7 +552,6 @@ function Embudo({ isDark }: { isDark: boolean }) {
           </motion.g>
         );
       })}
-      <motion.circle r={6} fill={ORANGE} cx={200} initial={{ cy: 0, opacity: 0 }} animate={{ cy: [0, 270, 300], opacity: [0, 1, 0] }} transition={{ duration: 2.6, repeat: Infinity, repeatDelay: 0.6, ease: 'easeIn' }} />
       <text x={200} y={306} textAnchor="middle" fontSize={15} fontWeight={900} fill={t.text}>Cliente = fondo del embudo</text>
     </svg>
   );
@@ -573,7 +582,7 @@ function RuedaFlywheel({ isDark, i, setI }: { isDark: boolean; i: number; setI: 
           <stop offset="0%" stopColor={ORANGE} />
           <stop offset="100%" stopColor={PINK} />
         </linearGradient>
-        {FASES.map((f, k) => <path key={k} id={`rofw-t${k}`} d={arcoTexto(f.a0, f.a1, k === 2)} />)}
+        {FASES.map((f, k) => <path key={k} id={`rofw-t${k}`} d={arcoTexto(f.a0, f.a1, false)} />)}
       </defs>
       <path d={`M ${c - 194} ${c} a 194 194 0 1 0 388 0 a 194 194 0 1 0 -388 0 Z M ${c - 160} ${c} a 160 160 0 1 1 320 0 a 160 160 0 1 1 -320 0 Z`} fill={ORANGE} fillRule="evenodd" />
       <circle cx={c} cy={c} r={160} fill={fondo} />
@@ -581,6 +590,8 @@ function RuedaFlywheel({ isDark, i, setI }: { isDark: boolean; i: number; setI: 
         <text key={e.t} x={e.x} y={e.y + 5} textAnchor="middle" fontSize={14} fontWeight={800} fill="#fff" transform={`rotate(${e.rot} ${e.x} ${e.y})`}>{e.t}</text>
       ))}
       <Traveler id="rofw" path={orbita} dur={6} r={4} color={ORANGE} />
+      <g>
+      <animateTransform attributeName="transform" type="rotate" from="0 200 200" to="360 200 200" dur="24s" repeatCount="indefinite" />
       {FASES.map((f, k) => {
         const on = k === i;
         return (
@@ -592,6 +603,7 @@ function RuedaFlywheel({ isDark, i, setI }: { isDark: boolean; i: number; setI: 
           </g>
         );
       })}
+      </g>
       <motion.circle cx={c} cy={c} fill={ORANGE} initial={{ r: 70, opacity: 0.35 }} animate={{ r: [70, 82], opacity: [0.35, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeOut' }} />
       <circle cx={c} cy={c} r={70} fill="url(#rofw-g)" />
       <text x={c} y={c + 7} textAnchor="middle" fontSize={20} fontWeight={900} fill="#fff">Crecimiento</text>
@@ -616,25 +628,31 @@ export function Flywheel({ isDark }: SlideProps) {
               {modo === 'embudo' ? <Embudo isDark={isDark} /> : <RuedaFlywheel isDark={isDark} i={i} setI={setI} />}
             </motion.div>
           </AnimatePresence>
+          <p className={`max-w-[400px] text-center text-[11.5px] leading-snug ${textMuted(isDark)}`}>
+            {modo === 'embudo'
+              ? 'Cada franja es una etapa y se angosta porque en cada una quedan menos prospectos. El punto naranja es un prospecto que baja y sale como cliente: ahí termina el recorrido.'
+              : 'Las tres flechas son las fases que giran alrededor del crecimiento. El anillo exterior nombra a la persona en cada tramo. El punto naranja que lo recorre es la energía que vuelve a entrar al ciclo.'}
+          </p>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
+          <Cita isDark={isDark} autor="Emmanuelle Skala">Creo que ya no es un embudo; es un círculo. Los embudos, por definición, tienen un final. En SaaS no hay final: hay renovaciones, recomendaciones y referidos. Si separas ventas de éxito del cliente, ¿quién mira el ciclo completo?</Cita>
           <AnimatePresence mode="wait">
             {modo === 'embudo' ? (
               <motion.div key="e" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
                 <Nota isDark={isDark} label="Cómo razona el embudo" destacada>Los prospectos entran arriba y, etapa por etapa, se filtran hasta convertirse en clientes. El cliente es el <strong>fondo del embudo</strong>: el resultado final del proceso.</Nota>
                 <Nota isDark={isDark} label="Lo que queda fuera">Todo lo que pasa después de la compra: renovaciones, recomendaciones y referidos. En el embudo, la energía de un cliente feliz no vuelve a entrar al sistema.</Nota>
+                <Nota isDark={isDark} label="El problema de los silos">Cada equipo optimiza su tramo del embudo y nadie mira el recorrido completo. El flywheel obliga a mirarlo entero.</Nota>
               </motion.div>
             ) : (
               <motion.div key={`f${i}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
                 <div className="flex gap-2">{FASES.map((fa, k) => <Pill key={fa.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{fa.k}</Pill>)}</div>
-                <Nota isDark={isDark} label={`${f.k} · qué significa`} destacada>{f.def}</Nota>
+                <Nota isDark={isDark} label={`${f.k} · qué significa`} destacada>{f.def} <span className="opacity-80">{f.quien}</span></Nota>
                 <Nota isDark={isDark} label="Preguntas para mapear tu empresa">{f.preguntas}</Nota>
                 <Nota isDark={isDark} label="El anillo exterior">Desconocidos que se vuelven prospectos, prospectos que se vuelven clientes y clientes que se vuelven promotores. Los promotores atraen a nuevos desconocidos y la rueda gana impulso.</Nota>
               </motion.div>
             )}
           </AnimatePresence>
-          <Cita isDark={isDark} autor="Emmanuelle Skala">Creo que ya no es un embudo; es un círculo. Los embudos, por definición, tienen un final. En SaaS no hay final: hay renovaciones, recomendaciones y referidos. Si separas ventas de éxito del cliente, ¿quién mira el ciclo completo?</Cita>
-          {modo === 'flywheel' && <p className={`text-[11px] ${textMuted(isDark)}`}><strong>NPS</strong> · Net Promoter Score: mide qué tan probable es que un cliente te recomiende.</p>}
+          {modo === 'flywheel' && <p className={`text-[11px] ${textMuted(isDark)}`}><strong>NPS</strong> · Net Promoter Score: mide qué tan probable es que un cliente te recomiende a un amigo. <strong>SaaS</strong> · software como servicio: suscripción recurrente, la relación no termina con la compra.</p>}
         </div>
       </div>
     </Shell>
@@ -644,44 +662,54 @@ export function Flywheel({ isDark }: SlideProps) {
 export function Fuerza({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const [friccion, setFriccion] = useState(true);
-  const cx = 236, cy = 128, rx = 132, ry = 42;
+  const cx = 220, cy = 128, rx = 132, ry = 42;
   const orbita: [number, number][] = Array.from({ length: 13 }, (_, k) => [cx + 104 * Math.cos(rad(k * 30)), cy + 33 * Math.sin(rad(k * 30))]);
   return (
     <Shell isDark={isDark} title="Fuerza y" highlight="fricción" subtitle="Fuerza es cualquier programa o estrategia que acelera tu flywheel. Fricción es todo lo que lo frena. RevOps trabaja sobre las dos.">
-      <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
+      <div className="h-full flex flex-col gap-3 min-h-0 justify-center">
+        <div className="max-w-[820px] w-full mx-auto text-center">
+          <Cita isDark={isDark} autor="Devyn Bellamy">Piensa en un carrusel con niños empujando. No necesitas que Kyle, el niño grande, empuje más fuerte: necesitas que el carrusel gire mejor. Ver dónde está la fricción es enorme, y ahí entra RevOps.</Cita>
+        </div>
+        <div className="flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] flex flex-col items-center justify-center gap-2">
           <div className="flex gap-2">
             <Pill isDark={isDark} on={friccion} onClick={() => setFriccion(true)}>Empujar más fuerte</Pill>
             <Pill isDark={isDark} on={!friccion} onClick={() => setFriccion(false)}>Quitar la fricción</Pill>
           </div>
-          <svg viewBox="0 0 440 252" className="w-full max-h-[270px] overflow-visible" role="img" aria-label="Carrusel con y sin fricción">
+          <svg viewBox="0 0 440 252" className="w-full max-h-[215px] overflow-visible" role="img" aria-label="Flywheel con y sin fricción">
             <SceneDefs id="rofu" isDark={isDark} />
-            <ellipse cx={cx} cy={cy + 40} rx={170} ry={56} fill={t.floor} />
-            <g filter="url(#rofu-sh)"><Cylinder cx={cx} cy={cy} rx={rx} ry={ry} h={20} top={friccion ? '#ffd2a8' : '#ffc08a'} side="#f0875a" /></g>
-            <ellipse cx={cx} cy={cy} rx={18} ry={6} fill={isDark ? '#1f1f1f' : '#9ca3af'} />
-            {friccion && [[-70, -14], [60, 18], [10, -26]].map(([dx, dy], k) => (
-              <PulseDisc key={k} cx={cx + dx} cy={cy + dy} rx={26} ry={9} color={isDark ? '#111' : '#6b7280'} dur={1.6} delay={k * 0.5} peak={0.45} />
+            <ellipse cx={cx} cy={cy + 52} rx={92} ry={14} fill={t.floor} />
+            <motion.g key={friccion ? 'f' : 'l'} animate={friccion ? { x: [0, 0, 1, -1, 0.8, -0.6, 0, 0], y: [0, 0, -0.6, 0.6, -0.4, 0.3, 0, 0] } : { x: 0, y: 0 }} transition={{ duration: 7, repeat: Infinity, ease: 'linear', times: [0, 0.94, 0.953, 0.966, 0.979, 0.99, 0.996, 1] }}>
+              <g>
+                <animateTransform attributeName="transform" type="rotate" from={`0 ${cx} ${cy}`} to={`360 ${cx} ${cy}`} dur={friccion ? '14s' : '2.4s'} repeatCount="indefinite" />
+                {[0, 120, 240].map((g0, k) => {
+                  const Pt = (rr: number, g: number) => `${(cx + rr * Math.cos(rad(g))).toFixed(1)} ${(cy + rr * Math.sin(rad(g))).toFixed(1)}`;
+                  return <path key={k} d={`M ${Pt(64, g0)} A 64 64 0 0 1 ${Pt(64, g0 + 104)} L ${Pt(53, g0 + 116)} L ${Pt(42, g0 + 104)} A 42 42 0 0 0 ${Pt(42, g0)} Z`} fill={['#ff851d', '#ef375c', '#ffb27a'][k]} />;
+                })}
+              </g>
+              <circle cx={cx} cy={cy} r={22} fill={isDark ? '#3a3a3a' : '#e5e7eb'} />
+              <circle cx={cx} cy={cy} r={8} fill={friccion ? (isDark ? '#111' : '#6b7280') : ORANGE} />
+            </motion.g>
+            {friccion && [[-66, -8], [48, 34], [14, -64], [60, -30]].map(([dx, dy], k) => (
+              <PulseDisc key={k} cx={cx + dx} cy={cy + dy} rx={16} ry={16} color={isDark ? '#111' : '#6b7280'} dur={1.6} delay={k * 0.4} peak={0.55} />
             ))}
-            <g key={friccion ? 'f' : 'l'}>
-              <Traveler id="rofu" path={orbita} dur={friccion ? 5.5 : 1.8} r={6} />
-              <Traveler id="rofu" path={orbita.map(([x, y]) => [2 * cx - x, 2 * cy - y] as [number, number])} dur={friccion ? 5.5 : 1.8} r={6} color={PINK} />
-            </g>
-            <Float amp={friccion ? 4 : 1.5} dur={friccion ? 0.8 : 3}>
-              <Persona id="rofu" cx={98} cy={184} s={0.85} body={friccion ? BRAND : PEACH} accessory="star" />
-            </Float>
-            <text x={98} y={226} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{friccion ? 'Kyle empuja al máximo' : 'Kyle empuja normal'}</text>
-            <text x={290} y={226} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={friccion ? t.muted : ORANGE}>{friccion ? 'Rodamientos gastados: gira lento' : 'Sin roce: gira rápido con menos esfuerzo'}</text>
-          </svg>
+                      </svg>
+          <p className={`max-w-[400px] text-center text-[11.5px] leading-snug ${textMuted(isDark)}`}>
+            {friccion
+              ? 'La maqueta es el flywheel. Las manchas oscuras son la fricción: aunque se empuje al máximo, la rueda gira lento.'
+              : 'La maqueta es el flywheel. Sin manchas de roce, gira mucho más rápido con un empuje normal.'}
+          </p>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-          <Cita isDark={isDark} autor="Devyn Bellamy">Piensa en un carrusel con niños empujando. No necesitas que Kyle, el niño grande, empuje más fuerte: necesitas que el carrusel gire mejor. Ver dónde está la fricción es enorme, y ahí entra RevOps.</Cita>
           <div className="grid grid-cols-2 gap-2.5">
-            <Nota isDark={isDark} label="Fuerza bien aplicada">Alex queda feliz, lo cuenta a colegas y amigos, y cada ciclo trae más alcance: el crecimiento se acelera y rompe la línea recta.</Nota>
+            <Nota isDark={isDark} label="Fuerza bien aplicada">Alex queda feliz, lo cuenta a colegas y amigos, y cada ciclo trae más alcance: el crecimiento se acelera de forma exponencial y rompe la línea recta.</Nota>
             <Nota isDark={isDark} label="Fricción sin atender">Alex tiene una mala experiencia y el boca a boca negativo viaja de persona en persona: cada vez cuesta más encontrar a alguien dispuesto a comprarte.</Nota>
           </div>
           <Nota isDark={isDark} label="Dónde poner la fuerza: en deleitar" destacada>
             Un ejemplo no obvio es la compensación de ventas. En el caso documentado en el curso, si el cliente cancela dentro de los <strong>8 meses</strong>, el vendedor devuelve la comisión, y quienes retienen más y tienen clientes más felices ganan más. Incentivos alineados con el éxito del cliente producen más deleite.
           </Nota>
+          <Nota isDark={isDark} label="Tu ejercicio">Lista todas las fuerzas que tu empresa despliega para atraer, interactuar y deleitar, y en qué lugares se pueden reasignar recursos para aumentar el deleite del cliente.</Nota>
+        </div>
         </div>
       </div>
     </Shell>
@@ -744,15 +772,16 @@ export function Friccion({ isDark }: SlideProps) {
             })}
             <Traveler id="rofr" path={[[70, 168], hop([70, 168], [170, 140], 22)[1], [170, 140], hop([170, 140], [270, 112], 22)[1], [270, 112], hop([270, 112], [370, 84], 22)[1], [370, 84]]} dur={3.4} repeatDelay={0.5} r={5} />
           </svg>
-          <p className={`text-xs text-center max-w-sm ${textMuted(isDark)}`}>El punto rosa marca dónde golpea la fricción seleccionada.</p>
+          <p className={`text-xs text-center max-w-sm ${textMuted(isDark)}`}>Cada plataforma es una etapa del recorrido. El pulso rosa marca en cuál se siente la fricción seleccionada, y el punto naranja es el cliente avanzando.</p>
         </div>
         <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
           <p className={microLabel(isDark)}>{tipo === 'externa' ? 'Ejemplos de fricción que enfrenta el cliente' : 'Ejemplos de fricción interna'}</p>
-          <div className="grid grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-1.5 content-start min-h-[212px]">
             {data.items.map((x, k) => <Opcion key={x.t} isDark={isDark} on={k === i} onClick={() => setI(k)}>{x.t}</Opcion>)}
           </div>
+          <p className={`text-xs ${textMuted(isDark)}`}>Esta fricción se siente en la etapa <strong className="text-[#ef375c]">{data.etapas[it.e]}</strong>.</p>
           <Cita isDark={isDark} autor="Yamini Rangan">Quitar la fricción es examinar la experiencia del cliente a lo largo del recorrido e identificar los bordes filosos: demasiados traspasos, lugares que no funcionan.</Cita>
-          <Nota isDark={isDark} label="Regla de prioridad" destacada>Cualquier mejora a la experiencia del cliente tiene efecto positivo en el negocio. Lo interno importa igual: todo lo que dificulta a tus equipos servir bien termina como fricción para el cliente.</Nota>
+          <Nota isDark={isDark} label="Regla de prioridad" destacada>Prioridad es qué tan fácil es arreglar un proceso o cuánto impacto tendrá en clientes y compañeros: se elige un criterio y se empieza por lo de arriba. Cualquier mejora a la experiencia del cliente tiene efecto positivo en el negocio. Lo interno importa igual: todo lo que dificulta a tus equipos servir bien termina como fricción para el cliente.</Nota>
         </div>
       </div>
     </Shell>
@@ -764,18 +793,21 @@ const FRIC_CASOS = [
     k: 'Fechas de inicio',
     cuadrante: 1,
     txt: 'Una agencia arranca clientes nuevos solo los días 1 y 15 de cada mes. Para quien quiere empezar el 5 es fricción, pero ventas la convierte en fuerza: «para partir el 15, el contrato debe llegar antes de fin de mes». Alinea expectativas y acelera la firma.',
+    extra: 'Es como pedirle a tu estilista de confianza una cita para hoy: te dirá que puede atenderte en tres semanas. Si hoy es 30 de marzo y el próximo cupo es el 15 de abril, el contrato debe llegar antes de fin de mes.',
     autor: 'Jen Spencer',
   },
   {
     k: 'Formulario de pasaporte',
     cuadrante: 1,
     txt: 'A mitad de un formulario aparecían 17 documentos requeridos. Al pedir que la persona confirmara al inicio que los tenía (más fricción), subieron los formularios completados, la satisfacción y el NPS.',
+    extra: 'Quien no estaba listo decidía volver más tarde, en lugar de abandonar a mitad de camino. Davidoff vivió lo contrario con una cuenta gratuita que, ya empezada, pedía datos bancarios.',
     autor: 'Doug Davidoff',
   },
   {
     k: 'Fricción que se traslada',
     cuadrante: 0,
     txt: 'Cuando reduces la fricción en un lugar, casi siempre se crea en otro. Quitarla exige un análisis de costo y beneficio, no un reflejo automático.',
+    extra: 'No basta con quitar lo que claramente no funciona: hay que considerar el matiz y el impacto de cada punto, por pequeño que parezca.',
     autor: 'Doug Davidoff',
   },
 ];
@@ -817,62 +849,87 @@ export function FriccionUtil({ isDark }: SlideProps) {
         <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
           <Cita isDark={isDark} autor="Doug Davidoff">Toda experiencia de alto valor tiene fricción; si no la tuviera, ni la notaría. El problema es la fricción en un lugar de poco valor. No usar la fricción es no usar una herramienta.</Cita>
           <div className="flex gap-1.5 flex-wrap">{FRIC_CASOS.map((x, k) => <Pill key={x.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{x.k}</Pill>)}</div>
-          <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-              <Nota isDark={isDark} label={`Caso · ${c.autor}`} destacada>{c.txt}</Nota>
-            </motion.div>
-          </AnimatePresence>
-          <Nota isDark={isDark} label="Cómo empezar">Dibuja tu flywheel, lista todos sus puntos de fuerza y fricción, y elimina primero las fricciones más negativas. Después distingue cuáles dañan y cuáles mejoran la experiencia.</Nota>
+          <div className="grid">
+            {FRIC_CASOS.map((x, k) => (
+              <motion.div key={x.k} className="col-start-1 row-start-1" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }} aria-hidden={k !== i}>
+                <Nota isDark={isDark} label={`Caso · ${x.autor}`} destacada>{x.txt} <span className="opacity-80">{x.extra}</span></Nota>
+              </motion.div>
+            ))}
+          </div>
+          <Nota isDark={isDark} label="Cómo empezar">Dibuja tu flywheel, lista todos sus puntos de fuerza y fricción, y elimina primero las fricciones más negativas. Después distingue cuáles dañan y cuáles mejoran la experiencia. La fuerza también puede restar: el objetivo es reducir la fricción y la fuerza negativas, y aumentar las positivas.</Nota>
         </div>
       </div>
     </Shell>
   );
 }
 
-const MAPA = [
-  { fase: 'Atraer', herramienta: 'Anuncios', equipo: 'Marketing', metrica: 'MQL, retorno de la inversión' },
-  { fase: 'Interactuar', herramienta: 'Prospección de ventas', equipo: 'Ventas', metrica: 'Negocios cerrados-ganados' },
-  { fase: 'Deleitar', herramienta: 'Chat en vivo', equipo: 'Ventas y servicio', metrica: 'Tiempo de respuesta, satisfacción del cliente' },
+const EJEMPLO = [
+  { fase: 'Atraer', color: ORANGE, lado: 'izq', herramienta: 'Blog, SEO y anuncios', equipo: 'Marketing', metrica: 'MQL y costo por lead', valor: '400 MQL al mes', detalle: 'de 20.000 visitas: 2% deja sus datos' },
+  { fase: 'Interactuar', color: PINK, lado: 'der', herramienta: 'Prospección y demos', equipo: 'Ventas', metrica: 'Tasa de cierre', valor: '25 negocios ganados', detalle: '400 MQL → 100 SQL → 25 cierres' },
+  { fase: 'Deleitar', color: '#f4834f', lado: 'izq', herramienta: 'Onboarding, chat y soporte', equipo: 'Servicio y éxito del cliente', metrica: 'NPS y retención', valor: 'NPS 45', detalle: '90% de los clientes renueva al año' },
+  { fase: 'Promotores', color: '#fbae3c', lado: 'der', herramienta: 'Referidos y reseñas', equipo: 'Éxito del cliente y marketing', metrica: 'Clientes que llegan referidos', valor: '1 de cada 5', detalle: 'clientes nuevos llega recomendado' },
 ];
 
-export function MapaFlywheel({ isDark }: SlideProps) {
-  const [filas, setFilas] = useState(MAPA.map(() => ({ herramienta: '', equipo: '', metrica: '' })));
-  const [obs, setObs] = useState({ o: '', a: '', s: '' });
-  const input = `w-full bg-transparent text-xs outline-none border-b ${isDark ? 'border-white/10 text-gray-200 placeholder:text-gray-500' : 'border-gray-200 text-gray-800 placeholder:text-gray-400'}`;
+function TarjetaEjemplo({ isDark, e, on, onClick, k }: { isDark: boolean; e: (typeof EJEMPLO)[number]; on: boolean; onClick: () => void; k: number }) {
+  const izq = e.lado === 'izq';
   return (
-    <Shell isDark={isDark} title="Mapea" highlight="tu flywheel" subtitle="Para cada fase, anota qué herramientas o procesos usas, qué equipo los maneja y con qué métrica los mides. Los textos grises son el ejemplo del material.">
-      <div className="h-full flex flex-col gap-3 min-h-0 justify-center">
-        <div className={`rounded-3xl p-3 ${panelClass(isDark)}`}>
-          <div className="grid grid-cols-[110px_1fr_1fr_1.3fr] gap-x-3 gap-y-2 items-center">
-            <span className={microLabel(isDark)}>Fase</span>
-            <span className={microLabel(isDark)}>Herramienta o proceso</span>
-            <span className={microLabel(isDark)}>Equipo</span>
-            <span className={microLabel(isDark)}>Métrica</span>
-            {MAPA.map((m, k) => (
-              <React.Fragment key={m.fase}>
-                <span className={`text-sm font-black ${k === 2 ? 'text-[#ef375c]' : 'text-[#ff851d]'}`}>{m.fase}</span>
-                {(['herramienta', 'equipo', 'metrica'] as const).map((c) => (
-                  <input key={c} className={input} placeholder={m[c]} value={filas[k][c]} onChange={(e) => setFilas((p) => p.map((f, j) => (j === k ? { ...f, [c]: e.target.value } : f)))} />
-                ))}
-              </React.Fragment>
-            ))}
+    <motion.div
+      initial={{ opacity: 0, x: izq ? -24 : 24 }}
+      animate={{ opacity: 1, x: 0, scale: on ? 1.03 : 1 }}
+      transition={{ delay: 0.2 + k * 0.15, type: 'spring', stiffness: 110, damping: 16 }}
+      onClick={onClick}
+      className={`relative cursor-pointer p-3 rounded-2xl ${on ? featuredClass(isDark) : panelClass(isDark)}`}
+    >
+      <div className={`absolute top-1/2 -translate-y-1/2 ${izq ? '-right-9' : '-left-9'} w-9 h-2 overflow-hidden`}>
+        {on && (
+          <motion.span
+            className="absolute top-0 w-2 h-2 rounded-full"
+            style={{ background: e.color }}
+            initial={{ left: izq ? '100%' : '-10%' }}
+            animate={{ left: izq ? ['100%', '-10%'] : ['-10%', '100%'] }}
+            transition={{ duration: 0.9, repeat: Infinity, ease: 'easeIn' }}
+          />
+        )}
+      </div>
+      <p className="text-sm font-black" style={{ color: e.color }}>{e.fase}</p>
+      <p className={`text-[11.5px] leading-snug mt-0.5 ${textMuted(isDark)}`}><strong>Herramienta:</strong> {e.herramienta}</p>
+      <p className={`text-[11.5px] leading-snug ${textMuted(isDark)}`}><strong>Equipo:</strong> {e.equipo}</p>
+      <p className={`text-[11.5px] leading-snug ${textMuted(isDark)}`}><strong>Métrica:</strong> {e.metrica}</p>
+      <div className="mt-1.5 flex items-baseline gap-2 flex-wrap">
+        <span className={`text-lg font-black ${heading(isDark)}`}>{e.valor}</span>
+        <span className={`text-[11px] ${textMuted(isDark)}`}>{e.detalle}</span>
+      </div>
+    </motion.div>
+  );
+}
+
+export function MapaFlywheel({ isDark }: SlideProps) {
+  const [i, setI] = useState(0);
+  const [auto, setAuto] = useState(true);
+  React.useEffect(() => {
+    if (!auto) return;
+    const id = setInterval(() => setI((x) => (x + 1) % EJEMPLO.length), 3500);
+    return () => clearInterval(id);
+  }, [auto]);
+  const elegir = (k: number) => { setAuto(false); setI(k); };
+  const col = (lado: string) => EJEMPLO.map((e, k) => ({ e, k })).filter((x) => x.e.lado === lado);
+  return (
+    <Shell isDark={isDark} title="Un flywheel" highlight="de ejemplo" subtitle="Así se ve el flywheel de una empresa B2B típica una vez mapeado: cada fase con su herramienta, el equipo que la maneja, la métrica que la mide y el indicador que alimenta.">
+      <div className="h-full flex flex-col gap-2 min-h-0 justify-center">
+        <div className="grid grid-cols-[1fr_330px_1fr] gap-9 items-center">
+          <div className="flex flex-col gap-3">
+            {col('izq').map(({ e, k }) => <TarjetaEjemplo key={e.fase} isDark={isDark} e={e} k={k} on={k === i} onClick={() => elegir(k)} />)}
+          </div>
+          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 80, damping: 14 }} className="flex justify-center">
+            <RuedaFlywheel isDark={isDark} i={i < 3 ? i : -1} setI={elegir} />
+          </motion.div>
+          <div className="flex flex-col gap-3">
+            {col('der').map(({ e, k }) => <TarjetaEjemplo key={e.fase} isDark={isDark} e={e} k={k} on={k === i} onClick={() => elegir(k)} />)}
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.6fr] gap-3">
-          <Nota isDark={isDark} label="Después de dibujarlo, pregúntate">
-            ¿Dónde sienten más fricción tus clientes? ¿Y tus equipos internos? ¿Dónde ejerce más fuerza la empresa? ¿Dónde debería ejercer más?
-          </Nota>
-          <div className={`rounded-2xl p-3 ${featuredClass(isDark)}`}>
-            <p className={microLabel(isDark)}>De la observación a la acción</p>
-            <div className="grid grid-cols-3 gap-2 mt-1.5">
-              <input className={input} placeholder="Ventas no contacta los leads de marketing" value={obs.o} onChange={(e) => setObs({ ...obs, o: e.target.value })} />
-              <input className={input} placeholder="Reunir a los líderes de ambas áreas" value={obs.a} onChange={(e) => setObs({ ...obs, a: e.target.value })} />
-              <input className={input} placeholder="Jefatura de ventas y de marketing" value={obs.s} onChange={(e) => setObs({ ...obs, s: e.target.value })} />
-            </div>
-            <div className={`grid grid-cols-3 gap-2 mt-1 text-[10px] font-bold ${textMuted(isDark)}`}><span>Observación</span><span>Acción propuesta</span><span>Personas clave</span></div>
-          </div>
-        </div>
-        <Footer isDark={isDark}>Lo que escribas aquí no se guarda: es un borrador para la conversación de la clase.</Footer>
+        <p className={`max-w-[760px] mx-auto text-center text-[11.5px] leading-snug ${textMuted(isDark)}`}>
+          La rueda gira como el flywheel de la lección. La fase resaltada corresponde a la tarjeta activa, y el punto que sale hacia ella es el indicador que esa fase alimenta. Las cifras son ilustrativas de una empresa B2B típica, no un estándar publicado.
+        </p>
       </div>
     </Shell>
   );

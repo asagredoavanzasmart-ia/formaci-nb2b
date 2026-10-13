@@ -37,9 +37,10 @@ export function PorQueSLA({ isDark }: SlideProps) {
             <Cifra isDark={isDark} n={69} sufijo="%" titulo="Empresas de alto desempeño" lineas={['dicen que comunicar las metas a toda la empresa es lo más efectivo para formar un equipo de alto rendimiento']} />
             <Cifra isDark={isDark} n={7} sufijo="%" titulo="Empleados de una empresa típica" lineas={['saben qué deben hacer para contribuir a las metas de la empresa']} destacada />
           </div>
-          <Nota isDark={isDark} label="La brecha que cierra el SLA">Una meta de ingresos clara sirve de poco si los equipos no saben qué les toca. El SLA traduce la meta en un compromiso para cada lado y vuelve a marketing y ventas <strong>responsables en conjunto</strong> de los ingresos.</Nota>
+          <Nota isDark={isDark} label="La brecha que cierra el SLA">Una meta de ingresos clara sirve de poco si los equipos no saben qué les toca. Sin acuerdo, marketing y ventas persiguen metas distintas y hasta opuestas. El SLA traduce la meta en un compromiso para cada lado y los vuelve <strong>responsables en conjunto</strong> de los ingresos.</Nota>
+          <Nota isDark={isDark} label="Ni más ni menos leads">La meta es entregarle a ventas el número exacto que necesita. Y no basta un monto: hace falta una mezcla de ventas, por ejemplo una grande al trimestre, tres pequeñas y una mediana (Steve Bookbinder, DM Training).</Nota>
           <Cita isDark={isDark} autor="Janet Comenos">Para que no haya fricción entre ventas y marketing, sus metas deben ser complementarias, de modo que estén obligados a trabajar juntos, en vez de una estructura de incentivos que los haga competir.</Cita>
-          <Fuente isDark={isDark}>Las dos cifras se citan en el material del curso sin indicar el estudio de origen: úsalas como referencia, no como dato verificado.</Fuente>
+          <Fuente isDark={isDark}>Las dos cifras circulan sin un estudio de origen identificado: úsalas como referencia, no como dato verificado.</Fuente>
         </div>
       </div>
     </Shell>
@@ -66,7 +67,8 @@ export function CalculadoraSLA({ isDark }: SlideProps) {
             <Campo isDark={isDark} label="Lead → oportunidad" sufijo="%" value={aOport} max={100} onChange={setAOport} />
           </div>
           <Campo isDark={isDark} label="Plazo de contacto de ventas" sufijo="horas" value={horas} onChange={setHoras} />
-          <Verificado isDark={isDark} tipo="corregido">El workbook indica <em>multiplicar</em> por las tasas de conversión; lo correcto es <strong>dividir</strong>. Con 25% de cierre, 20 negocios exigen 20 ÷ 0,25 = 80 oportunidades, no 5.</Verificado>
+          <Verificado isDark={isDark} tipo="corregido">Algunas guías indican <em>multiplicar</em> por las tasas de conversión; lo correcto es <strong>dividir</strong>. Con 25% de cierre, 20 negocios exigen 20 ÷ 0,25 = 80 oportunidades, no 5.</Verificado>
+          <Nota isDark={isDark} label="El plazo: 24 horas para empezar">Si aún no hay un plazo definido, 24 horas es un buen punto de partida. Reducirlo es un tema permanente de las reuniones entre marketing y ventas.</Nota>
         </div>
         <div className="lg:w-[62%] flex flex-col gap-2.5 justify-center">
           <div className="h-[230px]">
@@ -82,7 +84,7 @@ export function CalculadoraSLA({ isDark }: SlideProps) {
               Cada mes, marketing entregará <span className="text-[#ff851d]">{fmt(leads)} leads calificados</span> a ventas, y ventas contactará cada uno dentro de <span className="text-[#ef375c]">{horas} horas</span> desde que lo recibe.
             </p>
           </div>
-          <Nota isDark={isDark} label="Referencia real (Mark Roberge, Harvard Business School)">Con 100 leads al mes, un vendedor del segmento medio conectaba con 50, hacía 30 llamadas de descubrimiento, 15 demostraciones y cerraba 5 clientes. Con 10 vendedores, marketing debía entregar 1.000 leads al mes.</Nota>
+          <Nota isDark={isDark} label="Referencia real (Mark Roberge, Harvard Business School)">Con 100 leads al mes, un vendedor del segmento medio conectaba con 50, hacía 30 llamadas de descubrimiento, 15 demostraciones y cerraba 5 clientes. Con 10 vendedores, marketing debía entregar 1.000 leads al mes. Un SLA así ya deja a la empresa en el 5% superior.</Nota>
         </div>
       </div>
     </Shell>
@@ -121,6 +123,7 @@ export function ValorLead({ isDark }: SlideProps) {
               <motion.div className="h-full rounded-full bg-gradient-to-r from-[#ff851d] to-[#ef375c]" initial={false} animate={{ width: `${pct * 100}%` }} />
             </div>
             <p className={`text-xs mt-1.5 ${textMuted(isDark)}`}>Meta: ${fmt(metaValor)} de valor de leads. A marketing ya no le importa la mezcla: puede llegar con 100 demos, con 300 ebooks o combinando. Así marketing queda con una cuota de ingresos, igual que ventas.</p>
+            <p className={`text-sm font-bold leading-snug mt-2 ${heading(isDark)}`}>SLA avanzado: cada mes, marketing entregará <span className="text-[#ff851d]">${fmt(metaValor)} en valor de leads</span>, y ventas contactará cada MQL dentro de <span className="text-[#ef375c]">24 horas</span>.</p>
           </div>
           <Verificado isDark={isDark} tipo="corregido">La fuente dice que $300.000 se logran con «1.000 demos o 3.000 ebooks»; eso suma $3.000.000. Con sus propios valores, son <strong>100 demos o 300 ebooks</strong>.</Verificado>
           <Nota isDark={isDark} label="Y ventas tampoco se libra: el tablero «no aparezcas aquí»">Si un lead no recibía llamada en 24 horas, el nombre del vendedor aparecía en pantalla. Si un lead llevaba dos semanas sin cinco intentos de contacto, también.</Nota>
@@ -146,10 +149,10 @@ export function Contacto({ isDark }: SlideProps) {
         </div>
         <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
           <Nota isDark={isDark} label="Caso · Huify (7 personas)" destacada>Regla: todo lead se llama dentro de cinco minutos, aunque el equipo de ventas completo esté en una conferencia; si hace falta, llama alguien de éxito del cliente. Su fundador, Josh Harcus, cuenta que multiplicaron sus ingresos por seis en un año.</Nota>
-          <Verificado isDark={isDark} tipo="dudoso">En el curso se afirma que llamar en 5 minutos en vez de 24 horas multiplica por 1.000 la probabilidad de cerrar. El estudio publicado no muestra esa cifra: habla de unas 60 veces para <em>calificar</em> el lead.</Verificado>
+          <Verificado isDark={isDark} tipo="dudoso">Harcus afirma además que llamar en 5 minutos en vez de 24 horas multiplica por 1.000 la probabilidad de cerrar. El estudio publicado no muestra esa cifra: habla de unas 60 veces para <em>calificar</em> el lead.</Verificado>
           <div className="grid grid-cols-2 gap-2.5">
             <Nota isDark={isDark} label="Caso · PeopleDoc">Movieron al equipo de ventas internas y desarrollo de negocio dentro de marketing para cuidar el primer contacto humano. Las reuniones calificadas subieron 60%.</Nota>
-            <Nota isDark={isDark} label="El ritmo importa (Mark Roberge)">Si la meta es $100.000 de valor al mes, traza una línea recta de 0 a 100.000 en 30 días: ni una súper campaña la primera semana, ni dormir tres semanas y correr al final.</Nota>
+            <Nota isDark={isDark} label="El ritmo importa (Mark Roberge)">Si la meta es $100.000 de valor al mes, traza una línea recta de 0 a 100.000 en 30 días: ni una súper campaña la primera semana, ni dormir tres semanas y correr al final. Si hay meses de alta carga predecibles, la línea cambia de forma.</Nota>
           </div>
           <Nota isDark={isDark} label="¿Cuántas veces insistir?">El patrón óptimo cambia entre empresas grandes, medianas y pequeñas. Si aún no tienes volumen para analizarlo, parte de la investigación de mercado y de supuestos razonables, instala la medición y corrige con tus datos en 3 a 6 meses.</Nota>
         </div>
@@ -163,28 +166,31 @@ const PREOCUPACIONES = [
     k: 'Pide más leads de los posibles',
     txt: 'Si la meta exige un número imposible, no es realista y hay que replantearla. Pero si solo pide más de lo que marketing ha hecho antes, quizá falte velocidad de marketing: medir cuánto tiempo cuesta cada pieza y cuántos leads genera, y mover horas hacia lo que mejor rinde.',
     autor: 'Jamie Shanks: controlas el volumen, la velocidad de producción y la conversión de cada pieza.',
+    extra: 'Se mide cada formato como lo haría una agencia: blogs, ebooks, infografías, casos, podcasts.',
   },
   {
     k: 'Llegan más leads de los que ventas atiende',
     txt: 'Calcula la velocidad de ventas: cuánto ingreso puede producir el equipo en un periodo. Si la meta es $500.000 al mes y la velocidad actual es $300.000, hay un problema antes de empezar.',
     autor: 'Fórmula del libro Aligned to Achieve (Andrea Austin y Tracy Eiler).',
+    extra: 'Marketing también mueve esos números: trae más oportunidades, sube la tasa de cierre calificando mejor y acorta el ciclo con contenido.',
   },
   {
     k: 'Ventas rechaza leads',
     txt: 'Un lead rechazado nunca debe perderse: si no estaba listo, vuelve a nutrición; si estaba listo, ventas lo contacta. Para las disputas existe la rama judicial, un grupo pequeño de líderes que revisa cada lead rechazado o no contactado a tiempo y decide qué equipo debe actuar.',
     autor: 'Dan McDade (PointClear) acuñó la idea de la rama judicial.',
+    extra: 'Sin revisión no se sabe si el lead no estaba calificado o si ventas dejó de insistir antes de tiempo.',
   },
   {
     k: 'Los leads de marketing no sirven',
     txt: 'Es un problema que se arregla. Los leads son tan buenos o tan malos como el mensaje que los atrajo: si el mensaje es claro sobre lo que eres y lo que no eres, los leads mejoran.',
     autor: 'Marcus Sheridan: «arregla tu mensaje y arreglarás tu problema de leads».',
+    extra: 'Por eso el contenido es central: buen contenido genera buenos leads; mal contenido, malos leads.',
   },
 ];
 
 export function RamaJudicial({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const [i, setI] = useState(2);
-  const p = PREOCUPACIONES[i];
   return (
     <Shell isDark={isDark} title="Cuatro problemas del SLA y" highlight="la rama judicial" subtitle="Al implementar un SLA aparecen cuatro preocupaciones típicas. Todas tienen solución si existen los sistemas correctos.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
@@ -213,13 +219,15 @@ export function RamaJudicial({ isDark }: SlideProps) {
           <div className="grid grid-cols-2 gap-1.5">
             {PREOCUPACIONES.map((x, k) => <Opcion key={x.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{k + 1}. {x.k}</Opcion>)}
           </div>
-          <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2">
-              <Nota isDark={isDark} label={`Preocupación ${i + 1}`} destacada>{p.txt}</Nota>
-              <p className={`text-xs italic ${textMuted(isDark)}`}>{p.autor}</p>
-            </motion.div>
-          </AnimatePresence>
-          <Nota isDark={isDark} label="Cómo funciona la rama judicial">Sus miembros deben ser imparciales: el CMO o el VP de ventas pueden participar, pero no presidirla. Al comienzo se reúne en persona; con el tiempo la lista se achica y basta un turno rotativo que revise un tablero. En una empresa pequeña alcanza con un solo líder imparcial.</Nota>
+          <div className="grid">
+            {PREOCUPACIONES.map((x, k) => (
+              <motion.div key={x.k} className="col-start-1 row-start-1 flex flex-col gap-2" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }}>
+                <Nota isDark={isDark} label={`Preocupación ${k + 1}`} destacada>{x.txt} <span className="opacity-80">{x.extra}</span></Nota>
+                <p className={`text-xs italic ${textMuted(isDark)}`}>{x.autor}</p>
+              </motion.div>
+            ))}
+          </div>
+          <Nota isDark={isDark} label="Cómo funciona la rama judicial">Sus miembros deben ser imparciales: el CMO o el VP de ventas pueden participar, pero no presidirla. Al comienzo se reúne en persona; con el tiempo marketing califica mejor, ventas confía más, la lista se achica y basta un turno rotativo que revise un tablero. En una empresa pequeña alcanza con un solo líder imparcial.</Nota>
         </div>
       </div>
     </Shell>
@@ -227,9 +235,9 @@ export function RamaJudicial({ isDark }: SlideProps) {
 }
 
 export function Velocidades({ isDark }: SlideProps) {
-  const [vol, setVol] = useState(200);
-  const [lpp, setLpp] = useState(0.25);
-  const [hpp, setHpp] = useState(4);
+  const [vol, setVol] = useState(250);
+  const [lpp, setLpp] = useState(5);
+  const [hpp, setHpp] = useState(3);
   const [op, setOp] = useState(40);
   const [ticket, setTicket] = useState(5000);
   const [win, setWin] = useState(25);
@@ -243,15 +251,15 @@ export function Velocidades({ isDark }: SlideProps) {
           <p className={microLabel(isDark)}>Velocidad de marketing · una pieza de contenido</p>
           <div className="grid grid-cols-3 gap-2">
             <Campo isDark={isDark} label="Piezas al año" value={vol} step={10} onChange={setVol} />
-            <Campo isDark={isDark} label="Leads por pieza" value={lpp} step={0.05} onChange={setLpp} />
+            <Campo isDark={isDark} label="Leads por pieza" value={lpp} step={1} onChange={setLpp} />
             <Campo isDark={isDark} label="Horas por pieza" value={hpp} step={0.5} onChange={setHpp} />
           </div>
           <div className="grid grid-cols-3 gap-2">
-            <Cifra isDark={isDark} n={lph} dec={3} titulo="Leads por hora" />
-            <Cifra isDark={isDark} n={lph > 0 ? 1 / lph : 0} dec={1} titulo="Horas por lead" />
+            <Cifra isDark={isDark} n={lph} dec={2} titulo="Leads por hora" />
+            <Cifra isDark={isDark} n={lph > 0 ? 1 / lph : 0} dec={2} titulo="Horas por lead" />
             <Cifra isDark={isDark} n={vol * hpp} titulo="Horas al año" destacada />
           </div>
-          <p className={`text-xs leading-snug ${textMuted(isDark)}`}>Ejemplo del material: 200 blogs al año, 0,25 leads por blog y 4 horas cada uno dan 0,0625 leads por hora (16 horas por lead) y 800 horas al año. Si una pieza rinde poco por hora, mueve esas horas a otra que rinda más.</p>
+          <p className={`text-xs leading-snug ${textMuted(isDark)}`}>Ejemplo de Jamie Shanks (Sales for Life): 250 blogs al año, 5 leads por blog y 3 horas cada uno dan 1,7 leads por hora y 750 horas al año. Bajar cada blog a 1 hora libera 500 horas para otra pieza que rinda más.</p>
         </div>
         <div className={`p-4 rounded-3xl flex flex-col gap-2 ${featuredClass(isDark)}`}>
           <p className={microLabel(isDark)}>Velocidad de ventas = oportunidades × ticket × tasa de cierre ÷ días de ciclo</p>
@@ -278,7 +286,7 @@ export function Velocidades({ isDark }: SlideProps) {
 
 const NIVELES = [
   { k: 'Sin proceso', txt: 'Cada vendedor vende a su manera. Funciona con dos o tres estrellas, pero no se puede medir, enseñar ni escalar: es volar «a ojo».', gap: 70 },
-  { k: 'Barandas', txt: 'Etapas claras con criterios de salida, y libertad dentro de ellas para que cada vendedor use su estilo y se adapte al comprador.', gap: 38 },
+  { k: 'Barandas', txt: 'Etapas claras con criterios de salida, y libertad dentro de ellas para que cada vendedor use su estilo y se adapte al comprador. El estilo propio se cultiva, pero no al punto de romper el proceso (Dave Casey).', gap: 38 },
   { k: 'Guion rígido', txt: 'Todos dicen lo mismo, como autómatas. Se pierde lo que más vale en ventas: la capacidad de adaptarse a cada persona.', gap: 14 },
 ];
 
@@ -291,6 +299,13 @@ export function Paradoja({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="La paradoja" highlight="del proceso de ventas" subtitle="«Demasiado proceso mata a los equipos de ventas, pero los equipos de ventas mueren sin proceso.» (Cory Bray y Hilmon Sorey, The Sales Enablement Playbook)">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] flex flex-col items-center justify-center gap-2">
+          <div className="grid w-full mb-4">
+            {NIVELES.map((x, k) => (
+              <motion.div key={x.k} className="col-start-1 row-start-1" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }}>
+                <Nota isDark={isDark} label={x.k} destacada>{x.txt}</Nota>
+              </motion.div>
+            ))}
+          </div>
           <div className="flex gap-2">{NIVELES.map((x, k) => <Pill key={x.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{x.k}</Pill>)}</div>
           <svg viewBox="0 0 440 240" className="w-full max-h-[260px] overflow-visible" role="img" aria-label="Un vendedor avanza entre barandas más o menos separadas">
             <SceneDefs id="ropa" isDark={isDark} />
@@ -313,8 +328,7 @@ export function Paradoja({ isDark }: SlideProps) {
           </svg>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-          <AnimatePresence mode="wait"><motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}><Nota isDark={isDark} label={n.k} destacada>{n.txt}</Nota></motion.div></AnimatePresence>
-          <Nota isDark={isDark} label="Qué es un proceso de ventas">Un conjunto de pasos claramente definidos y formas de comunicación entre la empresa y sus prospectos, desde que el comprador sabe que existes hasta que renueva. Permite <strong>métricas, repetición, escala y responsabilidad</strong>.</Nota>
+          <Nota isDark={isDark} label="Qué es un proceso de ventas">Un conjunto de pasos claramente definidos y formas de comunicación entre la empresa y sus prospectos, desde que el comprador sabe que existes hasta que renueva. Permite <strong>métricas, repetición, escala y responsabilidad</strong>, y guía a quién contratar, cómo capacitar y cómo hacer coaching.</Nota>
           <Cita isDark={isDark} autor="Doug Davidoff, sobre Jack Welch">Welch, el gran promotor de Six Sigma, decía que había dos disciplinas que no podía estandarizar: el derecho y las ventas. Six Sigma elimina la variación, y en ventas todo el valor está en la variación.</Cita>
           <Cita isDark={isDark} autor="Steve Bookbinder">Quiero que cada venta en la que trabajo sea aburridamente parecida a las historias de las ventas que se cierran. «Esta es distinta» casi siempre significa «esta probablemente no se cierra».</Cita>
         </div>
@@ -380,7 +394,7 @@ export function Comprador({ isDark }: SlideProps) {
         <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
           <Nota isDark={isDark} label={`${e.k} · la pregunta del vendedor`}>{e.pregunta}</Nota>
           <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-3.5 rounded-2xl ${featuredClass(isDark)}`}>
+            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-3.5 rounded-2xl min-h-[172px] ${featuredClass(isDark)}`}>
               <p className={microLabel(isDark)}>Ejemplo: TINYpulse mide el clima de una organización con una pregunta semanal</p>
               <div className="flex flex-col gap-1.5 mt-1.5">
                 {e.opciones.map((o) => (
@@ -392,6 +406,7 @@ export function Comprador({ isDark }: SlideProps) {
               </div>
             </motion.div>
           </AnimatePresence>
+          <Nota isDark={isDark} label="De dónde salen las etapas del proceso">Los tres compradores son prospectos calificados, pero la conversación ideal con cada uno es muy distinta. Las etapas del proceso son los puntos del recorrido donde el comprador no puede avanzar sin ayuda de un vendedor.</Nota>
           <Nota isDark={isDark} label="Lo contrario: «llegar y vomitar la presentación»">Armar un deck de diez láminas con funciones, precios y casos, y dárselo igual a todos. También se le llama «venta cocodrilo»: boca grande, orejas chicas.</Nota>
         </div>
       </div>
@@ -400,58 +415,83 @@ export function Comprador({ isDark }: SlideProps) {
 }
 
 const FILTROS = [
-  { k: 'Requerido', d: 'Pasa en toda venta, aunque el vendedor pudiera saltárselo.' },
-  { k: 'Factual', d: 'Ligado a una acción concreta, no a una sensación.' },
-  { k: 'Inspeccionable', d: 'Se puede verificar con un registro en el CRM.' },
-  { k: 'Centrado en el comprador', d: 'Nombrado desde lo que logra el comprador.' },
+  { k: 'Requerido', q: '¿Ocurre en todas las ventas?', d: 'Si la venta puede cerrarse sin ese paso, no es una etapa.' },
+  { k: 'Factual', q: '¿Se responde con sí o no?', d: 'Es un hecho concreto, no una sensación ni una opinión del vendedor.' },
+  { k: 'Inspeccionable', q: '¿Queda un registro que otro pueda revisar?', d: 'Debe verse en el CRM. Si no está registrado, no cuenta.' },
+  { k: 'Centrado en el comprador', q: '¿Describe lo que logró el comprador?', d: 'La etapa se nombra por el avance del comprador, no por la tarea del vendedor.' },
 ];
 
 const PASOS = [
-  { t: 'El prospecto asiste a la consultoría', falla: -1 },
-  { t: 'Hacer seguimiento si el prospecto no responde', falla: 0 },
-  { t: 'Tercera reunión para «revisar» lo mismo', falla: 0 },
-  { t: 'El prospecto disfruta la consultoría', falla: 1 },
-  { t: 'El prospecto lo conversa con su directorio', falla: 2 },
-  { t: 'Le dimos la demo', falla: 3 },
-  { t: 'El prospecto agenda la segunda reunión', falla: -1 },
-  { t: 'El prospecto confirma los próximos pasos por correo', falla: -1 },
+  { t: 'El prospecto asiste a la consultoría', falla: -1, por: '' },
+  { t: 'Hacer seguimiento si el prospecto no responde', falla: 0, por: 'Solo ocurre cuando el prospecto no contesta: es un plan de contingencia, no una etapa.' },
+  { t: 'Tercera reunión para «revisar» lo mismo', falla: 0, por: 'Repite una reunión anterior. La venta avanza igual sin ella.' },
+  { t: 'El prospecto disfruta la consultoría', falla: 1, por: 'Es una sensación: nadie puede comprobarla. «Asistió» sí se responde con sí o no.' },
+  { t: 'El prospecto lo conversa con su directorio', falla: 2, por: 'Ocurre puertas adentro del comprador: el vendedor no lo ve ni puede registrarlo.' },
+  { t: 'Le dimos la demo', falla: 3, por: 'Describe al vendedor, no al comprador. Se reescribe como «Producto evaluado».' },
+  { t: 'El prospecto agenda la segunda reunión', falla: -1, por: '' },
+  { t: 'El prospecto confirma los próximos pasos por correo', falla: -1, por: '' },
+];
+
+const CONTEXTO = [
+  { k: 'Por qué se hace', txt: 'Cada vendedor suele llamar «etapa» a cosas distintas: para uno, «propuesta» es haberla enviado; para otro, que el cliente la aceptó. Así nadie sabe en qué punto está cada negocio.' },
+  { k: 'Para qué sirve', txt: 'Para dejar solo los pasos que ocurren en toda venta, se pueden comprobar y muestran un avance del comprador. Esos pasos pasan a ser las etapas del pipeline.' },
+  { k: 'Cómo impacta', txt: 'El pronóstico se vuelve confiable, la jefatura revisa cada negocio con evidencia y una persona nueva aprende el proceso más rápido.' },
 ];
 
 export function Filtros({ isDark }: SlideProps) {
-  const t = sceneTone(isDark);
   const [activos, setActivos] = useState<number>(0);
-  const quedan = PASOS.filter((p) => p.falla === -1 || p.falla >= activos).length;
+  const [c, setC] = useState(0);
+  const sigue = (p: (typeof PASOS)[number]) => p.falla === -1 || p.falla >= activos;
+  const quedan = PASOS.filter(sigue).length;
   return (
-    <Shell isDark={isDark} title="Los cuatro filtros" highlight="de cada etapa" subtitle="Escribe todos los pasos de una venta típica, del vendedor y del prospecto. Luego pasa la lista por cuatro filtros: lo que no los supera, se tacha o se reescribe.">
-      <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
-        <div className="lg:w-[40%] flex flex-col gap-2 justify-center">
-          {FILTROS.map((f, k) => (
-            <button key={f.k} onClick={() => setActivos(k + 1 === activos ? k : k + 1)} className="text-left">
-              <Paso isDark={isDark} n={k + 1} titulo={f.k} on={k < activos}>{f.d}</Paso>
-            </button>
-          ))}
-          <div className="flex items-center gap-3">
-            <svg viewBox="0 0 120 70" className="w-28 h-16 overflow-visible" aria-hidden="true">
-              <SceneDefs id="rofi" isDark={isDark} />
-              <motion.g initial={false} animate={{ scaleY: quedan / PASOS.length }} style={{ transformOrigin: '60px 62px' }} transition={{ type: 'spring', stiffness: 80, damping: 14 }}>
-                <IsoBox cx={60} cy={10} s={18} h={43} f={BRAND} />
-              </motion.g>
-            </svg>
-            <p className={`text-sm ${textMuted(isDark)}`}>Quedan <strong className="text-[#ff851d] text-xl">{quedan}</strong> de {PASOS.length} pasos</p>
+    <Shell isDark={isDark} title="Los cuatro filtros" highlight="de cada etapa" subtitle="Se escriben todos los pasos de una venta típica, del vendedor y del prospecto, cada uno con su responsable. Luego la lista pasa por cuatro filtros: lo que no los supera se tacha o se reescribe.">
+      <div className="h-full flex flex-col gap-4 min-h-0 justify-center">
+        <div className="-mt-6 mb-7 flex flex-col items-center gap-3">
+          <div className="flex gap-3 justify-center">
+            {CONTEXTO.map((x, k) => <Pill key={x.k} isDark={isDark} on={k === c} onClick={() => setC(k)}>{x.k}</Pill>)}
+          </div>
+          <div className="grid w-full max-w-[900px]">
+            {CONTEXTO.map((x, k) => (
+              <motion.p key={x.k} className={`col-start-1 row-start-1 self-center text-center text-[15px] leading-snug ${heading(isDark)}`} initial={false} animate={{ opacity: k === c ? 1 : 0, x: k === c ? 0 : 10 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === c ? 'auto' : 'none' }}>{x.txt}</motion.p>
+            ))}
           </div>
         </div>
-        <div className="lg:w-[60%] flex flex-col gap-1.5 justify-center">
-          <p className={microLabel(isDark)}>Pasos candidatos (ejemplo ilustrativo)</p>
-          {PASOS.map((p) => {
-            const fuera = p.falla !== -1 && p.falla < activos;
-            return (
-              <motion.div key={p.t} initial={false} animate={{ opacity: fuera ? 0.45 : 1, x: fuera ? 12 : 0 }} className={`flex items-center justify-between gap-3 px-3 py-2 rounded-xl ${fuera ? '' : panelClass(isDark)}`}>
-                <span className={`text-sm ${fuera ? 'line-through' : ''} ${heading(isDark)}`}>{p.t}</span>
-                {fuera && <span className="shrink-0 text-[10px] font-black uppercase text-[#ef375c]">No es {FILTROS[p.falla].k.toLowerCase()}</span>}
-              </motion.div>
-            );
-          })}
-          <p className={`text-[11px] mt-1 ${t ? textMuted(isDark) : ''}`}>«Le dimos la demo» no se borra: se reescribe como «Producto evaluado», que describe lo que logró el comprador.</p>
+        <div className="flex flex-col lg:flex-row gap-5 min-h-0">
+          <div className="lg:w-[38%] flex flex-col gap-2">
+            <p className={microLabel(isDark)}>Los filtros se activan en orden, del 1 al 4</p>
+            {FILTROS.map((f, k) => (
+              <button key={f.k} onClick={() => setActivos(k + 1 === activos ? k : k + 1)} className="text-left">
+                <Paso isDark={isDark} n={k + 1} titulo={f.k} on={k < activos}><strong>{f.q}</strong> {f.d}</Paso>
+              </button>
+            ))}
+          </div>
+          <div className="lg:w-[62%] flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <p className={microLabel(isDark)}>Ocho pasos candidatos de una venta (ejemplo ilustrativo)</p>
+              <div className="flex items-center gap-2 shrink-0">
+                <div className="flex gap-1">
+                  {PASOS.map((p, k) => <motion.span key={k} className="w-3 h-3 rounded-[3px]" initial={false} animate={{ backgroundColor: sigue(p) ? ORANGE : isDark ? '#4b5563' : '#d1d5db', scale: sigue(p) ? 1 : 0.7 }} />)}
+                </div>
+                <p className={`text-sm ${textMuted(isDark)}`}>Quedan <strong className="text-[#ff851d] text-lg">{quedan}</strong> de {PASOS.length}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 flex-1">
+              {PASOS.map((p, k) => {
+                const fuera = !sigue(p);
+                const pasa = p.falla === -1 && activos === FILTROS.length;
+                return (
+                  <motion.div key={p.t} initial={false} animate={{ scale: fuera ? 0.98 : 1 }} className={`flex gap-2.5 px-3 py-2 rounded-xl min-h-[78px] ${fuera ? (isDark ? 'bg-white/5' : 'bg-black/[0.03]') : panelClass(isDark)}`}>
+                    <span className={`shrink-0 w-6 h-6 rounded-full grid place-items-center text-[11px] font-black ${fuera ? 'bg-gray-400/30 text-gray-500' : pasa ? 'bg-emerald-500 text-white' : 'bg-[#ff851d] text-white'}`}>{k + 1}</span>
+                    <div className="min-w-0">
+                      <p className={`text-[13.5px] font-semibold leading-snug ${fuera ? 'line-through opacity-55' : ''} ${heading(isDark)}`}>{p.t}</p>
+                      {fuera && <p className={`text-[11.5px] leading-snug mt-0.5 ${textMuted(isDark)}`}><span className="font-black uppercase text-[10px] text-[#ef375c]">No es {FILTROS[p.falla].k.toLowerCase()}. </span>{p.por}</p>}
+                      {pasa && <p className="text-[10px] font-black uppercase text-emerald-600 mt-0.5">Pasa los cuatro: es una etapa</p>}
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </Shell>
@@ -510,7 +550,8 @@ export function CriteriosSalida({ isDark }: SlideProps) {
             <p className={`text-xs text-center ${textMuted(isDark)}`}>Caso de Mike Venman: con las etapas 9 a 11 mide cuánto tarda éxito del cliente en reaccionar y si el negocio realmente quedó en marcha.</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
+          <Nota isDark={isDark} label="¿Cuántas etapas?">Las necesarias para mantener el avance y confirmar o descartar al prospecto. Muy pocas dejan pipelines llenos que nunca dan negocios; demasiadas le complican la venta al vendedor (Bray y Sorey).</Nota>
           <Nota isDark={isDark} label="La prueba de Mark Roberge">A los 6, 9 o 12 meses, ¿cumpliste la promesa de valor que vendiste? Debe ser cierto en más del 80 u 85% de los clientes. Y esos clientes, ¿son rentables?</Nota>
           <Cita isDark={isDark} autor="Bertrand Hazard (TrustRadius)">No tienes dos vendedores: tienes 1.002. Tus mil clientes que hablan maravillas de tu producto son tus mejores vendedores.</Cita>
         </div>
@@ -571,6 +612,12 @@ const MATRIZ: Fila[] = [
   },
 ];
 
+function OpcionOscura({ isDark, on, onClick, children }: { isDark: boolean; on: boolean; onClick: () => void; children: React.ReactNode; key?: React.Key }) {
+  return (
+    <button onClick={onClick} className={`w-full text-left px-3.5 py-2.5 rounded-xl text-sm font-bold leading-snug transition-colors ${on ? (isDark ? 'bg-gray-200 text-gray-900 shadow-lg' : 'bg-gray-900 text-white shadow-lg') : (isDark ? 'bg-white/5 text-gray-300 hover:bg-white/10' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')}`}>{children}</button>
+  );
+}
+
 function MatrizPPFC({ isDark }: { isDark: boolean }) {
   const [p, setP] = useState(0);
   const [d, setD] = useState(0);
@@ -588,27 +635,27 @@ function MatrizPPFC({ isDark }: { isDark: boolean }) {
   const flecha = <span className="self-center text-xl font-black text-[#ff851d] opacity-70">→</span>;
   return (
     <div className="flex flex-col gap-3">
-      <div className={`rounded-3xl p-3.5 grid grid-cols-[1fr_auto_1fr_auto_1fr_auto_1.25fr] gap-2.5 ${panelClass(isDark)}`}>
+      <div className={`rounded-3xl p-3.5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1.25fr)] items-start gap-2.5 min-h-[272px] ${panelClass(isDark)}`}>
         {columna(1, 'Persona', MATRIZ.map((x, k) => (
-          <Opcion key={x.persona} isDark={isDark} on={k === p} onClick={() => { setP(k); setD(0); setF(0); }}>
-            {x.persona}<span className={`block text-[10.5px] font-semibold ${k === p ? 'text-white/80' : textMuted(isDark)}`}>{x.contexto}</span>
-          </Opcion>
+          <OpcionOscura key={x.persona} isDark={isDark} on={k === p} onClick={() => { setP(k); setD(0); setF(0); }}>
+            {x.persona}<span className={`block text-[10.5px] font-semibold ${k === p ? 'opacity-75' : textMuted(isDark)}`}>{x.contexto}</span>
+          </OpcionOscura>
         )))}
         {flecha}
         <AnimatePresence mode="wait">
-          <motion.div key={`d${p}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
-            {columna(2, 'Dolor', fila.dolores.map((x, k) => <Opcion key={x.d} isDark={isDark} on={k === d} onClick={() => { setD(k); setF(0); }}>{x.d}</Opcion>))}
+          <motion.div key={`d${p}`} className="min-w-0" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+            {columna(2, 'Dolor', fila.dolores.map((x, k) => <OpcionOscura key={x.d} isDark={isDark} on={k === d} onClick={() => { setD(k); setF(0); }}>{x.d}</OpcionOscura>))}
           </motion.div>
         </AnimatePresence>
         {flecha}
         <AnimatePresence mode="wait">
-          <motion.div key={`f${p}${d}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
-            {columna(3, 'Función', dolor.funciones.map((x, k) => <Opcion key={x.f} isDark={isDark} on={k === f} onClick={() => setF(k)}>{x.f}</Opcion>))}
+          <motion.div key={`f${p}${d}`} className="min-w-0" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
+            {columna(3, 'Función', dolor.funciones.map((x, k) => <OpcionOscura key={x.f} isDark={isDark} on={k === f} onClick={() => setF(k)}>{x.f}</OpcionOscura>))}
           </motion.div>
         </AnimatePresence>
         {flecha}
         <AnimatePresence mode="wait">
-          <motion.div key={`c${p}${d}${f}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}>
+          <motion.div key={`c${p}${d}${f}`} className="min-w-0" initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}>
             {columna(4, 'Contenido', func.contenido.map((c) => (
               <div key={c.t} className={`p-2.5 rounded-xl ${featuredClass(isDark)}`}>
                 <span className="inline-block px-2 py-0.5 rounded-full text-[9.5px] font-black uppercase text-white mb-1" style={{ background: colorTipo[c.tipo] }}>{c.tipo}</span>
@@ -622,7 +669,7 @@ function MatrizPPFC({ isDark }: { isDark: boolean }) {
         <Nota isDark={isDark} label="Para qué sirve">Por cada persona, sus dolores; por cada dolor, las funciones que lo resuelven; por cada función, el contenido que lo explica: casos, preguntas, frases, plantillas de correo y guiones.</Nota>
         <Cita isDark={isDark} autor="Cory Bray y Hilmon Sorey">Una empresa decía que le faltaban casos de clientes. El problema real: no había un circuito cerrado entre éxito del cliente y ventas, y las historias nunca llegaban a los vendedores.</Cita>
       </div>
-      <p className={`text-[11px] ${textMuted(isDark)}`}>Matriz de ejemplo ilustrativa, basada en el caso TINYpulse del curso (medición de clima organizacional).</p>
+      <p className={`text-[11px] ${textMuted(isDark)}`}>Matriz de ejemplo ilustrativa, basada en el caso TINYpulse (medición de clima organizacional).</p>
     </div>
   );
 }
@@ -636,42 +683,45 @@ export function Playbook({ isDark }: SlideProps) {
         <div className="flex gap-2 justify-center">
           {['Metodología adaptativa', 'Las cuatro áreas', 'Matriz dolor · persona · función · contenido'].map((x, k) => <Pill key={x} isDark={isDark} on={k === tab} onClick={() => setTab(k)}>{x}</Pill>)}
         </div>
-        <AnimatePresence mode="wait">
-          <motion.div key={tab} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-3">
-            {tab === 0 && (
-              <div className="flex flex-col lg:flex-row gap-4">
-                <div className="lg:w-[34%] flex flex-col gap-1.5">
-                  {METODOS.map((x, k) => <Opcion key={x.k} isDark={isDark} on={k === m} onClick={() => setM(k)}>Venta {x.k.toLowerCase()}</Opcion>)}
+        <div className="grid">
+            <motion.div className="col-start-1 row-start-1 flex flex-col" initial={false} animate={{ opacity: tab === 0 ? 1 : 0 }} transition={{ duration: 0.3 }} style={{ pointerEvents: tab === 0 ? 'auto' : 'none' }}>
+              <div className="flex-1 flex flex-col lg:flex-row gap-4">
+                <div className="lg:w-[34%] flex flex-col gap-2">
+                  {METODOS.map((x, k) => (
+                    <button key={x.k} onClick={() => setM(k)} className={`flex-1 flex items-center text-left px-4 py-2.5 rounded-xl text-[15px] font-bold transition-colors ${k === m ? (isDark ? 'bg-gray-200 text-gray-900 shadow-lg' : 'bg-gray-800 text-white shadow-lg') : (isDark ? 'bg-white/5 text-gray-300 hover:bg-white/10' : 'bg-gray-100 text-gray-700 hover:bg-gray-200')}`}>Venta {x.k.toLowerCase()}</button>
+                  ))}
                 </div>
-                <div className="lg:w-[66%] flex flex-col gap-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Nota isDark={isDark} label="Cuándo usarla">{METODOS[m].cuando}</Nota>
+                <div className="lg:w-[66%] flex flex-col gap-3 [&>*]:flex-1">
+                  <div className="grid grid-cols-2 gap-3">
+                    <Nota isDark={isDark} label="Cuándo se usa">{METODOS[m].cuando}</Nota>
                     <Nota isDark={isDark} label="Cómo se ve" destacada>{METODOS[m].como}</Nota>
                   </div>
                   <Cita isDark={isDark} autor="Mike Kunkle">En dieciséis años analizando a los mejores vendedores vi una tendencia: no usan una sola metodología. Se adaptan según de dónde viene el comprador, no según lo que ellos intentan hacer.</Cita>
+                  <Nota isDark={isDark} label="Ninguna metodología calza perfecto">Por eso conviene combinar las que sirven al proceso y a la persona compradora. La metodología enseña a ejecutar cada etapa.</Nota>
                 </div>
               </div>
-            )}
-            {tab === 1 && (
-              <div className="flex flex-col gap-3">
-                <div className="grid grid-cols-4 gap-2">{AREAS.map((a, k) => <Paso key={a.k} isDark={isDark} n={k + 1} titulo={a.k} on={k === 3}>{a.d}</Paso>)}</div>
-                <div className="grid grid-cols-2 gap-3">
+            </motion.div>
+            <motion.div className="col-start-1 row-start-1 flex flex-col" initial={false} animate={{ opacity: tab === 1 ? 1 : 0 }} transition={{ duration: 0.3 }} style={{ pointerEvents: tab === 1 ? 'auto' : 'none' }}>
+              <div className="flex-1 flex flex-col lg:flex-row gap-6">
+                <div className="lg:w-1/2 grid grid-cols-2 grid-rows-2 gap-3 [&>*]:h-full">{AREAS.map((a, k) => <Paso key={a.k} isDark={isDark} n={k + 1} titulo={a.k} on={k === 3}>{a.d}</Paso>)}</div>
+                <div className="lg:w-1/2 flex flex-col gap-4 [&>*]:flex-1">
                   <Cita isDark={isDark} autor="Walter Pollard">Un playbook debe ser web, a pedido e interactivo; tener video; y ser perenne, es decir, actualizarse constantemente, porque para el vendedor siempre está cambiando.</Cita>
-                  <Nota isDark={isDark} label="Más importante que la metodología elegida">Es cómo la documentas: la consistencia entre vendedores es lo que convierte a los clientes en fans.</Nota>
+                  <Nota isDark={isDark} label="Más importante que la metodología elegida">Es cómo la documentas: la consistencia entre vendedores es lo que convierte a los clientes en fans. El playbook incluye también el contenido que el vendedor comparte con el prospecto en cada etapa.</Nota>
                 </div>
               </div>
-            )}
-            {tab === 2 && <MatrizPPFC isDark={isDark} />}
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+            <motion.div className="col-start-1 row-start-1" initial={false} animate={{ opacity: tab === 2 ? 1 : 0 }} transition={{ duration: 0.3 }} style={{ pointerEvents: tab === 2 ? 'auto' : 'none' }}>
+              <MatrizPPFC isDark={isDark} />
+            </motion.div>
+        </div>
       </div>
     </Shell>
   );
 }
 
 const ESTADOS = [
-  { k: 'Funciona en armonía', d: 'Más del 80% de los vendedores cumple su cuota de forma consistente, las personas nuevas alcanzan rápido el rendimiento esperado y nadie se queja de las «mejoras de proceso».', accion: 'No te relajes: el mercado cambia. Haz más de lo que rinde y menos del ruido (Dave Casey).' },
-  { k: 'Experimenta', d: 'Si el proceso aún no está en armonía, la vía es hacer experimentos rápidos y mejorar de forma continua, en un entorno controlado.', accion: 'Escucha a la primera línea; pregunta a clientes ganados y perdidos por qué; copia lo que hace el mejor vendedor y pruébalo A/B (Mike Venman).' },
+  { k: 'Funciona en armonía', d: 'Más del 80% de los vendedores cumple su cuota de forma consistente, las personas nuevas alcanzan rápido el rendimiento esperado y nadie se queja de las «mejoras de proceso».', accion: 'No relajarse: el mercado cambia. Hacer más de lo que rinde y menos del ruido (Dave Casey).' },
+  { k: 'Experimenta', d: 'Si el proceso aún no está en armonía, la vía es hacer experimentos rápidos y mejorar de forma continua, en un entorno controlado.', accion: 'Escuchar a la primera línea; preguntar a clientes ganados y perdidos por qué; copiar lo que hace el mejor vendedor y probarlo A/B (Mike Venman). El «uno-dos»: un líder escribe de par a par al decisor para pedir feedback franco.' },
   { k: 'Se agita sin control', d: 'Saltar de una «solución» a otra cada vez que algo sale mal. Cory Bray y Hilmon Sorey lo describen como corrosivo: nunca debería pasar.', accion: 'Volver a experimentos acotados. Bob Britton: la mayoría de los equipos de ventas vive en el cuadrante de crisis; hay que mudarse al proactivo.' },
 ];
 
@@ -682,8 +732,10 @@ export function Estados({ isDark }: SlideProps) {
   const orbita: [number, number][] = Array.from({ length: 13 }, (_, k) => [cx + 100 * Math.cos((k * 30 * Math.PI) / 180), cy + 32 * Math.sin((k * 30 * Math.PI) / 180)]);
   const caos: [number, number][] = [[120, 110], [300, 140], [180, 90], [330, 100], [140, 150], [260, 96], [120, 110]];
   return (
-    <Shell isDark={isDark} title="¿Tu proceso funciona, experimenta" highlight="o se agita?" subtitle="Todo proceso de ventas está en uno de tres estados. Revísalo al menos cada tres meses: mide qué pasa en cada etapa y pregúntate qué aprendiste (Doug Davidoff).">
-      <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
+    <Shell isDark={isDark} title="¿Tu proceso funciona, experimenta" highlight="o se agita?" subtitle="Todo proceso de ventas está en uno de tres estados. Conviene revisarlo al menos cada tres meses: medir qué pasa en cada etapa y preguntarse qué se aprendió (Doug Davidoff).">
+      <div className="h-full flex flex-col gap-4 min-h-0 justify-center">
+        <div className="mx-auto w-full max-w-[860px]"><Cita isDark={isDark} autor="Mathias Thulin y Dailius Wilson">Lo que más ha hecho prosperar a mis equipos es preguntar a los clientes ganados y también a los que perdimos por qué siguieron o no. Ese aprendizaje casi nunca vuelve al inicio del proceso.</Cita></div>
+      <div className="flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[44%] flex flex-col items-center justify-center gap-2">
           <svg viewBox="0 0 440 226" className="w-full max-h-[260px] overflow-visible" role="img" aria-label="Estado del proceso de ventas">
             <SceneDefs id="roes" isDark={isDark} />
@@ -706,15 +758,17 @@ export function Estados({ isDark }: SlideProps) {
           <div className="flex gap-1.5 flex-wrap justify-center">{ESTADOS.map((x, k) => <Pill key={x.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{x.k}</Pill>)}</div>
         </div>
         <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
-              <Nota isDark={isDark} label={`Estado · ${ESTADOS[i].k}`} destacada>{ESTADOS[i].d}</Nota>
-              <Nota isDark={isDark} label="Qué hacer">{ESTADOS[i].accion}</Nota>
-            </motion.div>
-          </AnimatePresence>
-          <Cita isDark={isDark} autor="Mathias Thulin y Dailius Wilson">Lo que más ha hecho prosperar a mis equipos es preguntar a los clientes ganados y también a los que perdimos por qué siguieron o no. Ese aprendizaje casi nunca vuelve al inicio del proceso.</Cita>
-          <Nota isDark={isDark} label="Cuando perdiste un negocio con el mismo proceso que antes ganó">Pregunta qué cambió: ¿el cliente, el mercado, la oferta? Analiza los negocios perdidos y pide feedback a clientes ganados y perdidos, en vez de cambiar todo el proceso de golpe.</Nota>
+          <div className="grid">
+            {ESTADOS.map((x, k) => (
+              <motion.div key={x.k} className="col-start-1 row-start-1 flex flex-col gap-2.5" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }}>
+                <Nota isDark={isDark} label={`Estado · ${x.k}`} destacada>{x.d}</Nota>
+                <Nota isDark={isDark} label="Qué hacer">{x.accion}</Nota>
+              </motion.div>
+            ))}
+          </div>
+          <Nota isDark={isDark} label="Cuando perdiste un negocio con el mismo proceso que antes ganó">Preguntar qué cambió: ¿el cliente, el mercado, la oferta? Analizar los negocios perdidos y pedir feedback a clientes ganados y perdidos, en vez de cambiar todo el proceso de golpe.</Nota>
         </div>
+      </div>
       </div>
     </Shell>
   );

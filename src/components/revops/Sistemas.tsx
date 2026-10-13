@@ -22,9 +22,17 @@ export function ProcesoPrimero({ isDark }: SlideProps) {
   const cx = 170;
   const cys = [150, 126, 104];
   return (
-    <Shell isDark={isDark} title="Primero el proceso," highlight="después la herramienta" subtitle="Hay tres áreas en las que invertir para tener buenos datos, y van en este orden. Las herramientas aceleran el proceso que ya tienes: si no está definido, aceleras en la dirección equivocada.">
-      <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
-        <div className="lg:w-[44%] flex flex-col items-center justify-center">
+    <Shell isDark={isDark} title="Primero el proceso," highlight="después la herramienta" subtitle="Hay tres áreas en las que invertir para tener buenos datos, y van en este orden. Las herramientas aceleran el proceso que ya existe: si no está definido, se acelera en la dirección equivocada.">
+      <div className="h-full flex flex-col gap-4 min-h-0 justify-center">
+      <div className="flex flex-col lg:flex-row gap-5 min-h-0">
+        <div className="lg:w-[48%] flex flex-col items-center justify-center gap-4">
+          <div className="grid w-full">
+            {CAPAS.map((c, k) => (
+              <motion.div key={c.k} className="col-start-1 row-start-1" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }}>
+                <Nota isDark={isDark} label={`Área ${k + 1} · ${c.k}`} destacada>{c.d}</Nota>
+              </motion.div>
+            ))}
+          </div>
           <svg viewBox="0 0 440 262" className="w-full max-h-[290px] overflow-visible" role="img" aria-label="Pirámide: procesos, datos y herramientas">
             <SceneDefs id="rpp" isDark={isDark} />
             <Piso cx={cx} cy={196} s={124} fill={t.floor} />
@@ -43,12 +51,15 @@ export function ProcesoPrimero({ isDark }: SlideProps) {
             <Traveler id="rpp" path={[[cx, 150], [cx, 104], [cx, 62]]} dur={1.8} repeatDelay={0.6} r={4.5} />
           </svg>
         </div>
-        <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
-          <AnimatePresence mode="wait"><motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}><Nota isDark={isDark} label={`Área ${i + 1} · ${CAPAS[i].k}`} destacada>{CAPAS[i].d}</Nota></motion.div></AnimatePresence>
+        <div className="lg:w-[52%] flex flex-col gap-4 justify-center">
           <Cita isDark={isDark} autor="Daniel Remedios">Hay herramientas maravillosas y brillantes, pero son un multiplicador de fuerza. Si las traes demasiado pronto, te frenas casi hasta detenerte, porque no tienes claro qué herramienta necesitas ni para qué.</Cita>
-          <Nota isDark={isDark} label="Extiende el mapa en ambas direcciones">¿De dónde vienen los leads antes del pipeline y qué pasa con los clientes después del cierre? Fíjate en los traspasos entre equipos y en cada tasa de conversión: ahí todos deben usar la misma definición.</Nota>
           <Cita isDark={isDark} autor="Asia Corbett">Finanzas y marketing me preguntaron por qué dos reportes daban distinto: «¡uno está mal!». Ninguno estaba mal. Usaban definiciones distintas de lo que es un SQL.</Cita>
         </div>
+      </div>
+      <div className="grid md:grid-cols-2 gap-4 [&>*]:h-full">
+        <Nota isDark={isDark} label="Extender el mapa en ambas direcciones">¿De dónde vienen los leads antes del pipeline y qué pasa con los clientes después del cierre? Lo que más importa son los traspasos entre equipos y cada tasa de conversión: ahí todos deben usar la misma definición.</Nota>
+        <Nota isDark={isDark} label="El modelo de datos se protege">Ventas, marketing y servicio acuerdan el modelo de datos y un proceso para cambiarlo. Si un equipo lo modifica por su cuenta, los reportes de punta a punta se rompen (Bryan Semple).</Nota>
+      </div>
       </div>
     </Shell>
   );
@@ -84,7 +95,8 @@ export function Gobierno({ isDark }: SlideProps) {
                 </Float>
               </motion.g>
             ))}
-            <text x={130} y={246} textAnchor="middle" fontSize={11.5} fontWeight={900} fill={orden ? ORANGE : PINK}>{orden ? 'Simple, documentado y estable' : 'Sacas una pieza y todo se cae'}</text>
+            <text x={130} y={236} textAnchor="middle" fontSize={11.5} fontWeight={900} fill={orden ? ORANGE : PINK}>{orden ? 'Simple, documentado y estable' : 'Se saca una pieza y todo puede caerse'}</text>
+            <text x={130} y={252} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.muted}>{orden ? 'Cada cambio se justifica y se documenta' : 'Diez años de personalizaciones, una sobre otra'}</text>
           </svg>
         </div>
         <div className="lg:w-[66%] flex flex-col gap-2.5 justify-center">
@@ -100,11 +112,11 @@ export function Gobierno({ isDark }: SlideProps) {
                 </React.Fragment>
               ))}
             </div>
-            <p className={`text-xs mt-1.5 ${textMuted(isDark)}`}>Dirección de la sincronización de «{DICCIONARIO[fila].dato}»: <strong className="text-[#ef375c]">{DICCIONARIO[fila].flujo}</strong>. Un mismo dato con nombres distintos es la causa más común de inconsistencias.</p>
+            <p className={`text-xs mt-1.5 ${textMuted(isDark)}`}>Dirección de la sincronización de «{DICCIONARIO[fila].dato}»: <strong className="text-[#ef375c]">{DICCIONARIO[fila].flujo}</strong>. Un buen diccionario reúne los datos más importantes, el nombre del campo en cada sistema, cómo se integran, hacia dónde fluyen y cuál es el sistema de registro.</p>
           </div>
           <div className="grid grid-cols-2 gap-2.5">
-            <Nota isDark={isDark} label="Controles mínimos">No todos pueden borrar ni crear. Ciertos campos son obligatorios antes de entrar al sistema. Cada sincronización tiene dirección y responsable.</Nota>
-            <Nota isDark={isDark} label="Regla de la casa" destacada>No puedes añadir simplicidad: tienes que quitar complejidad. Cada personalización suma mantenimiento futuro.</Nota>
+            <Nota isDark={isDark} label="Controles mínimos">No todos pueden borrar ni crear. Ciertos campos son obligatorios antes de entrar al sistema. Cada sincronización tiene dirección y responsable. Y no todo campo pedido hace falta: cada uno suma deuda técnica.</Nota>
+            <Nota isDark={isDark} label="Más simple es mejor" destacada>La simplicidad no se añade: se consigue quitando complejidad. Antes de personalizar, dos preguntas: ¿mueve de verdad el resultado? ¿Se acepta el mantenimiento que trae después? (Bryan Semple)</Nota>
           </div>
           <Cita isDark={isDark} autor="Bryan Semple">¿Quieres un campo nuevo? Perfecto: tú lo reportas cada semana. A los cinco o seis meses nadie lo mira, y entonces se borra.</Cita>
         </div>
@@ -124,7 +136,7 @@ export function Indicadores({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const [i, setI] = useState(0);
   const [pistas, setPistas] = useState(0);
-  const PISTAS = ['La tasa de rebote es de 99%.', 'Casi todo el tráfico viene de un país donde no vendes.', 'Ese país es conocido por su tráfico de bots.'];
+  const PISTAS = ['La tasa de rebote es de 99%.', 'Casi todo el tráfico viene de un país donde no se vende.', 'Ese país es conocido por su tráfico de bots.'];
   return (
     <Shell isDark={isDark} title="Indicadores adelantados y" highlight="la historia detrás del número" subtitle="Los ingresos son un indicador rezagado. Para corregir a tiempo hay que encontrar los indicadores adelantados que terminan convirtiéndose en ingresos, y vigilarlos de cerca (Dwamian Mcleish).">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
@@ -145,23 +157,29 @@ export function Indicadores({ isDark }: SlideProps) {
               );
             })}
             <Traveler id="rin" path={[[60, 92], [173, 92], [286, 92], [399, 92]]} dur={3} repeatDelay={0.4} r={5} />
-            <text x={230} y={204} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>Ejemplo del material: más tickets anticipan pérdida de clientes</text>
+            <text x={230} y={204} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>Más tickets de soporte pueden anticipar la pérdida de clientes</text>
           </svg>
-          <Nota isDark={isDark} label={CADENA[i].k}>{CADENA[i].d}</Nota>
+          <div className="grid w-full">
+            {CADENA.map((c, k) => (
+              <motion.div key={c.k} className="col-start-1 row-start-1" initial={false} animate={{ opacity: k === i ? 1 : 0, y: k === i ? 0 : 6 }} transition={{ duration: 0.3 }} style={{ pointerEvents: k === i ? 'auto' : 'none' }}>
+                <Nota isDark={isDark} label={c.k}>{c.d}</Nota>
+              </motion.div>
+            ))}
+          </div>
         </div>
         <div className="lg:w-[50%] flex flex-col gap-2.5 justify-center">
           <div className={`p-3.5 rounded-3xl ${featuredClass(isDark)}`}>
-            <p className={microLabel(isDark)}>Lee el dato como una historia</p>
+            <p className={microLabel(isDark)}>El dato se lee como una historia</p>
             <p className={`text-lg font-black ${heading(isDark)}`}>100.000 visitas en un día, cuando lo normal son 1.000.</p>
             <div className="flex flex-col gap-1 mt-1.5">
               {PISTAS.slice(0, pistas).map((p) => <motion.p key={p} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} className={`text-sm ${textMuted(isDark)}`}>• {p}</motion.p>)}
             </div>
             {pistas < 3
               ? <button onClick={() => setPistas(pistas + 1)} className="mt-2 px-4 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white">Siguiente pista</button>
-              : <p className="mt-2 text-sm font-black text-[#ef375c]">No es un triunfo: probablemente es tráfico de bots.</p>}
+              : <p className="mt-2 text-sm font-black text-[#ef375c]">No es un triunfo: probablemente es tráfico de bots. Interpretar el dato es el oficio de quien analiza.</p>}
           </div>
           <Cita isDark={isDark} autor="Devyn Bellamy">Los buenos reportes no salen de la nada; lo intenté. Lo que funciona es preguntar a la gente qué quiere saber, no qué reporte quiere ver, y buscar los datos que respondan esa pregunta.</Cita>
-          <Nota isDark={isDark} label="Para qué sirve todo esto">Ver juntos varios datos (tickets y pérdida de clientes, por ejemplo) muestra qué palancas mueven el resultado y cuáles puedes tirar para cambiarlo.</Nota>
+          <Nota isDark={isDark} label="Para qué sirve todo esto">Ver juntos varios datos (tickets y pérdida de clientes, por ejemplo) muestra qué palancas mueven el resultado y cuáles se pueden mover para cambiarlo. Una empresa pequeña o mediana puede partir por las herramientas que ya tiene.</Nota>
         </div>
       </div>
     </Shell>
@@ -172,7 +190,7 @@ export function Stack({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const [integrado, setIntegrado] = useState(false);
   const n = integrado ? 3 : 7;
-  const xs = Array.from({ length: n }, (_, k) => (n === 1 ? 230 : 50 + (k * 360) / (n - 1)));
+  const xs = Array.from({ length: n }, (_, k) => 50 + (k * 360) / (n - 1));
   return (
     <Shell isDark={isDark} title="Administrar" highlight="el stack tecnológico" subtitle="Lo normal no es implementar desde cero: es heredar un stack desordenado, porque cada departamento compró herramientas sin pensar en el resto. RevOps debe tener voz en qué entra y por qué.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
@@ -181,7 +199,7 @@ export function Stack({ isDark }: SlideProps) {
             <Pill isDark={isDark} on={!integrado} onClick={() => setIntegrado(false)}>Hoy: 7 sistemas</Pill>
             <Pill isDark={isDark} on={integrado} onClick={() => setIntegrado(true)}>Integrado: 3 sistemas</Pill>
           </div>
-          <svg viewBox="0 0 460 220" className="w-full max-h-[240px] overflow-visible" role="img" aria-label={`El cliente pasa por ${n} sistemas`}>
+          <svg viewBox="0 0 460 220" className="w-full max-h-[215px] overflow-visible" role="img" aria-label={`El cliente pasa por ${n} sistemas`}>
             <SceneDefs id="rst" isDark={isDark} />
             <Piso cx={230} cy={130} s={226} fill={t.floor} />
             <g key={n}>
@@ -193,17 +211,18 @@ export function Stack({ isDark }: SlideProps) {
               <Traveler id="rst" path={xs.map((x) => [x, 84] as [number, number])} dur={integrado ? 1.4 : 3.6} repeatDelay={0.3} r={5} />
             </g>
             <text x={230} y={182} textAnchor="middle" fontSize={12} fontWeight={900} fill={integrado ? ORANGE : PINK}>{integrado ? 'Recorrido corto y datos que no se pierden' : 'Siete traspasos: el dato se aleja de la verdad'}</text>
-            <text x={230} y={200} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>Mapa de flujo de valor: así se ve el camino del cliente por tus sistemas</text>
+            <text x={230} y={200} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>Mapa de flujo de valor: el camino del cliente por los sistemas</text>
           </svg>
           <Cita isDark={isDark} autor="Dwamian Mcleish">Una vez que muestras «movemos a un cliente por siete sistemas sin ningún beneficio», la conversación es más fácil que decir «voy a sacar cuatro sistemas».</Cita>
+          <Nota isDark={isDark} label="Sacar un sistema también es un cambio">El equipo que lo ocupa está acostumbrado y puede resistirse: necesita acompañamiento. También conviene revisar qué datos se dejarían de capturar (Asia Corbett).</Nota>
         </div>
         <div className="lg:w-[52%] flex flex-col gap-2 justify-center">
           <Nota isDark={isDark} label="RevOps no es TI" destacada>TI y los administradores hacen que las cosas funcionen, incluso con eficiencia, pero rara vez entran en el porqué. RevOps se ocupa de la eficiencia de ingresos, la transparencia de los datos y el uso responsable de herramientas y datos (Devyn Bellamy).</Nota>
           <p className={microLabel(isDark)}>Antes de aprobar una herramienta nueva</p>
-          <Paso isDark={isDark} n={1} titulo="¿Ya lo hace lo que tienes?">Si el CRM o la herramienta principal ya lo hace, la negociación será difícil (Jen Bergren).</Paso>
+          <Paso isDark={isDark} n={1} titulo="¿Ya lo hace lo que hay?">Si el CRM o la herramienta principal ya lo hace, la negociación será difícil (Jen Bergren). Lo integrado tiene menos funciones, pero ahorra complejidad y costo.</Paso>
           <Paso isDark={isDark} n={2} titulo="¿Quién la aprueba?">Operaciones debe aprobar las herramientas, junto a finanzas y TI. Nadie la carga a la tarjeta de la empresa por su cuenta.</Paso>
           <Paso isDark={isDark} n={3} titulo="¿Profundidad o complejidad?">Las soluciones puntuales tienen más funciones; muchas juntas terminan en un sistema «espagueti» (Bryan Semple).</Paso>
-          <Paso isDark={isDark} n={4} titulo="¿Vale la pena automatizar?">No pases 10 horas automatizando algo que a mano toma 30 minutos (Matthew Volm).</Paso>
+          <Paso isDark={isDark} n={4} titulo="¿Vale la pena automatizar?">Primero se resuelve a mano. No conviene dedicar 10 horas a automatizar algo que toma 30 minutos (Matthew Volm).</Paso>
         </div>
       </div>
     </Shell>
