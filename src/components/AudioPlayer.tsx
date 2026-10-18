@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 const SPEEDS = [1, 1.2, 1.5, 2] as const;
 
@@ -9,11 +9,12 @@ interface Props {
 
 export function AudioPlayer({ src, isDark }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const speedMenuRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [speed, setSpeed] = useState<number>(1);
+  const [speedOpen, setSpeedOpen] = useState(false);
 
-  // Reset on slide change
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -26,6 +27,17 @@ export function AudioPlayer({ src, isDark }: Props) {
   useEffect(() => {
     if (audioRef.current) audioRef.current.playbackRate = speed;
   }, [speed]);
+
+  const closeMenu = useCallback((e: MouseEvent) => {
+    if (speedMenuRef.current && !speedMenuRef.current.contains(e.target as Node)) {
+      setSpeedOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (speedOpen) document.addEventListener('mousedown', closeMenu);
+    return () => document.removeEventListener('mousedown', closeMenu);
+  }, [speedOpen, closeMenu]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -58,8 +70,10 @@ export function AudioPlayer({ src, isDark }: Props) {
     setProgress(fraction);
   };
 
-  const mutedClass = isDark ? 'text-white/40 hover:text-white/70' : 'text-gray-400 hover:text-gray-700';
   const trackBg = isDark ? 'bg-white/10' : 'bg-black/8';
+  const btnBase = isDark
+    ? 'bg-white/10 hover:bg-white/20 text-white/70 hover:text-white'
+    : 'bg-black/8 hover:bg-black/15 text-gray-500 hover:text-gray-900';
 
   return (
     <>
@@ -70,15 +84,11 @@ export function AudioPlayer({ src, isDark }: Props) {
         onEnded={handleEnded}
       />
 
-      {/* Play/Pause + Speed — bottom-left */}
       <div className="absolute bottom-3 left-3 flex items-center gap-1 z-20">
+        {/* Play / Pause */}
         <button
           onClick={togglePlay}
-          className={`w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition-colors
-            ${isDark
-              ? 'bg-white/10 hover:bg-white/20 text-white/70 hover:text-white'
-              : 'bg-black/8 hover:bg-black/15 text-gray-500 hover:text-gray-900'
-            }`}
+          className={`w-7 h-7 rounded-full flex items-center justify-center shadow-sm transition-colors ${btnBase}`}
           aria-label={playing ? 'Pausar' : 'Reproducir'}
         >
           {playing ? (
@@ -93,36 +103,56 @@ export function AudioPlayer({ src, isDark }: Props) {
           )}
         </button>
 
+        {/* Speed — compact toggle */}
         {playing && (
-          <div className="flex items-center gap-0.5 animate-in fade-in duration-150">
-            {SPEEDS.map((s) => (
-              <button
-                key={s}
-                onClick={() => setSpeed(s)}
-                className={`px-1.5 py-0.5 rounded text-[9px] font-bold transition-all leading-none
-                  ${speed === s
-                    ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white'
-                    : mutedClass
-                  }`}
+          <div ref={speedMenuRef} className="relative animate-in fade-in duration-150">
+            <button
+              onClick={() => setSpeedOpen(o => !o)}
+              className={`h-5 px-1.5 rounded text-[9px] font-bold leading-none transition-all
+                ${speed !== 1
+                  ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white'
+                  : btnBase
+                }`}
+            >
+              {speed === 1 ? '1×' : `${speed}×`}
+            </button>
+
+            {speedOpen && (
+              <div
+                className={`absolute bottom-full left-0 mb-1 flex flex-col gap-0.5 rounded-md p-0.5 shadow-lg
+                  animate-in fade-in slide-in-from-bottom-1 duration-100
+                  ${isDark ? 'bg-neutral-800' : 'bg-white'}`}
               >
-                {s === 1 ? '1×' : `${s}×`}
-              </button>
-            ))}
+                {SPEEDS.map(s => (
+                  <button
+                    key={s}
+                    onClick={() => { setSpeed(s); setSpeedOpen(false); }}
+                    className={`px-2 py-1 rounded text-[9px] font-bold leading-none transition-all whitespace-nowrap
+                      ${speed === s
+                        ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white'
+                        : isDark
+                          ? 'text-white/50 hover:text-white hover:bg-white/10'
+                          : 'text-gray-400 hover:text-gray-700 hover:bg-black/5'
+                      }`}
+                  >
+                    {s === 1 ? '1×' : `${s}×`}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
 
-      {/* Progress bar — absolute bottom edge of the slide */}
+      {/* Progress bar */}
       <div
         className={`absolute bottom-0 left-0 right-0 h-[4px] cursor-pointer z-20 ${trackBg}`}
         onClick={seek}
       >
-        {/* Fill */}
         <div
           className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#ff851d] to-[#ef375c]"
           style={{ width: `${progress * 100}%`, transition: 'width 0.1s linear' }}
         />
-        {/* Dot */}
         <div
           className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-gradient-to-br from-[#ff851d] to-[#ef375c] shadow-md pointer-events-none"
           style={{

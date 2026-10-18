@@ -1,0 +1,169 @@
+Textos para generar audio — 10 páginas sin audio
+==================================================
+Nombre del MP3: "pagina XX" donde XX es el número de posición.
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 4 — ro-1-ruta
+---
+La ruta: diez lecciones, un plan propio. Cada lección deja una pieza de tu estrategia de RevOps, y al final tendrás un plan completo, aplicable a cualquier tamaño de empresa e industria.
+
+En la lección 1, Bienvenida, aprendes qué es RevOps y de qué está hecho, y construyes un mapa de las personas, procesos, sistemas y datos que generan ingresos en tu empresa. En la lección 2, Introducción a RevOps, aprendes por qué crecer a escala exige otra forma de operar y por dónde empezar, y construyes un diagnóstico de diez afirmaciones con cuarenta puntos posibles para decidir si tu empresa necesita invertir en RevOps. En la lección 3, El flywheel, aprendes a pensar en atraer, involucrar y deleitar como un ciclo, con fuerzas que lo aceleran y fricciones que lo frenan, y construyes el dibujo de tu flywheel con sus fuerzas, fricciones y acciones priorizadas.
+
+En la lección 4, Responsabilidad con SLA, aprendes cómo funciona el acuerdo de servicio entre marketing y ventas, y construyes tu SLA con la cantidad de leads por mes y el plazo máximo de contacto. En la lección 5, Mapear el proceso de ventas, aprendes a diseñar etapas centradas en el comprador con criterios de salida y playbook, y construyes un proceso de ventas depurado donde cada etapa tiene la acción del vendedor y la acción del comprador.
+
+La segunda mitad se enfoca en los sistemas y en el equipo. En la lección 6, Gestión de sistemas, aprendes a priorizar el proceso antes que la herramienta, con gobierno de datos y control del stack, y construyes un diccionario de datos y una evaluación de tus herramientas. En la lección 7, Comunicar el valor, aprendes a hablar en el idioma de las finanzas, a calcular el costo de la mala calidad, a usar el informe A3 y a persuadir, y construyes una propuesta para tus líderes con pre-wiring y respuestas a objeciones. En la lección 8, Estructurar el equipo, aprendes sobre silos, estructura formal e informal y cómo crece un equipo de operaciones, y construyes tu organigrama actual, el ideal y el camino entre ambos. En la lección 9, Contratar al equipo, aprendes cuándo contratar, qué tipo de candidato buscar y cómo evaluarlo, y construyes roles, perfiles y una pauta de entrevista. En la lección 10, Evaluar e iterar, aprendes el ciclo continuo de datos, comunicación y alineación, y construyes un plan de cuatro trimestres con métricas y prioridades diarias.
+
+¿Cuál de estas piezas te haría más falta mañana mismo en tu trabajo?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 20 — ro-4-valor
+---
+Valor del lead, no volumen de leads. No todos los MQL valen lo mismo. Cuando marketing se atrasaba, cambiaba sus llamados a la acción por descargas de ebooks, más fáciles de conseguir, y ventas preguntaba: «¿dónde están las solicitudes de demo?». Es la historia de Mark Roberge: un SLA por cantidad premia el lead fácil, no el que cierra.
+
+Un mismo perfil, un gerente de marketing de una empresa mediana, y la misma venta de cien mil dólares. Una descarga de ebook cierra el uno por ciento de las veces: vale mil dólares. Una solicitud de demo cierra el tres por ciento: vale tres mil dólares. La regla es directa: valor de un lead igual a tasa de cierre por valor de la venta.
+
+**Valor de leads entregado este mes.** Con 150 descargas y 50 demos, el mes suma trescientos mil dólares, justo la meta. A marketing ya no le importa la mezcla: puede llegar con 100 demos, con 300 ebooks o combinando. Así marketing queda con una cuota de ingresos, igual que ventas. Roberge lo recuerda como un momento decisivo para su empresa.
+
+De ahí sale el SLA avanzado: cada mes, marketing entregará trescientos mil dólares en valor de leads, y ventas contactará cada MQL dentro de 24 horas. Con la matriz de calificación de leads el cálculo es simple: los que levantan la mano, los que piden hablar con ventas, suelen cerrar más, y se cuentan por lo que valen.
+
+Hay una corrección importante en la fuente. Roberge dice que trescientos mil se logran con mil demos o tres mil ebooks, pero con sus propios valores eso daría tres millones. Lo correcto son cien demos o trescientos ebooks.
+
+**Y ventas tampoco se libra: el tablero «no aparezcas aquí».** Si un lead no recibía llamada en 24 horas, el nombre del vendedor aparecía en pantalla. Si un lead llevaba dos semanas sin cinco intentos de contacto, también. Si marketing asume una cuota, ventas asume el mismo nivel de responsabilidad.
+
+¿Qué tipo de lead de tu empresa se cuenta igual que los demás aunque cierre mucho más?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 21 — ro-4-contacto
+---
+La parte más delicada: qué tan rápido contactar. La meta de marketing se calcula con matemática. El plazo de ventas es otra cosa: la respuesta correcta es «lo antes posible», y el SLA fija el más rápido que el equipo puede cumplir de verdad.
+
+La probabilidad relativa de calificar un lead cambia drásticamente según cuánto tardas en responder. Contactar en menos de una hora multiplica las chances por sesenta. Una hora después, solo por nueve. A las 24 horas, estás en la base: uno. Esos datos vienen de una auditoría de Oldroyd, McElheran y Elkington publicada en Harvard Business Review en 2011, sobre 2.241 empresas de Estados Unidos, cuyo tiempo promedio de primera respuesta era de 42 horas. Quien responde en una hora le gana a casi toda su competencia.
+
+**Caso, Huify, siete personas.** Regla: todo lead se llama dentro de cinco minutos, aunque el equipo de ventas completo esté en una conferencia; si hace falta, llama alguien de éxito del cliente. Su fundador, Josh Harcus, cuenta que multiplicaron sus ingresos por seis en un año. Los prospectos lo agradecían: alguien los llamaba con la duda todavía fresca. Harcus afirma además que llamar en cinco minutos en vez de 24 horas multiplica por mil la probabilidad de cerrar, pero esa cifra no aparece en el estudio publicado: el estudio habla de unas sesenta veces para calificar el lead, no para cerrarlo.
+
+**Caso, PeopleDoc.** Movieron al equipo de ventas internas y desarrollo de negocio dentro de marketing para cuidar el primer contacto humano. Laura Poggi, su vicepresidenta de marketing, cuenta que las reuniones calificadas subieron un sesenta por ciento.
+
+**El ritmo importa**, según Mark Roberge: si la meta es cien mil dólares de valor al mes, traza una línea recta de cero a cien mil en treinta días, sin una súper campaña la primera semana ni tres semanas dormidas para correr al final. Lo primero desperdicia leads que nadie alcanza a llamar; lo segundo deja vendedores ociosos. Si hay meses de alta carga predecibles, la línea cambia de forma: menos leads en los meses ocupados, más en los tranquilos.
+
+**¿Cuántas veces insistir?** El patrón óptimo cambia entre empresas grandes, medianas y pequeñas. Sin volumen para analizarlo, se parte de la investigación de mercado y de supuestos razonables, se instala la medición y se corrige con datos propios en tres a seis meses.
+
+¿Cuánto tarda hoy tu equipo en responder a un lead nuevo, medido y no estimado?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 23 — ro-4-velocidades
+---
+Velocidad de marketing y velocidad de ventas. Dos cálculos para saber si el SLA es posible: cuántos leads produce cada hora de marketing y cuánto ingreso puede procesar ventas por día.
+
+**Velocidad de marketing, una pieza de contenido.** Tres campos definen el cálculo: piezas al año, leads por pieza y horas por pieza. De ahí salen tres resultados: leads por hora, horas por lead y horas al año. Con el ejemplo de Jamie Shanks, de Sales for Life: 250 blogs al año, cinco leads por blog y tres horas cada uno dan 1,7 leads por hora y 750 horas al año. Bajar cada blog a una hora libera quinientas horas para otra pieza que rinda más. El ejercicio se repite con cada formato: el que rinde poco por hora cede sus horas al que rinde más.
+
+**Velocidad de ventas.** La fórmula es oportunidades por ticket por tasa de cierre, dividido por los días de ciclo. Con cuarenta oportunidades, un ticket de cinco mil dólares, veinticinco por ciento de cierre y sesenta días de ciclo, el equipo procesa unos 833 dólares al día, cerca de veinticinco mil en treinta días. Si la meta mensual es mayor, el SLA no cierra antes de empezar. Las oportunidades que un vendedor maneja dependen de la complejidad de la venta y de su experiencia; el ciclo, idealmente, baja con el tiempo.
+
+Si la tasa de cierre es baja, quizá marketing atrae a la gente equivocada: conviene revisar el perfil de cliente ideal y buscar rasgos comunes en los negocios perdidos que no aparecen en los clientes. Marketing también puede acortar el ciclo con contenido que responda dudas antes de la reunión.
+
+¿Qué pieza de contenido de tu empresa consume más horas en relación con los leads que genera?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 35 — ro-6-stack
+---
+Administrar el stack tecnológico. Lo normal no es implementar desde cero: es heredar un stack desordenado, porque cada departamento compró herramientas sin pensar en el resto. RevOps debe tener voz en qué entra y por qué. La meta no es un stack pequeño, que a veces no es posible, sino que cada herramienta tenga una razón.
+
+El mapa de flujo de valor muestra el camino del cliente por los sistemas. Con siete sistemas, el dato pasa por siete traspasos y en cada uno puede llegar tarde o cambiado: se aleja de la verdad. Con tres sistemas integrados, el recorrido es corto y los datos no se pierden.
+
+Dwamian Mcleish explica para qué sirve dibujarlo: «Una vez que muestras "movemos a un cliente por siete sistemas sin ningún beneficio", la conversación es más fácil que decir "voy a sacar cuatro sistemas"». La discusión deja de ser sobre la herramienta favorita de cada equipo y pasa a ser sobre el recorrido del cliente.
+
+**Sacar un sistema también es un cambio.** El equipo que lo ocupa está acostumbrado y puede resistirse: necesita acompañamiento. También conviene revisar qué datos se dejarían de capturar, advierte Asia Corbett.
+
+**RevOps no es TI.** TI y los administradores hacen que las cosas funcionen, incluso con eficiencia, pero rara vez entran en el porqué. RevOps se ocupa de la eficiencia de ingresos, la transparencia de los datos y el uso responsable de herramientas y datos, según Devyn Bellamy. Un sistema configurado sin entender para qué existe crece sin control.
+
+Antes de aprobar una herramienta nueva, cuatro preguntas. **1. ¿Ya lo hace lo que hay?** Si el CRM o la herramienta principal ya lo hace, la negociación será difícil, dice Jen Bergren. Lo integrado tiene menos funciones, pero ahorra complejidad y costo. **2. ¿Quién la aprueba?** Operaciones debe aprobar las herramientas, junto a finanzas y TI. Nadie la carga a la tarjeta de la empresa por su cuenta. Sin ese control, ventas, marketing y soporte terminan cada uno con su propio chat. **3. ¿Profundidad o complejidad?** Las soluciones puntuales tienen más funciones; muchas juntas terminan en un sistema «espagueti», en palabras de Bryan Semple. La pregunta de fondo es si esa función adicional da una ventaja real frente a la competencia. **4. ¿Vale la pena automatizar?** Primero se resuelve a mano. No conviene dedicar diez horas a automatizar algo que toma treinta minutos, calcula Matthew Volm.
+
+¿Por cuántos sistemas pasa hoy un cliente de tu empresa desde que es lead hasta que renueva?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 37 — ro-7-lenguaje
+---
+Habla el idioma del negocio. Operaciones se ve como un gasto en los estados financieros. Tu trabajo frente a la gerencia es traducir ese gasto en un activo que genera ingresos, en pesos y centavos. Alicia Butler Pierre lleva más de dos décadas en roles operativos y lo resume así. Matt Bolian describe el error más común: llegar con el CEO y proponer «reducir la fricción de ventas y romper silos». El CEO responde que eso es lo que lleva haciendo veinte años. Si no puedes articular qué tiene de distinto lo que propones, en términos financieros, la conversación termina ahí.
+
+El estado de resultados simplificado tiene cinco líneas: ingresos arriba, de ahí viene «top-line revenue», luego costo de ventas, margen bruto, gastos operativos y resultado operacional. Tres iniciativas muestran qué línea mueve cada una. **Bajar el costo de adquirir clientes** sube el resultado operacional. **Vender a la base de clientes actual** sube los ingresos de primera línea. **Vender más sin agrandar el equipo** baja los gastos operativos en proporción a lo que se vende.
+
+Tres estados financieros que todo profesional de operaciones debería dominar. **1. Balance general:** una foto en un momento; activos equivalen a pasivos más patrimonio; la mayoría de las mejoras operativas aumentan activos sin aumentar pasivos en la misma proporción, y eso siempre mejora la posición financiera. **2. Estado de resultados:** cubre un periodo; ingresos menos costo de ventas da el margen bruto; restar los gastos operativos da el resultado operacional; descontar impuestos da la utilidad neta. **3. Flujo de caja:** de dónde viene y adónde va el dinero; flujo operacional igual a utilidad neta más depreciación y amortización, porque no son desembolsos reales de caja, menos los cambios en capital de trabajo.
+
+Matt Bolian lo pone en palabras: le dices al CEO que vas a reducir la fricción de ventas y romper silos con estas herramientas, y te responde «genial, es lo que llevo haciendo veinte años, ¿qué tiene de distinto?». Y no puedes explicar por qué importa.
+
+Alicia Butler Pierre recomienda cursos gratuitos o de bajo costo de contabilidad y finanzas en LinkedIn Learning, Udemy o en las plataformas de Stanford, Harvard o Yale, porque «más eficiente» son palabras vacías hasta que las atas a un número concreto.
+
+¿Qué iniciativa de tu área podrías expresar hoy como un impacto en el estado de resultados de tu empresa?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 41 — ro-7-monroe
+---
+La secuencia motivada de Monroe. Cinco pasos para que tu audiencia pase a la acción. Sirve para una presentación de quince minutos y también para un correo de cinco frases. Es un marco de persuasión desarrollado en los años treinta y todavía válido porque responde a cómo la gente toma decisiones: primero presta atención, luego siente la urgencia del problema, luego evalúa la solución, luego la visualiza funcionando, y solo entonces actúa.
+
+**Paso 1, Atención:** una frase corta que anticipe lo que quieres lograr, algo que interrumpa el modo piloto automático. **Paso 2, Necesidad:** describe el problema con los datos del A3 si los tienes, para que la persona conecte emocionalmente antes de escuchar la solución. **Paso 3, Satisfacción:** la solución en una sola frase de claridad inevitable, sin rodeos. **Paso 4, Visualización:** los beneficios en detalle, con datos si los tienes, y nunca cifras que no puedas probar. **Paso 5, Acción:** pide algo concreto — un nombre, una fecha, un número de teléfono. Es la parte más importante; sin esto, los cuatro pasos anteriores no producen nada.
+
+El correo de ejemplo está dirigido a una líder de implementación y usa una frase por paso. **Atención:** «¿Viste el último reporte del pipeline?». **Necesidad:** nuestro crecimiento se está frenando porque perdemos clientes en el traspaso de ventas a implementación. **Satisfacción:** propongo presentar al especialista de implementación antes del cierre, no después. **Visualización:** así cada cliente nuevo sabe desde el inicio quién lo acompaña y llega listo al arranque. **Acción:** «¿Agendamos 30 minutos para revisar los detalles?».
+
+**Para aprender a hablar en público,** Alicia Butler Pierre recomienda Toastmasters y dos libros: Cómo ganar amigos e influir sobre las personas, de Dale Carnegie, y How to Get Your Point Across in 30 Seconds or Less, de Milo Frank. Su consejo: practica siempre antes con alguien ajeno al proyecto.
+
+¿Cuál de los cinco pasos sueles saltarte cuando pides algo a tu jefatura?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 42 — ro-7-objeciones
+---
+Trece objeciones y cómo responderlas. No basta con que nadie se oponga: necesitas apoyo entusiasta. Heifetz y Linsky advierten que quienes suelen decidir el resultado no son los que están a favor ni los que están en contra, sino los del medio, sin interés especial en tu iniciativa pero sí en la comodidad de lo conocido. Prepararse para trece objeciones no es pesimismo; es reconocer que la resistencia es predecible y que la respuesta correcta también puede serlo.
+
+Varias comparten un patrón de respuesta. Ante **«Nos ha ido bien, ¿por qué cambiar?»**, reconoce el éxito y explica la diferencia entre crecer en línea recta y crecer a escala. Ante **«¿Insinúas que nuestro equipo lo hace mal?»**, felicita sus esfuerzos y muestra cómo tu iniciativa potencia lo que ya funciona. Ante **«¿Y qué pasa con esto, y esto, y esto?»**, agradece que se involucre e invítalo a ser parte del equipo que resolverá esas preguntas. Ante **«No es el momento»**, recuerda que postergar hace perder impulso y que nunca será el momento ideal. Ante **«Aquí somos distintos»**, Marcus Sheridan señala que en sus charlas el cien por ciento del público cree lo mismo, cuando todos los negocios se basan en lo mismo: la confianza.
+
+Ante **«Ya probamos algo nuevo y no funcionó»**, comparte casos reales similares y los recursos que esta vez harán la diferencia. Ante **«El cambio es enorme»**, busca un vendedor dispuesto a experimentar y muestra sus resultados al resto antes de expandir. Y si alguien te toma por sorpresa, admítelo directamente y promete volver con una respuesta.
+
+John Kotter y Lorne Whitehead, en Buy-In, dan cuatro reglas para salir bien de cualquier objeción: invita a los escépticos a la conversación, porque si nadie objeta nadie se está involucrando; responde siempre con respeto, porque bajar al nivel combativo aleja a quienes están indecisos; da respuestas cortas y de sentido común, que convencen más que los datos; y prepárate, porque con preparación de nota B+ las respuestas parecen inspiradas.
+
+¿Cuál de las trece objeciones esperarías escuchar primero en tu empresa?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 50 — ro-9-entrevista
+---
+Evaluar a los candidatos como trabajarán. Hilmon Sorey lo plantea como principio de diseño: el proceso de contratación debe emular lo que la persona hará en terreno una vez contratada. Si el trabajo exige resolver problemas con datos y sistemas bajo presión, el proceso de selección debe tener momentos de resolución de problemas con datos y sistemas. Y estandarizarlo garantiza que cada candidato tenga exactamente la misma oportunidad, sin favoritismos por afinidad.
+
+**Tres fases en secuencia.** La primera, **Verificar la base técnica:** no exige experiencia directa en operaciones, sino señales de que la persona resuelve problemas complejos con datos y sistemas; a menudo esas señales están en proyectos fuera de su descripción de cargo. La segunda, **Evaluación de habilidades:** un ejercicio para llevar a casa o un entorno de prueba, un problema simple y cómo lo resolvería. Chloe Barritault dice que valora más el proceso de razonamiento que la respuesta correcta, porque una respuesta correcta sin razonamiento explícito no enseña nada sobre cómo piensa la persona. La tercera, **Entrevista cara a cara:** preguntas estandarizadas para comparar con justicia, dejando de lado afinidades personales que sesgan la decisión.
+
+Tres tipos de evaluación que describe Sorey. **Personalidad:** qué motiva a la persona y cómo reacciona ante la ambigüedad. **Conductual:** cómo trabaja en equipo y cómo maneja conflictos. **Habilidades:** dónde está hoy y si tiene la base para crecer.
+
+La pauta de ejemplo evalúa el atributo «experiencia gestionando sistemas». La pregunta es: «cuéntame de una vez en que tuviste que administrar varios sistemas y hacer que funcionaran juntos». Una respuesta buena trae números concretos: en mi último cargo administré tantos sistemas, bajé el costo del stack en tanto por ciento y construí una integración a medida entre los sistemas A y B. Una respuesta regular muestra iniciativa sin el cargo: en mi trabajo actual me volví la persona a la que todos consultan sobre el stack, no era mi función pero resolví el problema. Una respuesta mala habla solo de gustos: me gustan los computadores, mi mamá me llama cuando tiene problemas con su correo. Para comprensión básica de APIs, la tarea real equivalente es evaluar integraciones y la prueba es hacer una llamada de prueba en vivo.
+
+Sandy Robinson cierra con la actitud correcta: «creo firmemente en contratar personas más inteligentes que yo, mejores que yo». Dejarles proponer su manera, probar si funciona y medir los resultados.
+
+¿Qué tarea real de tu equipo podría convertirse en una prueba de habilidad para candidatos?
+
+
+<long pause> [habla como chileno masculino coloquial nativa de chile 100% con acento nativo coloquial de chile] <long pause>
+
+Página 53 — ro-10-metas
+---
+De la visión a las metas trimestrales. RevOps es una inversión de uno a tres años. Doug Davidoff lo dice sin rodeos: «¿RevOps? Esa es tu inversión de uno a tres años. En dieciocho meses, todo lo que estás haciendo hoy te será más fácil». Y Jasmine Powers advierte que la validación no llega de inmediato: al principio el gasto en marketing parece igual de alto, pero con tiempo el costo por lead baja, las conversiones suben y el valor de vida del cliente crece. Saber eso de antemano cambia la manera de leer los primeros resultados.
+
+Tres prioridades estructuran los primeros trimestres. **Por dónde empezar:** Jen Spencer recomienda los problemas cuantificables — clics de un formulario, tasas de abandono, días que un negocio pasa en revisión legal, tiempos de respuesta, uso de la aplicación. Si puedes medir la fricción, puedes priorizar qué resolver primero. **Lo que nunca se suelta:** optimizar el proceso de ventas; ahí nace el flujo de ingresos que mantiene viva a la empresa; con un pipeline predecible es que puedes innovar en la experiencia del cliente. **Paciencia con los resultados:** no se ven de inmediato; con el tiempo baja el costo por lead, suben las conversiones y crece el valor de vida del cliente. El pago real llega a los dieciocho meses, según Davidoff.
+
+El plan de doce meses tiene tres filas — metas, métricas y cómo se ve el éxito — y cuatro trimestres. Por ejemplo: en el primer trimestre, definir MQL y SQL con marketing y ventas, y el éxito se ve como un solo reporte sin discusiones. En el segundo, implementar el SLA, con el noventa por ciento de los leads contactados en 24 horas. En el tercero, agregar etapas posventa en el CRM, sin ningún negocio sin activar. En el cuarto, revisar el recorrido del cliente, con el plan del próximo año aprobado.
+
+Jen Spencer explica el método: alinearse en metas anuales y a tres años, y bajarlas a rocas trimestrales, porque una meta a tres años no se puede empezar en el año tres. Sarah Doughty agrega que el recorrido del cliente debe mapearse al menos cada doce meses: si la empresa crece, lo que necesita cada segmento cambia; y si el producto cambia, el recorrido también.
+
+¿Qué meta de este trimestre te acercaría más a la visión de largo plazo de tu empresa?
