@@ -38,10 +38,13 @@ import ClaseSpin from './components/ClaseSpin';
 import ClaseKahneman from './components/ClaseKahneman';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
+import ClaseCompensacion from './components/ClaseCompensacion';
 import ClaseRevOps from './components/ClaseRevOps';
 import ClaseSalesEnablement from './components/ClaseSalesEnablement';
 import { AudioSrcContext } from './components/slideKit';
 import { audioBySlide } from './data/audioBySlide';
+import { cuesBySlide } from './data/cuesBySlide';
+import { GuidedControlContext, GuidedStepContext } from './lib/guided';
 import NotasDocente from './components/NotasDocente';
 import { catalogoClases } from './data/catalogoClases';
 import { initialSlides, slidesByClass, slideCountByClassId } from './data/slidesByClass';
@@ -58,6 +61,8 @@ export default function App() {
   const [activeClassId, setActiveClassId] = useState<string | null>(null);
   const [slidesOrder, setSlidesOrder] = useState(initialSlides);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [guidedStep, setGuidedStep] = useState<string | null>(null);
+  useEffect(() => { setGuidedStep(null); }, [currentSlideIndex, activeClassId]);
   const [createdIcps, setCreatedIcps] = useState<CompleteICP[]>([]);
   // En pantallas angostas el menú parte cerrado para no tapar la diapositiva.
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => typeof window === 'undefined' || Math.min(window.innerWidth, window.innerHeight) >= 768);
@@ -734,8 +739,17 @@ export default function App() {
                 {/* Clase "RevOps": diapositivas de contenido (ro-*) */}
                 {currentSlideId.startsWith('ro-') && slidesOrder[currentSlideIndex].level !== 1 && (
                   <AudioSrcContext.Provider value={audioBySlide[currentSlideId]}>
-                    <ClaseRevOps slideId={currentSlideId} isDark={isDark} />
+                    <GuidedControlContext.Provider value={cuesBySlide[currentSlideId] ? { cues: cuesBySlide[currentSlideId], onStep: setGuidedStep } : null}>
+                      <GuidedStepContext.Provider value={guidedStep}>
+                        <ClaseRevOps slideId={currentSlideId} isDark={isDark} />
+                      </GuidedStepContext.Provider>
+                    </GuidedControlContext.Provider>
                   </AudioSrcContext.Provider>
+                )}
+
+                {/* Clase "Pagar para vender mejor": diapositivas de contenido (cc-*) */}
+                {currentSlideId.startsWith('cc-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseCompensacion slideId={currentSlideId} isDark={isDark} />
                 )}
 
                 {/* Clase "Sales Enablement": diapositivas de contenido (se-*) */}

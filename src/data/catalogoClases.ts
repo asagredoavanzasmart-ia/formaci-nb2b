@@ -100,6 +100,15 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
     iconKey: 'liderazgo',
   },
   {
+    id: 'compensacion-comercial',
+    title: 'Pagar para vender mejor',
+    subtitle: 'La evidencia sobre compensación comercial',
+    description:
+      'Qué dice la investigación sobre comisiones y bonos: cantidad frente a calidad, topes y aceleradores, umbrales, mezcla fijo-variable, cuotas justas, torneos, refuerzo y metas. Cada estudio con su sello de evidencia y las cifras del informe contrastadas con las fuentes originales.',
+    category: 'Ventas',
+    iconKey: 'ventas',
+  },
+  {
     id: 'sales-enablement',
     title: 'Sales Enablement: el ecosistema de ventas',
     subtitle: 'Cory Bray & Hilmon Sorey',

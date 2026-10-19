@@ -383,6 +383,52 @@ export const revopsSlides: SlideMeta[] = [
   { id: 'ro-10-diario', title: 'Prioridades diarias', level: 2 },
 ];
 
+// Clase "Pagar para vender mejor" — evidencia sobre compensación comercial (prefijo cc-).
+export const compensacionSlides: SlideMeta[] = [
+  { id: 'cc-slide-0', title: 'Inicio', level: 2 },
+
+  { id: 'cc-header-dinero', title: 'I. ¿El dinero funciona?', level: 1 },
+  { id: 'cc-cantidad', title: 'Más cantidad, no más calidad', level: 2 },
+  { id: 'cc-magnitud', title: 'Cuánto mejora el desempeño', level: 2 },
+  { id: 'cc-intrinseca', title: '¿Mata la motivación interna?', level: 2 },
+  { id: 'cc-efectivo', title: 'Efectivo o premios en especie', level: 2 },
+
+  { id: 'cc-header-contrato', title: 'II. Ingeniería del contrato', level: 1 },
+  { id: 'cc-segmentos', title: 'Tres tipos de vendedor', level: 2 },
+  { id: 'cc-topes', title: 'Topes y aceleradores', level: 2 },
+  { id: 'cc-ritmo', title: 'Bonos de ritmo y metas escalonadas', level: 2 },
+  { id: 'cc-umbral', title: 'Todo o nada frente a pago lineal', level: 2 },
+  { id: 'cc-simplicidad', title: 'Un plan que se entiende', level: 2 },
+  { id: 'cc-paymix', title: 'Cuánto fijo y cuánto variable', level: 2 },
+  { id: 'cc-cuotas', title: 'Cuotas justas por territorio', level: 2 },
+  { id: 'cc-perdida', title: 'Encuadre de pérdida', level: 2 },
+
+  { id: 'cc-header-equipo', title: 'III. El equipo como ecosistema', level: 1 },
+  { id: 'cc-sorting', title: 'Quién entra y quién se va', level: 2 },
+  { id: 'cc-torneos', title: 'Torneos de suma cero', level: 2 },
+  { id: 'cc-equipo', title: 'Incentivo de equipo o individual', level: 2 },
+
+  { id: 'cc-header-conducta', title: 'IV. Conducta y refuerzo', level: 1 },
+  { id: 'cc-contingencia', title: 'Contingencia e inmediatez', level: 2 },
+  { id: 'cc-rdi', title: 'Cómo evitar la venta engañosa', level: 2 },
+  { id: 'cc-spiffs', title: 'Concursos relámpago', level: 2 },
+  { id: 'cc-triada', title: 'Dinero, retroalimentación y reconocimiento', level: 2 },
+
+  { id: 'cc-header-metas', title: 'V. Metas, rol y entrenamiento', level: 1 },
+  { id: 'cc-metas', title: 'Metas específicas con tablero', level: 2 },
+  { id: 'cc-rol', title: 'Ambigüedad de rol y autoeficacia', level: 2 },
+  { id: 'cc-bmt', title: 'Entrenar con modelado conductual', level: 2 },
+
+  { id: 'cc-header-critico', title: 'VI. Pensamiento crítico', level: 1 },
+  { id: 'cc-semaforo', title: 'El semáforo de la evidencia', level: 2 },
+  { id: 'cc-cuadran', title: 'Lo que no cuadra del informe', level: 2 },
+  { id: 'cc-diagnostico', title: 'Diagnostica tu plan', level: 2 },
+
+  { id: 'cc-header-test', title: 'VII. Evalúa lo aprendido', level: 1 },
+  { id: 'cc-test-basico', title: 'Test 1 · Principiante', level: 2 },
+  { id: 'cc-test-avanzado', title: 'Test 2 · Avanzado', level: 2 },
+];
+
 export const seSlides: SlideMeta[] = [
   { id: 'se-header-1', title: 'Lección 1: Qué es Sales Enablement', level: 1 },
   { id: 'se-1-portada',     title: 'Sales Enablement',       level: 2 },
@@ -433,6 +479,7 @@ export const slidesByClass: Record<string, SlideMeta[]> = {
   challenger: challengerSlides,
   'trampas-deseo': trampasSlides,
   revops: revopsSlides,
+  'compensacion-comercial': compensacionSlides,
   'sales-enablement': seSlides,
 };
 
@@ -447,5 +494,6 @@ export const slideCountByClassId: Record<string, number> = {
   challenger: challengerSlides.filter((slide) => slide.level === 2).length,
   'trampas-deseo': trampasSlides.filter((slide) => slide.level === 2).length,
   revops: revopsSlides.filter((slide) => slide.level === 2).length,
+  'compensacion-comercial': compensacionSlides.filter((slide) => slide.level === 2).length,
   'sales-enablement': seSlides.filter((slide) => slide.level === 2).length,
 };

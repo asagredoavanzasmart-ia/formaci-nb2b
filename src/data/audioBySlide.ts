@@ -67,7 +67,7 @@ const RO_ALL_SLIDES: string[] = [
 /** Extrae el número de posición del path del archivo. */
 function pageFromPath(filePath: string): number | null {
   // Usa el último segmento del path (filename), sin extensión.
-  const raw = (filePath.split('/').pop() ?? filePath).replace(/\.mp3$/i, '');
+  const raw = (filePath.split('/').pop() ?? filePath).replace(/\.(mp3|wav)$/i, '');
 
   // "Revops 01", "00 - Revops 01 Generated..."
   let m = raw.match(/revops\s+0*(\d+)/i);
@@ -86,7 +86,7 @@ function pageFromPath(filePath: string): number | null {
 
 // Carga todos los MP3 como URLs de asset (Vite los hashea en build).
 const audioGlob = import.meta.glob<string>(
-  '../audios/**/*.mp3',
+  '../audios/**/*.{mp3,wav}',
   { query: '?url', import: 'default', eager: true }
 );
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shell, panelClass, textMuted, microLabel, Footer, Pill, featuredClass } from '../slideKit';
+import { Shell, panelClass, textMuted, microLabel, Footer, Pill, featuredClass, AudioSrcContext } from '../slideKit';
+import { AudioPlayer } from '../AudioPlayer';
+import { useGuidedStep } from '../../lib/guided';
 import {
   ORANGE, PINK, BRAND, PEACH, NEUTRAL, SLATE, sceneTone, SceneDefs, IsoBox, IsoFloor, Cylinder, Orb, Float, Lift, Traveler, PulseDisc, hop, Persona,
 } from '../scene3d';
@@ -11,13 +13,25 @@ import { SlideProps, heading, Piso, Bola, Cifra, Cita, Nota, Fuente, Opcion, Bar
    LECCIÓN 1 · Bienvenida
 ══════════════════════════════════════════════════════════════════ */
 
+const CAMBIOS = [
+  { n: 1, t: 'Clientes que esperan más', d: 'Experiencias mejores, más rápidas y más personalizadas.' },
+  { n: 2, t: 'Clientes conectados', d: 'Se hablan entre sí y cuentan lo que viven con cada empresa.' },
+  { n: 3, t: 'Más datos, más dispersos', d: 'Más información que nunca, repartida entre muchos sistemas y equipos.' },
+];
+
 export function Portada({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
-  const equipos: { x: number; body: Faces; acc: 'megaphone' | 'tie' | 'heart'; nombre: string }[] = [
-    { x: 130, body: PEACH, acc: 'megaphone', nombre: 'Marketing' },
-    { x: 300, body: BRAND, acc: 'tie', nombre: 'Ventas' },
-    { x: 470, body: SLATE(isDark), acc: 'heart', nombre: 'Servicio al cliente' },
+  const step = useGuidedStep();
+  const audioSrc = React.useContext(AudioSrcContext);
+  const equipos: { key: string; x: number; body: Faces; acc: 'megaphone' | 'tie' | 'heart'; nombre: string }[] = [
+    { key: 'marketing', x: 130, body: PEACH, acc: 'megaphone', nombre: 'Marketing' },
+    { key: 'ventas', x: 300, body: BRAND, acc: 'tie', nombre: 'Ventas' },
+    { key: 'servicio', x: 470, body: SLATE(isDark), acc: 'heart', nombre: 'Servicio al cliente' },
   ];
+  const enEquipos = step === 'marketing' || step === 'ventas' || step === 'servicio';
+  const enDatos = step === 'datos';
+  const enEscena = enEquipos || enDatos;
+  const resaltar = step === 'definicion' ? 'rounded px-1 bg-[#ff851d]/25 transition-colors duration-500' : 'rounded px-1 transition-colors duration-500';
   return (
     <div className={`w-full h-full flex flex-col items-center justify-center text-center p-8 relative overflow-hidden rounded-3xl ${isDark ? 'bg-[#121212]' : 'bg-[#f8f9fa]'}`}>
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
@@ -25,28 +39,58 @@ export function Portada({ isDark }: SlideProps) {
       <svg viewBox="0 0 600 236" className="w-full max-w-2xl mb-1 z-10 overflow-visible" role="img" aria-label="Marketing, ventas y servicio comparten un mismo núcleo de datos">
         <SceneDefs id="rop" isDark={isDark} />
         <Piso cx={300} cy={176} s={290} fill={t.floor} />
-        <PulseDisc cx={300} cy={58} rx={40} ry={14} dur={2.4} peak={0.3} />
-        <Float amp={6} dur={2.6}><Bola id="rop" cx={300} cy={52} r={17} /></Float>
+        <PulseDisc cx={300} cy={58} rx={enDatos ? 64 : 40} ry={enDatos ? 22 : 14} dur={enDatos ? 1.4 : 2.4} peak={enDatos ? 0.5 : 0.3} />
+        <motion.g animate={{ scale: enDatos ? 1.5 : 1 }} transition={{ type: 'spring', stiffness: 120, damping: 14 }} style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+          <Float amp={6} dur={2.6}><Bola id="rop" cx={300} cy={52} r={17} /></Float>
+        </motion.g>
         <text x={326} y={50} fontSize={11.5} fontWeight={900} fill={ORANGE}>Datos compartidos</text>
-        {equipos.map((e, i) => (
-          <motion.g key={e.nombre} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.15, type: 'spring', stiffness: 90, damping: 13 }}>
-            <Float amp={4} dur={2.4 + i * 0.3} delay={i * 0.4}>
-              <Persona id="rop" cx={e.x} cy={170} s={1.05} body={e.body} accessory={e.acc} hair={i === 1 ? '#2b1a12' : '#3b2a20'} />
-            </Float>
-            <text x={e.x} y={204} textAnchor="middle" fontSize={12} fontWeight={800} fill={t.muted}>{e.nombre}</text>
-            <Traveler id="rop" path={hop([e.x, 104], [300, 66], 26)} dur={2} delay={i * 0.6} repeatDelay={0.8} r={4} color={i === 1 ? PINK : ORANGE} />
-          </motion.g>
-        ))}
+        {equipos.map((e, i) => {
+          const on = step === e.key;
+          const dim = enEquipos && !on;
+          return (
+            <motion.g key={e.nombre} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.15, type: 'spring', stiffness: 90, damping: 13 }}>
+              {on && <PulseDisc cx={e.x} cy={174} rx={50} ry={14} dur={1.6} peak={0.4} />}
+              <Lift on={on} dimmed={dim} lift={14}>
+                <Float amp={4} dur={2.4 + i * 0.3} delay={i * 0.4}>
+                  <Persona id="rop" cx={e.x} cy={170} s={on ? 1.2 : 1.05} body={e.body} accessory={e.acc} hair={i === 1 ? '#2b1a12' : '#3b2a20'} />
+                </Float>
+              </Lift>
+              <text x={e.x} y={204} textAnchor="middle" fontSize={on ? 14 : 12} fontWeight={on ? 900 : 800} fill={on ? ORANGE : t.muted}>{e.nombre}</text>
+              <Traveler id="rop" path={hop([e.x, 104], [300, 66], 26)} dur={enDatos ? 1.2 : 2} delay={i * (enDatos ? 0.2 : 0.6)} repeatDelay={enDatos ? 0.1 : 0.8} r={enDatos ? 5.5 : 4} color={i === 1 ? PINK : ORANGE} />
+            </motion.g>
+          );
+        })}
         <text x={300} y={232} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>Tres equipos, un solo sistema de ingresos</text>
       </svg>
       <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xs md:text-sm uppercase tracking-[0.3em] mb-3 font-bold text-[#ff851d] z-10">Revenue Operations · operaciones de ingresos</motion.p>
       <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className={`text-5xl md:text-7xl font-black mb-4 leading-tight tracking-tighter z-10 ${heading(isDark)}`}>
         Rev<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">Ops</span>
       </motion.h1>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className={`text-base md:text-xl max-w-3xl mx-auto z-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-        Las <strong>personas, procesos, sistemas y datos</strong> que controlan cómo tu empresa genera ingresos, alineados para que el negocio crezca más rápido de lo que crece su costo.
-      </motion.p>
+      <div className="z-10 w-full max-w-3xl min-h-[104px] flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {step === 'porque' ? (
+            <motion.div key="porque" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid grid-cols-3 gap-3 w-full">
+              {CAMBIOS.map((c, k) => (
+                <motion.div key={c.n} initial={{ opacity: 0, y: 18, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.15 + k * 0.35, type: 'spring', stiffness: 110, damping: 14 }} className={`p-3 rounded-2xl text-left ${isDark ? 'bg-[#2a2a2a] shadow-lg shadow-black/40' : 'bg-white shadow-lg shadow-gray-200/80'}`}>
+                  <p className="text-[10px] font-black uppercase tracking-[0.15em] text-[#ff851d]">Cambio {c.n}</p>
+                  <p className={`text-sm font-black leading-tight ${heading(isDark)}`}>{c.t}</p>
+                  <p className={`text-xs leading-snug mt-0.5 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{c.d}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : step === 'pregunta' ? (
+            <motion.p key="pregunta" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="text-xl md:text-2xl font-black italic text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">
+              ¿Quién es responsable del recorrido completo del cliente en tu empresa?
+            </motion.p>
+          ) : (
+            <motion.p key="base" initial={{ opacity: 0 }} animate={{ opacity: enEscena ? 0.3 : 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.5 }} className={`text-base md:text-xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              Las <strong><span className={resaltar}>personas</span>, <span className={resaltar}>procesos</span>, <span className={resaltar}>sistemas</span> y <span className={resaltar}>datos</span></strong> que controlan cómo tu empresa genera ingresos, alineados para que el negocio crezca más rápido de lo que crece su costo.
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
       <motion.div initial={{ opacity: 0, scaleX: 0 }} animate={{ opacity: 1, scaleX: 1 }} transition={{ delay: 0.6 }} className="h-1.5 w-48 bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-lg shadow-red-500/20 mt-6 z-10" />
+      {audioSrc && <AudioPlayer src={audioSrc} isDark={isDark} />}
     </div>
   );
 }
