@@ -214,7 +214,8 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
             ocultables.forEach((g) => {
               const el = buscar(g);
               if (!el) return;
-              const ver = reel ? (visibles.has(g) && (esEstructural(g) || tarjetas.has(g))) : visibles.has(g);
+              // En reel, lo estructural (gráfico, pestañas, campos) aparece al entrar la diapositiva para no dejar un hueco; las tarjetas van de a una.
+              const ver = reel ? (esEstructural(g) ? true : tarjetas.has(g)) : visibles.has(g);
               el.classList.toggle('g-colapso', reel ? !ver : false);
               el.classList.toggle('g-oculto', reel ? false : !ver);
               el.classList.toggle('g-visible', ver);
