@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Shell, panelClass, textMuted, microLabel, Pill, featuredClass } from '../slideKit';
-import { ORANGE, BRAND, PEACH, NEUTRAL, sceneTone, SceneDefs, IsoBox, Float, Lift, Traveler, PulseDisc, hop, Persona, Orb } from '../scene3d';
-import { Cifra, Nota, Fuente, BarrasIso, Piso, Verificado, Sello } from './kit';
+import { Shell, textMuted, microLabel, Pill, featuredClass } from '../slideKit';
+import { ORANGE, BRAND, PEACH, sceneTone, SceneDefs, IsoBox, Float, Lift, Traveler, hop, Persona, Orb } from '../scene3d';
+import { Nota, Fuente, BarrasIso, Piso, Sello } from './kit';
 import type { SlideProps } from './kit';
 
 /* ------------------------------------------------------------------ */
@@ -18,7 +18,7 @@ export function Sorting({ isDark }: SlideProps) {
   const yBajo = B - h;
   const yAlto = yBajo - h;
   return (
-    <Shell isDark={isDark} title="Quién entra y quién se va:" highlight="el efecto de ordenamiento" subtitle="Un pago variable no solo cambia el esfuerzo de quienes ya están: cambia a quién atrae y a quién expulsa.">
+    <Shell isDark={isDark} title="Quién entra y quién se va:" highlight="el efecto de ordenamiento" subtitle="Un pago variable no solo cambia el esfuerzo de quienes ya están: cambia a quién atrae y a quién retiene.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -35,33 +35,27 @@ export function Sorting({ isDark }: SlideProps) {
               <motion.g animate={{ opacity: k === 'orden' ? 1 : 0.45 }}>
                 <Float amp={k === 'orden' ? 3 : 1} dur={2.9} delay={0.3}><g filter="url(#ccso-sh)"><IsoBox cx={150} cy={yAlto} s={s} h={h} f={BRAND} /></g></Float>
               </motion.g>
-              <text x={232} y={yBajo + h * 0.55} fontSize={12.5} fontWeight={900} fill={k === 'incentivo' ? ORANGE : t.text}>≈ 22 %</text>
+              <text x={232} y={yBajo + h * 0.55} fontSize={12.5} fontWeight={900} fill={k === 'incentivo' ? ORANGE : t.text}>≈ la mitad</text>
               <text x={232} y={yBajo + h * 0.55 + 14} fontSize={11} fill={t.muted}>más esfuerzo de</text>
               <text x={232} y={yBajo + h * 0.55 + 27} fontSize={11} fill={t.muted}>quienes ya estaban</text>
-              <text x={232} y={yAlto + h * 0.55} fontSize={12.5} fontWeight={900} fill={k === 'orden' ? ORANGE : t.text}>≈ 22 %</text>
-              <text x={232} y={yAlto + h * 0.55 + 14} fontSize={11} fill={t.muted}>entran los más capaces,</text>
-              <text x={232} y={yAlto + h * 0.55 + 27} fontSize={11} fill={t.muted}>salen los menos productivos</text>
+              <text x={232} y={yAlto + h * 0.55} fontSize={12.5} fontWeight={900} fill={k === 'orden' ? ORANGE : t.text}>≈ la otra mitad</text>
+              <text x={232} y={yAlto + h * 0.55 + 14} fontSize={11} fill={t.muted}>mejores trabajadores</text>
+              <text x={232} y={yAlto + h * 0.55 + 27} fontSize={11} fill={t.muted}>entran y se quedan</text>
               <text x={150} y={yAlto - s / 2 - 14} textAnchor="middle" fontSize={20} fontWeight={900} fill={ORANGE}>+44 %</text>
               <text x={150} y={B + 40} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>Productividad por trabajador</text>
             </svg>
           </div>
           <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
             <Nota isDark={isDark} label="El caso Safelite" destacada>
-              Al pasar de sueldo por hora a pago por pieza, instaladores de parabrisas elevaron un <strong>44 %</strong> su productividad, y la empresa ganó más. Cerca de la mitad vino del esfuerzo de los existentes; la otra mitad, de atraer y retener a los más capaces.
+              Al pasar de un sueldo por hora a un pago por pieza, los instaladores de parabrisas elevaron un <strong>44 %</strong> su producción por trabajador, y la empresa ganó más. Cerca de la mitad vino de más esfuerzo de los existentes; la otra mitad, de atraer y retener a trabajadores más productivos.
             </Nota>
             <Nota isDark={isDark} label="Lo que confirmó el laboratorio">
-              Los contratos con alta proporción variable atraen a perfiles de mayor autoeficacia y menor aversión al riesgo, y empujan a los de bajo esfuerzo hacia empleos de sueldo fijo.
-            </Nota>
-            <Nota isDark={isDark} label="Dos advertencias de diseño">
-              El pago por mérito que se suma al sueldo base retiene, pero exige revalidación anual para no fomentar complacencia. Y separar de forma rígida a «cazadores» y «granjeros» daña más de lo que ahorra: se prefiere la venta ambidiestra.
+              Cadsby, Song y Tapon (2007) compararon en un experimento de esfuerzo real el pago por desempeño con el sueldo fijo: la productividad fue significativamente mayor, tanto por ordenamiento como por incentivo. Los más productivos eligieron más el pago por desempeño, y quienes tenían más aversión al riesgo lo eligieron menos.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
               <Sello isDark={isDark} tipo="campo" detalle="Lazear · 2000 · una empresa" />
               <Sello isDark={isDark} tipo="laboratorio" detalle="Cadsby, Song y Tapon · 2007" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              El 44 % está confirmado; la división «mitad y mitad» aparece en los resúmenes del trabajo, no la pude contrastar con sus tablas. Y era trabajo rutinario: no se puede trasladar tal cual a una venta consultiva.
-            </Verificado>
           </div>
         </div>
         <Fuente isDark={isDark}>Fuente: Lazear (2000), American Economic Review 90(5), 1346–1361; Cadsby, Song y Tapon (2007), Academy of Management Journal 50(2), 387–405.</Fuente>
@@ -115,22 +109,18 @@ export function Torneos({ isDark }: SlideProps) {
             </svg>
           </div>
           <div className="lg:w-[50%] flex flex-col gap-2.5 justify-center">
-            <Nota isDark={isDark} label="La lógica perversa" destacada>
-              En un torneo de suma cero, <strong>bajar el resultado del colega vale lo mismo que subir el tuyo</strong>. Aparecen la negativa a ayudar, el ocultamiento de información, el acaparamiento de prospectos y el boicot de cuentas ajenas.
+            <Nota isDark={isDark} label="La lógica del torneo" destacada>
+              Lazear mostró que, cuando la paga depende del desempeño relativo frente a los compañeros y no de un estándar absoluto, <strong>bajar el resultado del colega vale lo mismo que subir el propio</strong>.
             </Nota>
-            <Nota isDark={isDark} label="Doble costo para la empresa">
-              Pierdes valor por el sabotaje, y además el que va adelante se vuelve el blanco: la amenaza anticipada baja su esfuerzo al inicio del ciclo.
+            <Nota isDark={isDark} label="Qué incentiva">
+              Con ese esquema, negar ayuda, ocultar información o interferir con el trabajo de los pares se vuelve racional para quien compite por el único premio.
             </Nota>
-            <Nota isDark={isDark} label="El costo emocional">
-              La competencia intensa promovida por líderes tiende a producir agotamiento emocional, estrés por conflicto de rol, territorialidad y menos creatividad comercial.
+            <Nota isDark={isDark} label="Qué cambia con un estándar absoluto">
+              Si el premio depende de alcanzar un estándar y no de superar al compañero, ayudar a otros no perjudica a quien ayuda.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="teoria" detalle="Lazear · modelos de torneo" />
-              <Sello isDark={isDark} tipo="campo" detalle="Frieß, Alavi, Habel y Richter · 2023/24" />
+              <Sello isDark={isDark} tipo="teoria" detalle="Lazear · modelo de torneos" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              La crítica es a rankings donde casi todo el premio va al primero. Un reconocimiento por hitos absolutos, que todos pueden alcanzar, no tiene ese problema.
-            </Verificado>
           </div>
         </div>
       </div>
@@ -142,16 +132,16 @@ export function Torneos({ isDark }: SlideProps) {
 /* III.3 Incentivo de equipo o individual                              */
 /* ------------------------------------------------------------------ */
 
-const CONDICIONES = [
-  { k: 'Reparto por aporte', d: 'Si el premio se divide en partes iguales, premia el parasitismo (free-riding). Funciona mejor repartido según la contribución de cada miembro.' },
-  { k: 'Equipos pequeños', d: 'El efecto se debilita al crecer el equipo: en grupos grandes cada persona siente que su aporte se diluye.' },
-  { k: 'Trabajo interdependiente', d: 'Preventa técnica, ejecutivos de cuenta e implementación dependen unos de otros; ahí el bono de equipo alinea lo que un bono individual separa.' },
+const LECTURAS = [
+  { k: 'Reparto por aporte', d: 'Las recompensas de equipo repartidas de forma equitativa, según la contribución de cada miembro, rinden más que las repartidas en partes iguales.' },
+  { k: 'Tamaño y composición', d: 'El efecto de los incentivos de equipo depende del tamaño del equipo y de su composición, por ejemplo la proporción de mujeres y hombres.' },
+  { k: 'Otra revisión coincide', d: 'Condly y colaboradores (2003) también encontraron que los incentivos dirigidos a equipos superan a los individuales. Dos metaanálisis independientes apuntan en la misma dirección.' },
 ];
 
 export function EquipoIndividual({ isDark }: SlideProps) {
   const [i, setI] = useState(0);
   return (
-    <Shell isDark={isDark} title="Incentivo de equipo" highlight="o individual" subtitle="Cuando el trabajo exige colaborar, premiar al equipo supera a premiar a cada uno, siempre que se cumplan ciertas condiciones.">
+    <Shell isDark={isDark} title="Incentivo de equipo" highlight="o individual" subtitle="Premiar al equipo mostró un efecto mayor que premiar a cada persona por separado, y cómo se reparte el premio importa.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -164,28 +154,25 @@ export function EquipoIndividual({ isDark }: SlideProps) {
             <div className="flex flex-wrap items-center justify-center gap-1.5">
               <Sello isDark={isDark} tipo="metaanalisis" detalle="146 estudios · 31.861 personas" />
             </div>
-            <p className={`text-[11px] text-center ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>116 estudios de incentivos individuales y 30 de equipo. Son conjuntos distintos: la comparación es indicativa.</p>
+            <p data-aux="pie" className={`text-[11px] text-center ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>116 estudios de incentivos individuales y 30 de equipo.</p>
           </div>
           <div className="lg:w-[56%] flex flex-col gap-2.5 justify-center">
-            <p className={microLabel(isDark)}>Tres condiciones para que funcione</p>
+            <p data-g="lecturas" className={microLabel(isDark)}>Tres lecturas del metaanálisis</p>
             <div className="flex flex-wrap gap-1.5">
-              {CONDICIONES.map((c, k) => <Pill key={c.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{c.k}</Pill>)}
+              {LECTURAS.map((c, k) => <Pill key={c.k} isDark={isDark} on={k === i} onClick={() => setI(k)}>{c.k}</Pill>)}
             </div>
             <AnimatePresence mode="wait">
               <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
-                <p className={microLabel(isDark)}>{CONDICIONES[i].k}</p>
-                <p className={`text-sm leading-snug mt-0.5 ${textMuted(isDark)}`}>{CONDICIONES[i].d}</p>
+                <p className={microLabel(isDark)}>{LECTURAS[i].k}</p>
+                <p className={`text-sm leading-snug mt-0.5 ${textMuted(isDark)}`}>{LECTURAS[i].d}</p>
               </motion.div>
             </AnimatePresence>
-            <Nota isDark={isDark} label="Lo que añade el otro gran metaanálisis">
-              Condly y cols. (2003) también hallaron que los incentivos dirigidos a equipos superan a los individuales. Dos revisiones independientes apuntan en la misma dirección.
+            <Nota isDark={isDark} label="Qué es la g de Hedges">
+              Una medida estandarizada del tamaño de un efecto: la diferencia entre trabajar con y sin incentivo, expresada en desviaciones estándar.
             </Nota>
-            <Verificado isDark={isDark} tipo="corregido">
-              El informe da otro par de cifras y una caída lineal del efecto con el tamaño del equipo. Estas son las del resumen publicado; la dirección sobre el tamaño la tomé de resúmenes secundarios.
-            </Verificado>
           </div>
         </div>
-        <Fuente isDark={isDark}>Fuente: Garbers y Konradt (2014), Journal of Occupational and Organizational Psychology 87(1), 102–137.</Fuente>
+        <Fuente isDark={isDark}>Fuente: Garbers y Konradt (2014), Journal of Occupational and Organizational Psychology 87(1), 102–137; Condly, Clark y Stolovitch (2003).</Fuente>
       </div>
     </Shell>
   );

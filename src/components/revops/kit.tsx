@@ -66,7 +66,7 @@ export function Nota({ isDark, label, children, destacada = false }: { isDark: b
 
 /* Línea de fuente al pie. */
 export function Fuente({ isDark, children }: { isDark: boolean; children: React.ReactNode }) {
-  return <p className={`shrink-0 mt-2 text-[10.5px] leading-tight ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{children}</p>;
+  return <p data-aux="fuente" className={`shrink-0 mt-2 text-[10.5px] leading-tight ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{children}</p>;
 }
 
 /* Botón de opción pequeño (para listas largas). */
@@ -99,8 +99,8 @@ export function envolver(texto: string, max: number): string[] {
 /* Barras 3D con geometría de etiquetas calculada. */
 export type BarraIso = { name: string; value: number; label?: string; tone?: 'brand' | 'peach' | 'neutral' | 'slate'; hl?: boolean };
 
-export function BarrasIso({ id, isDark, items, max, W = 520, hMax = 150, unit = '', decimals = 0, caption }: {
-  id: string; isDark: boolean; items: BarraIso[]; max: number; W?: number; hMax?: number; unit?: string; decimals?: number; caption?: string;
+export function BarrasIso({ id, isDark, items, max, W = 520, hMax = 150, unit = '', decimals = 0, caption, piso = 'iso' }: {
+  id: string; isDark: boolean; items: BarraIso[]; max: number; W?: number; hMax?: number; unit?: string; decimals?: number; caption?: string; piso?: 'iso' | 'plano';
 }) {
   const t = sceneTone(isDark);
   const n = items.length;
@@ -117,13 +117,13 @@ export function BarrasIso({ id, isDark, items, max, W = 520, hMax = 150, unit = 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-full overflow-visible" role="img" aria-label={items.map((i) => `${i.name}: ${i.label ?? f(i.value)}`).join('; ')}>
       <SceneDefs id={id} isDark={isDark} />
-      <IsoFloor cx={W / 2} cy={B + 4} s={W / 2 - 6} fill={t.floor} />
+      {piso === 'plano' ? <ellipse cx={W / 2} cy={B + 2} rx={W / 2 - 20} ry={S * 0.55} fill={t.floor} /> : <IsoFloor cx={W / 2} cy={B + 4} s={W / 2 - 6} fill={t.floor} />}
       {items.map((b, i) => {
         const x = slot * (i + 0.5);
         const h = Math.max(6, (b.value / max) * hMax);
         const cy = B - h;
         return (
-          <g key={b.name + i}>
+          <g key={b.name + i} data-barra={i + 1}>
             <motion.g initial={{ scaleY: 0, opacity: 0 }} animate={{ scaleY: 1, opacity: 1 }} transition={{ delay: i * 0.08, type: 'spring', stiffness: 70, damping: 15 }} style={{ transformOrigin: `${x}px ${B}px` }}>
               {b.hl && <PulseDisc cx={x} cy={B + 2} rx={Math.min(slot * 0.42, 56)} ry={13} dur={2.2} peak={0.32} />}
               <Float amp={b.hl ? 5 : 1.5} dur={b.hl ? 2.3 : 4} delay={i * 0.2}>

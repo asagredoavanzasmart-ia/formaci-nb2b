@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shell, panelClass, textMuted, microLabel, Pill, featuredClass } from '../slideKit';
-import { ORANGE, BRAND, PEACH, NEUTRAL, sceneTone, SceneDefs, IsoBox, Cylinder, Float, Lift, Traveler, PulseDisc, hop, Persona } from '../scene3d';
-import { heading, Cifra, Nota, Fuente, Opcion, BarrasIso, Piso, Campo, Paso, Verificado, Sello, fmt } from './kit';
+import { ORANGE, BRAND, PEACH, NEUTRAL, sceneTone, SceneDefs, IsoBox, Cylinder, Float, Lift, Traveler, PulseDisc, hop, Persona, Orb } from '../scene3d';
+import { Cifra, Nota, Fuente, BarrasIso, Piso, Campo, Sello, fmt } from './kit';
 import type { SlideProps } from './kit';
 
 /* ------------------------------------------------------------------ */
@@ -15,24 +15,24 @@ const SEGMENTOS = [
     en: 'laggards',
     x: 110,
     acc: 'compass' as const,
-    comportamiento: 'Si arrancan mal y la cuota anual parece inalcanzable, abandonan el esfuerzo. También se saturan persiguiendo demasiadas oportunidades inconexas.',
-    palanca: 'Metas escalonadas con microincentivos acumulativos, para que siempre haya un escalón al alcance.',
+    comportamiento: 'Cuando están lejos de la cuota tienden a rendirse: abandonan el esfuerzo en lugar de intentar alcanzarla.',
+    palanca: 'Bonos intermedios, por ejemplo trimestrales, que funcionan como puntos de control y mantienen un siguiente escalón al alcance.',
   },
   {
     k: 'Núcleo',
     en: 'core performers',
     x: 300,
     acc: 'gear' as const,
-    comportamiento: 'Es el grupo más numeroso y el más ignorado. Cuando el premio está lejos, posterga el esfuerzo y lo concentra de forma errática al final del año.',
-    palanca: 'Metas de varios niveles con un primer tramo fácil de alcanzar, y bonos trimestrales que acorten la distancia al premio.',
+    comportamiento: 'Es el grupo más numeroso de la mayoría de los equipos de ventas, y los gerentes suelen ignorarlo.',
+    palanca: 'Metas de varios niveles, con un primer tramo que alcancen con facilidad. En un experimento de Ahearne, así rindieron mejor.',
   },
   {
     k: 'Estrellas',
     en: 'stars',
     x: 490,
     acc: 'star' as const,
-    comportamiento: 'Son el segmento de mayor rendimiento. El estudio encontró que, una vez pasada la cuota, no frenan su esfuerzo si el contrato sigue pagando más.',
-    palanca: 'Comisiones por sobrecumplimiento: un porcentaje mayor sobre lo que excede la cuota.',
+    comportamiento: 'Son el segmento de mayor rendimiento. Una vez superada la cuota, no frenan su esfuerzo.',
+    palanca: 'Comisiones por sobrecumplimiento: ayudan a los mejores a sostener su producción después de alcanzar la cuota.',
   },
 ];
 
@@ -77,9 +77,6 @@ export function Segmentos({ isDark }: SlideProps) {
             <div className="flex flex-wrap items-center gap-1.5">
               <Sello isDark={isDark} tipo="campo" detalle="una gran empresa de suministros de oficina · 3 años" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              Los tres segmentos salen del modelo del estudio, no de una regla universal. Su tamaño y su reacción cambian de una empresa a otra.
-            </Verificado>
           </div>
         </div>
         <Fuente isDark={isDark}>Fuente: Steenburgh y Ahearne (2012), Harvard Business Review; Chung, Steenburgh y Sudhir (2014), Marketing Science 33(2), 165–187.</Fuente>
@@ -110,14 +107,14 @@ export function Topes({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <div className="flex gap-1.5">
-              <Pill isDark={isDark} on={!acel} onClick={() => setAcel(false)}>Con tope</Pill>
-              <Pill isDark={isDark} on={acel} onClick={() => setAcel(true)}>Con acelerador, sin tope</Pill>
+            <div data-g="pills" className="flex gap-1.5">
+              <span data-g="pill-tope" className="inline-flex rounded-full"><Pill isDark={isDark} on={!acel} onClick={() => setAcel(false)}>Con tope</Pill></span>
+              <span data-g="pill-acel" className="inline-flex rounded-full"><Pill isDark={isDark} on={acel} onClick={() => setAcel(true)}>Con acelerador, sin tope</Pill></span>
             </div>
-            <div className="w-full max-h-[230px] flex-1 min-h-0">
-              <BarrasIso id="cct" isDark={isDark} max={Math.max(maxV, 1) * 1.1} W={440} hMax={120} decimals={1} items={niveles.map((n, k) => ({ name: `Vende ${n} % de la cuota`, value: valores[k], label: `${fmt(valores[k], 1)} mil`, hl: n >= 120 && acel }))} caption="Comisión cobrada, en miles de dólares (ejemplo ilustrativo)" />
+            <div data-g="grafico" className="w-full max-h-[230px] flex-1 min-h-0">
+              <BarrasIso id="cct" isDark={isDark} max={maxV * 1.1} W={440} hMax={120} decimals={1} items={niveles.map((n, k) => ({ name: `Vende ${n} % de la cuota`, value: valores[k], label: `${fmt(valores[k], 1)} mil`, hl: n >= 120 && acel }))} caption="Comisión cobrada, en miles de dólares (ejemplo de cálculo)" />
             </div>
-            <div className="grid grid-cols-3 gap-2 w-full">
+            <div data-g="campos" className="grid grid-cols-3 gap-2 w-full">
               <Campo isDark={isDark} label="Comisión base" value={base} onChange={setBase} step={0.5} sufijo="%" />
               <Campo isDark={isDark} label={acel ? 'Sobre la cuota' : 'Tope de pago'} value={acel ? alta : tope} onChange={acel ? setAlta : setTope} step={acel ? 0.5 : 10} sufijo="%" />
               <div className={`p-2.5 rounded-2xl ${panelClass(isDark)}`}>
@@ -127,19 +124,18 @@ export function Topes({ isDark }: SlideProps) {
             </div>
           </div>
           <div className="lg:w-[52%] flex flex-col gap-2.5 justify-center">
-            <Nota isDark={isDark} label="Qué hace un tope" destacada>
-              Al tocar el máximo, el valor de la siguiente venta cae a cero. La predicción teórica es que el vendedor <strong>difiere cierres</strong> al período siguiente (<em>sandbagging</em>) para no «regalar» ventas.
-            </Nota>
-            <Nota isDark={isDark} label="Qué hace un acelerador">
-              Subir el porcentaje sobre el excedente (por ejemplo del 5 % al 8 %) mantiene valiosa cada venta extra justo cuando el vendedor mejor convierte, a un costo marginal menor que lo que aporta.
-            </Nota>
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div data-g="nota-tope" className="rounded-3xl"><Nota isDark={isDark} label="Qué hace un tope" destacada>
+              Al llegar al máximo, la siguiente venta ya no suma comisión: para el vendedor, el valor de vender de más cae a cero.
+            </Nota></div>
+            <div data-g="nota-acel" className="rounded-2xl"><Nota isDark={isDark} label="Qué hace un acelerador">
+              Sube el porcentaje sobre el excedente de la cuota, por ejemplo del 5 al 8 %, de modo que cada venta extra sigue pagando más que las anteriores.
+            </Nota></div>
+            <div data-g="nota-estudio" className="rounded-2xl"><Nota isDark={isDark} label="Lo que mostró el estudio de campo">
+              Chung, Steenburgh y Sudhir encontraron que las comisiones por sobrecumplimiento ayudan a los mejores vendedores a sostener su producción después de alcanzar la cuota, y que los vendedores no frenan su esfuerzo al alcanzarla.
+            </Nota></div>
+            <div data-g="sello" className="flex flex-wrap items-center gap-1.5">
               <Sello isDark={isDark} tipo="campo" detalle="Chung y cols. 2014 · una empresa" />
-              <Sello isDark={isDark} tipo="teoria" detalle="diferir cierres bajo tope" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              Lo que el estudio mide es que las comisiones por sobrecumplimiento sostienen a los mejores. El diferimiento de cierres ante un tope es una predicción de la teoría; el propio resumen del estudio dice que los vendedores no frenan al alcanzar la cuota.
-            </Verificado>
           </div>
         </div>
       </div>
@@ -153,36 +149,51 @@ export function Topes({ isDark }: SlideProps) {
 
 export function Ritmo({ isDark }: SlideProps) {
   const [trim, setTrim] = useState(true);
-  const anual = [55, 70, 85, 130];
-  const trimestral = [95, 100, 100, 105];
-  const datos = trim ? trimestral : anual;
+  const t = sceneTone(isDark);
+  const xs = [90, 220, 350, 480];
   return (
-    <Shell isDark={isDark} title="Acortar la distancia al premio:" highlight="bonos de ritmo y metas escalonadas" subtitle="Una cuota anual lejana invita a postergar. Los hitos intermedios mantienen el esfuerzo a lo largo del año.">
+    <Shell isDark={isDark} title="Acortar la distancia al premio:" highlight="bonos de ritmo y metas escalonadas" subtitle="Quien está lejos de la cuota tiende a rendirse. Los hitos intermedios mantienen un siguiente escalón al alcance.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
+          <div className="lg:w-[48%] min-h-0 flex flex-col items-center justify-center gap-2">
             <div className="flex gap-1.5">
               <Pill isDark={isDark} on={!trim} onClick={() => setTrim(false)}>Solo cuota anual</Pill>
               <Pill isDark={isDark} on={trim} onClick={() => setTrim(true)}>Con hitos trimestrales</Pill>
             </div>
-            <div className="w-full max-h-[270px] flex-1 min-h-0">
-              <BarrasIso id="ccr" isDark={isDark} max={140} W={440} hMax={140} items={['1.er trimestre', '2.º trimestre', '3.er trimestre', '4.º trimestre'].map((n, k) => ({ name: n, value: datos[k], label: `${datos[k]}`, hl: !trim && k === 3 }))} caption="Esfuerzo relativo por trimestre · esquema ilustrativo, no datos" />
-            </div>
+            <svg viewBox="0 0 580 250" className="w-full h-full max-h-[270px] overflow-visible" role="img" aria-label={trim ? 'Un premio al cierre de cada trimestre' : 'Un solo premio al cierre del año'}>
+              <SceneDefs id="ccr" isDark={isDark} />
+              <Piso cx={290} cy={206} s={270} fill={t.floor} />
+              {xs.map((x, k) => {
+                const premio = trim || k === 3;
+                return (
+                  <g key={x}>
+                    <g filter="url(#ccr-sh)"><IsoBox cx={x} cy={170} s={30} h={16} f={premio ? PEACH : NEUTRAL(isDark)} /></g>
+                    {premio && (
+                      <motion.g key={`${trim}-${k}`} initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: k * 0.12, type: 'spring', stiffness: 110, damping: 13 }}>
+                        <Float amp={3} dur={2.2} delay={k * 0.2}><Orb id="ccr" cx={x} cy={118} r={k === 3 ? 20 : 15} /></Float>
+                      </motion.g>
+                    )}
+                    <text x={x} y={218} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={premio ? ORANGE : t.muted}>{['1.er', '2.º', '3.er', '4.º'][k]} trimestre</text>
+                  </g>
+                );
+              })}
+              <Traveler id="ccr" path={xs.map((x) => [x, 150] as [number, number])} dur={3.2} repeatDelay={0.6} r={5} />
+              <text x={290} y={242} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{trim ? 'Un punto de control al cierre de cada trimestre' : 'El premio queda lejos hasta el final del año'}</text>
+            </svg>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-            <Nota isDark={isDark} label="Núcleo · el problema de la distancia" destacada>
-              Con un premio a doce meses, el esfuerzo se posterga y se concentra al final. Un bono de ritmo trimestral acerca el refuerzo y estabiliza la facturación mes a mes.
+          <div className="lg:w-[52%] flex flex-col gap-2.5 justify-center">
+            <Nota isDark={isDark} label="Rezagados · el riesgo de rendirse" destacada>
+              El estudio de campo encontró que los vendedores tienden a rendirse cuando están lejos de la cuota. Con un premio anual, ese riesgo dura meses.
             </Nota>
-            <Nota isDark={isDark} label="Rezagados · el riesgo de rendirse">
-              Quien arranca mal abandona si la cuota es matemáticamente inalcanzable. Metas escalonadas con microincentivos acumulativos le dan un siguiente escalón posible.
+            <Nota isDark={isDark} label="Bonos trimestrales">
+              Funcionaron como puntos de control, sobre todo para los vendedores de menor desempeño, que así mantienen el ritmo hacia la cuota anual.
             </Nota>
-            <Nota isDark={isDark} label="Lo que mostró el estudio de campo">
-              Los bonos trimestrales funcionaron como puntos de control, y los vendedores tienden a rendirse cuando están lejos de la cuota. Con metas de varios niveles, el primer tramo debe poder alcanzarlo con holgura el núcleo.
+            <Nota isDark={isDark} label="Núcleo · metas de varios niveles">
+              En un experimento de Ahearne, citado por Steenburgh, el núcleo prosperó con metas de varios niveles: el primer tramo se fija en un nivel que alcanzan con facilidad.
             </Nota>
-            <Sello isDark={isDark} tipo="campo" detalle="Chung y cols. 2014; Ahearne, experimento citado por Steenburgh" />
-            <Verificado isDark={isDark} tipo="corregido">
-              El informe atribuye el efecto de los bonos trimestrales al segmento medio. El resumen del estudio lo ubica sobre todo en los de menor desempeño. Ambos grupos se benefician, pero no se mide igual.
-            </Verificado>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <Sello isDark={isDark} tipo="campo" detalle="Chung y cols. 2014; Steenburgh y Ahearne 2012" />
+            </div>
           </div>
         </div>
       </div>
@@ -201,7 +212,7 @@ export function Umbral({ isDark }: SlideProps) {
   const lin = niveles.map((n) => Math.max(0, Math.round(((n - 70) / 30) * 100)));
   const datos = lineal ? lin : binario;
   return (
-    <Shell isDark={isDark} title="Todo o nada" highlight="frente a pago lineal" subtitle="Un bono que solo se paga al 100 % de la meta expulsa a quien no llegará y tienta a quien quedó cerca.">
+    <Shell isDark={isDark} title="Todo o nada" highlight="frente a pago lineal" subtitle="Un bono que solo se paga al 100 % de la meta deja sin premio a quien queda cerca y tienta a exagerar los resultados.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -210,23 +221,22 @@ export function Umbral({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={lineal} onClick={() => setLineal(true)}>Lineal desde 70 %</Pill>
             </div>
             <div className="w-full max-h-[270px] flex-1 min-h-0">
-              <BarrasIso id="ccu" isDark={isDark} max={100} W={440} hMax={140} unit=" %" items={niveles.map((n, k) => ({ name: `Cumple ${n} %`, value: datos[k], hl: n === 95 && !lineal }))} caption="Porcentaje del bono pagado (ejemplo ilustrativo)" />
+              <BarrasIso id="ccu" isDark={isDark} max={100} W={440} hMax={140} unit=" %" items={niveles.map((n, k) => ({ name: `Cumple ${n} %`, value: datos[k], hl: n === 95 && !lineal }))} caption="Porcentaje del bono pagado (ejemplo de cálculo)" />
             </div>
           </div>
           <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-            <Nota isDark={isDark} label="Dos daños del todo o nada" destacada>
-              <strong>Deserción:</strong> quien se proyecta bajo el umbral deja de esforzarse. <strong>Tentación:</strong> quien queda cerca siente injusticia y encuentra una justificación para inflar el reporte.
+            <Nota isDark={isDark} label="El experimento" destacada>
+              Cadsby, Song y Tapon reunieron estudiantes en un laboratorio y les pidieron formar palabras con unas letras en un minuto, con un bono al llegar a nueve. Cuanto más cerca de la meta quedaba la persona, más probable era que exagerara su puntaje.
             </Nota>
-            <Nota isDark={isDark} label="El experimento">
-              En un laboratorio con estudiantes, formar palabras en un minuto, con un bono al llegar a nueve: cuanto más cerca de la meta quedaba la persona, más probable era que exagerara su puntaje. Con pago por palabra, hubo mucho menos engaño.
+            <Nota isDark={isDark} label="La comparación">
+              Con pago por palabra, es decir lineal, los participantes engañaron significativamente menos. Quien cobra por cada unidad no tiene un umbral que lo tiente.
+            </Nota>
+            <Nota isDark={isDark} label="El otro riesgo">
+              En el estudio de campo, los vendedores tienden a rendirse cuando están lejos de la cuota: un umbral inalcanzable les quita el incentivo para intentarlo.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="laboratorio" detalle="Cadsby, Song y Tapon · 2010" />
+              <Sello isDark={isDark} tipo="laboratorio" detalle="Cadsby, Song y Tapon · 2010 · sin supervisión" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              El informe dice que el engaño es mayor que con «salarios fijos». El experimento comparó con pago lineal y con torneo. Y el piso del 70–80 % es una sugerencia de diseño, no un valor probado.
-            </Verificado>
-            <p className={`text-[11px] leading-snug ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Límite: es un resultado de laboratorio con estudiantes y sin supervisión; en empresas con auditoría el efecto puede ser menor.</p>
           </div>
         </div>
       </div>
@@ -235,133 +245,7 @@ export function Umbral({ isDark }: SlideProps) {
 }
 
 /* ------------------------------------------------------------------ */
-/* II.5 Un plan que se entiende                                        */
-/* ------------------------------------------------------------------ */
-
-const SENALES = [
-  { k: 'Más de tres variables', d: 'El vendedor no puede calcular de cabeza cuánto ganará con la próxima llamada. Se paraliza y se refugia en el sueldo garantizado.', fix: 'Máximo dos o tres métricas, calculables en segundos.' },
-  { k: 'Anulaciones opacas', d: 'Cláusulas de devolución (clawbacks) difusas elevan la percepción de injusticia y disparan la rotación voluntaria.', fix: 'Reglas escritas de qué se anula, cuándo y por qué.' },
-  { k: 'Plazos de pago inciertos', d: 'Si no sabe cuándo cobra, el pago pierde fuerza como refuerzo y aumentan los costos de transacción internos.', fix: 'Fechas fijas de liquidación.' },
-  { k: 'Deducciones retroactivas', d: 'Cambiar las reglas después de la venta destruye la credibilidad del contrato completo.', fix: 'Reglas congeladas durante el período.' },
-];
-
-export function Simplicidad({ isDark }: SlideProps) {
-  const [simple, setSimple] = useState(true);
-  const [i, setI] = useState(0);
-  const t = sceneTone(isDark);
-  const n = simple ? 3 : 8;
-  const pos = (k: number, total: number) => {
-    const cols = total <= 3 ? total : 4;
-    const fila = Math.floor(k / cols);
-    const col = k % cols;
-    const ancho = cols * 56;
-    return { x: 300 - ancho / 2 + 28 + col * 56 + (fila % 2) * 14, y: 110 + fila * 34 };
-  };
-  const s = SENALES[i];
-  return (
-    <Shell isDark={isDark} title="Un plan que se entiende" highlight="en segundos" subtitle="Cuando el plan excede lo que la persona puede calcular, el dinero deja de dirigir su conducta.">
-      <div className="h-full flex flex-col min-h-0">
-        <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <div className="flex gap-1.5">
-              <Pill isDark={isDark} on={simple} onClick={() => setSimple(true)}>Plan simple</Pill>
-              <Pill isDark={isDark} on={!simple} onClick={() => setSimple(false)}>Plan complejo</Pill>
-            </div>
-            <svg viewBox="0 0 600 250" className="w-full h-full max-h-[270px] overflow-visible" role="img" aria-label={simple ? 'Tres variables' : 'Ocho variables'}>
-              <SceneDefs id="ccx" isDark={isDark} />
-              <Piso cx={300} cy={210} s={250} fill={t.floor} />
-              {Array.from({ length: n }).map((_, k) => {
-                const p = pos(k, n);
-                return (
-                  <motion.g key={`${simple}-${k}`} initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: k * 0.06, type: 'spring', stiffness: 110, damping: 14 }}>
-                    <Float amp={1.5} dur={3} delay={k * 0.2}>
-                      <g filter="url(#ccx-sh)"><IsoBox cx={p.x} cy={p.y} s={22} h={22} f={simple ? BRAND : k % 2 ? PEACH : NEUTRAL(isDark)} /></g>
-                    </Float>
-                  </motion.g>
-                );
-              })}
-              <text x={300} y={238} textAnchor="middle" fontSize={12} fontWeight={900} fill={simple ? ORANGE : t.muted}>{simple ? 'Tres variables: el cálculo cabe en la cabeza' : 'Ocho variables y cláusulas cruzadas: nadie calcula'}</text>
-            </svg>
-          </div>
-          <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-            <p className={microLabel(isDark)}>Cuatro señales de un plan ilegible</p>
-            <div className="grid grid-cols-2 gap-1.5">
-              {SENALES.map((x, k) => <Opcion key={x.k} isDark={isDark} on={k === i} onClick={() => { setI(k); setSimple(false); }}>{x.k}</Opcion>)}
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-2.5">
-                <Nota isDark={isDark} label="Qué provoca" destacada>{s.d}</Nota>
-                <Nota isDark={isDark} label="Directriz">{s.fix}</Nota>
-              </motion.div>
-            </AnimatePresence>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="practica" detalle="revisiones de Bowen, Haas y Hofmann; Alavi y cols. 2024" />
-              <Sello isDark={isDark} tipo="teoria" detalle="racionalidad limitada" />
-            </div>
-            <Verificado isDark={isDark} tipo="dudoso">
-              No existe una cifra publicada del tipo «más de tres variables paraliza». El límite de dos o tres métricas es una regla de práctica razonable, no un umbral medido.
-            </Verificado>
-          </div>
-        </div>
-      </div>
-    </Shell>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* II.6 Cuánto fijo y cuánto variable                                  */
-/* ------------------------------------------------------------------ */
-
-export function PayMix({ isDark }: SlideProps) {
-  const [v, setV] = useState(35);
-  const zona =
-    v < 10 ? { k: 'Poca urgencia', d: 'Con casi todo fijo, el bono pesa poco: aparece la saciación y la complacencia.' }
-    : v <= 40 ? { k: 'Rango habitual', d: 'Solvencia asegurada y bastante saliencia económica para mantener la urgencia diaria.' }
-    : v <= 50 ? { k: 'Exigente', d: 'Dentro del rango típico de bonos (10 % a 50 %), pero con más exposición a los vaivenes del mercado.' }
-    : { k: 'Zona de riesgo', d: 'Con un variable muy alto, la aversión al riesgo, el estrés y la rotación crecen, sobre todo si el fijo no cubre lo básico.' };
-  return (
-    <Shell isDark={isDark} title="Cuánto fijo" highlight="y cuánto variable" subtitle="La mezcla salarial resuelve una tensión clásica: dar seguridad sin apagar la urgencia. Arrastra el control y observa dónde cae tu plan.">
-      <div className="h-full flex flex-col min-h-0">
-        <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <div className="w-full max-h-[240px] flex-1 min-h-0">
-              <BarrasIso id="ccpm" isDark={isDark} max={100} W={400} hMax={130} unit=" %" items={[{ name: 'Sueldo fijo', value: 100 - v, tone: 'peach' }, { name: 'Variable', value: v, hl: true }]} caption="Ingreso objetivo total (OTE)" />
-            </div>
-            <label className="w-full px-2">
-              <span className={microLabel(isDark)}>Parte variable del ingreso objetivo: {v} %</span>
-              <input type="range" min={0} max={100} value={v} onChange={(e) => setV(Number(e.target.value))} className="w-full accent-[#ff851d]" aria-label="Porcentaje variable" />
-            </label>
-            <div className={`w-full p-3 rounded-2xl ${featuredClass(isDark)}`}>
-              <p className={microLabel(isDark)}>{zona.k}</p>
-              <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{zona.d}</p>
-            </div>
-          </div>
-          <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
-            <div className="grid grid-cols-2 gap-3">
-              <Cifra isDark={isDark} n={60} sufijo=" a 70 %" titulo="Fijo recomendado" lineas={['venta transaccional, ciclo corto']} destacada />
-              <Cifra isDark={isDark} n={30} sufijo=" a 40 %" titulo="Variable recomendado" lineas={['sobre el ingreso objetivo']} />
-            </div>
-            <Nota isDark={isDark} label="Dos errores simétricos">
-              <strong>Comisión pura:</strong> estrés y rotación. <strong>Sueldo muy alto:</strong> el bono estándar pierde fuerza (saciación) y llega la meseta de complacencia. Con perfiles senior bien pagados, el incentivo adicional necesita valor instrumental superior: aceleradores, categorías de élite o cuentas estratégicas.
-            </Nota>
-            <Nota isDark={isDark} label="Ajusta por el ciclo de venta">
-              Los ciclos largos y la venta consultiva piden más fijo y menos variable.
-            </Nota>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="practica" detalle="Zoltners, Sinha y Lorimer · 2012" />
-            </div>
-            <Verificado isDark={isDark} tipo="dudoso">
-              El 60/40 a 70/30 viene de guías de consultoría sobre compensación, no de un experimento ni de un metaanálisis. Úsalo como punto de partida y ajusta con tu propio ciclo y mercado.
-            </Verificado>
-          </div>
-        </div>
-      </div>
-    </Shell>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* II.7 Cuotas justas por territorio                                   */
+/* II.5 Cuotas justas por territorio                                   */
 /* ------------------------------------------------------------------ */
 
 export function Cuotas({ isDark }: SlideProps) {
@@ -375,7 +259,7 @@ export function Cuotas({ isDark }: SlideProps) {
   const ea = Math.round((qa / pa) * 100);
   const eb = Math.round((qb / pb) * 100);
   return (
-    <Shell isDark={isDark} title="Cuotas justas:" highlight="el territorio importa" subtitle="Una cuota idéntica para carteras desiguales castiga a quien tiene el territorio más difícil. Ajusta los números y compara.">
+    <Shell isDark={isDark} title="Cuotas justas:" highlight="el territorio importa" subtitle="Una cuota idéntica para carteras desiguales exige esfuerzos muy distintos. Compara qué parte de su potencial debe vender cada territorio.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -383,29 +267,36 @@ export function Cuotas({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={!norm} onClick={() => setNorm(false)}>Cuota idéntica</Pill>
               <Pill isDark={isDark} on={norm} onClick={() => setNorm(true)}>Cuota normalizada</Pill>
             </div>
-            <div className="w-full max-h-[210px] flex-1 min-h-0">
-              <BarrasIso id="ccc" isDark={isDark} max={Math.max(ea, eb, 100)} W={380} hMax={110} unit=" %" items={[{ name: 'Territorio A (rico)', value: ea, hl: !norm }, { name: 'Territorio B (difícil)', value: eb, tone: 'peach', hl: !norm && eb > ea }]} caption="Parte del potencial que debe vender para cumplir" />
+            <div className="w-full max-h-[190px] flex-1 min-h-0 mb-3">
+              <BarrasIso id="ccc" isDark={isDark} max={Math.max(ea, eb, 100)} W={380} hMax={100} unit=" %" items={[{ name: 'Territorio A (rico)', value: ea, hl: !norm }, { name: 'Territorio B (difícil)', value: eb, tone: 'peach', hl: !norm && eb > ea }]} caption="Parte del potencial que debe vender para cumplir" />
             </div>
-            <div className="grid grid-cols-3 gap-2 w-full">
-              <Campo isDark={isDark} label="Potencial A" value={pa} onChange={(x) => setPa(Math.max(1, x))} step={10} />
-              <Campo isDark={isDark} label="Potencial B" value={pb} onChange={(x) => setPb(Math.max(1, x))} step={10} />
-              <Campo isDark={isDark} label="Cuota base" value={cuota} onChange={setCuota} step={10} />
+            <div data-g="campos" className="grid grid-cols-3 gap-3 w-full">
+              {[
+                { label: 'Potencial A', sub: 'territorio rico', value: pa, onChange: (x: number) => setPa(Math.max(1, x)) },
+                { label: 'Potencial B', sub: 'territorio difícil', value: pb, onChange: (x: number) => setPb(Math.max(1, x)) },
+                { label: 'Cuota base', sub: 'por territorio', value: cuota, onChange: setCuota },
+              ].map((c) => (
+                <label key={c.label} className={`flex flex-col rounded-2xl border px-3 py-2 shadow-md ${isDark ? 'bg-[#1c1c1c] border-[#333]' : 'bg-white border-gray-200'}`}>
+                  <span className={`text-[10px] font-black uppercase tracking-wide leading-tight ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{c.label}</span>
+                  <span className={`text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>{c.sub}</span>
+                  <input type="number" value={c.value} step={10} min={0} onChange={(e) => c.onChange(Math.max(0, Number(e.target.value) || 0))} className={`w-full bg-transparent text-xl font-black outline-none ${isDark ? 'text-white' : 'text-gray-900'}`} />
+                </label>
+              ))}
             </div>
-            <p className={`text-[11px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Cuota A: {fmt(qa)} · Cuota B: {fmt(qb)} · mismo total del equipo ({fmt(total)}).</p>
+            <p data-aux="pie" className={`text-[11px] mt-1 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Cuota A: {fmt(qa)} · Cuota B: {fmt(qb)} · mismo total del equipo ({fmt(total)}).</p>
           </div>
           <div className="lg:w-[52%] flex flex-col gap-2.5 justify-center">
-            <Nota isDark={isDark} label="Por qué importa" destacada>
-              Las personas comparan lo que reciben con su esfuerzo y con el de sus pares (teoría de la equidad). Si un territorio rico cumple con la mitad del esfuerzo, la sensación de arbitrariedad apaga la motivación de todos.
+            <Nota isDark={isDark} label="Teoría de la equidad" destacada>
+              Adams (1965) planteó que cada persona compara lo que recibe, en relación con lo que aporta, con lo que reciben y aportan sus pares. Si el mismo bono exige la mitad del esfuerzo en un territorio que en otro, la comparación resulta injusta.
+            </Nota>
+            <Nota isDark={isDark} label="Qué muestra el ejemplo">
+              Con la misma cuota, el territorio A necesita vender el 40 % de su potencial y el B, el 80 %. Al repartir la misma cuota total en proporción al potencial, ambos necesitan vender cerca del 53 %.
             </Nota>
             <Nota isDark={isDark} label="Cómo calibrar">
-              Pondera el potencial, la densidad de clientes y la madurez de la cartera. Involucrar a los gerentes de ventas revela información privada del territorio que ningún menú de cuotas estándar tiene.
-            </Nota>
-            <Nota isDark={isDark} label="Cuidado con la participación ingenua">
-              Dejar que el vendedor negocie su cuota solo ayuda si mejora la comprensión del plan y el compromiso. Sin dirección técnica, tiende a negociar metas más bajas (holgura presupuestaria).
+              Ponderar el potencial de cada territorio, por ejemplo por cantidad de clientes y madurez de la cartera, antes de fijar las cuotas individuales.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="practica" detalle="Zoltners y Zoltners · 2001" />
-              <Sello isDark={isDark} tipo="teoria" detalle="equidad (Adams, 1965) · metas (Locke y Latham, 1990)" />
+              <Sello isDark={isDark} tipo="teoria" detalle="equidad · Adams, 1965" />
             </div>
           </div>
         </div>
@@ -415,14 +306,14 @@ export function Cuotas({ isDark }: SlideProps) {
 }
 
 /* ------------------------------------------------------------------ */
-/* II.8 Encuadre de pérdida                                            */
+/* II.6 Encuadre de pérdida                                            */
 /* ------------------------------------------------------------------ */
 
 export function Perdida({ isDark }: SlideProps) {
   const [perdida, setPerdida] = useState(true);
   const t = sceneTone(isDark);
   return (
-    <Shell isDark={isDark} title="Encuadre de pérdida:" highlight="el bono que ya sientes tuyo" subtitle="Perder duele más que ganar. Entregar el bono al inicio, con devolución si no se cumple, aprovecha esa asimetría. Pero la prueba no viene de ventas.">
+    <Shell isDark={isDark} title="Encuadre de pérdida:" highlight="el bono que ya sientes tuyo" subtitle="Perder duele más que ganar. Entregar el bono al inicio, con devolución si no se cumple, aprovecha esa asimetría.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -443,26 +334,26 @@ export function Perdida({ isDark }: SlideProps) {
                 </g>
               </motion.g>
               {perdida && <Traveler id="ccl" path={hop([150, 150], [190, 130], 14)} dur={1.6} repeatDelay={0.6} r={4} />}
-              <text x={perdida ? 190 : 470} y={118} textAnchor="middle" fontSize={11.5} fontWeight={900} fill={ORANGE}>{perdida ? 'Ya es tuyo si cumples' : 'Se promete para después'}</text>
+              <text x={perdida ? 205 : 470} y={118} textAnchor="middle" fontSize={11.5} fontWeight={900} fill={ORANGE}>{perdida ? 'Ya es tuyo si cumples' : 'Se promete para después'}</text>
             </svg>
           </div>
           <div className="lg:w-[52%] flex flex-col gap-2.5 justify-center">
             <div className="grid grid-cols-2 gap-3">
               <Cifra isDark={isDark} n={0.2} dec={2} prefijo="+" titulo="Con encuadre de pérdida" lineas={['desviaciones estándar en matemáticas', 'hasta +0,40 en otra muestra']} destacada />
               <div className={`p-3.5 rounded-3xl ${panelClass(isDark)}`}>
-                <p className={microLabel(isDark)}>Con encuadre de ganancia</p>
+                <p className={microLabel(isDark)}>Con bono estándar</p>
                 <p className={`text-sm leading-snug mt-1 ${textMuted(isDark)}`}>Efecto menor y sin significación estadística.</p>
               </div>
             </div>
-            <Nota isDark={isDark} label="Cómo llevarlo a ventas">
-              Donde pedir devoluciones en efectivo tiene restricciones laborales, se usan <strong>cuentas virtuales de bono preasignado</strong>, visibles a diario en el CRM, con deducciones por hitos semanales no cumplidos.
+            <Nota isDark={isDark} label="El experimento">
+              Fryer, Levitt, List y Sadoff (2012) pagaron a unos 150 docentes un bono de 4.000 dólares al inicio del ciclo, con la obligación de devolverlo si los resultados de sus alumnos no mejoraban.
+            </Nota>
+            <Nota isDark={isDark} label="Los conceptos detrás">
+              La aversión a la pérdida describe que una pérdida pesa aproximadamente el doble que una ganancia equivalente; el efecto de dotación, que valoramos más lo que sentimos propio.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="campo" detalle="≈150 docentes · Chicago Heights" />
+              <Sello isDark={isDark} tipo="campo" detalle="≈150 docentes · NBER 18237" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              El experimento de Fryer, Levitt, List y Sadoff (NBER, 2012) se hizo con docentes, no con vendedores, y nació como documento de trabajo. Trasladarlo a un plan comercial es una hipótesis razonable, no un resultado probado en ventas.
-            </Verificado>
           </div>
         </div>
       </div>

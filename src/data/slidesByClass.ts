@@ -391,15 +391,12 @@ export const compensacionSlides: SlideMeta[] = [
   { id: 'cc-cantidad', title: 'Más cantidad, no más calidad', level: 2 },
   { id: 'cc-magnitud', title: 'Cuánto mejora el desempeño', level: 2 },
   { id: 'cc-intrinseca', title: '¿Mata la motivación interna?', level: 2 },
-  { id: 'cc-efectivo', title: 'Efectivo o premios en especie', level: 2 },
 
   { id: 'cc-header-contrato', title: 'II. Ingeniería del contrato', level: 1 },
   { id: 'cc-segmentos', title: 'Tres tipos de vendedor', level: 2 },
   { id: 'cc-topes', title: 'Topes y aceleradores', level: 2 },
   { id: 'cc-ritmo', title: 'Bonos de ritmo y metas escalonadas', level: 2 },
   { id: 'cc-umbral', title: 'Todo o nada frente a pago lineal', level: 2 },
-  { id: 'cc-simplicidad', title: 'Un plan que se entiende', level: 2 },
-  { id: 'cc-paymix', title: 'Cuánto fijo y cuánto variable', level: 2 },
   { id: 'cc-cuotas', title: 'Cuotas justas por territorio', level: 2 },
   { id: 'cc-perdida', title: 'Encuadre de pérdida', level: 2 },
 
@@ -410,18 +407,16 @@ export const compensacionSlides: SlideMeta[] = [
 
   { id: 'cc-header-conducta', title: 'IV. Conducta y refuerzo', level: 1 },
   { id: 'cc-contingencia', title: 'Contingencia e inmediatez', level: 2 },
-  { id: 'cc-rdi', title: 'Cómo evitar la venta engañosa', level: 2 },
-  { id: 'cc-spiffs', title: 'Concursos relámpago', level: 2 },
   { id: 'cc-triada', title: 'Dinero, retroalimentación y reconocimiento', level: 2 },
 
   { id: 'cc-header-metas', title: 'V. Metas, rol y entrenamiento', level: 1 },
-  { id: 'cc-metas', title: 'Metas específicas con tablero', level: 2 },
-  { id: 'cc-rol', title: 'Ambigüedad de rol y autoeficacia', level: 2 },
+  { id: 'cc-metas', title: 'Metas específicas y difíciles', level: 2 },
+  { id: 'cc-rol', title: 'Rol claro y autoeficacia', level: 2 },
   { id: 'cc-bmt', title: 'Entrenar con modelado conductual', level: 2 },
 
   { id: 'cc-header-critico', title: 'VI. Pensamiento crítico', level: 1 },
-  { id: 'cc-semaforo', title: 'El semáforo de la evidencia', level: 2 },
-  { id: 'cc-cuadran', title: 'Lo que no cuadra del informe', level: 2 },
+  { id: 'cc-solidez', title: 'Qué tan sólido es cada hallazgo', level: 2 },
+  { id: 'cc-leer', title: 'Cómo leer un estudio', level: 2 },
   { id: 'cc-diagnostico', title: 'Diagnostica tu plan', level: 2 },
 
   { id: 'cc-header-test', title: 'VII. Evalúa lo aprendido', level: 1 },

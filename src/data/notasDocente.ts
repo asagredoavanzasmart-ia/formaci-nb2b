@@ -4,6 +4,7 @@ import { notasKahneman } from './notasKahneman';
 import { notasChallenger } from './notasChallenger';
 import { notasTrampas } from './notasTrampas';
 import { notasRevOps } from './notasRevOps';
+import { notasCompensacion } from './notasCompensacion';
 import { notasEquipos } from './notasEquipos';
 import { notasSalesEnablement } from './notasSalesEnablement';
 
@@ -149,5 +150,6 @@ export const notasPorDiapositiva: Record<string, string> = {
   ...notasChallenger,
   ...notasTrampas,
   ...notasRevOps,
+  ...notasCompensacion,
   ...notasSalesEnablement,
 };

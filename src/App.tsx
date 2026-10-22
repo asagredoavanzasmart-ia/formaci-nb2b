@@ -39,6 +39,8 @@ import ClaseKahneman from './components/ClaseKahneman';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
 import ClaseCompensacion from './components/ClaseCompensacion';
+import ClaseGuiada from './components/ClaseGuiada';
+import { guiadoCompensacion } from './data/guiadoCompensacion';
 import ClaseRevOps from './components/ClaseRevOps';
 import ClaseSalesEnablement from './components/ClaseSalesEnablement';
 import { AudioSrcContext } from './components/slideKit';
@@ -797,6 +799,16 @@ export default function App() {
             </button>
           </div>
         </div>
+
+        {/* Reproducción global de la clase con audio (flecha, resaltado y aparición de elementos) */}
+        {activeClassId === 'compensacion-comercial' && (
+          <ClaseGuiada
+            datos={guiadoCompensacion}
+            slideActualId={currentSlideId}
+            irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
+            isDark={isDark}
+          />
+        )}
 
         {/* Botones de Navegación Flotantes (Solo en Móvil/Responsive) */}
         <div className={isCompact ? 'contents' : 'hidden'}>

@@ -104,7 +104,7 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
     title: 'Pagar para vender mejor',
     subtitle: 'La evidencia sobre compensación comercial',
     description:
-      'Qué dice la investigación sobre comisiones y bonos: cantidad frente a calidad, topes y aceleradores, umbrales, mezcla fijo-variable, cuotas justas, torneos, refuerzo y metas. Cada estudio con su sello de evidencia y las cifras del informe contrastadas con las fuentes originales.',
+      'Qué dice la investigación sobre comisiones y bonos: cantidad frente a calidad, topes y aceleradores, umbrales, cuotas por territorio, encuadre de pérdida, torneos, refuerzo, metas, rol y entrenamiento. Cada hallazgo con su sello de evidencia y su fuente.',
     category: 'Ventas',
     iconKey: 'ventas',
   },

@@ -47,7 +47,7 @@ export function Shell({
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ef375c]/10 to-[#ff851d]/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="shrink-0 mb-6 z-10">
+      <div className="shrink-0 mb-6 z-10" data-g="titulo">
         <h2 className={`text-2xl md:text-4xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
           {title} {highlight && <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">{highlight}</span>}
         </h2>

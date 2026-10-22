@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shell, panelClass, textMuted, microLabel, Pill, featuredClass } from '../slideKit';
 import { ORANGE, BRAND, PEACH, NEUTRAL, sceneTone, SceneDefs, IsoBox, Float, Lift, Traveler, PulseDisc, hop, Persona } from '../scene3d';
-import { Cifra, Nota, Fuente, Opcion, Piso, Paso, Verificado, Sello } from './kit';
+import { Cifra, Nota, Fuente, Piso, Paso, Sello } from './kit';
 import type { SlideProps } from './kit';
 
 /* ------------------------------------------------------------------ */
-/* V.1 Metas específicas con tablero                                   */
+/* V.1 Metas específicas                                               */
 /* ------------------------------------------------------------------ */
 
 const NIVELES_META = [
-  { k: 'Meta vaga', d: '«Haz tu mejor esfuerzo». Cualquier nivel moderado de esfuerzo parece suficiente, porque no hay un estándar que cumplir.' },
-  { k: 'Meta específica', d: 'Una cifra concreta de facturación o unidades, desafiante pero alcanzable. Elimina la ambigüedad sobre qué significa tener éxito.' },
-  { k: 'Meta + tablero', d: 'La misma meta con un tablero visible de avance diario. El vendedor ve la discrepancia y ajusta su estrategia, sobre todo en tareas complejas.' },
+  { k: 'Meta vaga', d: '«Haz tu mejor esfuerzo». No hay un estándar que cumplir, y la persona decide por su cuenta cuánto es suficiente.' },
+  { k: 'Meta específica y difícil', d: 'Una cifra concreta, desafiante, de facturación o unidades. En los metaanálisis revisados por Locke y Latham rinde más que el «haz tu mejor esfuerzo», con tamaños de efecto de 0,42 a 0,80.' },
+  { k: 'Con retroalimentación', d: 'La teoría de metas incluye la retroalimentación entre sus cinco principios: claridad, desafío, compromiso, retroalimentación y complejidad de la tarea.' },
 ];
 
 export function Metas({ isDark }: SlideProps) {
-  const [i, setI] = useState(2);
+  const [i, setI] = useState(1);
   const t = sceneTone(isDark);
   const pasos = [0, 1, 2, 3, 4, 5];
   const x = (k: number) => 70 + k * 92;
   return (
-    <Shell isDark={isDark} title="Metas específicas" highlight="con un tablero visible" subtitle="Una cifra concreta rinde más que la exhortación genérica. Y rinde aún más cuando el avance se ve todos los días.">
+    <Shell isDark={isDark} title="Metas específicas" highlight="y difíciles" subtitle="Treinta y cinco años de investigación muestran que una meta concreta y exigente rinde más que la exhortación genérica.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -48,45 +48,39 @@ export function Metas({ isDark }: SlideProps) {
               </motion.g>
               {i === 0 && <Traveler id="ccme" path={[[210, 60], [330, 92], [250, 52], [390, 90]]} dur={3} repeatDelay={0.3} r={5} />}
               {i > 0 && <text x={x(5)} y={96} textAnchor="middle" fontSize={11.5} fontWeight={900} fill={ORANGE}>Meta</text>}
-              <text x={300} y={232} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{i === 0 ? 'Sin estándar: no se sabe cuánto es suficiente' : i === 1 ? 'Un destino claro' : 'Destino claro y avance visible'}</text>
+              <text x={300} y={232} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{i === 0 ? 'Sin estándar: no se sabe cuánto es suficiente' : i === 1 ? 'Un destino claro y exigente' : 'Destino claro y avance conocido'}</text>
             </svg>
           </div>
           <div className="lg:w-[48%] flex flex-col gap-2.5 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="detalle" className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{NIVELES_META[i].k}</p>
                 <p className={`text-sm leading-snug mt-0.5 ${textMuted(isDark)}`}>{NIVELES_META[i].d}</p>
               </motion.div>
             </AnimatePresence>
-            <Nota isDark={isDark} label="Aspiración, no castigo">
-              Formular la meta como un máximo a lograr, y no como un mínimo bajo amenaza, activa un enfoque de promoción: más exploración y creatividad comercial, menos conformidad defensiva.
-            </Nota>
-            <Nota isDark={isDark} label="Participar en la cuota, con condición">
-              Opinar sobre la propia meta solo ayuda si aumenta la comprensión del plan y el compromiso. Sin dirección técnica, lo normal es negociar metas más bajas.
+            <Nota isDark={isDark} label="Más difícil, más rendimiento">
+              Los metaanálisis encontraron una relación positiva y lineal entre la dificultad de la meta y el rendimiento, con tamaños de efecto de 0,52 a 0,82. El rendimiento se aplana o cae solo cuando se alcanzan los límites de la capacidad, o cuando el compromiso con una meta muy difícil se pierde.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="metaanalisis" detalle="Locke y Latham · 35 años · Neubert 1998" />
+              <Sello isDark={isDark} tipo="metaanalisis" detalle="Locke y Latham · 35 años de investigación" />
             </div>
-            <Verificado isDark={isDark} tipo="dudoso">
-              Los tamaños de efecto no se leen en el PDF y no los pude confirmar, así que no los muestro. La dirección es de lo más replicado en psicología organizacional; la cifra exacta, no.
-            </Verificado>
           </div>
         </div>
-        <Fuente isDark={isDark}>Fuente: Locke y Latham (1990; 2002, American Psychologist 57(9)); Neubert (1998), Human Performance 11(4); Janssen et al. (2024), citados en el informe.</Fuente>
+        <Fuente isDark={isDark}>Fuente: Locke y Latham (2002), American Psychologist 57(9), 705–717.</Fuente>
       </div>
     </Shell>
   );
 }
 
 /* ------------------------------------------------------------------ */
-/* V.2 Ambigüedad de rol y autoeficacia                                */
+/* V.2 Rol claro y autoeficacia                                        */
 /* ------------------------------------------------------------------ */
 
 export function Rol({ isDark }: SlideProps) {
   const [claro, setClaro] = useState(true);
   const t = sceneTone(isDark);
   return (
-    <Shell isDark={isDark} title="Antes de pagar más," highlight="aclara el rol" subtitle="Ningún esquema financiero compensa que el vendedor no sepa qué actividades llevan al cumplimiento. Y la confianza en sí mismo pesa más que los años de antigüedad.">
+    <Shell isDark={isDark} title="Rol claro y autoeficacia:" highlight="dos predictores del desempeño" subtitle="Se rinde menos cuando no se sabe con claridad qué se espera, y más cuando se confía en la propia capacidad de lograr lo que se propone.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
@@ -118,23 +112,17 @@ export function Rol({ isDark }: SlideProps) {
           <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
             <div className="grid grid-cols-2 gap-3">
               <Cifra isDark={isDark} n={0.25} dec={2} prefijo="−" titulo="Ambigüedad de rol" lineas={['con el desempeño en ventas', 'coeficiente β · Verbeke y cols. 2011']} destacada />
-              <div className={`p-3.5 rounded-3xl ${panelClass(isDark)}`}>
-                <p className={microLabel(isDark)}>Autoeficacia</p>
-                <p className={`text-sm leading-snug mt-1 ${textMuted(isDark)}`}>La convicción de poder superar objeciones y cerrar predice más el rendimiento que la antigüedad o la edad.</p>
-              </div>
+              <Cifra isDark={isDark} n={0.38} dec={2} prefijo="+" titulo="Autoeficacia" lineas={['con el desempeño laboral', 'correlación media · 114 estudios']} />
             </div>
-            <Nota isDark={isDark} label="Qué hace la ambigüedad" destacada>
-              El vendedor gasta recursos cognitivos en reconciliar demandas contradictorias y buscar aclaraciones, y eso <strong>neutraliza el estímulo del bono</strong>. Un liderazgo con recompensa contingente clara reduce esa incertidumbre.
+            <Nota isDark={isDark} label="Ambigüedad de rol" destacada>
+              Verbeke, Dietz y Verwaal sintetizaron estudios de 1982 a 2008 y encontraron que la ambigüedad de rol, es decir no saber con claridad qué se espera, se asocia con menor desempeño en ventas. Es uno de los cinco grupos de factores con relación significativa.
             </Nota>
-            <Nota isDark={isDark} label="Quién rinde en cuentas difíciles">
-              Alguien con diez años de oficio pero baja autoeficacia ante un canal nuevo evita las cuentas complejas. Quien confía en su método elige metas más ambiciosas y resiste mejor el rechazo.
+            <Nota isDark={isDark} label="Autoeficacia">
+              Es la convicción de poder movilizar los recursos necesarios para lograr lo que se propone. Stajkovic y Luthans (1998) reunieron 114 estudios, con más de 21.000 personas, y hallaron una correlación media de 0,38 con el desempeño laboral.
             </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
-              <Sello isDark={isDark} tipo="metaanalisis" detalle="Churchill y cols. 1985 · Verbeke y cols. 2011 · Stajkovic y Luthans 1998" />
+              <Sello isDark={isDark} tipo="metaanalisis" detalle="Verbeke y cols. 2011 · Stajkovic y Luthans 1998" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              El −0,25 es un coeficiente de un modelo multivariado, no una correlación simple (algunas fuentes lo llaman r). Las demás correlaciones del informe no se leen en el PDF y no las verifiqué.
-            </Verificado>
           </div>
         </div>
       </div>
@@ -147,18 +135,18 @@ export function Rol({ isDark }: SlideProps) {
 /* ------------------------------------------------------------------ */
 
 const BMT = [
-  { k: 'Describir la conducta', d: 'Los puntos de aprendizaje se presentan como reglas que explican por qué funciona lo que se hace, no como un guion que repetir.' },
-  { k: 'Modelar', d: 'Demostraciones en vivo con modelos mixtos: se ve el cierre impecable y también el error que arruina una negociación.' },
-  { k: 'Practicar', d: 'Juego de roles estructurado, con escenarios generados por los propios participantes: las objeciones y clientes reales de su cartera.' },
-  { k: 'Recibir retroalimentación', d: 'Corrección inmediata y específica sobre lo que acaba de hacer.' },
-  { k: 'Transferir al puesto', d: 'Cada persona fija metas de aplicación: qué hará distinto esta semana con un cliente concreto.' },
+  { k: 'Describir la conducta', d: 'Se definen las conductas objetivo. Funciona mejor cuando los puntos clave se presentan como las reglas que explican por qué la conducta funciona.' },
+  { k: 'Modelar', d: 'Una persona demuestra la conducta, de modo que quien aprende ve cómo se hace.' },
+  { k: 'Practicar', d: 'La persona que aprende ensaya la conducta con práctica guiada.' },
+  { k: 'Recibir retroalimentación', d: 'Después del ensayo recibe corrección sobre lo que hizo.' },
+  { k: 'Transferir al puesto', d: 'Se promueve que lo aprendido se aplique en el trabajo real.' },
 ];
 
 export function ModeladoConductual({ isDark }: SlideProps) {
   const [i, setI] = useState(0);
   const t = sceneTone(isDark);
   return (
-    <Shell isDark={isDark} title="Entrenar con modelado conductual:" highlight="ver, practicar, corregir" subtitle="La instrucción pasiva con manuales y conferencias transmite conocimiento. Para cambiar lo que el vendedor hace, hay que hacerle ensayar.">
+    <Shell isDark={isDark} title="Entrenar con modelado conductual:" highlight="ver, practicar, corregir" subtitle="Para cambiar lo que el vendedor hace, no basta explicárselo: hay que mostrárselo, hacerlo ensayar y corregirlo.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex items-center justify-center">
@@ -185,13 +173,12 @@ export function ModeladoConductual({ isDark }: SlideProps) {
             {BMT.map((b, k) => (
               <button key={b.k} onClick={() => setI(k)} className="text-left"><Paso isDark={isDark} n={k + 1} titulo={b.k} on={i === k}>{i === k ? b.d : undefined}</Paso></button>
             ))}
+            <Nota isDark={isDark} label="Qué encontró el metaanálisis">
+              Taylor, Russ-Eft y Chan (2005) hallaron que este entrenamiento tiene efectos positivos en actitudes, conocimientos, habilidades y conducta en el puesto: grandes en conocimientos y habilidades, y moderados en actitudes y conducta en el puesto.
+            </Nota>
             <div className="flex flex-wrap items-center gap-1.5">
               <Sello isDark={isDark} tipo="metaanalisis" detalle="Taylor, Russ-Eft y Chan · 2005" />
             </div>
-            <Verificado isDark={isDark} tipo="corregido">
-              Verificado: efectos grandes en conocimiento y habilidades, modestos en actitudes y conducta en el puesto. El informe dice «117 estudios» y «2 a 3 veces más retención», y no pude confirmar ninguna de las dos cifras.
-            </Verificado>
-            <p className={`text-[11px] leading-snug ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Con entrenadores basados en IA, los vendedores pueden rechazar el feedback de un algoritmo si lo sienten como amenaza: el acompañamiento del gerente sigue siendo clave (Habel, Alavi y Heinitz).</p>
           </div>
         </div>
         <Fuente isDark={isDark}>Fuente: Taylor, Russ-Eft y Chan (2005), Journal of Applied Psychology 90(4), 692–709.</Fuente>
