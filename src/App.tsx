@@ -377,9 +377,9 @@ export default function App() {
   // --- Modo reel: contenido en vertical, pantalla completa y navegación hacia abajo con el dedo ---
   const [reel, setReel] = useState(false);
   // Marco vertical 9:16: se diseña en 480×854 y equivale a 1080×1920 al exportar (×2,25); se escala para caber en cualquier pantalla.
-  const REEL_W = 480, REEL_H = 854;
-  const reelK = Math.min(windowSize.width / REEL_W, windowSize.height / REEL_H);
-  const marco = { ancho: REEL_W * reelK, alto: REEL_H * reelK, izq: (windowSize.width - REEL_W * reelK) / 2, arriba: (windowSize.height - REEL_H * reelK) / 2 };
+  // En móvil el marco llena la pantalla real; en PC se limita a una columna 9:16 (alto completo) centrada.
+  const reelAncho = Math.min(windowSize.width, Math.round(windowSize.height * 9 / 16));
+  const marco = { ancho: reelAncho, izq: Math.round((windowSize.width - reelAncho) / 2) };
   const reelDir = useRef(1);
   const stageRef = useRef<HTMLDivElement>(null);
   const reelTouch = useRef<{ x: number; y: number } | null>(null);
@@ -692,21 +692,17 @@ export default function App() {
               className={reel ? 'reel-lienzo' : undefined}
               style={reel ? {
                 position: 'fixed',
-                left: '50%',
-                top: '50%',
+                left: marco.izq,
+                top: 0,
                 zIndex: 60,
-                width: REEL_W,
-                height: REEL_H,
-                transform: `translate(-50%, -50%) scale(${reelK})`,
-                transformOrigin: 'center center',
+                width: marco.ancho,
+                height: '100dvh',
                 overflowY: 'auto',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' ? '44px 8px 74px' : '44px 8px 10px',
+                padding: activeClassId === 'compensacion-comercial' ? '48px 14px 96px' : '48px 14px 24px',
                 boxSizing: 'border-box',
-                borderRadius: 28,
                 background: isDark ? '#000' : '#f0f2f5',
-                boxShadow: '0 30px 80px -20px rgba(0,0,0,.45)',
                 pointerEvents: 'auto'
               } : currentSlideId === 'slide-flow-constructor' ? {
                 width: '100%',
@@ -874,7 +870,7 @@ export default function App() {
         </div>
 
         {reel && (
-          <div className="fixed z-[130] pointer-events-none" style={{ left: marco.izq, top: marco.arriba, width: marco.ancho }}>
+          <div className="fixed z-[130] pointer-events-none" style={{ left: marco.izq, top: 0, width: marco.ancho }}>
             <style>{REEL_CSS}</style>
             <div className={`h-[3px] mx-4 mt-2 rounded-full overflow-hidden ${isDark ? 'bg-white/15' : 'bg-black/10'}`}>
               <div className="h-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] transition-all duration-300" style={{ width: `${((currentSlideIndex + 1) / slidesOrder.length) * 100}%` }} />
@@ -942,7 +938,7 @@ export default function App() {
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}
-            compacto={reel ? { izq: marco.izq + 8, ancho: marco.ancho - 16, abajo: marco.arriba + 8 } : undefined}
+            compacto={reel ? { izq: marco.izq + 10, ancho: marco.ancho - 20, abajo: 14 } : undefined}
           />
         )}
 
