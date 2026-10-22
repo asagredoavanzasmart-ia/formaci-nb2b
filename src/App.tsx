@@ -70,6 +70,8 @@ const REEL_CSS = `
 .reel-lienzo [data-g="titulo"] h2 { font-size: 1.35rem !important; line-height: 1.12 !important; margin-bottom: .35rem !important; }
 .reel-lienzo [data-g="titulo"] p { line-height: 1.33 !important; }
 .reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; }
+.reel-lienzo [data-shell] { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; overflow: visible !important; }
+.reel-lienzo [data-adorno] { display: none !important; }
 `;
 
 export default function App() {

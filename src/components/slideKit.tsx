@@ -40,12 +40,13 @@ export function Shell({
 
   return (
     <div
+      data-shell
       className={`w-full h-full flex flex-col p-6 md:p-10 relative overflow-hidden rounded-3xl shadow-2xl ${
         isDark ? 'bg-[#1e1e1e] border border-[#2a2a2a] shadow-black/60' : 'bg-white border border-gray-100 shadow-gray-300/60'
       }`}
     >
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ef375c]/10 to-[#ff851d]/10 rounded-full blur-3xl pointer-events-none" />
+      <div data-adorno className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
+      <div data-adorno className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ef375c]/10 to-[#ff851d]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="shrink-0 mb-6 z-10" data-g="titulo">
         <h2 className={`text-2xl md:text-4xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
