@@ -11,6 +11,7 @@ import type { GuiadoClase } from '../lib/guiado';
 
 const estilos = (oscuro: boolean) => `
 .g-oculto { opacity: 0 !important; transform: translateY(8px); pointer-events: none; }
+.g-colapso { display: none !important; }
 .g-visible { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
 .g-foco { transform: translateY(-2px); box-shadow: ${oscuro ? '0 22px 44px -10px rgba(0,0,0,.68), 0 0 30px rgba(255,133,29,.11)' : '0 18px 38px -10px rgba(17,24,39,.24), 0 6px 16px rgba(17,24,39,.08)'} !important; transition: box-shadow .4s ease, transform .4s ease; }
 @keyframes g-pulso { 0%, 100% { filter: brightness(.95); } 50% { filter: brightness(1.05); } }
@@ -20,7 +21,9 @@ const estilos = (oscuro: boolean) => `
 
 const VELOCIDADES = [1, 1.2, 1.5, 2] as const;
 const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
-const limpiar = () => document.querySelectorAll<Element>('.g-oculto, .g-visible, .g-foco, .g-pulso').forEach((e) => e.classList.remove('g-oculto', 'g-visible', 'g-foco', 'g-pulso'));
+const limpiar = () => document.querySelectorAll<Element>('.g-oculto, .g-colapso, .g-visible, .g-foco, .g-pulso').forEach((e) => e.classList.remove('g-oculto', 'g-colapso', 'g-visible', 'g-foco', 'g-pulso'));
+// En reel solo se mantienen a la vista los elementos estructurales; las tarjetas de texto se muestran de a una.
+const esEstructural = (g: string) => /^(titulo|svg|grafico|campos|pills|fila|barra|b:|b~:|css:)/.test(g);
 
 /**
  * Resuelve un objetivo de las marcas a un elemento de la diapositiva visible:
@@ -56,9 +59,13 @@ type Props = {
   isDark: boolean;
   /** Modo reel: la barra ocupa el ancho de la pantalla vertical. */
   compacto?: { izq: number; ancho: number; abajo: number };
+  /** Modo reel activo: las tarjetas se muestran de a una para ahorrar alto. */
+  reel?: boolean;
+  /** Número de diapositiva actual y total, para el contador de la barra. */
+  indice?: { actual: number; total: number };
 };
 
-export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compacto }: Props) {
+export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compacto, reel = false, indice }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [activo, setActivo] = useState(false);
   const [sonando, setSonando] = useState(false);
@@ -195,11 +202,21 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
                 }
               }
             });
+            // En reel, las tarjetas de texto se muestran de a una: solo las de la última señal alcanzada.
+            let tarjetas = new Set<string>();
+            if (reel) {
+              let ultimas: string[] = [];
+              cues.forEach((c) => {
+                if (c.t <= t) { const cs = (c.mostrar ?? []).filter((g) => !esEstructural(g)); if (cs.length) ultimas = cs; }
+              });
+              tarjetas = new Set(ultimas);
+            }
             ocultables.forEach((g) => {
               const el = buscar(g);
               if (!el) return;
-              const ver = visibles.has(g);
-              el.classList.toggle('g-oculto', !ver);
+              const ver = reel ? (visibles.has(g) && (esEstructural(g) || tarjetas.has(g))) : visibles.has(g);
+              el.classList.toggle('g-colapso', reel ? !ver : false);
+              el.classList.toggle('g-oculto', reel ? false : !ver);
               el.classList.toggle('g-visible', ver);
             });
             // Sellos y pies de gráfico sueltos: el pie aparece con el primer elemento y el sello con el último.
@@ -209,14 +226,19 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
             document.querySelectorAll<HTMLElement>('[data-aux]').forEach((el) => {
               if (el.parentElement?.closest('[data-g]')) return;
               const ver = t >= (el.dataset.aux === 'pie' ? tPie : tSello);
-              el.classList.toggle('g-oculto', !ver);
+              el.classList.toggle('g-colapso', reel ? !ver : false);
+              el.classList.toggle('g-oculto', reel ? false : !ver);
               el.classList.toggle('g-visible', ver);
             });
             let elFoco = foco ? buscar(foco) : null;
             if (elFoco?.matches('[data-g="grafico"]')) elFoco = elFoco.querySelector<HTMLElement>('svg') ?? elFoco;
             const enGrafico = (e: Element) => e.tagName.toLowerCase() === 'svg' || !!e.closest('svg');
             const objetivos: HTMLElement[] = !elFoco ? [] : elFoco.tagName.toLowerCase() === 'svg' && elFoco.querySelector('[data-barra]') ? [] : [elFoco];
-            if (k.foco !== elFoco) document.querySelectorAll('.g-foco, .g-pulso').forEach((e) => e.classList.remove('g-foco', 'g-pulso'));
+            if (k.foco !== elFoco) {
+              document.querySelectorAll('.g-foco, .g-pulso').forEach((e) => e.classList.remove('g-foco', 'g-pulso'));
+              // En reel, el elemento resaltado se trae a la vista dentro del marco con scroll.
+              if (reel && elFoco) elFoco.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
             objetivos.forEach((e) => {
               e.classList.add(enGrafico(e) ? 'g-pulso' : 'g-foco');
               if (!enGrafico(e) && !/rounded/.test(e.className)) e.classList.add('g-redondo');
@@ -232,7 +254,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
     };
     raf = requestAnimationFrame(paso);
     return () => cancelAnimationFrame(raf);
-  }, [activo, datos, salir, saltar, silenciar]);
+  }, [activo, datos, salir, saltar, silenciar, reel]);
 
   useEffect(() => () => limpiar(), []);
 
@@ -254,7 +276,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
         onEnded={salir}
       />
 
-      <div className={`${compacto ? 'fixed' : 'absolute left-1/2 -translate-x-1/2 bottom-[74px] w-[min(820px,calc(100%-180px))]'} z-[140] flex items-center gap-3 pl-2.5 pr-4 py-2 rounded-full shadow-xl border backdrop-blur-md ${caja}`} style={compacto ? { left: compacto.izq, width: compacto.ancho, bottom: compacto.abajo } : undefined}>
+      <div className={`${compacto ? 'fixed gap-2 pl-2 pr-2.5' : 'absolute left-1/2 -translate-x-1/2 bottom-[74px] w-[min(820px,calc(100%-180px))] gap-3 pl-2.5 pr-4'} z-[140] flex items-center py-2 rounded-full shadow-xl border backdrop-blur-md ${caja}`} style={compacto ? { left: compacto.izq, width: compacto.ancho, bottom: compacto.abajo } : undefined}>
         <button
           onClick={alternar}
           className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white flex items-center justify-center shadow-md shadow-red-500/30 hover:scale-105 transition-transform"
@@ -284,7 +306,11 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
           <div className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-gradient-to-br from-[#ff851d] to-[#ef375c] shadow-md pointer-events-none" style={{ left: `calc(${progreso * 100}% - 7px)`, opacity: activo ? 1 : 0, transition: 'left .15s linear, opacity .2s' }} />
         </div>
 
-        <span className="shrink-0 text-xs font-bold tabular-nums">{fmt(activo ? efectivo(tiempo) : 0)} <span className="opacity-50">/ {fmt(totalEfectivo)}</span></span>
+        <span className="shrink-0 text-xs font-bold tabular-nums">{fmt(activo ? efectivo(tiempo) : 0)}{!compacto && <span className="opacity-50"> / {fmt(totalEfectivo)}</span>}</span>
+
+        {indice && (
+          <span className="shrink-0 text-[11px] font-black tabular-nums px-1.5 py-0.5 rounded-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white" title="Diapositiva">{indice.actual}/{indice.total}</span>
+        )}
 
         {activo && (
           <button onClick={salir} className={`shrink-0 p-1 rounded-full transition-colors ${chip}`} title="Salir de la clase guiada" aria-label="Salir de la clase guiada">

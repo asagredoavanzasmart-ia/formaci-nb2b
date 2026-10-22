@@ -67,6 +67,9 @@ const REEL_CSS = `
 .reel-lienzo .min-h-0 { min-height: 0 !important; }
 .reel-lienzo .justify-center { justify-content: flex-start !important; }
 .reel-lienzo [class*="max-h-["] { max-height: none !important; }
+.reel-lienzo [data-g="titulo"] h2 { font-size: 1.35rem !important; line-height: 1.12 !important; margin-bottom: .35rem !important; }
+.reel-lienzo [data-g="titulo"] p { line-height: 1.33 !important; }
+.reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; }
 `;
 
 export default function App() {
@@ -700,7 +703,7 @@ export default function App() {
                 overflowY: 'auto',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' ? '48px 14px 96px' : '48px 14px 24px',
+                padding: activeClassId === 'compensacion-comercial' ? '20px 14px 92px' : '20px 14px 24px',
                 boxSizing: 'border-box',
                 background: isDark ? '#000' : '#f0f2f5',
                 pointerEvents: 'auto'
@@ -870,23 +873,25 @@ export default function App() {
         </div>
 
         {reel && (
-          <div className="fixed z-[130] pointer-events-none" style={{ left: marco.izq, top: 0, width: marco.ancho }}>
+          <>
             <style>{REEL_CSS}</style>
-            <div className={`h-[3px] mx-4 mt-2 rounded-full overflow-hidden ${isDark ? 'bg-white/15' : 'bg-black/10'}`}>
-              <div className="h-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] transition-all duration-300" style={{ width: `${((currentSlideIndex + 1) / slidesOrder.length) * 100}%` }} />
+            {/* Franja superior mínima: solo la barra de avance de la clase. */}
+            <div className="fixed z-[130] pointer-events-none" style={{ left: marco.izq, top: 0, width: marco.ancho }}>
+              <div className={`h-[3px] ${isDark ? 'bg-white/15' : 'bg-black/10'}`}>
+                <div className="h-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] transition-all duration-300" style={{ width: `${((currentSlideIndex + 1) / slidesOrder.length) * 100}%` }} />
+              </div>
             </div>
-            <div className="flex items-center justify-between px-3 pt-1.5">
-              <span className={`text-[11px] font-black tabular-nums px-2 py-0.5 rounded-full backdrop-blur-md ${isDark ? 'bg-black/50 text-white/80' : 'bg-white/80 text-gray-600'}`}>{currentSlideIndex + 1} / {slidesOrder.length}</span>
-              <button
-                onClick={toggleReel}
-                className={`pointer-events-auto p-1.5 rounded-full shadow-md backdrop-blur-md border ${isDark ? 'bg-[#111111]/80 text-white border-[#3a3a3a]' : 'bg-white/85 text-gray-600 border-gray-200'}`}
-                title="Salir del modo reel"
-                aria-label="Salir del modo reel"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          </div>
+            {/* Salir del modo reel: botón pequeño en la esquina. */}
+            <button
+              onClick={toggleReel}
+              className={`fixed z-[131] p-1.5 rounded-full shadow-md backdrop-blur-md border ${isDark ? 'bg-[#111111]/70 text-white border-[#3a3a3a]' : 'bg-white/80 text-gray-500 border-gray-200'}`}
+              style={{ left: marco.izq + marco.ancho - 40, top: 10 }}
+              title="Salir del modo reel"
+              aria-label="Salir del modo reel"
+            >
+              <X size={15} />
+            </button>
+          </>
         )}
 
         <div className={`fixed top-6 left-6 right-6 z-[100] flex justify-between items-start pointer-events-none ${reel ? 'hidden' : ''}`}>
@@ -939,6 +944,8 @@ export default function App() {
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}
             compacto={reel ? { izq: marco.izq + 10, ancho: marco.ancho - 20, abajo: 14 } : undefined}
+            reel={reel}
+            indice={reel ? { actual: currentSlideIndex + 1, total: slidesOrder.length } : undefined}
           />
         )}
 
