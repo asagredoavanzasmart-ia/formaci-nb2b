@@ -62,6 +62,11 @@ const REEL_CSS = `
 .reel-lienzo .lg\\:flex-row, .reel-lienzo .md\\:flex-row { flex-direction: column !important; }
 .reel-lienzo [class*="lg:w-"], .reel-lienzo [class*="md:w-"] { width: 100% !important; }
 .reel-lienzo [class*="lg:col-span-"], .reel-lienzo [class*="md:col-span-"] { grid-column: 1 / -1 !important; }
+.reel-lienzo .h-full { height: auto !important; }
+.reel-lienzo .flex-1 { flex: 0 0 auto !important; }
+.reel-lienzo .min-h-0 { min-height: 0 !important; }
+.reel-lienzo .justify-center { justify-content: flex-start !important; }
+.reel-lienzo [class*="max-h-["] { max-height: none !important; }
 `;
 
 export default function App() {
@@ -731,7 +736,7 @@ export default function App() {
                   animate={reel ? { opacity: 1, y: 0 } : { opacity: 1 }}
                   exit={reel ? { opacity: 0, y: -reelDir.current * 60 } : { opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className={reel ? 'w-full min-h-full flex flex-col [&>*]:flex-1' : 'w-full h-full'}
+                  className={reel ? 'w-full' : 'w-full h-full'}
                 >
                 {/* Renderizado de Slides de Nivel 1 (Encabezados) */}
                 {slidesOrder[currentSlideIndex].level === 1 && (
