@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize, Save, LayoutGrid, NotebookPen, Presentation } from 'lucide-react';
+import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize, Save, LayoutGrid, NotebookPen, Presentation, Smartphone } from 'lucide-react';
 
 import Slide5 from './components/Slide5';
 import Slide6 from './components/Slide6';
@@ -56,6 +56,13 @@ import logoLight from './Logos/logo horizontal ligth.png';
 import logoDark from './Logos/logo horizontal dark.png';
 
 
+
+// En el marco vertical se anulan los cortes de escritorio (columnas y anchos en %) para que todo se apile igual en PC y en móvil.
+const REEL_CSS = `
+.reel-lienzo .lg\\:flex-row, .reel-lienzo .md\\:flex-row { flex-direction: column !important; }
+.reel-lienzo [class*="lg:w-"], .reel-lienzo [class*="md:w-"] { width: 100% !important; }
+.reel-lienzo [class*="lg:col-span-"], .reel-lienzo [class*="md:col-span-"] { grid-column: 1 / -1 !important; }
+`;
 
 export default function App() {
   const [isDark, setIsDark] = useState(false);
@@ -362,6 +369,80 @@ export default function App() {
     if (currentSlideIndex > 0) setCurrentSlideIndex(prev => prev - 1);
   };
 
+  // --- Modo reel: contenido en vertical, pantalla completa y navegación hacia abajo con el dedo ---
+  const [reel, setReel] = useState(false);
+  // Marco vertical 9:16: se diseña en 480×854 y equivale a 1080×1920 al exportar (×2,25); se escala para caber en cualquier pantalla.
+  const REEL_W = 480, REEL_H = 854;
+  const reelK = Math.min(windowSize.width / REEL_W, windowSize.height / REEL_H);
+  const marco = { ancho: REEL_W * reelK, alto: REEL_H * reelK, izq: (windowSize.width - REEL_W * reelK) / 2, arriba: (windowSize.height - REEL_H * reelK) / 2 };
+  const reelDir = useRef(1);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const reelTouch = useRef<{ x: number; y: number } | null>(null);
+  const reelIr = (delta: number) => {
+    const i = currentSlideIndex + delta;
+    if (i < 0 || i >= slidesOrder.length) return;
+    reelDir.current = delta;
+    setCurrentSlideIndex(i);
+  };
+  const reelAlFinal = (dir: number) => {
+    const el = stageRef.current;
+    if (!el) return true;
+    return dir > 0 ? el.scrollTop + el.clientHeight >= el.scrollHeight - 4 : el.scrollTop <= 2;
+  };
+  const toggleReel = async () => {
+    const orientation = screen.orientation as any;
+    if (reel) {
+      setReel(false);
+      try { orientation?.unlock?.(); } catch (e) { /* sin soporte */ }
+      if (document.fullscreenElement) { try { await document.exitFullscreen(); } catch (e) { /* ya salió */ } }
+      return;
+    }
+    setReel(true);
+    setIsSidebarOpen(false);
+    setIsNotesOpen(false);
+    try {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+      if (orientation?.lock) await orientation.lock('portrait');
+    } catch (e) {
+      console.log('Pantalla completa u orientación no disponible');
+    }
+  };
+  const reelTouchStart = (e: React.TouchEvent) => {
+    const target = e.target as HTMLElement;
+    const bloqueado = e.touches.length !== 1 || !!target.closest('input, textarea, select, [contenteditable="true"], .react-flow, [data-reel-bloqueo]');
+    reelTouch.current = bloqueado ? null : { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+  const reelTouchEnd = (e: React.TouchEvent) => {
+    const inicio = reelTouch.current;
+    reelTouch.current = null;
+    if (!inicio) return;
+    const dx = e.changedTouches[0].clientX - inicio.x;
+    const dy = e.changedTouches[0].clientY - inicio.y;
+    if (Math.abs(dy) < 60 || Math.abs(dy) < Math.abs(dx) * 1.2) return;
+    const dir = dy < 0 ? 1 : -1; // deslizar hacia arriba avanza, como en un reel
+    if (reelAlFinal(dir)) reelIr(dir);
+  };
+  useEffect(() => { if (reel && stageRef.current) stageRef.current.scrollTop = 0; }, [currentSlideIndex, reel]);
+  useEffect(() => {
+    if (!reel) return;
+    let ultimo = 0;
+    const onWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) < 30 || Date.now() - ultimo < 700) return;
+      const dir = e.deltaY > 0 ? 1 : -1;
+      if (!reelAlFinal(dir)) return;
+      ultimo = Date.now();
+      reelIr(dir);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement)?.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); reelIr(1); }
+      else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); reelIr(-1); }
+    };
+    window.addEventListener('wheel', onWheel, { passive: true });
+    window.addEventListener('keydown', onKey);
+    return () => { window.removeEventListener('wheel', onWheel); window.removeEventListener('keydown', onKey); };
+  });
+
   // Abre una clase: carga su guion de diapositivas y empieza desde el inicio.
   const openClass = (classId: string) => {
     const slides = slidesByClass[classId] ?? initialSlides;
@@ -590,8 +671,8 @@ export default function App() {
         */}
         <div
           className="flex-1 flex items-center justify-center p-0 md:p-8 min-h-0 relative"
-          onTouchStart={isMobile ? handleTouchStart : undefined}
-          onTouchEnd={isMobile ? handleTouchEnd : undefined}
+          onTouchStart={reel ? reelTouchStart : isMobile ? handleTouchStart : undefined}
+          onTouchEnd={reel ? reelTouchEnd : isMobile ? handleTouchEnd : undefined}
         >
           
           <div 
@@ -602,7 +683,27 @@ export default function App() {
               Diseñamos sobre 1280x720 (16:9) y escalamos para llenar el contenedor.
             */}
             <div 
-              style={currentSlideId === 'slide-flow-constructor' ? {
+              ref={stageRef}
+              className={reel ? 'reel-lienzo' : undefined}
+              style={reel ? {
+                position: 'fixed',
+                left: '50%',
+                top: '50%',
+                zIndex: 60,
+                width: REEL_W,
+                height: REEL_H,
+                transform: `translate(-50%, -50%) scale(${reelK})`,
+                transformOrigin: 'center center',
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                overscrollBehavior: 'contain',
+                padding: activeClassId === 'compensacion-comercial' ? '44px 8px 74px' : '44px 8px 10px',
+                boxSizing: 'border-box',
+                borderRadius: 28,
+                background: isDark ? '#000' : '#f0f2f5',
+                boxShadow: '0 30px 80px -20px rgba(0,0,0,.45)',
+                pointerEvents: 'auto'
+              } : currentSlideId === 'slide-flow-constructor' ? {
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
@@ -626,11 +727,11 @@ export default function App() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlideId}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
+                  initial={reel ? { opacity: 0, y: reelDir.current * 60 } : { opacity: 0 }}
+                  animate={reel ? { opacity: 1, y: 0 } : { opacity: 1 }}
+                  exit={reel ? { opacity: 0, y: -reelDir.current * 60 } : { opacity: 0 }}
                   transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="w-full h-full"
+                  className={reel ? 'w-full min-h-full flex flex-col [&>*]:flex-1' : 'w-full h-full'}
                 >
                 {/* Renderizado de Slides de Nivel 1 (Encabezados) */}
                 {slidesOrder[currentSlideIndex].level === 1 && (
@@ -767,7 +868,27 @@ export default function App() {
           </div>
         </div>
 
-        <div className="fixed top-6 left-6 right-6 z-[100] flex justify-between items-start pointer-events-none">
+        {reel && (
+          <div className="fixed z-[130] pointer-events-none" style={{ left: marco.izq, top: marco.arriba, width: marco.ancho }}>
+            <style>{REEL_CSS}</style>
+            <div className={`h-[3px] mx-4 mt-2 rounded-full overflow-hidden ${isDark ? 'bg-white/15' : 'bg-black/10'}`}>
+              <div className="h-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] transition-all duration-300" style={{ width: `${((currentSlideIndex + 1) / slidesOrder.length) * 100}%` }} />
+            </div>
+            <div className="flex items-center justify-between px-3 pt-1.5">
+              <span className={`text-[11px] font-black tabular-nums px-2 py-0.5 rounded-full backdrop-blur-md ${isDark ? 'bg-black/50 text-white/80' : 'bg-white/80 text-gray-600'}`}>{currentSlideIndex + 1} / {slidesOrder.length}</span>
+              <button
+                onClick={toggleReel}
+                className={`pointer-events-auto p-1.5 rounded-full shadow-md backdrop-blur-md border ${isDark ? 'bg-[#111111]/80 text-white border-[#3a3a3a]' : 'bg-white/85 text-gray-600 border-gray-200'}`}
+                title="Salir del modo reel"
+                aria-label="Salir del modo reel"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className={`fixed top-6 left-6 right-6 z-[100] flex justify-between items-start pointer-events-none ${reel ? 'hidden' : ''}`}>
           <div className="flex items-center gap-4 pointer-events-auto">
             <button 
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -783,6 +904,15 @@ export default function App() {
               title="Pantalla Completa"
             >
               {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+            </button>
+            {/* Modo reel: contenido en vertical, pantalla completa y deslizar hacia arriba para avanzar */}
+            <button
+              onClick={toggleReel}
+              className="p-2.5 rounded-full shadow-md bg-white hover:bg-gray-50 border border-gray-100 text-gray-500 hover:text-gray-700 transition-all duration-300 hover:scale-110"
+              title="Modo reel (vertical para móvil)"
+              aria-label="Modo reel (vertical para móvil)"
+            >
+              <Smartphone size={18} />
             </button>
             {/* Botón de Guardar Cambios */}
             <button 
@@ -807,11 +937,12 @@ export default function App() {
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}
+            compacto={reel ? { izq: marco.izq + 8, ancho: marco.ancho - 16, abajo: marco.arriba + 8 } : undefined}
           />
         )}
 
         {/* Botones de Navegación Flotantes (Solo en Móvil/Responsive) */}
-        <div className={isCompact ? 'contents' : 'hidden'}>
+        <div className={isCompact && !reel ? 'contents' : 'hidden'}>
           <button 
             onClick={prevSlide} 
             disabled={currentSlideIndex === 0}
@@ -840,7 +971,7 @@ export default function App() {
         </div>
 
         {/* Footer Navigation (sin puntos de avance ni pie en móvil, visible en Desktop) */}
-        <div className={`${isCompact ? 'hidden' : 'flex'} h-16 shrink-0 z-40 px-6 items-center justify-between`}>
+        <div className={`${isCompact || reel ? 'hidden' : 'flex'} h-16 shrink-0 z-40 px-6 items-center justify-between`}>
           <button 
             onClick={prevSlide} 
             disabled={currentSlideIndex === 0}

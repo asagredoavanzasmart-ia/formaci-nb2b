@@ -12,8 +12,9 @@ import type { GuiadoClase } from '../lib/guiado';
 const estilos = (oscuro: boolean) => `
 .g-oculto { opacity: 0 !important; transform: translateY(8px); pointer-events: none; }
 .g-visible { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
-.g-foco { transform: translateY(-2px); box-shadow: ${oscuro ? '0 22px 44px -10px rgba(0,0,0,.85), 0 0 30px rgba(255,133,29,.14)' : '0 18px 38px -10px rgba(17,24,39,.30), 0 6px 16px rgba(17,24,39,.10)'} !important; transition: box-shadow .4s ease, transform .4s ease; }
+.g-foco { transform: translateY(-2px); box-shadow: ${oscuro ? '0 22px 44px -10px rgba(0,0,0,.68), 0 0 30px rgba(255,133,29,.11)' : '0 18px 38px -10px rgba(17,24,39,.24), 0 6px 16px rgba(17,24,39,.08)'} !important; transition: box-shadow .4s ease, transform .4s ease; }
 @keyframes g-pulso { 0%, 100% { filter: brightness(.95); } 50% { filter: brightness(1.05); } }
+.g-redondo { border-radius: 1.25rem; }
 .g-pulso { animation: g-pulso 1.1s ease-in-out infinite; }
 `;
 
@@ -53,9 +54,11 @@ type Props = {
   slideActualId: string;
   irA: (id: string) => void;
   isDark: boolean;
+  /** Modo reel: la barra ocupa el ancho de la pantalla vertical. */
+  compacto?: { izq: number; ancho: number; abajo: number };
 };
 
-export default function ClaseGuiada({ datos, slideActualId, irA, isDark }: Props) {
+export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compacto }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [activo, setActivo] = useState(false);
   const [sonando, setSonando] = useState(false);
@@ -211,12 +214,16 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark }: Props
             });
             let elFoco = foco ? buscar(foco) : null;
             if (elFoco?.matches('[data-g="grafico"]')) elFoco = elFoco.querySelector<HTMLElement>('svg') ?? elFoco;
-            const enGrafico = (e: Element | null) => !!e && (e.tagName.toLowerCase() === 'svg' || !!e.closest('svg'));
-            if (k.foco && k.foco !== elFoco) k.foco.classList.remove('g-foco', 'g-pulso');
-            if (elFoco) elFoco.classList.add(enGrafico(elFoco) ? 'g-pulso' : 'g-foco');
+            const enGrafico = (e: Element) => e.tagName.toLowerCase() === 'svg' || !!e.closest('svg');
+            const objetivos: HTMLElement[] = !elFoco ? [] : elFoco.tagName.toLowerCase() === 'svg' && elFoco.querySelector('[data-barra]') ? [] : [elFoco];
+            if (k.foco !== elFoco) document.querySelectorAll('.g-foco, .g-pulso').forEach((e) => e.classList.remove('g-foco', 'g-pulso'));
+            objetivos.forEach((e) => {
+              e.classList.add(enGrafico(e) ? 'g-pulso' : 'g-foco');
+              if (!enGrafico(e) && !/rounded/.test(e.className)) e.classList.add('g-redondo');
+            });
             k.foco = elFoco;
           } else if (k.foco) {
-            k.foco.classList.remove('g-foco', 'g-pulso');
+            document.querySelectorAll('.g-foco, .g-pulso').forEach((e) => e.classList.remove('g-foco', 'g-pulso'));
             k.foco = null;
           }
         }
@@ -247,7 +254,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark }: Props
         onEnded={salir}
       />
 
-      <div className={`absolute left-1/2 -translate-x-1/2 bottom-[74px] z-[100] w-[min(820px,calc(100%-180px))] flex items-center gap-3 pl-2.5 pr-4 py-2 rounded-full shadow-xl border backdrop-blur-md ${caja}`}>
+      <div className={`${compacto ? 'fixed' : 'absolute left-1/2 -translate-x-1/2 bottom-[74px] w-[min(820px,calc(100%-180px))]'} z-[140] flex items-center gap-3 pl-2.5 pr-4 py-2 rounded-full shadow-xl border backdrop-blur-md ${caja}`} style={compacto ? { left: compacto.izq, width: compacto.ancho, bottom: compacto.abajo } : undefined}>
         <button
           onClick={alternar}
           className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white flex items-center justify-center shadow-md shadow-red-500/30 hover:scale-105 transition-transform"

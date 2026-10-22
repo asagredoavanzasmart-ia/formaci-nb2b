@@ -123,12 +123,16 @@ export function BarrasIso({ id, isDark, items, max, W = 520, hMax = 150, unit = 
         const h = Math.max(6, (b.value / max) * hMax);
         const cy = B - h;
         return (
-          <g key={b.name + i} data-barra={i + 1}>
+          <g key={b.name + i}>
             <motion.g initial={{ scaleY: 0, opacity: 0 }} animate={{ scaleY: 1, opacity: 1 }} transition={{ delay: i * 0.08, type: 'spring', stiffness: 70, damping: 15 }} style={{ transformOrigin: `${x}px ${B}px` }}>
-              {b.hl && <PulseDisc cx={x} cy={B + 2} rx={Math.min(slot * 0.42, 56)} ry={13} dur={2.2} peak={0.32} />}
-              <Float amp={b.hl ? 5 : 1.5} dur={b.hl ? 2.3 : 4} delay={i * 0.2}>
-                <g filter={`url(#${id}-sh)`}><IsoBox cx={x} cy={cy} s={S} h={h} f={cara(b)} /></g>
-              </Float>
+              {b.hl && piso !== 'plano' && <PulseDisc cx={x} cy={B + 2} rx={Math.min(slot * 0.42, 56)} ry={13} dur={2.2} peak={0.32} />}
+              {piso === 'plano' ? (
+                <g filter={`url(#${id}-sh)`}><g data-barra={i + 1}><IsoBox cx={x} cy={cy} s={S} h={h} f={cara(b)} /></g></g>
+              ) : (
+                <Float amp={b.hl ? 5 : 1.5} dur={b.hl ? 2.3 : 4} delay={i * 0.2}>
+                  <g filter={`url(#${id}-sh)`}><IsoBox cx={x} cy={cy} s={S} h={h} f={cara(b)} /></g>
+                </Float>
+              )}
             </motion.g>
             <text x={x} y={cy - S / 2 - 10} textAnchor="middle" fontSize={fsValor} fontWeight={900} fill={b.hl ? ORANGE : t.text}>{b.label ?? f(b.value)}</text>
             {envolver(b.name, maxChars).map((l, k) => (
