@@ -140,6 +140,7 @@ export function Lift({ on, dimmed, children, onClick, lift = 10 }: { on: boolean
       animate={{ y: on ? -lift : 0, opacity: dimmed ? 0.4 : 1 }}
       transition={{ type: 'spring', stiffness: 160, damping: 16 }}
       onClick={onClick}
+      data-lift={onClick ? '' : undefined}
       style={{ cursor: onClick ? 'pointer' : undefined }}
     >
       {children}

@@ -198,10 +198,17 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
                 if (objetivoClic && t >= c.t + 0.7 && !k.fired.has(clave)) {
                   const el = buscar(objetivoClic);
                   const boton = el && (el.matches('button') ? el : el.querySelector('button'));
-                  if (boton) { boton.click(); k.fired.add(clave); }
+                  if (boton) { (boton as HTMLElement).click(); k.fired.add(clave); }
+                  else if (el && (el.matches('g[data-lift]') || el.querySelector('g[data-lift]'))) {
+                    // Grupos clicables de una escena SVG (no son botones HTML): se les envía el clic.
+                    (el.matches('g[data-lift]') ? el : el.querySelector('g[data-lift]'))!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                    k.fired.add(clave);
+                  }
                 }
               }
             });
+            // Lo que nunca se narra (p. ej. instrucciones para interactuar) permanece oculto.
+            document.querySelectorAll('[data-nunca]').forEach((e) => e.classList.add('g-colapso'));
             // En reel, las tarjetas de texto se muestran de a una: solo las de la última señal alcanzada.
             let tarjetas = new Set<string>();
             if (reel) {

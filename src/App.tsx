@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { User, HelpCircle, ChevronUp, ChevronDown, Menu, X, ChevronLeft, ChevronRight, Sun, Moon, Maximize, Minimize, Save, LayoutGrid, NotebookPen, Presentation, Smartphone } from 'lucide-react';
 
@@ -41,6 +41,7 @@ import ClaseTrampas from './components/ClaseTrampas';
 import ClaseCompensacion from './components/ClaseCompensacion';
 import ClaseGuiada from './components/ClaseGuiada';
 import { guiadoCompensacion } from './data/guiadoCompensacion';
+import { guiadoKahneman } from './data/guiadoKahneman';
 import ClaseRevOps from './components/ClaseRevOps';
 import ClaseSalesEnablement from './components/ClaseSalesEnablement';
 import { AudioSrcContext } from './components/slideKit';
@@ -63,16 +64,54 @@ const REEL_CSS = `
 .reel-lienzo [class*="lg:w-"], .reel-lienzo [class*="md:w-"] { width: 100% !important; }
 .reel-lienzo [class*="lg:col-span-"], .reel-lienzo [class*="md:col-span-"] { grid-column: 1 / -1 !important; }
 .reel-lienzo .h-full { height: auto !important; }
+.reel-lienzo :is([class^="h-"], [class*=" h-"]):not(.h-full) > .h-full { height: 100% !important; }
 .reel-lienzo .flex-1 { flex: 0 0 auto !important; }
 .reel-lienzo .min-h-0 { min-height: 0 !important; }
 .reel-lienzo .justify-center { justify-content: flex-start !important; }
 .reel-lienzo [class*="max-h-["] { max-height: none !important; }
 .reel-lienzo [data-g="titulo"] h2 { font-size: 1.35rem !important; line-height: 1.12 !important; margin-bottom: .35rem !important; }
 .reel-lienzo [data-g="titulo"] p { line-height: 1.33 !important; }
-.reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; }
+.reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; padding-right: 34px; }
 .reel-lienzo [data-shell] { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; overflow: visible !important; }
 .reel-lienzo [data-adorno] { display: none !important; }
 `;
+
+/**
+ * Modo vertical: escala el contenido para que la diapositiva entera quepa en el alto disponible,
+ * sin scroll. El ancho de maquetación crece en la misma proporción, así el contenido escalado
+ * sigue ocupando todo el ancho. Se recalcula cuando aparece o desaparece un elemento.
+ */
+function AjustarAlto({ activo, children }: { activo: boolean; children: React.ReactNode }) {
+  const caja = useRef<HTMLDivElement>(null);
+  const dentro = useRef<HTMLDivElement>(null);
+  const [k, setK] = useState(1);
+  useLayoutEffect(() => {
+    if (!activo) { setK(1); return; }
+    const c = caja.current, d = dentro.current;
+    if (!c || !d) return;
+    let actual = 1;
+    const medir = () => {
+      const disponible = c.clientHeight, alto = d.offsetHeight;
+      if (!disponible || !alto) return;
+      let nuevo = actual;
+      // Se desborda: se reduce hasta caber (al ensanchar el contenido, solo puede bajar de alto).
+      if (alto * actual > disponible) nuevo = (disponible * 0.99) / alto;
+      // Sobra bastante espacio: se agranda con margen, sin pasar del tamaño real.
+      else if (actual < 1 && alto * actual < disponible * 0.85) nuevo = Math.min(1, (disponible * 0.95) / alto);
+      if (Math.abs(nuevo - actual) > 0.005) { actual = nuevo; setK(nuevo); }
+    };
+    const ro = new ResizeObserver(medir);
+    ro.observe(c); ro.observe(d);
+    medir();
+    return () => ro.disconnect();
+  }, [activo]);
+  if (!activo) return <>{children}</>;
+  return (
+    <div ref={caja} style={{ height: '100%', overflow: 'hidden', position: 'relative' }}>
+      <div ref={dentro} style={{ width: `${100 / k}%`, transform: `scale(${k})`, transformOrigin: 'top left' }}>{children}</div>
+    </div>
+  );
+}
 
 export default function App() {
   const [isDark, setIsDark] = useState(false);
@@ -702,10 +741,10 @@ export default function App() {
                 zIndex: 60,
                 width: marco.ancho,
                 height: '100dvh',
-                overflowY: 'auto',
+                overflowY: 'hidden',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' ? '20px 14px 92px' : '20px 14px 24px',
+                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' ? '20px 14px 92px' : '20px 14px 24px',
                 boxSizing: 'border-box',
                 background: isDark ? '#000' : '#f0f2f5',
                 pointerEvents: 'auto'
@@ -730,6 +769,7 @@ export default function App() {
                 pointerEvents: 'auto'
               }}
             >
+              <AjustarAlto activo={reel}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentSlideId}
@@ -870,6 +910,7 @@ export default function App() {
 
                 </motion.div>
               </AnimatePresence>
+              </AjustarAlto>
             </div>
           </div>
         </div>
@@ -939,9 +980,10 @@ export default function App() {
         </div>
 
         {/* Reproducción global de la clase con audio (flecha, resaltado y aparición de elementos) */}
-        {activeClassId === 'compensacion-comercial' && (
+        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman') && (
           <ClaseGuiada
-            datos={guiadoCompensacion}
+            key={activeClassId}
+            datos={activeClassId === 'kahneman' ? guiadoKahneman : guiadoCompensacion}
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}

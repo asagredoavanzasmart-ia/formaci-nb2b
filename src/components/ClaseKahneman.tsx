@@ -35,13 +35,15 @@ function Sello({ isDark, tipo }: { isDark: boolean; tipo: 'solido' | 'disputa' }
   );
 }
 
-/* Barra horizontal animada. */
+/* Barra horizontal animada. El llenado es una animación CSS: el navegador la reinicia cuando la
+   tarjeta pasa de oculta a visible, así se ve llenarse aunque aparezca recién al nombrarla. */
 function Bar({ isDark, label, value, max, suffix = '', brand = true, delay = 0 }: { isDark: boolean; label: string; value: number; max: number; suffix?: string; brand?: boolean; delay?: number }) {
   return (
     <div>
+      <style>{'@keyframes kn-llenar { from { width: 0 } }'}</style>
       <div className="flex justify-between text-sm mb-1"><span className={`font-bold ${textMuted(isDark)}`}>{label}</span><span className={`font-black ${heading(isDark)}`}>{value}{suffix}</span></div>
       <div className={`h-3.5 rounded-full overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-100'}`}>
-        <motion.div className={`h-full rounded-full ${brand ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-[0_0_15px_rgba(255,133,29,0.5)]' : 'bg-gray-400'}`} initial={{ width: 0 }} animate={{ width: `${(value / max) * 100}%` }} transition={{ delay, duration: 0.9, ease: 'easeOut' }} />
+        <div className={`h-full rounded-full ${brand ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-[0_0_15px_rgba(255,133,29,0.5)]' : 'bg-gray-400'}`} style={{ width: `${(value / max) * 100}%`, animation: `kn-llenar .9s ease-out ${delay}s both` }} />
       </div>
     </div>
   );
@@ -104,7 +106,7 @@ function Origen({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex items-center">
-            <svg viewBox="0 0 560 250" className="w-full h-full overflow-visible" aria-label="Cuatro hitos: 1969, 1974, 1979 y 2002">
+            <svg role="img" viewBox="0 0 560 250" className="w-full h-full overflow-visible" aria-label="Cuatro hitos: 1969, 1974, 1979 y 2002">
               <SceneDefs id="ori" isDark={isDark} />
               {hitos.map((h, i) => {
                 const x = 85 + i * 130;
@@ -129,7 +131,7 @@ function Origen({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="hito" className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{hitos[active].year}</p>
                 <h3 className={`text-xl font-black mb-1 ${heading(isDark)}`}>{hitos[active].title}</h3>
                 <p className={`text-sm leading-relaxed ${textMuted(isDark)}`}>{hitos[active].text}</p>
@@ -141,7 +143,7 @@ function Origen({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>El objetivo declarado del libro es modesto y práctico: <strong>enriquecer tu vocabulario</strong> para nombrar errores de juicio, en otros y en ti.</Footer>
+        <Footer g="footer" isDark={isDark}>El objetivo declarado del libro es modesto y práctico: <strong>enriquecer tu vocabulario</strong> para nombrar errores de juicio, en otros y en ti.</Footer>
       </div>
     </Shell>
   );
@@ -170,7 +172,7 @@ function DosSistemas({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[40%] min-h-0 flex items-center">
-            <svg viewBox="0 0 400 260" className="w-full h-full overflow-visible" aria-label="Sistema 1 y Sistema 2 como dos figuras">
+            <svg role="img" viewBox="0 0 400 260" className="w-full h-full overflow-visible" aria-label="Sistema 1 y Sistema 2 como dos figuras">
               <SceneDefs id="dos" isDark={isDark} />
               <IsoFloor cx={200} cy={200} s={190} fill={t.floor} />
               <g>
@@ -191,7 +193,7 @@ function DosSistemas({ isDark }: SlideProps) {
               {filas.map((x, i) => <Pill key={x.dim} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{x.dim}</Pill>)}
             </div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-3">
+              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="par" className="grid grid-cols-2 gap-3">
                 <div className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                   <p className={microLabel(isDark)}>Sistema 1 · {f.dim}</p>
                   <p className={`text-sm md:text-base leading-snug ${heading(isDark)}`}>{f.s1}</p>
@@ -202,7 +204,7 @@ function DosSistemas({ isDark }: SlideProps) {
                 </div>
               </motion.div>
             </AnimatePresence>
-            <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+            <div data-g="ilusion" className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>La ilusión central:</strong> tú te identificas con el Sistema 2, el que habla, razona y cree decidir. Pero el protagonista de casi todos tus juicios cotidianos es el Sistema 1.</p>
             </div>
           </div>
@@ -230,7 +232,7 @@ function Interaccion({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex items-center">
-            <svg viewBox="0 0 520 290" className="w-full h-full overflow-visible" aria-label="Cuatro pasos de la interacción entre sistemas">
+            <svg role="img" viewBox="0 0 520 290" className="w-full h-full overflow-visible" aria-label="Cuatro pasos de la interacción entre sistemas">
               <SceneDefs id="int" isDark={isDark} />
               {pasos.map((p, i) => {
                 const x = 80 + i * 120;
@@ -251,7 +253,7 @@ function Interaccion({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="paso" className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Paso {active + 1} · {pasos[active].n}</p>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{pasos[active].text}</p>
               </motion.div>
@@ -268,7 +270,7 @@ function Interaccion({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>De ahí la propuesta práctica del libro: no puedes corregir al Sistema 1 desde dentro, pero <strong>sí puedes reconocer las situaciones</strong> en las que suele equivocarse y, ahí, pedir ayuda al Sistema 2.</Footer>
+        <Footer g="footer" isDark={isDark}>De ahí la propuesta práctica del libro: no puedes corregir al Sistema 1 desde dentro, pero <strong>sí puedes reconocer las situaciones</strong> en las que suele equivocarse y, ahí, pedir ayuda al Sistema 2.</Footer>
       </div>
     </Shell>
   );
@@ -278,33 +280,63 @@ function Interaccion({ isDark }: SlideProps) {
 /* 5. El contador de energía mental                                    */
 /* ------------------------------------------------------------------ */
 
+/* Trazo de cardiograma: latidos P-QRS-T repetidos cada `p` px con pico de altura `a`, sobre la línea base `B`. */
+const cardiograma = (p: number, a: number, n: number, B: number) => {
+  let d = `M 0 ${B}`;
+  for (let k = 0; k < n; k++) {
+    const x = (f: number) => (k + f) * p;
+    d += ` L ${x(0.16)} ${B} L ${x(0.22)} ${B - a * 0.16} L ${x(0.28)} ${B} L ${x(0.38)} ${B} L ${x(0.42)} ${B + a * 0.2} L ${x(0.47)} ${B - a} L ${x(0.52)} ${B + a * 0.32} L ${x(0.57)} ${B} L ${x(0.7)} ${B} L ${x(0.78)} ${B - a * 0.26} L ${x(0.86)} ${B} L ${x(1)} ${B}`;
+  }
+  return d;
+};
+
 function Esfuerzo({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
-  const [fase, setFase] = useState(1);
-  const r = [16, 24, 16][fase];
+  const [fase, setFase] = useState(0);
+  // El pulso sube al pasar a esfuerzo máximo; en la clase guiada sube recién cuando la narración lo menciona.
+  const [pulso, setPulso] = useState(false);
+  const r = [11, 17, 11][fase];
   const etiquetas = ['Reposo', 'Esfuerzo máximo', 'Tarea resuelta'];
+  const alto = fase === 1 && pulso;
+  // Monitor: latidos más seguidos y más altos con el pulso alto. Se desplaza a velocidad constante.
+  const ECG = { x: 30, ancho: 240, base: 158 };
+  const p = alto ? 54 : 80, a = alto ? 34 : 18, latidosPorSeg = alto ? 1.6 : 1;
+  const m = Math.ceil(ECG.ancho / p);
+  const elegir = (i: number, e?: React.MouseEvent) => {
+    setFase(i);
+    if (i !== 1) setPulso(false);
+    else if (e?.isTrusted) setPulso(true);
+  };
   return (
     <Shell isDark={isDark} title="La pupila delata" highlight="el esfuerzo mental" subtitle="Kahneman y Jackson Beatty midieron el pensamiento desde fuera: el tamaño de la pupila funciona como el contador de la luz de la mente.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[42%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 300 220" className="w-full h-full max-h-[250px] overflow-visible" aria-label="La pupila se dilata con el esfuerzo y vuelve a su tamaño al resolver">
+            <svg role="img" viewBox="0 0 300 220" className="w-full h-full max-h-[250px] overflow-visible" aria-label="La pupila se dilata con el esfuerzo y vuelve a su tamaño al resolver">
               <SceneDefs id="esf" isDark={isDark} />
-              <ellipse cx={150} cy={110} rx={92} ry={56} fill={isDark ? '#f5f5f5' : '#ffffff'} filter="url(#esf-sh)" />
-              <motion.circle cx={150} cy={110} animate={{ r: r + 20 }} transition={{ type: 'spring', stiffness: 60, damping: 12 }} fill={isDark ? '#6b4a2f' : '#8b5e3c'} />
-              <motion.circle cx={150} cy={110} animate={{ r }} transition={{ type: 'spring', stiffness: 60, damping: 12 }} fill="#1a1a1a" />
-              <circle cx={140} cy={98} r={6} fill="#fff" opacity={0.8} />
-              <Float amp={fase === 1 ? 4 : 1.5} dur={fase === 1 ? 1.6 : 3.6}>
-                <motion.circle cx={262} cy={60} r={9} fill={fase === 1 ? ORANGE : "#94a3b8"} animate={{ scale: [1, 1.45, 1] }} transition={{ duration: fase === 1 ? 0.72 : 1, repeat: Infinity, ease: "easeInOut" }} style={{ transformOrigin: "262px 60px" }} />
-              </Float>
-              <text x={262} y={36} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={t.muted}>pulso</text>
-              {fase === 1 && <PulseDisc cx={150} cy={110} rx={70} ry={44} dur={1.6} peak={0.25} />}
-              <text x={150} y={206} textAnchor="middle" fontSize={13} fontWeight={900} fill={fase === 1 ? ORANGE : t.muted}>{etiquetas[fase]}</text>
+              <defs><clipPath id="esf-ecg"><rect x={ECG.x} y={104} width={ECG.ancho} height={92} /></clipPath></defs>
+              {/* Ojo: pequeño y arriba; solo cambia la pupila. */}
+              <ellipse cx={150} cy={52} rx={64} ry={38} fill={isDark ? '#f5f5f5' : '#ffffff'} filter="url(#esf-sh)" />
+              <motion.circle cx={150} cy={52} animate={{ r: r + 14 }} transition={{ type: 'spring', stiffness: 60, damping: 12 }} fill={isDark ? '#6b4a2f' : '#8b5e3c'} />
+              <motion.circle cx={150} cy={52} animate={{ r }} transition={{ type: 'spring', stiffness: 60, damping: 12 }} fill="#1a1a1a" />
+              <circle cx={143} cy={45} r={4} fill="#fff" opacity={0.8} />
+              {/* Cardiograma: más frecuencia y más amplitud cuando sube el pulso. */}
+              <g data-lift="" data-ecg="" onClick={() => setPulso((v) => !v)} style={{ cursor: 'pointer' }}>
+                <rect x={ECG.x} y={104} width={ECG.ancho} height={92} fill="transparent" />
+                <text x={ECG.x} y={112} fontSize={10.5} fontWeight={800} fill={alto ? ORANGE : t.muted}>{alto ? 'pulso · +7 latidos por minuto' : 'pulso'}</text>
+                <line x1={ECG.x} x2={ECG.x + ECG.ancho} y1={ECG.base} y2={ECG.base} stroke={t.muted} strokeOpacity={0.18} strokeWidth={1} />
+                <g clipPath="url(#esf-ecg)">
+                  <motion.g key={alto ? 'alto' : 'bajo'} initial={{ x: ECG.x }} animate={{ x: [ECG.x, ECG.x - p * m] }} transition={{ duration: m / latidosPorSeg, repeat: Infinity, ease: 'linear' }}>
+                    <path d={cardiograma(p, a, m * 2 + 1, ECG.base)} fill="none" stroke={alto ? ORANGE : t.muted} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
+                  </motion.g>
+                </g>
+              </g>
+              <text x={150} y={214} textAnchor="middle" fontSize={13} fontWeight={900} fill={fase === 1 ? ORANGE : t.muted}>{etiquetas[fase]}</text>
             </svg>
-            <div className="flex gap-2">{etiquetas.map((e, i) => <Pill key={e} isDark={isDark} on={i === fase} onClick={() => setFase(i)}>{e}</Pill>)}</div>
+            <div className="flex gap-2">{etiquetas.map((e, i) => <Pill key={e} isDark={isDark} on={i === fase} onClick={(ev?: React.MouseEvent) => elegir(i, ev)}>{e}</Pill>)}</div>
           </div>
           <div className="lg:w-[58%] flex flex-col gap-3 justify-center">
-            <div className={`p-4 rounded-3xl flex flex-col gap-3 ${featuredClass(isDark)}`}>
+            <div data-g="suma3" className={`p-4 rounded-3xl flex flex-col gap-3 ${featuredClass(isDark)}`}>
               <p className={microLabel(isDark)}>Lo que ocurre en el cuerpo durante la tarea "Suma-3"</p>
               <Bar isDark={isDark} label="Dilatación de la pupila" value={50} max={60} suffix="%" delay={0.2} />
               <Bar isDark={isDark} label="Aumento de pulsaciones por minuto" value={7} max={60} delay={0.45} />
@@ -368,17 +400,17 @@ function Perezoso({ isDark }: SlideProps) {
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] flex flex-col justify-center gap-3">
             <AnimatePresence mode="wait">
-              <motion.div key={c.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+              <motion.div key={c.id} data-g="enunciado" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Léelo y responde antes de seguir</p>
                 <p className={`text-lg md:text-xl font-bold leading-snug ${heading(isDark)}`}>{c.enunciado}</p>
               </motion.div>
             </AnimatePresence>
-            {!revelado && <button onClick={() => setRevelado(true)} className="self-start px-5 py-2 rounded-full text-sm font-black bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30">Revelar la respuesta</button>}
+            {!revelado && <button data-nunca onClick={() => setRevelado(true)} className="self-start px-5 py-2 rounded-full text-sm font-black bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30">Revelar la respuesta</button>}
           </div>
           <div className="lg:w-[48%] flex flex-col justify-center gap-3">
             <AnimatePresence mode="wait">
               {revelado ? (
-                <motion.div key={`r${c.id}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-3">
+                <motion.div key={`r${c.id}`} data-g="resultado" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-3">
                   <div className="grid grid-cols-2 gap-3">
                     <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a1a1e]' : 'bg-rose-50'}`}>
                       <p className={microLabel(isDark)}>Sistema 1 dice</p>
@@ -396,14 +428,14 @@ function Perezoso({ isDark }: SlideProps) {
                   <p className={`text-sm italic ${textMuted(isDark)}`}>{c.dato}</p>
                 </motion.div>
               ) : (
-                <motion.div key="espera" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+                <motion.div key="espera" data-nunca initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
                   <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Fíjate en lo que acaba de pasar en tu cabeza: apareció una respuesta <strong>sin que la buscaras</strong>. Esa es la sugerencia del Sistema 1. La pregunta es si vas a verificarla.</p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
         </div>
-        <Footer isDark={isDark}>Keith Stanovich separa dos cosas que solemos confundir: la <strong>mente algorítmica</strong> (lo que mide el test de inteligencia) y la <strong>mente reflexiva</strong>, la disposición a verificar tus propias intuiciones. Esta clase entrena la segunda.</Footer>
+        <Footer g="footer" isDark={isDark}>Keith Stanovich separa dos cosas que solemos confundir: la <strong>mente algorítmica</strong> (lo que mide el test de inteligencia) y la <strong>mente reflexiva</strong>, la disposición a verificar tus propias intuiciones. Esta clase entrena la segunda.</Footer>
       </div>
     </Shell>
   );
@@ -423,7 +455,7 @@ function Agotamiento({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 480 248" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Las resoluciones favorables caen del 65% a casi 0% entre pausas">
+            <svg role="img" viewBox="0 0 480 248" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Las resoluciones favorables caen del 65% a casi 0% entre pausas">
               <SceneDefs id="ago" isDark={isDark} />
               {serie.map((v, i) => {
                 const x = 80 + i * 110;
@@ -458,7 +490,7 @@ function Agotamiento({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Lo que el libro no alcanzó a incorporar</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Investigadores posteriores mostraron que <strong>el orden de los casos no es aleatorio</strong>: el tribunal agrupa por prisión y los presos con abogado se ven antes. Y en la replicación multi-laboratorio del agotamiento del ego (23 equipos, 2.141 personas) el efecto fue prácticamente <strong>cero</strong>. Volveremos a esto al final.</p>
             </div>
-            <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+            <div data-g="usar" className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>Lo que sí puedes usar hoy:</strong> no tomes decisiones importantes al final de una jornada de reuniones. Aunque el mecanismo esté en discusión, el consejo cuesta poco y no depende de él.</p>
             </div>
           </div>
@@ -487,7 +519,7 @@ function Asociativa({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex items-center">
-            <svg viewBox="0 0 510 345" className="w-full h-full max-h-[370px] overflow-visible" aria-label="Un estímulo que activa memoria, emoción, cuerpo e historia">
+            <svg role="img" viewBox="0 0 510 345" className="w-full h-full max-h-[370px] overflow-visible" aria-label="Un estímulo que activa memoria, emoción, cuerpo e historia">
               <SceneDefs id="aso" isDark={isDark} />
               <IsoFloor cx={255} cy={178} s={230} fill={t.floor} />
               {ramas.map((_, i) => <Traveler key={i} id="aso" path={hop([255, 130], pos[i], 28)} dur={1.2} delay={i * 0.3} repeatDelay={1.2} r={i === active ? 6 : 4} color={i === active ? ORANGE : '#94a3b8'} />)}
@@ -508,7 +540,7 @@ function Asociativa({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} data-g="rama" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Rama activada · {ramas[active].name.toLowerCase()}</p>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{ramas[active].text}</p>
               </motion.div>
@@ -561,7 +593,7 @@ function Priming({ isDark }: SlideProps) {
         </div>
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex items-center">
-            <svg viewBox="0 0 440 230" className="w-full h-full overflow-visible" aria-label="Estímulo, activación inconsciente y cambio de conducta">
+            <svg role="img" viewBox="0 0 440 230" className="w-full h-full overflow-visible" aria-label="Estímulo, activación inconsciente y cambio de conducta">
               <SceneDefs id="pri" isDark={isDark} />
               {['Estímulo', 'Activación', 'Conducta'].map((n, k) => {
                 const x = 80 + k * 140;
@@ -579,7 +611,7 @@ function Priming({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={e.id} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-2.5">
+              <motion.div key={e.id} data-g="exp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className={`text-xl font-black ${heading(isDark)}`}>{e.name} <span className={`text-sm font-semibold ${textMuted(isDark)}`}>· {e.autor}</span></h3>
                   <Sello isDark={isDark} tipo="disputa" />
@@ -616,7 +648,7 @@ function Facilidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[38%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 300 248" className="w-full h-full max-h-[260px] overflow-visible" aria-label="Medidor entre facilidad y tensión cognitiva">
+            <svg role="img" viewBox="0 0 300 248" className="w-full h-full max-h-[260px] overflow-visible" aria-label="Medidor entre facilidad y tensión cognitiva">
               <SceneDefs id="fac" isDark={isDark} />
               <g filter="url(#fac-sh)"><Cylinder cx={150} cy={150} rx={110} ry={34} h={14} top={t.floor} side={t.floorSide} /></g>
               <motion.g animate={{ x: facil ? -58 : 58 }} transition={{ type: 'spring', stiffness: 70, damping: 12 }}>
@@ -633,7 +665,7 @@ function Facilidad({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[62%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={modo} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-3">
+              <motion.div key={modo} data-g="par" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-3">
                 <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
                   <p className={microLabel(isDark)}>Qué lo provoca</p>
                   <ul className={`text-sm space-y-1 mt-1 ${textMuted(isDark)}`}>{causas.map((c) => <li key={c} className="flex gap-2"><ChevronRight size={14} className="text-[#ff851d] shrink-0 mt-0.5" />{c}</li>)}</ul>
@@ -676,7 +708,7 @@ function Verdad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[42%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 320 240" className="w-full h-full max-h-[260px] overflow-visible" aria-label="La repetición vuelve agradable un estímulo arbitrario">
+            <svg role="img" viewBox="0 0 320 240" className="w-full h-full max-h-[260px] overflow-visible" aria-label="La repetición vuelve agradable un estímulo arbitrario">
               <SceneDefs id="ver" isDark={isDark} />
               <IsoFloor cx={160} cy={180} s={150} fill={t.floor} />
               {n >= 3 && <PulseDisc cx={160} cy={178} rx={62} ry={20} dur={2.4} peak={0.28} />}
@@ -691,7 +723,7 @@ function Verdad({ isDark }: SlideProps) {
                 {n === 0 ? 'Primera vez: desconocido' : n < 3 ? 'Se repite: menos extraño' : 'Familiar: me agrada y lo creo'}
               </text>
             </svg>
-            <div className="flex items-center gap-2">
+            <div data-nunca className="flex items-center gap-2">
               <span className={`text-xs font-bold ${textMuted(isDark)}`}>Exposiciones</span>
               <input type="range" min={0} max={4} value={n} onChange={(ev) => setN(Number(ev.target.value))} className="w-40 accent-[#ff851d]" aria-label="Número de exposiciones" />
               <span className="text-sm font-black text-[#ff851d]">{n + 1}</span>
@@ -710,7 +742,7 @@ function Verdad({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Famosos de la noche a la mañana · Larry Jacoby</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Leer una lista de nombres inventados (como <em>David Stenbill</em>) hace que días después los reconozcas como personas famosas. Tu mente nota la fluidez, no recuerda de dónde viene, y la atribuye a la fama.</p>
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div data-g="reglas" className="grid grid-cols-2 gap-2">
               {reglas.map(([a, b], i) => (
                 <button key={a} onMouseEnter={() => setN(Math.min(4, i + 1))} className={`text-left p-2.5 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
                   <p className={`text-xs font-black ${heading(isDark)}`}>{a}</p>
@@ -744,7 +776,7 @@ function Causalidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 340 200" className="w-full h-full max-h-[220px] overflow-visible" aria-label="Un bloque que parece empujar a otro">
+            <svg role="img" viewBox="0 0 340 200" className="w-full h-full max-h-[220px] overflow-visible" aria-label="Un bloque que parece empujar a otro">
               <SceneDefs id="cau" isDark={isDark} />
               <IsoFloor cx={170} cy={130} s={160} fill={t.floor} />
               {empuja && <PulseDisc cx={140} cy={128} rx={30} ry={11} dur={2.2} peak={0.34} />}
@@ -767,7 +799,7 @@ function Causalidad({ isDark }: SlideProps) {
             ))}
           </div>
         </div>
-        <Footer isDark={isDark}>Un suceso rarísimo deja de sorprenderte <strong>la segunda vez</strong>: la primera ya reescribió tu norma. Así, una coincidencia se convierte en expectativa, y la expectativa en una historia causal.</Footer>
+        <Footer g="footer" isDark={isDark}>Un suceso rarísimo deja de sorprenderte <strong>la segunda vez</strong>: la primera ya reescribió tu norma. Así, una coincidencia se convierte en expectativa, y la expectativa en una historia causal.</Footer>
       </div>
     </Shell>
   );
@@ -791,7 +823,7 @@ function Sustitucion({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex items-center">
-            <svg viewBox="0 0 420 300" className="w-full h-full overflow-visible" aria-label="Una pregunta difícil es reemplazada por una fácil">
+            <svg role="img" viewBox="0 0 420 300" className="w-full h-full overflow-visible" aria-label="Una pregunta difícil es reemplazada por una fácil">
               <SceneDefs id="sus" isDark={isDark} />
               <Float amp={3} dur={4.6}><g filter="url(#sus-sh)"><IsoBox cx={120} cy={90} s={62} h={54} f={SLATE(isDark)} /></g></Float>
               <text x={120} y={32} textAnchor="middle" fontSize={12} fontWeight={900} fill={t.muted}>Pregunta objetivo</text>
@@ -837,7 +869,7 @@ function Representatividad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 520 250" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Por cada bibliotecario hay más de veinte agricultores">
+            <svg role="img" viewBox="0 0 520 250" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Por cada bibliotecario hay más de veinte agricultores">
               <SceneDefs id="rep" isDark={isDark} />
               <IsoFloor cx={260} cy={150} s={250} fill={t.floor} />
               <g>
@@ -876,7 +908,7 @@ function Representatividad({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Lo que se ignora</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>La <strong>tasa base</strong>: cuántos hay de cada categoría en la población. Si los agricultores superan a los bibliotecarios en más de veinte a uno, lo probable es que un hombre metódico y ordenado esté en un tractor, no en un mostrador.</p>
             </div>
-            <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+            <div data-g="costo" className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>Dónde te cuesta caro:</strong> al contratar. Un candidato que "tiene todo el perfil" puede ser menos probable que uno corriente, si el perfil es raro y el historial objetivo dice otra cosa.</p>
             </div>
           </div>
@@ -904,7 +936,7 @@ function Disponibilidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex items-center">
-            <svg viewBox="0 0 440 272" className="w-full h-full overflow-visible" aria-label="Lo vívido se recupera rápido; lo frecuente, no siempre">
+            <svg role="img" viewBox="0 0 440 272" className="w-full h-full overflow-visible" aria-label="Lo vívido se recupera rápido; lo frecuente, no siempre">
               <SceneDefs id="dis" isDark={isDark} />
               <PulseDisc cx={130} cy={176} rx={62} ry={19} dur={1.5} peak={0.34} />
               <Float amp={9} dur={1.4}><g filter="url(#dis-sh)"><IsoBox cx={130} cy={140} s={54} h={34} f={BRAND} /></g></Float>
@@ -919,7 +951,7 @@ function Disponibilidad({ isDark }: SlideProps) {
             </svg>
           </div>
           <div className="lg:w-[52%] flex flex-col gap-3 justify-center">
-            <p className={microLabel(isDark)}>¿Cuál ocurre más? Toca para comparar</p>
+            <p data-nunca className={microLabel(isDark)}>¿Cuál ocurre más? Toca para comparar</p>
             {pares.map((x, k) => (
               <motion.button key={x.a} whileHover={{ x: 4 }} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl flex items-center gap-2 ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <span className={`text-sm flex-1 ${k === i && x.gana === 'a' ? 'font-black text-[#ff851d]' : textMuted(isDark)}`}>{x.a}</span>
@@ -928,13 +960,13 @@ function Disponibilidad({ isDark }: SlideProps) {
               </motion.button>
             ))}
             <AnimatePresence mode="wait">
-              <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-3.5 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+              <motion.div key={i} data-g="nota" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-3.5 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
                 <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{p.nota}</p>
               </motion.div>
             </AnimatePresence>
           </div>
         </div>
-        <Footer isDark={isDark}>En una empresa, esto se traduce en presupuestos de riesgo torcidos: mucha protección contra el desastre espectacular y poca contra la amenaza silenciosa que de verdad desgasta.</Footer>
+        <Footer g="footer" isDark={isDark}>En una empresa, esto se traduce en presupuestos de riesgo torcidos: mucha protección contra el desastre espectacular y poca contra la amenaza silenciosa que de verdad desgasta.</Footer>
       </div>
     </Shell>
   );
@@ -953,7 +985,7 @@ function Afectiva({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 360 250" className="w-full h-full max-h-[265px] overflow-visible" aria-label="El afecto llega antes que el análisis">
+            <svg role="img" viewBox="0 0 360 250" className="w-full h-full max-h-[265px] overflow-visible" aria-label="El afecto llega antes que el análisis">
               <SceneDefs id="afe" isDark={isDark} />
               <IsoFloor cx={180} cy={150} s={170} fill={t.floor} />
               <motion.g animate={{ y: afecto ? -34 : 0 }} transition={{ type: 'spring', stiffness: 70, damping: 11 }}>
@@ -983,7 +1015,7 @@ function Afectiva({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Cómo detectarlo en una reunión</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Escucha si la respuesta contesta la pregunta. Si alguien aprueba una inversión porque «el producto se ve increíble», puedes decirlo con nombre y apellido: <strong>eso es una sustitución de preguntas guiada por el afecto</strong>.</p>
             </div>
-            <p className={`text-sm italic ${textMuted(isDark)}`}>«La emoción no interfiere con la decisión. En la mayoría de los casos, la emoción <strong>es</strong> la decisión.»</p>
+            <p data-g="cita" className={`text-sm italic ${textMuted(isDark)}`}>«La emoción no interfiere con la decisión. En la mayoría de los casos, la emoción <strong>es</strong> la decisión.»</p>
           </div>
         </div>
       </div>
@@ -1010,7 +1042,7 @@ function Halo({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={alan} onClick={() => setQuien('alan')}>Alan</Pill>
               <Pill isDark={isDark} on={!alan} onClick={() => setQuien('ben')}>Ben</Pill>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div data-g="chips" className="flex flex-wrap gap-2">
               {lista.map((a, i) => (
                 <motion.span
                   key={`${quien}-${a}`}
@@ -1024,7 +1056,7 @@ function Halo({ isDark }: SlideProps) {
               ))}
             </div>
             <AnimatePresence mode="wait">
-              <motion.div key={quien} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={quien} data-g="testarudo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Cómo se lee «testarudo» en cada caso</p>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{alan
                   ? 'En alguien que ya te pareció inteligente y diligente, ser testarudo suena a firmeza de carácter: defiende sus ideas porque tiene buenas razones.'
@@ -1045,7 +1077,7 @@ function Halo({ isDark }: SlideProps) {
                 <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" />En una entrevista: puntúa dimensiones por separado, sin mirar las anteriores.</li>
               </ul>
             </div>
-            <p className={`text-sm ${textMuted(isDark)}`}>La regla general: <strong>para que varias opiniones sumen información, tienen que ser independientes</strong>. Si la primera contagia a las demás, no tienes cinco juicios: tienes uno repetido cinco veces.</p>
+            <p data-g="regla" className={`text-sm ${textMuted(isDark)}`}>La regla general: <strong>para que varias opiniones sumen información, tienen que ser independientes</strong>. Si la primera contagia a las demás, no tienes cinco juicios: tienes uno repetido cinco veces.</p>
           </div>
         </div>
       </div>
@@ -1072,7 +1104,7 @@ function Wysiati({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg viewBox="0 0 520 300" className="w-full h-full max-h-[320px] overflow-visible" aria-label="Un foco ilumina tres piezas; el resto queda en la sombra mientras la historia se arma igual">
+            <svg role="img" viewBox="0 0 520 300" className="w-full h-full max-h-[320px] overflow-visible" aria-label="Un foco ilumina tres piezas; el resto queda en la sombra mientras la historia se arma igual">
               <SceneDefs id="wys" isDark={isDark} />
               <IsoFloor cx={200} cy={170} s={230} fill={t.floor} />
 
@@ -1155,7 +1187,7 @@ function Wysiati({ isDark }: SlideProps) {
                 </div>
               ))}
             </div>
-            <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+            <div data-g="desarma" className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>La pregunta que lo desarma:</strong> «¿qué tendría que ser verdad para que esta conclusión fuera falsa, y lo habríamos visto en estos datos?».</p>
             </div>
           </div>
@@ -1187,7 +1219,7 @@ function Basicas({ isDark }: SlideProps) {
           {caso === 'rostros' ? (
             <motion.div key="r" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
               <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center">
-                <svg viewBox="0 0 320 210" className="w-full h-full max-h-[230px] overflow-visible" aria-label="Siete de cada diez elecciones predichas por la cara">
+                <svg role="img" viewBox="0 0 320 210" className="w-full h-full max-h-[230px] overflow-visible" aria-label="Siete de cada diez elecciones predichas por la cara">
                   <SceneDefs id="bas" isDark={isDark} />
                   {Array.from({ length: 10 }, (_, i) => {
                     const col = i % 5;
@@ -1221,7 +1253,7 @@ function Basicas({ isDark }: SlideProps) {
             </motion.div>
           ) : (
             <motion.div key="a" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-              <div className={`lg:w-[48%] p-5 rounded-3xl flex flex-col justify-center gap-3 ${panelClass(isDark)}`}>
+              <div data-g="aves" className={`lg:w-[48%] p-5 rounded-3xl flex flex-col justify-center gap-3 ${panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Cuánto estaría dispuesto a pagar para salvar…</p>
                 {aves.map((a, i) => <Bar key={a.n} isDark={isDark} label={a.n} value={a.v} max={100} suffix=" USD" delay={0.15 * i} brand={i === 2} />)}
                 <p className={`text-xs ${textMuted(isDark)}`}>Cien veces más aves, prácticamente el mismo dinero.</p>
@@ -1231,7 +1263,7 @@ function Basicas({ isDark }: SlideProps) {
                   <p className={microLabel(isDark)}>Promedios sí, sumas no</p>
                   <p className={`text-sm leading-relaxed ${textMuted(isDark)}`}>El Sistema 1 maneja muy bien <strong>prototipos y promedios</strong>, y es casi ciego a las <strong>variables de suma</strong>. Quien responde no está valorando una cantidad de aves: está pagando por la imagen de un ave cubierta de petróleo, y esa imagen es la misma en los tres casos.</p>
                 </div>
-                <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
+                <div data-g="porEso" className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
                   <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>Por eso funciona</strong> la campaña con una sola historia y un solo rostro, y fracasa la que informa la cifra total de víctimas. No es frialdad: es cómo está hecha la maquinaria.</p>
                 </div>
               </div>
@@ -1268,7 +1300,7 @@ function Replicacion({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Qué sobrevivió" highlight="a la crisis de replicación" subtitle="Esto no está en el libro, publicado en 2011. Es la parte más importante de la clase: cómo se comportó esta ciencia cuando se la puso a prueba.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-4">
-          <div className="lg:w-[58%] grid grid-cols-3 gap-2.5">
+          <div data-g="cols" className="lg:w-[58%] grid grid-cols-3 gap-2.5">
             {cols.map((col, k) => (
               <button key={col.k} onClick={() => setI(k)} className={`text-left p-3 rounded-3xl transition-all flex flex-col ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <span className="w-9 h-1.5 rounded-full mb-2" style={{ backgroundColor: col.color }} />
@@ -1294,7 +1326,7 @@ function Replicacion({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>La lección de método es del propio libro: <strong>un resultado sorprendente con pocos sujetos no es un hallazgo, es una hipótesis</strong>. Antes de citar un experimento, pregunta cuántas personas participaron y si alguien lo repitió.</Footer>
+        <Footer g="footer" isDark={isDark}>La lección de método es del propio libro: <strong>un resultado sorprendente con pocos sujetos no es un hallazgo, es una hipótesis</strong>. Antes de citar un experimento, pregunta cuántas personas participaron y si alguien lo repitió.</Footer>
       </div>
     </Shell>
   );
@@ -1318,7 +1350,7 @@ function Vocabulario({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="El objetivo del libro:" highlight="poder nombrar el error" subtitle="Kahneman no promete que dejes de equivocarte. Promete algo más modesto y más útil: que tengas las palabras para reconocer el error mientras ocurre, sobre todo en los demás.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[40%] flex flex-col gap-1.5 justify-center">
+          <div data-g="lista" className="lg:w-[40%] flex flex-col gap-1.5 justify-center">
             {frases.map((f, k) => (
               <motion.button key={f.t} whileHover={{ x: 4 }} onMouseEnter={() => setI(k)} onClick={() => setI(k)} className={`text-left px-4 py-2.5 rounded-2xl text-sm font-bold ${k === i ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30' : isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-white shadow-md shadow-gray-200/70 text-gray-700'}`}>
                 {f.t}
@@ -1327,7 +1359,7 @@ function Vocabulario({ isDark }: SlideProps) {
           </div>
           <div className="lg:w-[60%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={i} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={`p-6 rounded-3xl ${featuredClass(isDark)}`}>
+              <motion.div key={i} data-g="frase" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={`p-6 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Cómo suena en una reunión</p>
                 <p className={`text-lg md:text-2xl font-bold leading-snug ${heading(isDark)}`}>{frases[i].d}</p>
               </motion.div>
@@ -1338,7 +1370,7 @@ function Vocabulario({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Su frase sobre esto es medio en broma y medio en serio: <strong>esperar un chisme inteligente sobre tus decisiones es mejor motivación para revisarlas</strong> que cualquier propósito de Año Nuevo.</Footer>
+        <Footer g="footer" isDark={isDark}>Su frase sobre esto es medio en broma y medio en serio: <strong>esperar un chisme inteligente sobre tus decisiones es mejor motivación para revisarlas</strong> que cualquier propósito de Año Nuevo.</Footer>
       </div>
     </Shell>
   );

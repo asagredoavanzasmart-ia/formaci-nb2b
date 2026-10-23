@@ -63,9 +63,9 @@ export function Shell({
 }
 
 /* Franja de cierre / insight al pie de una diapositiva (sin contorno). */
-export function Footer({ isDark, children }: { isDark: boolean; children: React.ReactNode }) {
+export function Footer({ isDark, children, g }: { isDark: boolean; children: React.ReactNode; g?: string }) {
   return (
-    <div className={`shrink-0 mt-4 p-3.5 rounded-2xl text-center text-sm md:text-base font-medium ${isDark ? 'bg-white/5 text-gray-300' : 'bg-gradient-to-r from-orange-50 to-rose-50 text-gray-700'}`}>
+    <div data-g={g} className={`shrink-0 mt-4 p-3.5 rounded-2xl text-center text-sm md:text-base font-medium ${isDark ? 'bg-white/5 text-gray-300' : 'bg-gradient-to-r from-orange-50 to-rose-50 text-gray-700'}`}>
       {children}
     </div>
   );
