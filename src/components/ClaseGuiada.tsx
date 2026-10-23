@@ -59,7 +59,7 @@ type Props = {
   isDark: boolean;
   /** Modo reel: la barra ocupa el ancho de la pantalla vertical. */
   compacto?: { izq: number; ancho: number; abajo: number };
-  /** Modo reel activo: las tarjetas se muestran de a una para ahorrar alto. */
+  /** Modo reel activo: las tarjetas narradas se acumulan y se retiran las más antiguas solo si no caben. */
   reel?: boolean;
   /** Número de diapositiva actual y total, para el contador de la barra. */
   indice?: { actual: number; total: number };
@@ -77,7 +77,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
   const saltar = datos.saltar ?? [];
   const silenciar = datos.silenciar ?? [];
 
-  const r = useRef({ cur: slideActualId, auto: slideActualId, pedido: 0, fired: new Set<string>(), lastT: 0, foco: null as HTMLElement | null, ultimoSeg: -1, vol: 1 });
+  const r = useRef({ cur: slideActualId, auto: slideActualId, pedido: 0, fired: new Set<string>(), lastT: 0, foco: null as HTMLElement | null, ultimoSeg: -1, vol: 1, recorte: 0, recorteSlide: '', reveladas: 0 });
   r.current.cur = slideActualId;
   const irARef = useRef(irA);
   irARef.current = irA;
@@ -195,7 +195,8 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
                 if (c.foco !== undefined) foco = c.foco;
                 const clave = `${destino}:${i}`;
                 const objetivoClic = c.clicEn ?? (c.clic ? c.foco : undefined);
-                if (objetivoClic && t >= c.t + 0.7 && !k.fired.has(clave)) {
+                // Tras un cambio de diapositiva se espera a que salga la anterior: si no, el clic cae en sus elementos.
+                if (objetivoClic && t >= c.t + 0.7 && ahora - k.pedido > 600 && !k.fired.has(clave)) {
                   const el = buscar(objetivoClic);
                   const boton = el && (el.matches('button') ? el : el.querySelector('button'));
                   if (boton) { (boton as HTMLElement).click(); k.fired.add(clave); }
@@ -209,14 +210,23 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
             });
             // Lo que nunca se narra (p. ej. instrucciones para interactuar) permanece oculto.
             document.querySelectorAll('[data-nunca]').forEach((e) => e.classList.add('g-colapso'));
-            // En reel, las tarjetas de texto se muestran de a una: solo las de la última señal alcanzada.
+            // En reel, las tarjetas ya narradas se acumulan; solo si no caben se retiran las más antiguas.
             let tarjetas = new Set<string>();
+            let reveladas: string[] = [];
+            let ultimas: string[] = [];
             if (reel) {
-              let ultimas: string[] = [];
               cues.forEach((c) => {
-                if (c.t <= t) { const cs = (c.mostrar ?? []).filter((g) => !esEstructural(g)); if (cs.length) ultimas = cs; }
+                if (c.t > t) return;
+                const cs = (c.mostrar ?? []).filter((g) => !esEstructural(g));
+                if (!cs.length) return;
+                ultimas = cs;
+                cs.forEach((g) => { if (!reveladas.includes(g)) reveladas.push(g); });
               });
-              tarjetas = new Set(ultimas);
+              if (k.recorteSlide !== destino || reveladas.length < k.reveladas) { k.recorteSlide = destino; k.recorte = 0; }
+              k.reveladas = reveladas.length;
+              k.recorte = Math.min(k.recorte, Math.max(0, reveladas.length - ultimas.length));
+              tarjetas = new Set(reveladas.slice(k.recorte));
+              ultimas.forEach((g) => tarjetas.add(g));
             }
             ocultables.forEach((g) => {
               const el = buscar(g);
@@ -227,6 +237,12 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
               el.classList.toggle('g-oculto', reel ? false : !ver);
               el.classList.toggle('g-visible', ver);
             });
+            if (reel) {
+              // Si lo visible exige achicar la diapositiva por debajo del 82 %, se retira la tarjeta más antigua (una por cuadro).
+              const caja = document.querySelector<HTMLElement>('[data-ajuste-caja]');
+              const dentro = document.querySelector<HTMLElement>('[data-ajuste-dentro]');
+              if (caja && dentro && caja.clientHeight && dentro.offsetHeight / caja.clientHeight > 1 / 0.82 && k.recorte < reveladas.length - ultimas.length) k.recorte++;
+            }
             // Sellos y pies de gráfico sueltos: el pie aparece con el primer elemento y el sello con el último.
             const reveladores = cues.filter((c) => c.mostrar?.some((g) => g !== 'titulo'));
             const tPie = reveladores[0]?.t ?? 0;

@@ -572,7 +572,7 @@ function NeedPayoff({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Lo que logran las de necesidad-beneficio</p>
               <ul className={`text-sm space-y-1.5 mt-1 ${textMuted(isDark)}`}>
                 <li className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />Llevan la atención a la solución y crean un clima positivo.</li>
-                <li className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />El <strong>cliente</strong> enuncia los beneficios: «nos ayudaría a mejorar la atención».</li>
+                <li className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" /><span>El <strong>cliente</strong> enuncia los beneficios: «nos ayudaría a mejorar la atención».</span></li>
                 <li className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />Ese cliente luego le vende la idea a sus colegas con sus propias palabras.</li>
               </ul>
             </div>

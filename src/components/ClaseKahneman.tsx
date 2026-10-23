@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, CheckCircle2, XCircle, AlertTriangle, Eye, Zap, Brain } from 'lucide-react';
 import { Shell, panelClass, textMuted, microLabel, Footer, Pill, featuredClass, Quiz } from './slideKit';
 import type { QuizQ } from './slideKit';
 import {
   ORANGE, PINK, BRAND, PEACH, NEUTRAL, SLATE, sceneTone, SceneDefs, IsoBox, IsoFloor,
-  Cylinder, Orb, Float, Lift, Traveler, PulseDisc, hop, Persona,
+  Orb, Float, Lift, Traveler, PulseDisc, hop, Persona,
 } from './scene3d';
 import type { Faces } from './scene3d';
 
@@ -101,35 +101,49 @@ function Origen({ isDark }: SlideProps) {
     { year: '2002', title: 'Premio Nobel de Economía', text: 'Tversky lo habría compartido, pero había fallecido en 1996 y el Nobel no se concede póstumamente.' },
   ];
   const [active, setActive] = useState(1);
+  // Sendero que sube: cada hito es un banderín; los dos autores lo recorren juntos.
+  const pts: [number, number][] = [[90, 204], [215, 164], [340, 128], [465, 96]];
+  const ruta: [number, number][] = [[28, 226], ...pts, [536, 76]];
+  const camino = 'M ' + ruta.map((p) => p.join(' ')).join(' L ');
+  const largos = ruta.slice(1).map((p, k) => Math.hypot(p[0] - ruta[k][0], p[1] - ruta[k][1]));
+  const total = largos.reduce((a, b) => a + b, 0);
+  const avance = largos.slice(0, active + 1).reduce((a, b) => a + b, 0) / total;
+  const [wx, wy] = pts[active];
   return (
     <Shell isDark={isDark} title="Una colaboración que cambió" highlight="la idea de racionalidad" subtitle="En los años setenta las ciencias sociales asumían que el humano es racional y que sus desvíos los causan las emociones. Kahneman y Tversky mostraron otra cosa.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[52%] min-h-0 flex items-center">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
             <svg role="img" viewBox="0 0 560 250" className="w-full h-full overflow-visible" aria-label="Cuatro hitos: 1969, 1974, 1979 y 2002">
               <SceneDefs id="ori" isDark={isDark} />
+              <path d={camino} fill="none" stroke={t.floor} strokeWidth={30} strokeLinecap="round" strokeLinejoin="round" />
+              <motion.path d={camino} fill="none" stroke="url(#ori-brand)" strokeOpacity={0.3} strokeWidth={30} strokeLinecap="round" strokeLinejoin="round" initial={false} animate={{ pathLength: avance }} transition={{ type: 'spring', stiffness: 40, damping: 14 }} />
+              <path d={camino} fill="none" stroke={t.muted} strokeOpacity={0.35} strokeWidth={2} strokeDasharray="7 11" />
               {hitos.map((h, i) => {
-                const x = 85 + i * 130;
-                const alt = 34 + i * 30;
-                const cy = 180 - alt;
+                const [x, y] = pts[i];
                 const on = i === active;
+                const recorrido = i < active;
                 return (
-                  <Lift key={h.year} on={on} dimmed={false} onClick={() => setActive(i)} lift={12}>
-                    {on && <PulseDisc cx={x} cy={cy + alt + 22} rx={54} ry={16} dur={2.3} peak={0.3} />}
-                    <Float amp={on ? 6 : 2} dur={on ? 2.4 : 4} delay={i * 0.3}>
-                      <g filter="url(#ori-sh)"><IsoBox cx={x} cy={cy} s={44} h={alt} f={on ? BRAND : i === 3 ? PEACH : NEUTRAL(isDark)} /></g>
-                      <text x={x} y={cy + 6} textAnchor="middle" fontSize={15} fontWeight={900} fill={on || i === 3 ? '#fff' : isDark ? '#fff' : '#374151'}>{h.year}</text>
-                    </Float>
+                  <Lift key={h.year} on={on} dimmed={false} onClick={() => setActive(i)} lift={8}>
+                    {on && <PulseDisc cx={x} cy={y} rx={34} ry={11} dur={2.2} peak={0.32} />}
+                    <g filter="url(#ori-sh)"><IsoBox cx={x} cy={y - 8} s={15} h={9} f={on ? BRAND : recorrido ? PEACH : NEUTRAL(isDark)} /></g>
+                    <rect x={x - 1.5} y={y - 66} width={3} height={58} rx={1.5} fill={on ? ORANGE : t.muted} />
+                    <path d={`M ${x + 1.5} ${y - 66} L ${x + 52} ${y - 57} L ${x + 1.5} ${y - 47} Z`} fill={on ? 'url(#ori-brand)' : recorrido ? PEACH.top : isDark ? '#3a3a3a' : '#ffffff'} filter="url(#ori-sh)" />
+                    <text x={x + 7} y={y - 53} fontSize={11.5} fontWeight={900} fill={on ? '#fff' : recorrido ? '#7a3a12' : t.text}>{h.year}</text>
+                    {i === 3 && <Orb id="ori" cx={x} cy={y - 74} r={8} neutral={!on} />}
                   </Lift>
                 );
               })}
-              {hitos.slice(0, -1).map((_, i) => (
-                <Traveler key={i} id="ori" path={hop([85 + i * 130, 180 - (34 + i * 30) - 26], [215 + i * 130, 180 - (34 + (i + 1) * 30) - 26], 24)} dur={1.3} delay={i * 0.4} repeatDelay={1.3} r={5} />
-              ))}
+              <motion.g initial={false} animate={{ x: wx - 30, y: wy + 6 }} transition={{ type: 'spring', stiffness: 50, damping: 13 }}>
+                <motion.g animate={{ opacity: active === 3 ? 0.22 : 1 }} transition={{ duration: 0.8 }}>
+                  <Persona id="ori" cx={-16} cy={-5} s={0.62} body={SLATE(isDark)} accessory="gear" hair="#4a4a4a" />
+                </motion.g>
+                <Persona id="ori" cx={4} cy={2} s={0.62} body={BRAND} accessory="heart" hair="#2b1a12" />
+              </motion.g>
               <text x={280} y={238} textAnchor="middle" fontSize={12} fontWeight={800} fill={t.muted}>De un seminario en Jerusalén al Nobel</text>
             </svg>
           </div>
-          <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
               <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="hito" className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{hitos[active].year}</p>
@@ -153,6 +167,41 @@ function Origen({ isDark }: SlideProps) {
 /* 3. Los dos sistemas                                                 */
 /* ------------------------------------------------------------------ */
 
+/* Ícono de cada dimensión dentro de la burbuja de pensamiento de cada sistema. */
+function IconoDimension({ k, s1, cx, cy, isDark }: { k: number; s1: boolean; cx: number; cy: number; isDark: boolean }) {
+  const c = s1 ? ORANGE : isDark ? '#94a3b8' : SLATE(isDark).left;
+  const o = (x: number, y: number) => `${cx + x},${cy + y}`;
+  const giro = { transformOrigin: `${cx}px ${cy}px` };
+  switch (k) {
+    case 0: return s1
+      ? <motion.polygon points={[o(3, -16), o(-9, 2), o(-1, 2), o(-4, 16), o(9, -3), o(1, -3)].join(' ')} fill="url(#dos-brandv)" animate={{ opacity: [1, 0.35, 1, 1] }} transition={{ duration: 0.9, repeat: Infinity }} />
+      : <motion.g animate={{ rotate: [0, 0, 180] }} transition={{ duration: 3.2, times: [0, 0.8, 1], repeat: Infinity }} style={giro}><polygon points={[o(-10, -14), o(10, -14), o(0, 0)].join(' ')} fill={c} /><polygon points={[o(-10, 14), o(10, 14), o(0, 0)].join(' ')} fill={SLATE(isDark).right} /></motion.g>;
+    case 1: return s1
+      ? <motion.ellipse cx={cx} cy={cy} rx={6} ry={15} fill={PEACH.left} animate={{ rotate: [20, 40, 20], y: [-3, 3, -3] }} transition={{ duration: 2.4, repeat: Infinity }} style={giro} />
+      : <motion.g animate={{ y: [0, 2, 0] }} transition={{ duration: 1.6, repeat: Infinity }}><path d={`M ${cx - 7} ${cy - 5} Q ${cx} ${cy - 18} ${cx + 7} ${cy - 5}`} stroke={c} strokeWidth={4} fill="none" /><rect x={cx - 13} y={cy - 6} width={26} height={20} rx={7} fill={c} /></motion.g>;
+    case 2: if (s1) {
+      const nodos: [number, number][] = [[-13, -8], [12, -11], [-2, 10], [14, 9]];
+      return <g>{[[0, 1], [0, 2], [1, 2], [2, 3], [1, 3]].map(([a, b]) => <line key={`${a}${b}`} x1={cx + nodos[a][0]} y1={cy + nodos[a][1]} x2={cx + nodos[b][0]} y2={cy + nodos[b][1]} stroke={c} strokeOpacity={0.45} strokeWidth={2} />)}{nodos.map(([x, y], n) => <motion.circle key={n} cx={cx + x} cy={cy + y} r={4.5} fill={n % 2 ? PINK : ORANGE} animate={{ scale: [1, 1.35, 1] }} transition={{ duration: 0.8, delay: n * 0.15, repeat: Infinity }} style={{ transformOrigin: `${cx + x}px ${cy + y}px` }} />)}</g>;
+    }
+      return <g>{[0, 1, 2].map((n) => <motion.g key={n} animate={{ opacity: [0.2, 1, 1, 0.2] }} transition={{ duration: 3, times: [0, 0.15 + n * 0.2, 0.85, 1], repeat: Infinity }}><circle cx={cx - 12} cy={cy - 10 + n * 10} r={3} fill={c} /><rect x={cx - 6} y={cy - 12 + n * 10} width={20} height={4} rx={2} fill={c} /></motion.g>)}</g>;
+    case 3: return s1
+      ? <g><circle cx={cx} cy={cy} r={14} fill={PEACH.top} /><motion.ellipse cx={cx} cy={cy} ry={14} fill="none" stroke={ORANGE} strokeWidth={2.5} animate={{ rx: [14, 2, 14] }} transition={{ duration: 2.6, repeat: Infinity, ease: 'linear' }} /><line x1={cx - 14} x2={cx + 14} y1={cy} y2={cy} stroke={ORANGE} strokeWidth={2.5} /></g>
+      : <g><path d={`M ${cx} ${cy - 15} L ${cx + 12} ${cy - 10} L ${cx + 12} ${cy + 1} Q ${cx + 12} ${cy + 11} ${cx} ${cy + 16} Q ${cx - 12} ${cy + 11} ${cx - 12} ${cy + 1} L ${cx - 12} ${cy - 10} Z`} fill={c} /><path d={`M ${cx - 5} ${cy} L ${cx - 1} ${cy + 4} L ${cx + 6} ${cy - 4}`} stroke="#fff" strokeWidth={2.5} fill="none" strokeLinecap="round" /></g>;
+    case 4: return s1
+      ? <motion.path d={`M ${cx} ${cy} C ${cx - 6} ${cy - 11}, ${cx - 18} ${cy - 11}, ${cx - 18} ${cy} C ${cx - 18} ${cy + 11}, ${cx - 6} ${cy + 11}, ${cx} ${cy} C ${cx + 6} ${cy - 11}, ${cx + 18} ${cy - 11}, ${cx + 18} ${cy} C ${cx + 18} ${cy + 11}, ${cx + 6} ${cy + 11}, ${cx} ${cy} Z`} fill="none" stroke="url(#dos-brand)" strokeWidth={4} strokeDasharray="14 8" animate={{ strokeDashoffset: [0, -44] }} transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }} />
+      : <g><rect x={cx - 15} y={cy - 9} width={27} height={18} rx={4} fill={isDark ? '#3a3a3a' : '#e5e7eb'} /><rect x={cx + 12} y={cy - 4} width={4} height={8} rx={1.5} fill={c} /><motion.rect x={cx - 12} y={cy - 6} height={12} rx={2} fill={c} animate={{ width: [21, 3] }} transition={{ duration: 3, repeat: Infinity }} /></g>;
+    case 5: return s1
+      ? <motion.text x={cx} y={cy + 11} textAnchor="middle" fontSize={32} fontWeight={900} fill={ORANGE} animate={{ scale: [0.7, 1.15, 1] }} transition={{ duration: 0.9, repeat: Infinity, repeatDelay: 0.6 }} style={giro}>!</motion.text>
+      : <motion.text x={cx} y={cy + 11} textAnchor="middle" fontSize={32} fontWeight={900} fill={c} animate={{ rotate: [-10, 10, -10] }} transition={{ duration: 2.6, repeat: Infinity }} style={giro}>?</motion.text>;
+    case 6: return s1
+      ? <g><circle cx={cx} cy={cy - 8} r={6} fill={ORANGE} /><path d={`M ${cx - 10} ${cy + 14} Q ${cx - 10} ${cy} ${cx} ${cy} Q ${cx + 10} ${cy} ${cx + 10} ${cy + 14} Z`} fill={PINK} /></g>
+      : <text x={cx} y={cy + 11} textAnchor="middle" fontSize={30} fontWeight={900} fill={c}>Σ</text>;
+    default: return s1
+      ? <g><circle cx={cx} cy={cy} r={15} fill={PEACH.top} /><circle cx={cx} cy={cy} r={9} fill={PEACH.left} /><circle cx={cx} cy={cy} r={3.5} fill="#fff" /><motion.circle r={4} fill={PINK} animate={{ cx: [cx, cx + 9, cx + 9], cy: [cy - 18, cy - 7, cy - 7] }} transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 0.6 }} /></g>
+      : <g>{[0, 1, 2].map((n) => <motion.text key={n} x={cx - 8 + n * 8} y={cy + 8 - n * 7} fontSize={14 - n * 2} fontWeight={900} fill={c} animate={{ opacity: [0, 1, 0] }} transition={{ duration: 2, delay: n * 0.4, repeat: Infinity }}>z</motion.text>)}</g>;
+  }
+}
+
 function DosSistemas({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const filas = [
@@ -171,10 +220,23 @@ function DosSistemas({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Dos personajes" highlight="en una misma mente" subtitle="Kahneman los presenta como dos agentes de ficción. No son zonas del cerebro: son una forma útil de nombrar dos modos de operar. Recorre cada dimensión.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[40%] min-h-0 flex items-center">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
             <svg role="img" viewBox="0 0 400 260" className="w-full h-full overflow-visible" aria-label="Sistema 1 y Sistema 2 como dos figuras">
               <SceneDefs id="dos" isDark={isDark} />
               <IsoFloor cx={200} cy={200} s={190} fill={t.floor} />
+              {/* Lo que piensa cada uno sobre la dimensión elegida */}
+              {[120, 280].map((x, s) => (
+                <g key={x}>
+                  <circle cx={x + (s ? -16 : 16)} cy={96} r={3.5} fill={isDark ? '#3a3a3a' : '#fff'} filter="url(#dos-sh)" />
+                  <circle cx={x + (s ? -8 : 8)} cy={84} r={5.5} fill={isDark ? '#3a3a3a' : '#fff'} filter="url(#dos-sh)" />
+                  <circle cx={x} cy={44} r={31} fill={isDark ? '#2f2f2f' : '#fff'} filter="url(#dos-sh)" />
+                  <AnimatePresence mode="wait">
+                    <motion.g key={active} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }} transition={{ type: 'spring', stiffness: 260, damping: 16 }} style={{ transformOrigin: `${x}px 44px` }}>
+                      <IconoDimension k={active} s1={s === 0} cx={x} cy={44} isDark={isDark} />
+                    </motion.g>
+                  </AnimatePresence>
+                </g>
+              ))}
               <g>
                 <PulseDisc cx={120} cy={200} rx={48} ry={15} dur={1.3} peak={0.3} />
                 <Float amp={7} dur={1.9}><Persona id="dos" cx={120} cy={198} s={1.3} body={S1_BODY} accessory="heart" hair="#2b1a12" /></Float>
@@ -188,7 +250,7 @@ function DosSistemas({ isDark }: SlideProps) {
               </g>
             </svg>
           </div>
-          <div className="lg:w-[60%] flex flex-col gap-2.5 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2.5 justify-center">
             <div className="flex flex-wrap gap-1.5">
               {filas.map((x, i) => <Pill key={x.dim} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{x.dim}</Pill>)}
             </div>
@@ -227,31 +289,62 @@ function Interaccion({ isDark }: SlideProps) {
     { n: 'Control', text: 'El Sistema 2 reprime el impulso y aplica una regla… o sucumbe por sobrecarga o pereza.' },
   ];
   const [active, setActive] = useState(0);
+  const tension = [0.12, 0.42, 0.78, 0.96][active];
   return (
     <Shell isDark={isDark} title="El Sistema 1 no tiene" highlight="interruptor" subtitle="Ambos están siempre encendidos. Lo que cambia es cuánta atención entrega el Sistema 2, y su presupuesto es estrictamente limitado.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex items-center">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
             <svg role="img" viewBox="0 0 520 290" className="w-full h-full overflow-visible" aria-label="Cuatro pasos de la interacción entre sistemas">
               <SceneDefs id="int" isDark={isDark} />
+              <IsoFloor cx={260} cy={196} s={215} fill={t.floor} />
+              {/* Medidor de tensión cognitiva: sube con cada paso */}
+              <text x={260} y={22} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={active >= 2 ? ORANGE : t.muted}>tensión cognitiva</text>
+              <path d="M 218 80 A 42 42 0 0 1 302 80" fill="none" stroke={isDark ? '#3a3a3a' : t.floorSide} strokeWidth={10} strokeLinecap="round" />
+              <motion.path d="M 218 80 A 42 42 0 0 1 302 80" fill="none" stroke="url(#int-brand)" strokeWidth={10} strokeLinecap="round" initial={false} animate={{ pathLength: tension }} transition={{ type: 'spring', stiffness: 45, damping: 12 }} />
+              <motion.polygon points="256.5,80 263.5,80 260,46" fill={t.text} initial={false} animate={{ rotate: -90 + 180 * tension }} transition={{ type: 'spring', stiffness: 45, damping: 10 }} style={{ transformOrigin: '260px 80px' }} />
+              <circle cx={260} cy={80} r={6} fill={ORANGE} />
+              {/* Sistema 1: siempre encendido */}
+              <PulseDisc cx={118} cy={200} rx={42} ry={13} dur={1.3} peak={0.3} />
+              <Float amp={5} dur={1.9}><Persona id="int" cx={118} cy={198} s={1.1} body={S1_BODY} accessory="heart" hair="#2b1a12" /></Float>
+              {/* Sistema 2: dormita hasta la movilización */}
+              {active >= 2 && <PulseDisc cx={402} cy={200} rx={42} ry={13} dur={2} peak={0.3} />}
+              <motion.g animate={{ opacity: active >= 2 ? 1 : 0.45, y: active >= 2 ? -6 : 0 }} transition={{ type: 'spring', stiffness: 60, damping: 12 }}>
+                <Persona id="int" cx={402} cy={198} s={1.1} body={S2_BODY(isDark)} accessory="gear" hair="#4a4a4a" />
+              </motion.g>
+              {active < 2 && [0, 1].map((k) => (
+                <motion.text key={k} x={430 + k * 10} y={104 - k * 12} fontSize={13 - k * 2} fontWeight={900} fill={t.muted} animate={{ opacity: [0, 1, 0], y: [0, -8, -14] }} transition={{ duration: 2.2, delay: k * 0.6, repeat: Infinity }}>z</motion.text>
+              ))}
+              {/* Sugerencias del 1 al 2; en el control, una barrera las detiene */}
+              {[0, 1, 2].map((k) => (
+                <Traveler key={`${active === 3 ? 'b' : 'a'}${k}`} id="int" path={active === 3 ? hop([136, 132], [300, 138], 14) : hop([136, 132], [384, 132], 14)} dur={1.4} delay={k * 0.47} repeatDelay={0} r={4.5} color={active === 1 && k === 1 ? PINK : active === 3 ? '#94a3b8' : ORANGE} />
+              ))}
+              {active === 1 && (
+                <motion.g initial={{ scale: 0 }} animate={{ scale: [1, 1.12, 1] }} transition={{ duration: 1, repeat: Infinity }} style={{ transformOrigin: '260px 150px' }}>
+                  <circle cx={260} cy={150} r={12} fill={PINK} filter="url(#int-sh)" />
+                  <text x={260} y={155} textAnchor="middle" fontSize={15} fontWeight={900} fill="#fff">!</text>
+                </motion.g>
+              )}
+              {active === 3 && (
+                <motion.g initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 120, damping: 12 }}>
+                  <g filter="url(#int-sh)"><IsoBox cx={312} cy={112} s={9} h={62} f={BRAND} /></g>
+                </motion.g>
+              )}
+              {/* Los cuatro pasos */}
               {pasos.map((p, i) => {
-                const x = 80 + i * 120;
+                const x = 140 + i * 80;
                 const on = i === active;
                 return (
-                  <Lift key={p.n} on={on} dimmed={!on} onClick={() => setActive(i)} lift={11}>
-                    {on && <PulseDisc cx={x} cy={178 + i * 14} rx={52} ry={16} dur={2.2} peak={0.3} />}
-                    <Float amp={on ? 6 : 2} dur={on ? 2.3 : 4} delay={i * 0.25}>
-                      <g filter="url(#int-sh)"><IsoBox cx={x} cy={150} s={44} h={30 + i * 14} f={on ? BRAND : i < 2 ? PEACH : NEUTRAL(isDark)} /></g>
-                      <text x={x} y={156} textAnchor="middle" fontSize={16} fontWeight={900} fill="#fff">{i + 1}</text>
-                    </Float>
-                    <text x={x} y={276} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={on ? ORANGE : t.muted}>{p.n}</text>
+                  <Lift key={p.n} on={on} dimmed={false} onClick={() => setActive(i)} lift={6}>
+                    <g filter="url(#int-sh)"><IsoBox cx={x} cy={246} s={17} h={11} f={on ? BRAND : i < active ? PEACH : NEUTRAL(isDark)} /></g>
+                    <text x={x} y={250} textAnchor="middle" fontSize={11} fontWeight={900} fill={on ? '#fff' : i < active ? '#7a3a12' : t.text}>{i + 1}</text>
+                    <text x={x} y={282} textAnchor="middle" fontSize={11} fontWeight={800} fill={on ? ORANGE : t.muted}>{p.n}</text>
                   </Lift>
                 );
               })}
-              {pasos.slice(0, -1).map((_, i) => <Traveler key={i} id="int" path={hop([80 + i * 120, 130], [200 + i * 120, 130], 26)} dur={1.2} delay={i * 0.4} repeatDelay={1.4} r={4.5} />)}
             </svg>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
               <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} data-g="paso" className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Paso {active + 1} · {pasos[active].n}</p>
@@ -311,8 +404,8 @@ function Esfuerzo({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="La pupila delata" highlight="el esfuerzo mental" subtitle="Kahneman y Jackson Beatty midieron el pensamiento desde fuera: el tamaño de la pupila funciona como el contador de la luz de la mente.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[42%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 300 220" className="w-full h-full max-h-[250px] overflow-visible" aria-label="La pupila se dilata con el esfuerzo y vuelve a su tamaño al resolver">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 300 220" className="w-full h-full max-h-[250px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="La pupila se dilata con el esfuerzo y vuelve a su tamaño al resolver">
               <SceneDefs id="esf" isDark={isDark} />
               <defs><clipPath id="esf-ecg"><rect x={ECG.x} y={104} width={ECG.ancho} height={92} /></clipPath></defs>
               {/* Ojo: pequeño y arriba; solo cambia la pupila. */}
@@ -335,7 +428,7 @@ function Esfuerzo({ isDark }: SlideProps) {
             </svg>
             <div className="flex gap-2">{etiquetas.map((e, i) => <Pill key={e} isDark={isDark} on={i === fase} onClick={(ev?: React.MouseEvent) => elegir(i, ev)}>{e}</Pill>)}</div>
           </div>
-          <div className="lg:w-[58%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <div data-g="suma3" className={`p-4 rounded-3xl flex flex-col gap-3 ${featuredClass(isDark)}`}>
               <p className={microLabel(isDark)}>Lo que ocurre en el cuerpo durante la tarea "Suma-3"</p>
               <Bar isDark={isDark} label="Dilatación de la pupila" value={50} max={60} suffix="%" delay={0.2} />
@@ -414,11 +507,16 @@ function Perezoso({ isDark }: SlideProps) {
                   <div className="grid grid-cols-2 gap-3">
                     <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a1a1e]' : 'bg-rose-50'}`}>
                       <p className={microLabel(isDark)}>Sistema 1 dice</p>
-                      <p className={`text-base font-black ${heading(isDark)}`}>{c.intuitiva}</p>
+                      <p className={`relative inline-block text-base font-black ${heading(isDark)}`}>
+                        {c.intuitiva}
+                        <motion.span className="absolute left-0 top-1/2 h-[3px] w-full rounded-full bg-[#ef375c]" style={{ originX: 0 }} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.6, duration: 0.45, ease: 'easeOut' }} />
+                      </p>
                     </div>
                     <div className={`p-3 rounded-2xl ${featuredClass(isDark)}`}>
                       <p className={microLabel(isDark)}>Sistema 2 comprueba</p>
-                      <p className="text-base font-black text-[#ff851d]">{c.correcta}</p>
+                      <motion.p className="flex items-center gap-1.5 text-base font-black text-[#ff851d]" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 1.1, type: 'spring', stiffness: 220, damping: 14 }}>
+                        <CheckCircle2 size={17} className="shrink-0 text-emerald-500" />{c.correcta}
+                      </motion.p>
                     </div>
                   </div>
                   <div className={`p-4 rounded-2xl ${panelClass(isDark)}`}>
@@ -454,31 +552,34 @@ function Agotamiento({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Agotamiento del ego:" highlight="decidir cansa, y el cansancio decide" subtitle="Roy Baumeister propuso que el autocontrol, el esfuerzo mental y la regulación emocional beben de un mismo depósito de energía.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[50%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg role="img" viewBox="0 0 480 248" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Las resoluciones favorables caen del 65% a casi 0% entre pausas">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-2">
+            <svg role="img" viewBox="0 0 480 248" className="w-full h-full max-h-[270px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Las resoluciones favorables caen del 65% a casi 0% entre pausas">
               <SceneDefs id="ago" isDark={isDark} />
+              {/* Cada momento de la sesión es una batería: la energía para decidir se va vaciando. */}
               {serie.map((v, i) => {
                 const x = 80 + i * 110;
-                const h = v * 170;
+                const H = 140;
+                const h = Math.max(v * H, 5);
                 const on = i === hora;
+                const bajo = v < 0.2;
                 return (
                   <motion.g key={i} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.12, type: 'spring', stiffness: 90, damping: 13 }}>
                     <Lift on={on} dimmed={false} onClick={() => setHora(i)} lift={8}>
-                      {on && <PulseDisc cx={x} cy={189} rx={46} ry={14} dur={2.2} peak={0.32} />}
-                      <Float amp={on ? 5 : 0} dur={2.6} delay={i * 0.2}>
-                        <g filter="url(#ago-sh)"><IsoBox cx={x} cy={185 - h} s={40} h={Math.max(h, 6)} f={on ? BRAND : i === 0 ? PEACH : NEUTRAL(isDark)} /></g>
-                        <text x={x} y={185 - h - 26} textAnchor="middle" fontSize={15} fontWeight={900} fill={on ? ORANGE : t.text}>{Math.round(v * 100)}%</text>
-                      </Float>
+                      {on && <PulseDisc cx={x} cy={196} rx={46} ry={14} dur={2.2} peak={0.32} color={bajo ? PINK : ORANGE} />}
+                      <g opacity={isDark ? 0.5 : 0.6}><IsoBox cx={x} cy={185 - H} s={34} h={H} f={NEUTRAL(isDark)} /></g>
+                      <IsoBox cx={x} cy={185 - H - 7} s={11} h={6} f={NEUTRAL(isDark)} />
+                      <g filter="url(#ago-sh)"><IsoBox cx={x} cy={185 - h} s={29} h={h} f={on ? BRAND : i === 0 ? PEACH : NEUTRAL(isDark)} /></g>
+                      {bajo && on && <motion.text x={x} y={185 - H / 2} textAnchor="middle" fontSize={22} fontWeight={900} fill={PINK} animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1.4, repeat: Infinity }}>!</motion.text>}
+                      <text x={x} y={185 - H - 26} textAnchor="middle" fontSize={15} fontWeight={900} fill={on ? (bajo ? PINK : ORANGE) : t.text}>{Math.round(v * 100)}%</text>
                     </Lift>
                   </motion.g>
                 );
               })}
-              <Traveler id="ago" path={[[80, 206], [190, 206], [300, 206], [410, 206]]} dur={5} repeatDelay={0.6} r={5} />
               <text x={240} y={240} textAnchor="middle" fontSize={12} fontWeight={800} fill={t.muted}>Libertades condicionales concedidas, según el momento de la sesión</text>
             </svg>
             <div className="flex flex-wrap justify-center gap-1.5">{horas.map((h, i) => <Pill key={h} isDark={isDark} on={i === hora} onClick={() => setHora(i)}>{h}</Pill>)}</div>
           </div>
-          <div className="lg:w-[50%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
               <div className="flex items-center justify-between gap-2 mb-1">
                 <p className={`text-base font-black ${heading(isDark)}`}>El estudio de los jueces en Israel</p>
@@ -518,8 +619,8 @@ function Asociativa({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="La máquina asociativa:" highlight="dos palabras y una cascada" subtitle="Lee estas dos palabras juntas: «Plátanos Vómito». En menos de un segundo tu mente hizo mucho más de lo que crees.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[52%] min-h-0 flex items-center">
-            <svg role="img" viewBox="0 0 510 345" className="w-full h-full max-h-[370px] overflow-visible" aria-label="Un estímulo que activa memoria, emoción, cuerpo e historia">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
+            <svg role="img" viewBox="0 0 510 345" className="w-full h-full max-h-[370px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un estímulo que activa memoria, emoción, cuerpo e historia">
               <SceneDefs id="aso" isDark={isDark} />
               <IsoFloor cx={255} cy={178} s={230} fill={t.floor} />
               {ramas.map((_, i) => <Traveler key={i} id="aso" path={hop([255, 130], pos[i], 28)} dur={1.2} delay={i * 0.3} repeatDelay={1.2} r={i === active ? 6 : 4} color={i === active ? ORANGE : '#94a3b8'} />)}
@@ -529,16 +630,24 @@ function Asociativa({ isDark }: SlideProps) {
               </Float>
               {ramas.map((b, i) => {
                 const on = i === active;
+                const [x, y0] = pos[i];
+                const y = y0 + 22;
+                const tinta = on ? '#fff' : isDark ? '#9ca3af' : '#6b7280';
                 return (
                   <Lift key={b.name} on={on} dimmed={!on} onClick={() => setActive(i)} lift={10}>
-                    <g filter="url(#aso-sh)"><IsoBox cx={pos[i][0]} cy={pos[i][1] + 16} s={34} h={on ? 28 : 18} f={on ? PEACH : NEUTRAL(isDark)} /></g>
-                    <text x={pos[i][0]} y={pos[i][1] + 88} textAnchor="middle" fontSize={12} fontWeight={800} fill={on ? ORANGE : t.text}>{b.name}</text>
+                    {on && <PulseDisc cx={x} cy={y + 36} rx={34} ry={10} dur={1.8} peak={0.3} />}
+                    <circle cx={x} cy={y} r={30} fill={on ? 'url(#aso-orb)' : isDark ? '#333' : '#fff'} filter="url(#aso-sh)" />
+                    {i === 0 && [0, 1, 2].map((n) => <rect key={n} x={x - 13 + n * 4} y={y - 14 + n * 6} width={20} height={14} rx={3} fill={tinta} opacity={0.45 + n * 0.25} />)}
+                    {i === 1 && <g><circle cx={x - 7} cy={y - 5} r={2.8} fill={tinta} /><circle cx={x + 7} cy={y - 5} r={2.8} fill={tinta} /><path d={`M ${x - 10} ${y + 10} q 5 -6 10 0 q 5 6 10 0`} fill="none" stroke={tinta} strokeWidth={2.8} strokeLinecap="round" /><path d={`M ${x - 12} ${y - 12} l 7 3 M ${x + 12} ${y - 12} l -7 3`} stroke={tinta} strokeWidth={2.4} strokeLinecap="round" /></g>}
+                    {i === 2 && <motion.g animate={on ? { rotate: [-6, 6, -6] } : { rotate: 0 }} transition={{ duration: 0.6, repeat: Infinity }} style={{ transformOrigin: `${x}px ${y + 10}px` }}><circle cx={x} cy={y - 9} r={6} fill={tinta} /><path d={`M ${x - 9} ${y + 14} Q ${x - 9} ${y - 2} ${x} ${y - 2} Q ${x + 9} ${y - 2} ${x + 9} ${y + 14} Z`} fill={tinta} /></motion.g>}
+                    {i === 3 && <g><path d={`M ${x - 15} ${y - 12} h 30 a 4 4 0 0 1 4 4 v 14 a 4 4 0 0 1 -4 4 h -18 l -8 7 v -7 h -4 a 4 4 0 0 1 -4 -4 v -14 a 4 4 0 0 1 4 -4 Z`} fill={tinta} />{[0, 1, 2].map((n) => <motion.circle key={n} cx={x - 7 + n * 7} cy={y - 1} r={2.4} fill={on ? ORANGE : isDark ? '#333' : '#fff'} animate={on ? { opacity: [0.2, 1, 0.2] } : { opacity: 1 }} transition={{ duration: 1, delay: n * 0.2, repeat: Infinity }} />)}</g>}
+                    <text x={x} y={y + 52} textAnchor="middle" fontSize={12} fontWeight={800} fill={on ? ORANGE : t.text}>{b.name}</text>
                   </Lift>
                 );
               })}
             </svg>
           </div>
-          <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
               <motion.div key={active} data-g="rama" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Rama activada · {ramas[active].name.toLowerCase()}</p>
@@ -562,27 +671,28 @@ function Asociativa({ isDark }: SlideProps) {
 
 function Priming({ isDark }: SlideProps) {
   const exps = [
-    { id: 'florida', name: 'Efecto Florida', autor: 'John Bargh',
+    { id: 'florida', name: 'Efecto Florida', autor: 'John Bargh', chip: 'Florida · canas · arrugas', efecto: 'camina más despacio',
       estimulo: 'Estudiantes arman frases con palabras asociadas a la vejez: Florida, olvido, canas, arrugas. Nunca aparece la palabra "viejo".',
       resultado: 'Caminaron por el pasillo del laboratorio más despacio que el grupo de control.',
       idea: 'Una idea activada sin conciencia dispara una conducta motora congruente: el efecto ideomotor.' },
-    { id: 'lapiz', name: 'El lápiz entre los dientes', autor: 'Strack y colegas',
+    { id: 'lapiz', name: 'El lápiz entre los dientes', autor: 'Strack y colegas', chip: 'lápiz en los dientes', efecto: 'le parece más divertido',
       estimulo: 'Evaluar tiras cómicas sosteniendo un lápiz con los dientes (fuerza una sonrisa) o con los labios (fuerza un ceño).',
       resultado: 'Quienes "sonreían" calificaron los dibujos como más divertidos.',
       idea: 'El vínculo es bidireccional: la idea mueve el cuerpo y el cuerpo activa la emoción.' },
-    { id: 'dinero', name: 'Primado del dinero', autor: 'Kathleen Vohs',
+    { id: 'dinero', name: 'Primado del dinero', autor: 'Kathleen Vohs', chip: 'billetes flotando', efecto: 'se sienta a 118 cm',
       estimulo: 'Salvapantallas con billetes flotando o frases que mencionan dinero.',
       resultado: 'Más independencia y perseverancia, pero menos conducta prosocial: recogían menos lápices caídos y se sentaban a 118 cm en lugar de 80 cm.',
       idea: 'El símbolo del dinero empuja al individualismo y a la distancia social.' },
-    { id: 'ojos', name: 'La caja de la honestidad', autor: 'Bateson y colegas',
+    { id: 'ojos', name: 'La caja de la honestidad', autor: 'Bateson y colegas', chip: 'unos ojos que miran', efecto: 'paga casi el triple',
       estimulo: 'En una cocina universitaria con pago voluntario por el café, el cartel de precios alterna semanas con flores y semanas con unos ojos que miran.',
       resultado: 'En las semanas de ojos la gente aportó casi el triple.',
       idea: 'Un símbolo de ser observado basta para activar conducta prosocial.' },
-    { id: 'macbeth', name: 'Efecto Lady Macbeth', autor: 'Zhong y Liljenquist',
+    { id: 'macbeth', name: 'Efecto Lady Macbeth', autor: 'Zhong y Liljenquist', chip: 'mentir', efecto: 'pide limpiarse',
       estimulo: 'Hacer que los participantes mientan por teléfono o por correo electrónico.',
       resultado: 'Quienes mintieron hablando prefirieron enjuague bucal; quienes escribieron, jabón de manos.',
       idea: 'La mancha moral pide limpieza física, y además apunta a la parte del cuerpo implicada.' },
   ];
+  const t = sceneTone(isDark);
   const [i, setI] = useState(0);
   const e = exps[i];
   return (
@@ -592,24 +702,43 @@ function Priming({ isDark }: SlideProps) {
           {exps.map((x, k) => <Pill key={x.id} isDark={isDark} on={k === i} onClick={() => setI(k)}>{x.name}</Pill>)}
         </div>
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex items-center">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
             <svg role="img" viewBox="0 0 440 230" className="w-full h-full overflow-visible" aria-label="Estímulo, activación inconsciente y cambio de conducta">
               <SceneDefs id="pri" isDark={isDark} />
-              {['Estímulo', 'Activación', 'Conducta'].map((n, k) => {
-                const x = 80 + k * 140;
+              {/* Estímulo: lo que la persona ve o hace */}
+              <AnimatePresence mode="wait">
+                <motion.g key={e.id} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
+                  <rect x={2} y={98} width={124} height={46} rx={14} fill={PEACH.top} filter="url(#pri-sh)" />
+                  <text x={64} y={124} textAnchor="middle" fontSize={e.chip.length > 20 ? 9 : 10.5} fontWeight={900} fill="#7a3a12">{e.chip}</text>
+                </motion.g>
+              </AnimatePresence>
+              {/* Activación: una cadena que cae sin que lo notes */}
+              <rect x={132} y={84} width={184} height={80} rx={16} fill={t.floor} />
+              <text x={224} y={78} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.muted}>sin que lo notes</text>
+              {Array.from({ length: 7 }, (_, k) => {
+                const x = 146 + k * 23;
+                const s = 0.05 + k * 0.055;
                 return (
-                  <g key={n}>
-                    <Float amp={4} dur={2.8} delay={k * 0.3}>
-                      <g filter="url(#pri-sh)"><IsoBox cx={x} cy={130 - k * 16} s={44} h={28 + k * 12} f={k === 2 ? BRAND : k === 1 ? PEACH : NEUTRAL(isDark)} /></g>
-                    </Float>
-                    <text x={x} y={206} textAnchor="middle" fontSize={12} fontWeight={800} fill={k === 2 ? ORANGE : t2(isDark)}>{n}</text>
-                  </g>
+                  <motion.g key={`${e.id}-${k}`} style={{ transformBox: 'fill-box', transformOrigin: 'right bottom' }} animate={{ rotate: [0, 0, 60, 60, 0] }} transition={{ duration: 3.6, times: [0, s, s + 0.06, 0.9, 1], repeat: Infinity, ease: 'easeIn' }}>
+                    <rect x={x} y={104} width={10} height={46} rx={2.5} fill={k % 2 ? PINK : ORANGE} />
+                    <rect x={x + 10} y={106} width={3} height={44} rx={1} fill="#c41e3d" />
+                  </motion.g>
                 );
               })}
-              {[0, 1].map((k) => <Traveler key={k} id="pri" path={hop([80 + k * 140, 110 - k * 16], [220 + k * 140, 110 - (k + 1) * 16], 26)} dur={1.2} delay={k * 0.5} repeatDelay={1.1} r={5} />)}
+              {/* Conducta: el efecto llega al final de la cadena */}
+              <motion.g key={`p${e.id}`} animate={{ scale: [1, 1, 1.06, 1] }} transition={{ duration: 3.6, times: [0, 0.42, 0.5, 0.6], repeat: Infinity }} style={{ transformOrigin: '378px 168px' }}>
+                <PulseDisc cx={378} cy={170} rx={36} ry={11} dur={1.8} peak={0.3} />
+                <Persona id="pri" cx={378} cy={168} s={0.95} body={BRAND} accessory="heart" hair="#2b1a12" />
+              </motion.g>
+              {(['Estímulo', 'Activación', 'Conducta'] as const).map((n, k) => (
+                <text key={n} x={[66, 224, 378][k]} y={196} textAnchor="middle" fontSize={12} fontWeight={800} fill={k === 2 ? ORANGE : t2(isDark)}>{n}</text>
+              ))}
+              <AnimatePresence mode="wait">
+                <motion.text key={e.id} x={378} y={214} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={t.muted} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>{e.efecto}</motion.text>
+              </AnimatePresence>
             </svg>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2.5 justify-center">
             <AnimatePresence mode="wait">
               <motion.div key={e.id} data-g="exp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between gap-2">
@@ -647,23 +776,32 @@ function Facilidad({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Facilidad y tensión:" highlight="el medidor que llevas encendido" subtitle="Tu mente mantiene un indicador permanente de cuánto cuesta procesar lo que tiene delante. Ese indicador cambia cómo piensas, no solo cómo te sientes.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[38%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 300 248" className="w-full h-full max-h-[260px] overflow-visible" aria-label="Medidor entre facilidad y tensión cognitiva">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 300 248" className="w-full h-full max-h-[260px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Medidor entre facilidad y tensión cognitiva">
               <SceneDefs id="fac" isDark={isDark} />
-              <g filter="url(#fac-sh)"><Cylinder cx={150} cy={150} rx={110} ry={34} h={14} top={t.floor} side={t.floorSide} /></g>
-              <motion.g animate={{ x: facil ? -58 : 58 }} transition={{ type: 'spring', stiffness: 70, damping: 12 }}>
-                <PulseDisc cx={150} cy={150} rx={44} ry={14} dur={2} color={facil ? ORANGE : '#64748b'} />
-                <Float amp={5} dur={2.4}><Orb id="fac" cx={150} cy={118} r={24} neutral={!facil} /></Float>
-              </motion.g>
-              <text x={92} y={226} textAnchor="middle" fontSize={12} fontWeight={900} fill={facil ? ORANGE : t.muted}>Facilidad</text>
-              <text x={208} y={226} textAnchor="middle" fontSize={12} fontWeight={900} fill={!facil ? ORANGE : t.muted}>Tensión</text>
+              <defs><filter id="fac-borroso"><feGaussianBlur stdDeviation={facil ? 0 : 1.4} /></filter></defs>
+              {/* Lo que tienes delante: se lee solo… o cuesta */}
+              <rect x={30} y={14} width={240} height={78} rx={18} fill={isDark ? '#2f2f2f' : '#fff'} filter="url(#fac-sh)" />
+              <AnimatePresence mode="wait">
+                <motion.g key={modo} initial={{ opacity: 0 }} animate={facil ? { opacity: 1, x: 0 } : { opacity: 1, x: [0, -1.5, 1.5, 0] }} exit={{ opacity: 0 }} transition={facil ? { duration: 0.4 } : { duration: 0.35, repeat: Infinity, repeatDelay: 1.6 }}>
+                  <text x={150} y={50} textAnchor="middle" fontSize={facil ? 19 : 13} fontWeight={facil ? 900 : 500} fill={facil ? t.text : t.muted} filter="url(#fac-borroso)" fontStyle={facil ? 'normal' : 'italic'}>{facil ? 'Se lee sin esfuerzo' : 'se lee con dificultad, despacio'}</text>
+                  <text x={150} y={74} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={facil ? ORANGE : t.muted}>{facil ? 'familiar · creíble · cómodo' : 'extraño · sospechoso · alerta'}</text>
+                </motion.g>
+              </AnimatePresence>
+              {/* El medidor que siempre está encendido */}
+              <path d="M 72 196 A 78 78 0 0 1 150 118" fill="none" stroke="url(#fac-brand)" strokeWidth={14} strokeLinecap="round" opacity={facil ? 1 : 0.35} />
+              <path d="M 150 118 A 78 78 0 0 1 228 196" fill="none" stroke={SLATE(isDark).left} strokeWidth={14} strokeLinecap="round" opacity={facil ? 0.35 : 1} />
+              <motion.polygon points="146,196 154,196 150,132" fill={t.text} initial={false} animate={{ rotate: facil ? -52 : 52 }} transition={{ type: 'spring', stiffness: 60, damping: 9 }} style={{ transformOrigin: '150px 196px' }} />
+              <circle cx={150} cy={196} r={8} fill={facil ? ORANGE : SLATE(isDark).left} />
+              <text x={72} y={224} textAnchor="middle" fontSize={12} fontWeight={900} fill={facil ? ORANGE : t.muted}>Facilidad</text>
+              <text x={228} y={224} textAnchor="middle" fontSize={12} fontWeight={900} fill={!facil ? ORANGE : t.muted}>Tensión</text>
             </svg>
             <div className="flex gap-2">
               <Pill isDark={isDark} on={facil} onClick={() => setModo('facil')}>Facilidad</Pill>
               <Pill isDark={isDark} on={!facil} onClick={() => setModo('tenso')}>Tensión</Pill>
             </div>
           </div>
-          <div className="lg:w-[62%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
               <motion.div key={modo} data-g="par" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="grid grid-cols-2 gap-3">
                 <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
@@ -702,24 +840,61 @@ function Verdad({ isDark }: SlideProps) {
     ['Si puedes, rima', '«Las penalidades borran las hostilidades» se juzga más profundo y más cierto que la misma idea sin rima.'],
     ['Cita fuentes pronunciables', 'Una empresa llamada Artan inspira más confianza que una llamada Taahhut. Solo por la fluidez fonética.'],
   ];
-  const [n, setN] = useState(1);
+  // Las exposiciones avanzan solas en bucle hasta que la persona toma el control.
+  const [paso, setPaso] = useState(0);
+  const [auto, setAuto] = useState(true);
+  useEffect(() => {
+    if (!auto) return;
+    const id = setInterval(() => setPaso((v) => (v >= 6 ? 0 : v + 1)), 1300);
+    return () => clearInterval(id);
+  }, [auto]);
+  const n = Math.min(paso, 4);
+  const setN = (v: number) => { setAuto(false); setPaso(v); };
+  const sello = Array.from({ length: 36 }, (_, k) => {
+    const a = (k / 36) * Math.PI * 2;
+    const r = k % 2 ? 46 : 52;
+    return `${(150 + r * Math.cos(a)).toFixed(1)},${(104 + r * Math.sin(a)).toFixed(1)}`;
+  }).join(' ');
+  const relleno = n >= 3 ? `url(#ver-orb)` : n >= 1 ? PEACH.left : NEUTRAL(isDark).top;
   return (
     <Shell isDark={isDark} title="Lo fácil de procesar" highlight="se siente verdadero" subtitle="El Sistema 1 confunde la fluidez con la verdad y con la familiaridad. Esa confusión es el motor de la propaganda y de buena parte de la publicidad.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[42%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 320 240" className="w-full h-full max-h-[260px] overflow-visible" aria-label="La repetición vuelve agradable un estímulo arbitrario">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 320 240" className="w-full h-full max-h-[260px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="La repetición vuelve agradable un estímulo arbitrario">
               <SceneDefs id="ver" isDark={isDark} />
-              <IsoFloor cx={160} cy={180} s={150} fill={t.floor} />
-              {n >= 3 && <PulseDisc cx={160} cy={178} rx={62} ry={20} dur={2.4} peak={0.28} />}
-              {Array.from({ length: n + 1 }, (_, i) => (
-                <motion.g key={i} initial={{ opacity: 0, y: -30, scale: 0.6 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ type: 'spring', stiffness: 120, damping: 12 }}>
-                  <Float amp={i === n ? 5 : 2} dur={2.6} delay={i * 0.25}>
-                    <g filter="url(#ver-sh)"><IsoBox cx={160} cy={156 - i * 26} s={46} h={22} f={i >= 3 ? BRAND : i >= 1 ? PEACH : NEUTRAL(isDark)} /></g>
-                  </Float>
-                </motion.g>
+              <defs><filter id="ver-blur" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation={[3.2, 2.2, 1.3, 0.5, 0][n]} /></filter></defs>
+              {n >= 3 && <PulseDisc cx={150} cy={104} rx={66} ry={66} dur={2.4} peak={0.18} />}
+              {/* Cada exposición deja un eco del estímulo */}
+              <motion.g key={paso} initial={{ opacity: 0.5, scale: 1 }} animate={{ opacity: 0, scale: 1.35 }} transition={{ duration: 1 }} style={{ transformOrigin: '150px 104px' }}>
+                <circle cx={150} cy={104} r={52} fill="none" stroke={ORANGE} strokeWidth={2} />
+              </motion.g>
+              <motion.g animate={{ scale: [0.86, 0.92, 0.97, 1.02, 1.06][n] }} transition={{ type: 'spring', stiffness: 120, damping: 11 }} style={{ transformOrigin: '150px 104px' }}>
+                <g filter="url(#ver-blur)">
+                  <polygon points={sello} fill={relleno} filter={n >= 3 ? 'url(#ver-sh)' : undefined} />
+                  <circle cx={150} cy={104} r={36} fill="#fff" opacity={0.16} />
+                  <text x={150} y={110} textAnchor="middle" fontSize={17} fontWeight={900} fill={n >= 1 ? '#fff' : t.text}>kadirga</text>
+                </g>
+              </motion.g>
+              <AnimatePresence>
+                {n >= 3 && (
+                  <motion.g initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} transition={{ type: 'spring', stiffness: 220, damping: 12 }} style={{ transformOrigin: '192px 64px' }}>
+                    <circle cx={192} cy={64} r={13} fill="#10b981" filter="url(#ver-sh)" />
+                    <path d="M 186 64 L 190.5 68.5 L 198 60" fill="none" stroke="#fff" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" />
+                  </motion.g>
+                )}
+              </AnimatePresence>
+              {/* Exposiciones */}
+              {Array.from({ length: 5 }, (_, j) => (
+                <motion.circle key={j} cx={110 + j * 20} cy={184} r={5.5} animate={{ fill: j <= n ? ORANGE : isDark ? '#3a3a3a' : t.floorSide, scale: j === n ? 1.3 : 1 }} transition={{ duration: 0.3 }} style={{ transformOrigin: `${110 + j * 20}px 184px` }} />
               ))}
-              <text x={160} y={222} textAnchor="middle" fontSize={12} fontWeight={800} fill={n >= 3 ? ORANGE : t.muted}>
+              <text x={150} y={202} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.muted}>exposiciones</text>
+              {/* Agrado */}
+              <rect x={262} y={56} width={14} height={110} rx={7} fill={isDark ? '#3a3a3a' : t.floorSide} />
+              <motion.rect x={262} width={14} rx={7} fill="url(#ver-brandv)" initial={false} animate={{ height: [16, 38, 62, 88, 106][n], y: 166 - [16, 38, 62, 88, 106][n] }} transition={{ type: 'spring', stiffness: 70, damping: 14 }} />
+              <path d="M 269 50 C 262 44, 258 38, 263 34 C 266 32, 269 34, 269 37 C 269 34, 272 32, 275 34 C 280 38, 276 44, 269 50 Z" fill={PINK} />
+              <text x={269} y={182} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.muted}>agrado</text>
+              <text x={160} y={228} textAnchor="middle" fontSize={12} fontWeight={800} fill={n >= 3 ? ORANGE : t.muted}>
                 {n === 0 ? 'Primera vez: desconocido' : n < 3 ? 'Se repite: menos extraño' : 'Familiar: me agrada y lo creo'}
               </text>
             </svg>
@@ -729,7 +904,7 @@ function Verdad({ isDark }: SlideProps) {
               <span className="text-sm font-black text-[#ff851d]">{n + 1}</span>
             </div>
           </div>
-          <div className="lg:w-[58%] flex flex-col gap-2.5 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2.5 justify-center">
             <div className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
               <div className="flex items-center justify-between gap-2 mb-1">
                 <p className={`text-base font-black ${heading(isDark)}`}>Mera exposición · Robert Zajonc</p>
@@ -775,22 +950,79 @@ function Causalidad({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Causas por todas partes:" highlight="la mente no tolera el azar" subtitle="El Sistema 1 mantiene un modelo de lo que es normal y, cuando algo lo rompe, fabrica una causa de inmediato. Esa habilidad es la que estorba al pensar en estadística.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 340 200" className="w-full h-full max-h-[220px] overflow-visible" aria-label="Un bloque que parece empujar a otro">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 340 200" className="w-full h-full max-h-[220px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un bloque que parece empujar a otro">
               <SceneDefs id="cau" isDark={isDark} />
-              <IsoFloor cx={170} cy={130} s={160} fill={t.floor} />
-              {empuja && <PulseDisc cx={140} cy={128} rx={30} ry={11} dur={2.2} peak={0.34} />}
-              <motion.g animate={{ x: empuja ? [0, 52, 0] : 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>
-                <Float amp={2.5} dur={3}><g filter="url(#cau-sh)"><IsoBox cx={90} cy={112} s={30} h={26} f={BRAND} /></g></Float>
-              </motion.g>
-              <motion.g animate={{ x: empuja ? [0, 52, 0] : 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.18 }}>
-                <Float amp={2.5} dur={3} delay={0.3}><g filter="url(#cau-sh)"><IsoBox cx={190} cy={112} s={30} h={26} f={NEUTRAL(isDark)} /></g></Float>
-              </motion.g>
-              <text x={170} y={186} textAnchor="middle" fontSize={12} fontWeight={800} fill={ORANGE}>Ves un empujón, no dos movimientos</text>
+              <motion.g animate={{ opacity: i === 3 ? 0 : 1 }}><IsoFloor cx={170} cy={130} s={160} fill={t.floor} /></motion.g>
+              <AnimatePresence mode="wait">
+                <motion.g key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }}>
+                  {i === 0 && (
+                    /* Ilusión de Moisés: el nombre equivocado pasa… hasta que se tacha */
+                    <g>
+                      <path d="M 104 118 L 236 118 L 214 150 Q 210 154 204 154 L 136 154 Q 130 154 126 150 Z" fill={PEACH.left} filter="url(#cau-sh)" />
+                      <rect x={104} y={114} width={132} height={7} rx={3.5} fill={PEACH.right} />
+                      <g filter="url(#cau-sh)"><IsoBox cx={170} cy={92} s={26} h={20} f={PEACH} /></g>
+                      {[128, 146, 194, 212].map((x, n) => <Float key={x} amp={2} dur={2} delay={n * 0.2}><circle cx={x} cy={106} r={6} fill={n < 2 ? SLATE(isDark).left : NEUTRAL(isDark).left} /></Float>)}
+                      <text x={150} y={42} textAnchor="middle" fontSize={17} fontWeight={900} fill={t.text}>Moisés</text>
+                      <motion.rect x={118} y={36} height={3.5} rx={1.75} fill={PINK} animate={{ width: [0, 0, 64, 64, 0] }} transition={{ duration: 4.5, times: [0, 0.35, 0.45, 0.92, 1], repeat: Infinity }} />
+                      <motion.text x={214} y={42} textAnchor="middle" fontSize={17} fontWeight={900} fill={ORANGE} animate={{ opacity: [0, 0, 1, 1, 0], scale: [0.6, 0.6, 1, 1, 0.6] }} transition={{ duration: 4.5, times: [0, 0.45, 0.55, 0.92, 1], repeat: Infinity }} style={{ transformOrigin: '214px 36px' }}>Noé</motion.text>
+                    </g>
+                  )}
+                  {i === 1 && (
+                    /* Michotte: un empujón que «se ve» */
+                    <g>
+                      {empuja && <PulseDisc cx={140} cy={128} rx={30} ry={11} dur={2.2} peak={0.34} />}
+                      <motion.g animate={{ x: empuja ? [0, 52, 0] : 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}>
+                        <g filter="url(#cau-sh)"><IsoBox cx={90} cy={112} s={30} h={26} f={BRAND} /></g>
+                      </motion.g>
+                      <motion.g animate={{ x: empuja ? [0, 52, 0] : 0 }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut', delay: 0.18 }}>
+                        <g filter="url(#cau-sh)"><IsoBox cx={190} cy={112} s={30} h={26} f={NEUTRAL(isDark)} /></g>
+                      </motion.g>
+                    </g>
+                  )}
+                  {i === 2 && (
+                    /* Heider y Simmel: formas que se persiguen alrededor de una casa */
+                    <g>
+                      <rect x={150} y={84} width={44} height={40} rx={6} fill={isDark ? '#333' : '#e5e7eb'} />
+                      <rect x={164} y={108} width={16} height={16} rx={2} fill={t.floor} />
+                      <motion.g animate={{ x: [0, 120, 120, 0, 0], y: [0, 0, 70, 70, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}>
+                        <circle cx={110} cy={74} r={9} fill={PEACH.left} filter="url(#cau-sh)" />
+                      </motion.g>
+                      <motion.g animate={{ x: [0, 120, 120, 0, 0], y: [0, 0, 70, 70, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.85 }}>
+                        <polygon points="96,62 80,90 112,90" fill="url(#cau-brandv)" filter="url(#cau-sh)" />
+                      </motion.g>
+                      <motion.g animate={{ x: [0, 120, 120, 0, 0], y: [0, 0, 70, 70, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }}>
+                        <polygon points="96,74 88,88 104,88" fill={SLATE(isDark).left} filter="url(#cau-sh)" />
+                      </motion.g>
+                      {([['víctima', PEACH.left], ['agresor', PINK], ['héroe', SLATE(isDark).left]] as const).map(([n, col], k) => (
+                        <g key={n}><circle cx={104 + k * 62} cy={170} r={4.5} fill={col} /><text x={112 + k * 62} y={174} fontSize={10.5} fontWeight={800} fill={t.muted}>{n}</text></g>
+                      ))}
+                    </g>
+                  )}
+                  {i === 3 && (
+                    /* Titulares: una misma causa para una subida y una bajada */
+                    <g>
+                      <line x1={60} x2={290} y1={150} y2={150} stroke={t.muted} strokeOpacity={0.3} strokeWidth={1.5} />
+                      <motion.path d="M 64 136 L 110 128 L 150 92 L 176 76 L 206 104 L 246 128 L 286 140" fill="none" stroke="url(#cau-brand)" strokeWidth={4} strokeLinejoin="round" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.8, ease: 'easeInOut' }} />
+                      <motion.g initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}>
+                        <rect x={88} y={36} width={120} height={24} rx={8} fill={isDark ? '#2f2f2f' : '#fff'} filter="url(#cau-sh)" />
+                        <text x={148} y={52} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.text}>Suben… por Sadam</text>
+                        <circle cx={176} cy={76} r={5} fill={ORANGE} />
+                      </motion.g>
+                      <motion.g initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.8 }}>
+                        <rect x={196} y={152} width={120} height={24} rx={8} fill={isDark ? '#2f2f2f' : '#fff'} filter="url(#cau-sh)" />
+                        <text x={256} y={168} textAnchor="middle" fontSize={10} fontWeight={800} fill={t.text}>Bajan… por Sadam</text>
+                        <circle cx={286} cy={140} r={5} fill={PINK} />
+                      </motion.g>
+                    </g>
+                  )}
+                </motion.g>
+              </AnimatePresence>
+              <text x={170} y={194} textAnchor="middle" fontSize={12} fontWeight={800} fill={ORANGE}>{['La anomalía pasa porque encaja en el contexto', 'Ves un empujón, no dos movimientos', 'Formas que se mueven: les ves intenciones', 'Un mismo hecho explica dos efectos opuestos'][i]}</text>
             </svg>
-            <div className="flex gap-2"><Pill isDark={isDark} on={empuja} onClick={() => setEmpuja(true)}>Animar</Pill><Pill isDark={isDark} on={!empuja} onClick={() => setEmpuja(false)}>Detener</Pill></div>
+            {i === 1 && <div className="flex gap-2"><Pill isDark={isDark} on={empuja} onClick={() => setEmpuja(true)}>Animar</Pill><Pill isDark={isDark} on={!empuja} onClick={() => setEmpuja(false)}>Detener</Pill></div>}
           </div>
-          <div className="lg:w-[56%] flex flex-col gap-2 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2 justify-center">
             {casos.map((c, k) => (
               <motion.button key={c.name} whileHover={{ x: 4 }} onMouseEnter={() => setI(k)} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <p className={`text-sm font-black ${heading(isDark)}`}>{c.name}</p>
@@ -809,6 +1041,13 @@ function Causalidad({ isDark }: SlideProps) {
 /* 13. Sustitución de preguntas                                        */
 /* ------------------------------------------------------------------ */
 
+/* Parte un texto en líneas de hasta `n` caracteres, para escribirlo dentro de un SVG. */
+const partir = (s: string, n: number) => s.split(' ').reduce<string[]>((ls, w) => {
+  const u = ls[ls.length - 1];
+  if (u && (u + ' ' + w).length <= n) ls[ls.length - 1] = u + ' ' + w; else ls.push(w);
+  return ls;
+}, []);
+
 function Sustitucion({ isDark }: SlideProps) {
   const t = sceneTone(isDark);
   const pares = [
@@ -822,22 +1061,27 @@ function Sustitucion({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Sustitución:" highlight="respondes otra pregunta sin darte cuenta" subtitle="Es el mecanismo que está detrás de casi todas las heurísticas. Ante una pregunta difícil, el Sistema 1 contesta una parecida pero fácil, y no te avisa del cambio.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex items-center">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
             <svg role="img" viewBox="0 0 420 300" className="w-full h-full overflow-visible" aria-label="Una pregunta difícil es reemplazada por una fácil">
               <SceneDefs id="sus" isDark={isDark} />
-              <Float amp={3} dur={4.6}><g filter="url(#sus-sh)"><IsoBox cx={120} cy={90} s={62} h={54} f={SLATE(isDark)} /></g></Float>
-              <text x={120} y={32} textAnchor="middle" fontSize={12} fontWeight={900} fill={t.muted}>Pregunta objetivo</text>
-              <text x={120} y={200} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>difícil, lenta</text>
-              <PulseDisc cx={300} cy={182} rx={66} ry={20} dur={2.2} peak={0.3} />
-              <Float amp={7} dur={2.1}><g filter="url(#sus-sh)"><IsoBox cx={300} cy={150} s={62} h={30} f={BRAND} /></g></Float>
-              <text x={300} y={92} textAnchor="middle" fontSize={12} fontWeight={900} fill={ORANGE}>Pregunta heurística</text>
-              <text x={300} y={238} textAnchor="middle" fontSize={11} fontWeight={800} fill={ORANGE}>fácil, inmediata</text>
-              <Traveler id="sus" path={hop([120, 56], [300, 116], 44)} dur={1.5} repeatDelay={0.5} r={6} />
-              <Traveler id="sus" path={hop([120, 56], [300, 116], 24)} dur={1.5} delay={0.7} repeatDelay={0.5} r={4} color={PINK} />
+              {/* Te hacen la pregunta difícil… */}
+              <AnimatePresence mode="wait">
+                <motion.g key={`d${i}`} initial={{ opacity: 0, rotate: -8 }} animate={{ opacity: 1, rotate: -4 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} style={{ transformOrigin: '140px 110px' }}>
+                  <rect x={30} y={50} width={220} height={120} rx={20} fill={isDark ? '#2f2f2f' : '#fff'} filter="url(#sus-sh)" />
+                  <text x={52} y={78} fontSize={10.5} fontWeight={900} fill={t.muted} letterSpacing={1.2}>TE PREGUNTAN</text>
+                  {partir(pares[i].dificil, 20).map((l, n) => <text key={n} x={52} y={104 + n * 20} fontSize={15} fontWeight={800} fill={t.text}>{l}</text>)}
+                </motion.g>
+              </AnimatePresence>
+              {/* …y el Sistema 1 desliza encima la fácil, sin avisar */}
+              <motion.g key={`f${i}`} initial={{ x: 140, opacity: 0 }} animate={{ x: [140, 140, 0, 0], opacity: [0, 0, 1, 1] }} transition={{ duration: 1.6, times: [0, 0.35, 0.8, 1], ease: 'easeOut' }}>
+                <rect x={170} y={140} width={228} height={110} rx={20} fill="url(#sus-brand)" filter="url(#sus-sh)" />
+                <text x={192} y={167} fontSize={10.5} fontWeight={900} fill="#fff" opacity={0.85} letterSpacing={1.2}>RESPONDES</text>
+                {partir(pares[i].facil, 21).map((l, n) => <text key={n} x={192} y={192 + n * 20} fontSize={15} fontWeight={800} fill="#fff">{l}</text>)}
+              </motion.g>
               <text x={210} y={284} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>La respuesta de la derecha se presenta como si fuera la de la izquierda</text>
             </svg>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-2 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2 justify-center">
             <p className={microLabel(isDark)}>Toca una pregunta y mira por cuál la cambia tu mente</p>
             {pares.map((p, k) => (
               <motion.button key={p.dificil} whileHover={{ x: 4 }} onMouseEnter={() => setI(k)} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl flex items-center gap-3 ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
@@ -868,8 +1112,8 @@ function Representatividad({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Representatividad:" highlight="juzgar por el parecido" subtitle="«Steve es tímido y retraído, servicial pero poco interesado en la gente. Metódico, ordenado, obsesionado con el detalle.» ¿Es más probable que sea bibliotecario o agricultor?">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[52%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 520 250" className="w-full h-full max-h-[270px] overflow-visible" aria-label="Por cada bibliotecario hay más de veinte agricultores">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 520 250" className="w-full h-full max-h-[270px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Por cada bibliotecario hay más de veinte agricultores">
               <SceneDefs id="rep" isDark={isDark} />
               <IsoFloor cx={260} cy={150} s={250} fill={t.floor} />
               <g>
@@ -884,10 +1128,8 @@ function Representatividad({ isDark }: SlideProps) {
                   const x = 180 + col * 46 + row * 10;
                   const y = 112 + row * 34;
                   return (
-                    <motion.g key={i} initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ delay: i * 0.025, type: 'spring', stiffness: 130, damping: 12 }}>
-                      <Float amp={3} dur={2.8} delay={(i % 7) * 0.2}>
-                        <g filter="url(#rep-sh)"><IsoBox cx={x} cy={y} s={13} h={16} f={NEUTRAL(isDark)} /></g>
-                      </Float>
+                    <motion.g key={i} initial={{ opacity: 0, y: -24 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ delay: i * 0.04, type: 'spring', stiffness: 130, damping: 12 }}>
+                      <Persona id="rep" cx={x} cy={y + 14} s={0.42} body={NEUTRAL(isDark)} hair={['#3b2a20', '#6b4a2f', '#2b1a12'][i % 3]} />
                     </motion.g>
                   );
                 })}
@@ -899,7 +1141,7 @@ function Representatividad({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={verTasa} onClick={() => setVerTasa(true)}>Mostrar la tasa base</Pill>
             </div>
           </div>
-          <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
               <p className={microLabel(isDark)}>La sustitución, paso a paso</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Pregunta real: <em>¿cuál es la probabilidad de que Steve sea bibliotecario?</em> Pregunta que respondes: <em>¿cuánto se parece Steve al estereotipo de bibliotecario?</em></p>
@@ -935,28 +1177,48 @@ function Disponibilidad({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Disponibilidad:" highlight="lo que recuerdas fácil parece frecuente" subtitle="Para estimar cuán común es algo, tu mente no cuenta: mide la velocidad con que le llegan ejemplos a la memoria.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[48%] min-h-0 flex items-center">
-            <svg role="img" viewBox="0 0 440 272" className="w-full h-full overflow-visible" aria-label="Lo vívido se recupera rápido; lo frecuente, no siempre">
+          <div className="lg:w-[58%] min-h-0 flex items-center">
+            <svg role="img" viewBox="0 0 440 290" className="w-full h-full overflow-visible" aria-label="Lo vívido llena la memoria de golpe; lo frecuente, gota a gota">
               <SceneDefs id="dis" isDark={isDark} />
-              <PulseDisc cx={130} cy={176} rx={62} ry={19} dur={1.5} peak={0.34} />
-              <Float amp={9} dur={1.4}><g filter="url(#dis-sh)"><IsoBox cx={130} cy={140} s={54} h={34} f={BRAND} /></g></Float>
-              <text x={130} y={88} textAnchor="middle" fontSize={12} fontWeight={900} fill={ORANGE}>Lo vívido</text>
-              <text x={130} y={222} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>llega en un instante</text>
-              <Float amp={2} dur={5.2}><g filter="url(#dis-sh)"><IsoBox cx={320} cy={140} s={54} h={34} f={NEUTRAL(isDark)} /></g></Float>
-              <text x={320} y={88} textAnchor="middle" fontSize={12} fontWeight={900} fill={t.text}>Lo frecuente</text>
-              <text x={320} y={222} textAnchor="middle" fontSize={11} fontWeight={800} fill={t.muted}>tarda o no aparece</text>
-              <Traveler id="dis" path={hop([130, 110], [130, 110], 46)} dur={0.9} repeatDelay={0.2} r={6} />
-              <Traveler id="dis" path={hop([320, 110], [320, 110], 20)} dur={3.4} repeatDelay={1.6} r={4} color="#94a3b8" />
-              <text x={225} y={262} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>Y la mente usa la velocidad como si fuera la cantidad</text>
+              {/* Lo vívido: un rayo llena el vaso de golpe */}
+              <ellipse cx={112} cy={40} rx={18} ry={14} fill={SLATE(isDark).top} />
+              <ellipse cx={134} cy={32} rx={22} ry={18} fill={SLATE(isDark).top} />
+              <ellipse cx={156} cy={40} rx={18} ry={14} fill={SLATE(isDark).left} />
+              <motion.polygon points="140,48 118,90 132,90 122,126 152,80 136,80 148,48" fill="url(#dis-brandv)" filter="url(#dis-gl)" animate={{ opacity: [0.15, 0.15, 1, 0.3, 1, 0.15, 0.15] }} transition={{ duration: 2.8, times: [0, 0.16, 0.18, 0.2, 0.23, 0.3, 1], repeat: Infinity }} />
+              <defs>
+                <clipPath id="dis-v1"><path d="M 88 130 L 172 130 L 163 220 Q 162 226 156 226 L 104 226 Q 98 226 97 220 Z" /></clipPath>
+                <clipPath id="dis-v2"><path d="M 268 130 L 352 130 L 343 220 Q 342 226 336 226 L 284 226 Q 278 226 277 220 Z" /></clipPath>
+              </defs>
+              <path d="M 88 130 L 172 130 L 163 220 Q 162 226 156 226 L 104 226 Q 98 226 97 220 Z" fill={t.floor} />
+              <g clipPath="url(#dis-v1)">
+                <motion.rect x={80} width={100} fill="url(#dis-brandv)" animate={{ height: [0, 0, 82, 82, 0], y: [226, 226, 144, 144, 226] }} transition={{ duration: 2.8, times: [0, 0.2, 0.27, 0.88, 1], repeat: Infinity, ease: 'easeOut' }} />
+              </g>
+              {/* Lo frecuente: una gota cada tanto */}
+              <rect x={286} y={38} width={48} height={12} rx={6} fill={NEUTRAL(isDark).left} />
+              <rect x={304} y={44} width={12} height={22} rx={4} fill={NEUTRAL(isDark).right} />
+              <motion.circle cx={310} r={4.5} fill="#94a3b8" animate={{ cy: [70, 212], opacity: [1, 1, 0] }} transition={{ duration: 1.1, repeat: Infinity, repeatDelay: 0.9, ease: 'easeIn' }} />
+              <path d="M 268 130 L 352 130 L 343 220 Q 342 226 336 226 L 284 226 Q 278 226 277 220 Z" fill={t.floor} />
+              <g clipPath="url(#dis-v2)">
+                <motion.rect x={260} width={100} fill="#94a3b8" animate={{ height: [3, 28], y: [223, 198] }} transition={{ duration: 9, repeat: Infinity, ease: 'linear' }} />
+              </g>
+              <text x={130} y={244} textAnchor="middle" fontSize={12} fontWeight={900} fill={ORANGE}>Lo vívido</text>
+              <text x={310} y={244} textAnchor="middle" fontSize={12} fontWeight={900} fill={t.text}>Lo frecuente</text>
+              <AnimatePresence mode="wait">
+                <motion.g key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                  <text x={130} y={260} textAnchor="middle" fontSize={10} fontWeight={700} fill={t.muted}>{p.a}</text>
+                  <text x={310} y={260} textAnchor="middle" fontSize={10} fontWeight={700} fill={t.muted}>{p.b}</text>
+                </motion.g>
+              </AnimatePresence>
+              <text x={220} y={284} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>Y la mente usa la velocidad como si fuera la cantidad</text>
             </svg>
           </div>
-          <div className="lg:w-[52%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <p data-nunca className={microLabel(isDark)}>¿Cuál ocurre más? Toca para comparar</p>
             {pares.map((x, k) => (
               <motion.button key={x.a} whileHover={{ x: 4 }} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl flex items-center gap-2 ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
-                <span className={`text-sm flex-1 ${k === i && x.gana === 'a' ? 'font-black text-[#ff851d]' : textMuted(isDark)}`}>{x.a}</span>
+                <span className={`text-sm flex-1 min-w-0 ${k === i && x.gana === 'a' ? 'font-black text-[#ff851d]' : textMuted(isDark)}`}>{x.a}</span>
                 <span className={`text-xs font-black ${textMuted(isDark)}`}>vs</span>
-                <span className={`text-sm flex-1 text-right ${k === i && x.gana === 'b' ? 'font-black text-[#ff851d]' : textMuted(isDark)}`}>{x.b}</span>
+                <span className={`text-sm flex-1 min-w-0 text-right ${k === i && x.gana === 'b' ? 'font-black text-[#ff851d]' : textMuted(isDark)}`}>{x.b}</span>
               </motion.button>
             ))}
             <AnimatePresence mode="wait">
@@ -984,21 +1246,35 @@ function Afectiva({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Heurística afectiva:" highlight="primero te gusta, después lo justificas" subtitle="Paul Slovic la describió así: tus gustos y aversiones determinan lo que crees sobre el mundo, y el argumento llega después, a ordenar lo ya decidido.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 360 250" className="w-full h-full max-h-[265px] overflow-visible" aria-label="El afecto llega antes que el análisis">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 360 250" className="w-full h-full max-h-[265px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="El afecto llega antes que el análisis">
               <SceneDefs id="afe" isDark={isDark} />
-              <IsoFloor cx={180} cy={150} s={170} fill={t.floor} />
-              <motion.g animate={{ y: afecto ? -34 : 0 }} transition={{ type: 'spring', stiffness: 70, damping: 11 }}>
-                {afecto && <PulseDisc cx={110} cy={158} rx={48} ry={15} dur={2.2} peak={0.3} />}
-                <Float amp={afecto ? 6 : 2} dur={afecto ? 2.2 : 4}><g filter="url(#afe-sh)"><IsoBox cx={110} cy={130} s={40} h={28} f={afecto ? BRAND : NEUTRAL(isDark)} /></g></Float>
-                <text x={110} y={196} textAnchor="middle" fontSize={12} fontWeight={900} fill={afecto ? ORANGE : t.muted}>Me gusta</text>
+              {/* Pie de la balanza */}
+              <g filter="url(#afe-sh)"><IsoBox cx={180} cy={196} s={34} h={10} f={SLATE(isDark)} /></g>
+              <rect x={175} y={72} width={10} height={126} rx={5} fill={SLATE(isDark).left} />
+              {/* Brazo: se inclina hacia lo que manda */}
+              <motion.g initial={false} animate={{ rotate: afecto ? -12 : 12 }} transition={{ type: 'spring', stiffness: 50, damping: 9 }} style={{ transformOrigin: '180px 70px' }}>
+                <rect x={66} y={66} width={228} height={8} rx={4} fill={SLATE(isDark).top} />
               </motion.g>
-              <motion.g animate={{ y: afecto ? 0 : -34 }} transition={{ type: 'spring', stiffness: 70, damping: 11 }}>
-                {!afecto && <PulseDisc cx={250} cy={158} rx={48} ry={15} dur={2.2} peak={0.3} />}
-                <Float amp={afecto ? 2 : 6} dur={afecto ? 4 : 2.2}><g filter="url(#afe-sh)"><IsoBox cx={250} cy={130} s={40} h={28} f={afecto ? NEUTRAL(isDark) : BRAND} /></g></Float>
-                <text x={250} y={196} textAnchor="middle" fontSize={12} fontWeight={900} fill={afecto ? t.muted : ORANGE}>Los datos</text>
+              <circle cx={180} cy={70} r={8} fill={ORANGE} />
+              {/* Platillo del afecto */}
+              <motion.g initial={false} animate={{ y: afecto ? 23 : -23 }} transition={{ type: 'spring', stiffness: 50, damping: 9 }}>
+                <polygon points="70,70 44,128 96,128" fill={t.muted} opacity={0.18} />
+                <ellipse cx={70} cy={130} rx={38} ry={9} fill={SLATE(isDark).left} />
+                <path d="M 70 124 C 48 110, 58 90, 70 102 C 82 90, 92 110, 70 124 Z" fill={afecto ? PINK : NEUTRAL(isDark).left} filter="url(#afe-sh)" />
+                <circle cx={44} cy={92} r={10} fill={afecto ? ORANGE : isDark ? '#3a3a3a' : t.floorSide} />
+                <text x={44} y={96} textAnchor="middle" fontSize={11} fontWeight={900} fill={afecto ? '#fff' : t.muted}>{afecto ? 1 : 2}</text>
+                <text x={70} y={156} textAnchor="middle" fontSize={12} fontWeight={900} fill={afecto ? ORANGE : t.muted}>Me gusta</text>
               </motion.g>
-              <Traveler id="afe" path={hop([110, 96], [250, 96], 34)} dur={1.4} repeatDelay={0.8} r={5} color={afecto ? ORANGE : '#94a3b8'} />
+              {/* Platillo de los datos */}
+              <motion.g initial={false} animate={{ y: afecto ? -23 : 23 }} transition={{ type: 'spring', stiffness: 50, damping: 9 }}>
+                <polygon points="290,70 264,128 316,128" fill={t.muted} opacity={0.18} />
+                <ellipse cx={290} cy={130} rx={38} ry={9} fill={SLATE(isDark).left} />
+                {[10, 17, 24].map((h, k) => <IsoBox key={k} cx={276 + k * 14} cy={124 - h} s={6} h={h} f={afecto ? NEUTRAL(isDark) : BRAND} />)}
+                <circle cx={316} cy={92} r={10} fill={afecto ? (isDark ? '#3a3a3a' : t.floorSide) : ORANGE} />
+                <text x={316} y={96} textAnchor="middle" fontSize={11} fontWeight={900} fill={afecto ? t.muted : '#fff'}>{afecto ? 2 : 1}</text>
+                <text x={290} y={156} textAnchor="middle" fontSize={12} fontWeight={900} fill={afecto ? t.muted : ORANGE}>Los datos</text>
+              </motion.g>
               <text x={180} y={242} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{afecto ? 'Lo habitual: el afecto decide' : 'Lo deseable: el dato manda'}</text>
             </svg>
             <div className="flex gap-2">
@@ -1006,7 +1282,7 @@ function Afectiva({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={!afecto} onClick={() => setOrden('analisis')}>Cómo debería</Pill>
             </div>
           </div>
-          <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
               <p className={microLabel(isDark)}>El ejecutivo y las acciones de Ford</p>
               <p className={`text-sm leading-relaxed ${textMuted(isDark)}`}>Un directivo financiero invirtió decenas de millones en acciones de Ford. ¿Su análisis? Había ido a un salón del automóvil, los coches le encantaron y pensó: <em>«vaya, sí que hacen buenos autos»</em>. Nunca se preguntó si la acción estaba barata.</p>
@@ -1043,17 +1319,24 @@ function Halo({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={!alan} onClick={() => setQuien('ben')}>Ben</Pill>
             </div>
             <div data-g="chips" className="flex flex-wrap gap-2">
-              {lista.map((a, i) => (
-                <motion.span
-                  key={`${quien}-${a}`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                  className={`px-3 py-1.5 rounded-full text-sm font-bold ${i < 2 ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-md shadow-red-500/30' : isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-white shadow-md shadow-gray-200/70 text-gray-700'}`}
-                >
-                  {a}
-                </motion.span>
-              ))}
+              {lista.map((a, i) => {
+                // Los dos primeros rasgos fijan el tono; ese tono se contagia, uno a uno, a los siguientes.
+                const neutro = isDark ? '#2a2a2a' : '#ffffff';
+                const tono = alan ? (isDark ? '#4a2c1a' : '#ffe4cc') : (isDark ? '#1f2a3a' : '#dbe3ee');
+                const letra = alan ? (isDark ? '#ffd2a8' : '#9a3d0c') : (isDark ? '#b6c4d8' : '#334155');
+                return i < 2 ? (
+                  <motion.span key={`${quien}-${a}`} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.12 }}
+                    className={`px-3 py-1.5 rounded-full text-sm font-bold text-white shadow-md ${alan ? 'bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-red-500/30' : 'bg-slate-600 shadow-slate-500/30'}`}>
+                    {a}
+                  </motion.span>
+                ) : (
+                  <motion.span key={`${quien}-${a}`} initial={{ opacity: 0, y: 12, backgroundColor: neutro, color: isDark ? '#d1d5db' : '#374151' }} animate={{ opacity: 1, y: 0, backgroundColor: tono, color: letra }}
+                    transition={{ opacity: { delay: i * 0.07 }, y: { delay: i * 0.07 }, backgroundColor: { delay: 0.7 + (i - 2) * 0.35, duration: 0.5 }, color: { delay: 0.7 + (i - 2) * 0.35, duration: 0.5 } }}
+                    className={`px-3 py-1.5 rounded-full text-sm font-bold ${a === 'testarudo' ? 'shadow-[0_0_16px_rgba(255,133,29,0.5)]' : isDark ? 'shadow-md shadow-black/30' : 'shadow-md shadow-gray-200/70'}`}>
+                    {a}
+                  </motion.span>
+                );
+              })}
             </div>
             <AnimatePresence mode="wait">
               <motion.div key={quien} data-g="testarudo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
@@ -1072,9 +1355,9 @@ function Halo({ isDark }: SlideProps) {
             <div className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
               <p className={microLabel(isDark)}>El antídoto · descorrelacionar los errores</p>
               <ul className={`text-sm space-y-1.5 mt-1 ${textMuted(isDark)}`}>
-                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" />Al corregir exámenes: califica <strong>la pregunta 1 de todos</strong>, anota la nota al dorso, y recién después pasa a la pregunta 2.</li>
-                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" />En un comité: cada persona escribe su posición <strong>antes</strong> de que empiece la discusión abierta.</li>
-                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" />En una entrevista: puntúa dimensiones por separado, sin mirar las anteriores.</li>
+                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" /><span>Al corregir exámenes: califica <strong>la pregunta 1 de todos</strong>, anota la nota al dorso, y recién después pasa a la pregunta 2.</span></li>
+                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" /><span>En un comité: cada persona escribe su posición <strong>antes</strong> de que empiece la discusión abierta.</span></li>
+                <li className="flex gap-2"><CheckCircle2 size={15} className="text-[#ff851d] shrink-0 mt-0.5" /><span>En una entrevista: puntúa dimensiones por separado, sin mirar las anteriores.</span></li>
               </ul>
             </div>
             <p data-g="regla" className={`text-sm ${textMuted(isDark)}`}>La regla general: <strong>para que varias opiniones sumen información, tienen que ser independientes</strong>. Si la primera contagia a las demás, no tienes cinco juicios: tienes uno repetido cinco veces.</p>
@@ -1103,8 +1386,8 @@ function Wysiati({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="WYSIATI:" highlight="lo que ves es todo lo que hay" subtitle="El Sistema 1 construye la mejor historia posible con la información que tiene a mano, y trata lo que no sabe como si no existiera.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-3">
-            <svg role="img" viewBox="0 0 520 300" className="w-full h-full max-h-[320px] overflow-visible" aria-label="Un foco ilumina tres piezas; el resto queda en la sombra mientras la historia se arma igual">
+          <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <svg role="img" viewBox="0 0 520 300" className="w-full h-full max-h-[320px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un foco ilumina tres piezas; el resto queda en la sombra mientras la historia se arma igual">
               <SceneDefs id="wys" isDark={isDark} />
               <IsoFloor cx={200} cy={170} s={230} fill={t.floor} />
 
@@ -1167,7 +1450,7 @@ function Wysiati({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={verOculto} onClick={() => setVerOculto(true)}>Lo que falta</Pill>
             </div>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-2.5 justify-center">
+          <div className="lg:w-[42%] flex flex-col gap-2.5 justify-center">
             <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
               <div className="flex items-center justify-between gap-2 mb-1">
                 <p className={`text-base font-black ${heading(isDark)}`}>El juicio de una sola parte</p>
@@ -1218,26 +1501,44 @@ function Basicas({ isDark }: SlideProps) {
         <AnimatePresence mode="wait">
           {caso === 'rostros' ? (
             <motion.div key="r" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-              <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center">
-                <svg role="img" viewBox="0 0 320 210" className="w-full h-full max-h-[230px] overflow-visible" aria-label="Siete de cada diez elecciones predichas por la cara">
+              <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center">
+                <svg role="img" viewBox="0 0 320 210" className="w-full h-full max-h-[230px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Siete de cada diez elecciones predichas por la cara">
                   <SceneDefs id="bas" isDark={isDark} />
+                  <text x={160} y={12} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={t2(isDark)} opacity={0.6}>una mirada de una fracción de segundo</text>
+                  {/* Dos rostros: uno «parece competente» */}
+                  <g filter="url(#bas-sh)">
+                    <path d="M 98 34 Q 120 20 142 34 L 142 74 Q 142 92 120 94 Q 98 92 98 74 Z" fill="url(#bas-head)" />
+                    <path d="M 98 40 Q 100 22 120 22 Q 140 22 142 40 Q 130 32 120 33 Q 108 32 98 40 Z" fill="#2b1a12" />
+                    <circle cx={111} cy={55} r={3} fill="#1f2937" /><circle cx={129} cy={55} r={3} fill="#1f2937" />
+                    <path d="M 109 72 Q 120 82 131 72 Q 120 77 109 72 Z" fill="#9b2c2c" />
+                  </g>
+                  <g filter="url(#bas-sh)" opacity={0.9}>
+                    <ellipse cx={200} cy={60} rx={21} ry={30} fill="url(#bas-head)" />
+                    <path d="M 179 52 Q 182 28 200 29 Q 218 28 221 52 Q 210 40 200 41 Q 190 40 179 52 Z" fill="#6b4a2f" />
+                    <circle cx={192} cy={60} r={3} fill="#1f2937" /><circle cx={208} cy={60} r={3} fill="#1f2937" />
+                    <rect x={193} y={75} width={14} height={3} rx={1.5} fill="#9b2c2c" />
+                  </g>
+                  <motion.rect x={88} y={18} width={144} height={84} rx={18} fill="#fff" initial={{ opacity: 0 }} animate={{ opacity: [0, 0.85, 0, 0] }} transition={{ duration: 4, times: [0, 0.04, 0.12, 1], repeat: Infinity }} />
+                  <motion.g animate={{ scale: [0, 0, 1, 1, 0] }} transition={{ duration: 4, times: [0, 0.14, 0.22, 0.92, 1], repeat: Infinity }} style={{ transformOrigin: '120px 108px' }}>
+                    <rect x={84} y={100} width={72} height={17} rx={8.5} fill="url(#bas-brand)" />
+                    <text x={120} y={112} textAnchor="middle" fontSize={10} fontWeight={900} fill="#fff">competente</text>
+                  </motion.g>
+                  {/* Diez elecciones: la cara acierta siete */}
                   {Array.from({ length: 10 }, (_, i) => {
-                    const col = i % 5;
-                    const row = Math.floor(i / 5);
+                    const x = 52 + i * 24;
                     const acierto = i < 7;
                     return (
-                      <motion.g key={i} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.06, type: 'spring', stiffness: 130, damping: 12 }}>
-                        <Float amp={acierto ? 5 : 0} dur={2.4} delay={i * 0.18}>
-                          <g filter="url(#bas-sh)"><IsoBox cx={60 + col * 52} cy={70 + row * 62} s={20} h={24} f={acierto ? BRAND : NEUTRAL(isDark)} /></g>
-                        </Float>
-                        {acierto && <PulseDisc cx={60 + col * 52} cy={94 + row * 62} rx={26} ry={9} dur={2.6} delay={i * 0.22} peak={0.22} />}
+                      <motion.g key={i} initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.09, type: 'spring', stiffness: 160, damping: 13 }}>
+                        <g filter="url(#bas-sh)"><IsoBox cx={x} cy={148} s={9} h={14} f={acierto ? BRAND : NEUTRAL(isDark)} /></g>
+                        <rect x={x - 4} y={146} width={8} height={2} rx={1} fill={acierto ? '#7a1a2a' : t2(isDark)} opacity={0.5} />
+                        {acierto && <text x={x} y={140} textAnchor="middle" fontSize={10} fontWeight={900} fill={ORANGE}>✓</text>}
                       </motion.g>
                     );
                   })}
                   <text x={160} y={198} textAnchor="middle" fontSize={13} fontWeight={900} fill={ORANGE}>≈ 7 de cada 10 contiendas acertadas</text>
                 </svg>
               </div>
-              <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
+              <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
                 <div className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <p className={`text-base font-black ${heading(isDark)}`}>Alex Todorov · cara de competente</p>

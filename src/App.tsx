@@ -107,8 +107,8 @@ function AjustarAlto({ activo, children }: { activo: boolean; children: React.Re
   }, [activo]);
   if (!activo) return <>{children}</>;
   return (
-    <div ref={caja} style={{ height: '100%', overflow: 'hidden', position: 'relative' }}>
-      <div ref={dentro} style={{ width: `${100 / k}%`, transform: `scale(${k})`, transformOrigin: 'top left' }}>{children}</div>
+    <div ref={caja} data-ajuste-caja="" style={{ height: '100%', overflow: 'clip', position: 'relative' }}>
+      <div ref={dentro} data-ajuste-dentro="" style={{ width: `${100 / k}%`, transform: `scale(${k})`, transformOrigin: 'top left' }}>{children}</div>
     </div>
   );
 }

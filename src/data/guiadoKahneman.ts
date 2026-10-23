@@ -729,6 +729,7 @@ export const guiadoKahneman: GuiadoClase = {
       {
         "t": 864.3,
         "mostrar": [
+          "svg",
           "n:Ilusión de Moisés"
         ],
         "foco": "n:Ilusión de Moisés",
