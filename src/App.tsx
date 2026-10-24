@@ -36,12 +36,14 @@ import ClaseArquitecturaEquipos from './components/ClaseArquitecturaEquipos';
 import ClaseMeddpicc from './components/ClaseMeddpicc';
 import ClaseSpin from './components/ClaseSpin';
 import ClaseKahneman from './components/ClaseKahneman';
+import ClaseInfluencia from './components/ClaseInfluencia';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
 import ClaseCompensacion from './components/ClaseCompensacion';
 import ClaseGuiada from './components/ClaseGuiada';
 import { guiadoCompensacion } from './data/guiadoCompensacion';
 import { guiadoKahneman } from './data/guiadoKahneman';
+import { guiadoInfluencia } from './data/guiadoInfluencia';
 import ClaseRevOps from './components/ClaseRevOps';
 import ClaseSalesEnablement from './components/ClaseSalesEnablement';
 import { AudioSrcContext } from './components/slideKit';
@@ -744,7 +746,7 @@ export default function App() {
                 overflowY: 'hidden',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' ? '20px 14px 92px' : '20px 14px 24px',
+                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' ? '20px 14px 92px' : '20px 14px 24px',
                 boxSizing: 'border-box',
                 background: isDark ? '#000' : '#f0f2f5',
                 pointerEvents: 'auto'
@@ -875,6 +877,11 @@ export default function App() {
                   <ClaseKahneman slideId={currentSlideId} isDark={isDark} />
                 )}
 
+                {/* Clase "Influencia y persuasión": diapositivas de contenido (ip-*) */}
+                {currentSlideId.startsWith('ip-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseInfluencia slideId={currentSlideId} isDark={isDark} />
+                )}
+
                 {/* Clase "El Vendedor Desafiante": diapositivas de contenido (ch-*) */}
                 {currentSlideId.startsWith('ch-') && slidesOrder[currentSlideIndex].level !== 1 && (
                   <ClaseChallenger slideId={currentSlideId} isDark={isDark} />
@@ -980,10 +987,10 @@ export default function App() {
         </div>
 
         {/* Reproducción global de la clase con audio (flecha, resaltado y aparición de elementos) */}
-        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman') && (
+        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion') && (
           <ClaseGuiada
             key={activeClassId}
-            datos={activeClassId === 'kahneman' ? guiadoKahneman : guiadoCompensacion}
+            datos={activeClassId === 'kahneman' ? guiadoKahneman : activeClassId === 'influencia-persuasion' ? guiadoInfluencia : guiadoCompensacion}
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}

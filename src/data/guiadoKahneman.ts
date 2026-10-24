@@ -67,48 +67,56 @@ export const guiadoKahneman: GuiadoClase = {
       "t": 846.78
     },
     {
+      "id": "kn-header-heuristicas",
+      "t": 923.75
+    },
+    {
+      "id": "kn-sustitucion",
+      "t": 925.96
+    },
+    {
       "id": "kn-representatividad",
-      "t": 924.92
+      "t": 997
     },
     {
       "id": "kn-disponibilidad",
-      "t": 971.98
+      "t": 1074.55
     },
     {
       "id": "kn-afectiva",
-      "t": 1035.15
+      "t": 1137.72
     },
     {
       "id": "kn-header-sesgos",
-      "t": 1096.45
+      "t": 1199.02
     },
     {
       "id": "kn-halo",
-      "t": 1099.12
+      "t": 1201.68
     },
     {
       "id": "kn-wysiati",
-      "t": 1189.18
+      "t": 1291.95
     },
     {
       "id": "kn-basicas",
-      "t": 1202.32
+      "t": 1367.89
     },
     {
       "id": "kn-header-critico",
-      "t": 1285.78
+      "t": 1451.36
     },
     {
       "id": "kn-replicacion",
-      "t": 1288.38
+      "t": 1453.96
     },
     {
       "id": "kn-vocabulario",
-      "t": 1409.38
+      "t": 1574.96
     },
     {
       "id": "kn-cierre",
-      "t": 1498.12
+      "t": 1663.69
     }
   ],
   cues: {
@@ -773,16 +781,63 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       }
     ],
-    "kn-representatividad": [
+    "kn-sustitucion": [
       {
-        "t": 925.22,
+        "t": 926.26,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 926.51,
+        "t": 939.13,
+        "mostrar": [
+          "svg"
+        ],
+        "foco": null,
+        "clicEn": "b~:¿Debo invertir"
+      },
+      {
+        "t": 946.26,
+        "foco": null,
+        "clicEn": "b~:¿Qué tan satisfecho"
+      },
+      {
+        "t": 953.09,
+        "foco": null,
+        "clicEn": "b~:¿Cuánto merece"
+      },
+      {
+        "t": 959.77,
+        "foco": null,
+        "clicEn": "b~:¿Llegará lejos"
+      },
+      {
+        "t": 963.79,
+        "mostrar": [
+          "n:Dos aptitudes que lo hacen posible"
+        ],
+        "foco": "n:Dos aptitudes que lo hacen posible"
+      },
+      {
+        "t": 985.5,
+        "foco": null
+      },
+      {
+        "t": 991.5,
+        "foco": null
+      }
+    ],
+    "kn-representatividad": [
+      {
+        "t": 997.3,
+        "mostrar": [
+          "titulo"
+        ],
+        "foco": null
+      },
+      {
+        "t": 1018.23,
         "mostrar": [
           "svg",
           "fila:Solo el perfil"
@@ -790,53 +845,53 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       },
       {
-        "t": 929.2,
+        "t": 1020.47,
         "mostrar": [
           "n:La sustitución, paso a paso"
         ],
         "foco": "n:La sustitución, paso a paso"
       },
       {
-        "t": 938.93,
+        "t": 1034.63,
         "mostrar": [
           "n:Lo que se ignora"
         ],
         "foco": "n:Lo que se ignora"
       },
       {
-        "t": 944.57,
+        "t": 1039.83,
         "foco": "n:Lo que se ignora",
         "clicEn": "b:Mostrar la tasa base"
       },
       {
-        "t": 953.27,
+        "t": 1053.83,
         "mostrar": [
           "costo"
         ],
         "foco": "costo"
       },
       {
-        "t": 963.87,
+        "t": 1067.07,
         "foco": null
       }
     ],
     "kn-disponibilidad": [
       {
-        "t": 972.28,
+        "t": 1074.85,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 980.73,
+        "t": 1083.3,
         "mostrar": [
           "svg"
         ],
         "foco": null
       },
       {
-        "t": 983.37,
+        "t": 1085.93,
         "mostrar": [
           "b~:Accidente de avión",
           "nota"
@@ -845,7 +900,7 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b~:Accidente de avión"
       },
       {
-        "t": 996.2,
+        "t": 1098.77,
         "mostrar": [
           "b~:Atentado terrorista"
         ],
@@ -853,7 +908,7 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b~:Atentado terrorista"
       },
       {
-        "t": 1005.93,
+        "t": 1108.5,
         "mostrar": [
           "b~:Palabras que empiezan con K"
         ],
@@ -861,27 +916,27 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b~:Palabras que empiezan con K"
       },
       {
-        "t": 1020.2,
+        "t": 1122.77,
         "mostrar": [
           "footer"
         ],
         "foco": "footer"
       },
       {
-        "t": 1029.7,
+        "t": 1132.27,
         "foco": null
       }
     ],
     "kn-afectiva": [
       {
-        "t": 1035.45,
+        "t": 1138.02,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1040.7,
+        "t": 1143.27,
         "mostrar": [
           "svg",
           "fila:Cómo ocurre"
@@ -889,41 +944,41 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       },
       {
-        "t": 1051.7,
+        "t": 1154.27,
         "mostrar": [
           "n:El ejecutivo y las acciones de Ford"
         ],
         "foco": "n:El ejecutivo y las acciones de Ford"
       },
       {
-        "t": 1068.07,
+        "t": 1170.63,
         "mostrar": [
           "n:Cómo detectarlo en una reunión"
         ],
         "foco": "n:Cómo detectarlo en una reunión"
       },
       {
-        "t": 1081.6,
+        "t": 1184.17,
         "mostrar": [
           "cita"
         ],
         "foco": "cita"
       },
       {
-        "t": 1089.17,
+        "t": 1191.73,
         "foco": null
       }
     ],
     "kn-halo": [
       {
-        "t": 1099.42,
+        "t": 1201.98,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1104.76,
+        "t": 1207.33,
         "mostrar": [
           "fila:Alan",
           "chips"
@@ -931,7 +986,7 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": "chips"
       },
       {
-        "t": 1119.4,
+        "t": 1221.97,
         "mostrar": [
           "testarudo"
         ],
@@ -939,50 +994,70 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b:Alan"
       },
       {
-        "t": 1127.5,
+        "t": 1230.07,
         "foco": "testarudo",
         "clicEn": "b:Ben"
       },
       {
-        "t": 1132.77,
+        "t": 1235.33,
         "mostrar": [
           "n:Qué está pasando"
         ],
         "foco": "n:Qué está pasando"
       },
       {
-        "t": 1147.2,
+        "t": 1249.77,
         "mostrar": [
           "n:El antídoto · descorrelacionar los errores"
         ],
         "foco": "n:El antídoto · descorrelacionar los errores"
       },
       {
-        "t": 1169.5,
+        "t": 1272.07,
         "mostrar": [
           "regla"
         ],
         "foco": "regla"
       },
       {
-        "t": 1183.17,
+        "t": 1285.73,
         "foco": null
       }
     ],
     "kn-wysiati": [
       {
-        "t": 1189.48,
+        "t": 1292.25,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1000000,
+        "t": 1294.23,
         "mostrar": [
           "svg",
-          "fila:Lo que ves",
-          "n:El juicio de una sola parte",
+          "fila:Lo que ves"
+        ],
+        "foco": null
+      },
+      {
+        "t": 1300.66,
+        "foco": null
+      },
+      {
+        "t": 1303.23,
+        "mostrar": [
+          "n:El juicio de una sola parte"
+        ],
+        "foco": "n:El juicio de una sola parte"
+      },
+      {
+        "t": 1311.99,
+        "foco": "n:El juicio de una sola parte"
+      },
+      {
+        "t": 1331.03,
+        "mostrar": [
           "n:Exceso de confianza",
           "n:Efectos marco",
           "n:Olvido de la tasa base"
@@ -990,27 +1065,39 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       },
       {
-        "t": 1192.13,
+        "t": 1332.63,
+        "foco": "n:Exceso de confianza"
+      },
+      {
+        "t": 1339.63,
+        "foco": "n:Efectos marco"
+      },
+      {
+        "t": 1348.23,
+        "foco": "n:Olvido de la tasa base"
+      },
+      {
+        "t": 1357.71,
         "mostrar": [
           "desarma"
         ],
         "foco": "desarma"
       },
       {
-        "t": 1197.7,
+        "t": 1363.28,
         "foco": null
       }
     ],
     "kn-basicas": [
       {
-        "t": 1202.62,
+        "t": 1368.19,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1213.18,
+        "t": 1378.76,
         "mostrar": [
           "fila:Rostros y elecciones",
           "svg",
@@ -1019,14 +1106,14 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": "n:Alex Todorov · cara de competente"
       },
       {
-        "t": 1229.07,
+        "t": 1394.64,
         "mostrar": [
           "n:Dónde pega más fuerte"
         ],
         "foco": "n:Dónde pega más fuerte"
       },
       {
-        "t": 1239.57,
+        "t": 1405.14,
         "mostrar": [
           "aves"
         ],
@@ -1034,34 +1121,34 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b:Cuántas aves salvar"
       },
       {
-        "t": 1258.87,
+        "t": 1424.44,
         "mostrar": [
           "n:Promedios sí, sumas no"
         ],
         "foco": "n:Promedios sí, sumas no"
       },
       {
-        "t": 1273.27,
+        "t": 1438.85,
         "mostrar": [
           "porEso"
         ],
         "foco": "porEso"
       },
       {
-        "t": 1279.97,
+        "t": 1445.54,
         "foco": null
       }
     ],
     "kn-replicacion": [
       {
-        "t": 1288.68,
+        "t": 1454.26,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1300.33,
+        "t": 1465.91,
         "mostrar": [
           "cols"
         ],
@@ -1069,51 +1156,51 @@ export const guiadoKahneman: GuiadoClase = {
         "clicEn": "b~:Resiste bien"
       },
       {
-        "t": 1324.57,
+        "t": 1490.14,
         "foco": "cols",
         "clicEn": "b~:En disputa"
       },
       {
-        "t": 1342.53,
+        "t": 1508.11,
         "foco": "cols",
         "clicEn": "b~:No replicó"
       },
       {
-        "t": 1356.97,
+        "t": 1522.54,
         "mostrar": [
           "n:Lo que hizo el propio Kahneman"
         ],
         "foco": "n:Lo que hizo el propio Kahneman"
       },
       {
-        "t": 1377.9,
+        "t": 1543.48,
         "mostrar": [
           "n:Cómo leer esto sin tirar el libro"
         ],
         "foco": "n:Cómo leer esto sin tirar el libro"
       },
       {
-        "t": 1394.7,
+        "t": 1560.28,
         "mostrar": [
           "footer"
         ],
         "foco": "footer"
       },
       {
-        "t": 1402.53,
+        "t": 1568.11,
         "foco": null
       }
     ],
     "kn-vocabulario": [
       {
-        "t": 1409.68,
+        "t": 1575.26,
         "mostrar": [
           "titulo"
         ],
         "foco": null
       },
       {
-        "t": 1426,
+        "t": 1591.58,
         "mostrar": [
           "fila:Facilidad cognitiva",
           "frase"
@@ -1121,57 +1208,57 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       },
       {
-        "t": 1428.37,
+        "t": 1593.94,
         "foco": "frase",
         "clicEn": "b:Facilidad cognitiva"
       },
       {
-        "t": 1436.8,
+        "t": 1602.38,
         "foco": "frase",
         "clicEn": "b:Efecto halo"
       },
       {
-        "t": 1441.69,
+        "t": 1607.27,
         "foco": "frase",
         "clicEn": "b:WYSIATI"
       },
       {
-        "t": 1450,
+        "t": 1615.58,
         "foco": "frase",
         "clicEn": "b:Sustitución de preguntas"
       },
       {
-        "t": 1455.2,
+        "t": 1620.78,
         "foco": "frase",
         "clicEn": "b:Tasa base"
       },
       {
-        "t": 1462.53,
+        "t": 1628.11,
         "foco": "frase",
         "clicEn": "b:Descorrelacionar errores"
       },
       {
-        "t": 1466.47,
+        "t": 1632.04,
         "mostrar": [
           "n:Por qué funciona mejor con los demás"
         ],
         "foco": "n:Por qué funciona mejor con los demás"
       },
       {
-        "t": 1484.87,
+        "t": 1650.44,
         "mostrar": [
           "footer"
         ],
         "foco": "footer"
       },
       {
-        "t": 1492.9,
+        "t": 1658.48,
         "foco": null
       }
     ],
     "kn-cierre": [
       {
-        "t": 1498.42,
+        "t": 1663.99,
         "mostrar": [
           "css:svg",
           "css:p.uppercase"
@@ -1179,84 +1266,84 @@ export const guiadoKahneman: GuiadoClase = {
         "foco": null
       },
       {
-        "t": 1501.1,
+        "t": 1666.68,
         "mostrar": [
           "css:h2"
         ],
         "foco": null
       },
       {
-        "t": 1505.17,
+        "t": 1670.74,
         "mostrar": [
           "css:div.flex-wrap > span#1"
         ],
         "foco": null
       },
       {
-        "t": 1507.2,
+        "t": 1672.78,
         "mostrar": [
           "css:div.flex-wrap > span#2"
         ],
         "foco": null
       },
       {
-        "t": 1508.9,
+        "t": 1674.48,
         "mostrar": [
           "css:div.flex-wrap > span#3"
         ],
         "foco": null
       },
       {
-        "t": 1511.13,
+        "t": 1676.71,
         "mostrar": [
           "css:div.flex-wrap > span#4"
         ],
         "foco": null
       },
       {
-        "t": 1513.37,
+        "t": 1678.94,
         "mostrar": [
           "css:div.flex-wrap > span#5"
         ],
         "foco": null
       },
       {
-        "t": 1516.51,
+        "t": 1682.09,
         "mostrar": [
           "css:div.flex-wrap > span#6"
         ],
         "foco": null
       },
       {
-        "t": 1518.07,
+        "t": 1683.64,
         "mostrar": [
           "css:div.flex-wrap > span#7"
         ],
         "foco": null
       },
       {
-        "t": 1521.1,
+        "t": 1686.68,
         "mostrar": [
           "css:div.flex-wrap > span#8"
         ],
         "foco": null
       },
       {
-        "t": 1526.24,
+        "t": 1691.81,
         "mostrar": [
           "css:div.flex-wrap > span#9"
         ],
         "foco": null
       },
       {
-        "t": 1528.7,
+        "t": 1694.28,
         "mostrar": [
           "css:p.max-w-3xl"
         ],
         "foco": "css:p.max-w-3xl"
       },
       {
-        "t": 1539.6,
+        "t": 1705.18,
         "foco": null
       }
     ]

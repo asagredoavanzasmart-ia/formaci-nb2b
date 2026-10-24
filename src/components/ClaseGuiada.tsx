@@ -292,6 +292,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
       <style>{estilos(isDark)}</style>
       <audio
         ref={audioRef}
+        data-guiado=""
         src={datos.audio}
         preload="metadata"
         onLoadedMetadata={(e) => setDuracion(e.currentTarget.duration)}

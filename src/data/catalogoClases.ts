@@ -73,6 +73,15 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
     iconKey: 'general',
   },
   {
+    id: 'influencia-persuasion',
+    title: 'Influencia y persuasión',
+    subtitle: 'Harvard Business Review · ocho autores',
+    description:
+      'Los cuatro frentes de la influencia, los seis principios de Cialdini, confianza, equipo y red, el carisma que se aprende, empatía, historias que emocionan, el poder de un pósit y cuándo vender con datos o con emociones. Clase guiada con audio y dos tests.',
+    category: 'Liderazgo',
+    iconKey: 'liderazgo',
+  },
+  {
     id: 'challenger',
     title: 'El Vendedor Desafiante (Challenger)',
     subtitle: 'Dixon y Adamson · venta compleja B2B',

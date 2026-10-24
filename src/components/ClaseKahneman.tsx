@@ -8,6 +8,38 @@ import {
   Orb, Float, Lift, Traveler, PulseDisc, hop, Persona,
 } from './scene3d';
 import type { Faces } from './scene3d';
+import { EscenaSincronizada, useMarcaClase } from './remotion/EscenaSincronizada';
+import { PupilaEsfuerzo, W as PE_W, H as PE_H } from './remotion/PupilaEsfuerzo';
+import { ControladorPerezoso, W as CP_W, H as CP_H } from './remotion/ControladorPerezoso';
+import { MaquinaAsociativa, MARCAS_RAMAS, W as MA_W, H as MA_H } from './remotion/MaquinaAsociativa';
+import { PrimingEscena, W as PR_W, H as PR_H } from './remotion/PrimingEscena';
+import { HaloEscena, W as HA_W, H as HA_H } from './remotion/HaloEscena';
+import { FacilidadEscena, W as FA_W, H as FA_H } from './remotion/FacilidadEscena';
+import { CausalidadEscena, W as CA_W, H as CA_H } from './remotion/CausalidadEscena';
+import { AfectivaEscena, W as AF_W, H as AF_H } from './remotion/AfectivaEscena';
+import { DisponibilidadEscena, W as DI_W, H as DI_H } from './remotion/DisponibilidadEscena';
+import { RepresentatividadEscena, W as RP_W, H as RP_H } from './remotion/RepresentatividadEscena';
+import { WysiatiEscena, W as WY_W, H as WY_H } from './remotion/WysiatiEscena';
+import { SustitucionEscena, W as SU_W, H as SU_H } from './remotion/SustitucionEscena';
+import { guiadoKahneman } from '../data/guiadoKahneman';
+
+/* Tramo del audio de la clase que cubre una diapositiva: de su inicio al de la siguiente. */
+const tramo = (id: string) => {
+  const i = guiadoKahneman.slides.findIndex((s) => s.id === id);
+  return { inicio: guiadoKahneman.slides[i].t, fin: guiadoKahneman.slides[i + 1].t };
+};
+const TRAMO_ESFUERZO = tramo('kn-esfuerzo');
+const TRAMO_PEREZOSO = tramo('kn-perezoso');
+const TRAMO_ASOCIATIVA = tramo('kn-asociativa');
+const TRAMO_PRIMING = tramo('kn-priming');
+const TRAMO_HALO = tramo('kn-halo');
+const TRAMO_FACILIDAD = tramo('kn-facilidad');
+const TRAMO_CAUSALIDAD = tramo('kn-causalidad');
+const TRAMO_AFECTIVA = tramo('kn-afectiva');
+const TRAMO_DISPONIBILIDAD = tramo('kn-disponibilidad');
+const TRAMO_REPRESENTATIVIDAD = tramo('kn-representatividad');
+const TRAMO_WYSIATI = tramo('kn-wysiati');
+const TRAMO_SUSTITUCION = tramo('kn-sustitucion');
 
 /**
  * Clase: "Pensar rápido, pensar despacio" (Daniel Kahneman).
@@ -405,6 +437,7 @@ function Esfuerzo({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={PupilaEsfuerzo} props={{ isDark }} inicio={TRAMO_ESFUERZO.inicio} fin={TRAMO_ESFUERZO.fin} ancho={PE_W} alto={PE_H} respaldo={<>
             <svg role="img" viewBox="0 0 300 220" className="w-full h-full max-h-[250px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="La pupila se dilata con el esfuerzo y vuelve a su tamaño al resolver">
               <SceneDefs id="esf" isDark={isDark} />
               <defs><clipPath id="esf-ecg"><rect x={ECG.x} y={104} width={ECG.ancho} height={92} /></clipPath></defs>
@@ -427,6 +460,7 @@ function Esfuerzo({ isDark }: SlideProps) {
               <text x={150} y={214} textAnchor="middle" fontSize={13} fontWeight={900} fill={fase === 1 ? ORANGE : t.muted}>{etiquetas[fase]}</text>
             </svg>
             <div className="flex gap-2">{etiquetas.map((e, i) => <Pill key={e} isDark={isDark} on={i === fase} onClick={(ev?: React.MouseEvent) => elegir(i, ev)}>{e}</Pill>)}</div>
+            </>} />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <div data-g="suma3" className={`p-4 rounded-3xl flex flex-col gap-3 ${featuredClass(isDark)}`}>
@@ -491,16 +525,18 @@ function Perezoso({ isDark }: SlideProps) {
           {casos.map((x, k) => <Pill key={x.id} isDark={isDark} on={k === i} onClick={() => elegir(k)}>{x.nombre}</Pill>)}
         </div>
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[52%] flex flex-col justify-center gap-3">
-            <AnimatePresence mode="wait">
-              <motion.div key={c.id} data-g="enunciado" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
-                <p className={microLabel(isDark)}>Léelo y responde antes de seguir</p>
-                <p className={`text-lg md:text-xl font-bold leading-snug ${heading(isDark)}`}>{c.enunciado}</p>
-              </motion.div>
-            </AnimatePresence>
+          <div className="lg:w-[58%] flex flex-col justify-center gap-3">
+            <EscenaSincronizada componente={ControladorPerezoso} props={{ isDark }} inicio={TRAMO_PEREZOSO.inicio} fin={TRAMO_PEREZOSO.fin} ancho={CP_W} alto={CP_H} respaldo={
+              <AnimatePresence mode="wait">
+                <motion.div key={c.id} data-g="enunciado" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+                  <p className={microLabel(isDark)}>Léelo y responde antes de seguir</p>
+                  <p className={`text-lg md:text-xl font-bold leading-snug ${heading(isDark)}`}>{c.enunciado}</p>
+                </motion.div>
+              </AnimatePresence>
+            } />
             {!revelado && <button data-nunca onClick={() => setRevelado(true)} className="self-start px-5 py-2 rounded-full text-sm font-black bg-gradient-to-r from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30">Revelar la respuesta</button>}
           </div>
-          <div className="lg:w-[48%] flex flex-col justify-center gap-3">
+          <div className="lg:w-[42%] flex flex-col justify-center gap-3">
             <AnimatePresence mode="wait">
               {revelado ? (
                 <motion.div key={`r${c.id}`} data-g="resultado" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="flex flex-col gap-3">
@@ -614,12 +650,16 @@ function Asociativa({ isDark }: SlideProps) {
     { name: 'Historia', text: 'Inventas una secuencia causal: alguien comió plátanos y se enfermó.' },
   ];
   const pos: [number, number][] = [[110, 85], [400, 85], [110, 225], [400, 225]];
-  const [active, setActive] = useState(3);
+  const [elegida, setActive] = useState(3);
+  // En la clase guiada la rama activa sigue al audio; si no, la elige la persona.
+  const marca = useMarcaClase(TRAMO_ASOCIATIVA.inicio, TRAMO_ASOCIATIVA.fin, MARCAS_RAMAS);
+  const active = marca === null ? elegida : Math.max(0, marca);
   return (
     <Shell isDark={isDark} title="La máquina asociativa:" highlight="dos palabras y una cascada" subtitle="Lee estas dos palabras juntas: «Plátanos Vómito». En menos de un segundo tu mente hizo mucho más de lo que crees.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex items-center">
+            <EscenaSincronizada componente={MaquinaAsociativa} props={{ isDark }} inicio={TRAMO_ASOCIATIVA.inicio} fin={TRAMO_ASOCIATIVA.fin} ancho={MA_W} alto={MA_H} respaldo={
             <svg role="img" viewBox="0 0 510 345" className="w-full h-full max-h-[370px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un estímulo que activa memoria, emoción, cuerpo e historia">
               <SceneDefs id="aso" isDark={isDark} />
               <IsoFloor cx={255} cy={178} s={230} fill={t.floor} />
@@ -646,6 +686,7 @@ function Asociativa({ isDark }: SlideProps) {
                 );
               })}
             </svg>
+            } />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
@@ -703,6 +744,7 @@ function Priming({ isDark }: SlideProps) {
         </div>
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex items-center">
+            <EscenaSincronizada componente={PrimingEscena} props={{ isDark }} inicio={TRAMO_PRIMING.inicio} fin={TRAMO_PRIMING.fin} ancho={PR_W} alto={PR_H} respaldo={
             <svg role="img" viewBox="0 0 440 230" className="w-full h-full overflow-visible" aria-label="Estímulo, activación inconsciente y cambio de conducta">
               <SceneDefs id="pri" isDark={isDark} />
               {/* Estímulo: lo que la persona ve o hace */}
@@ -737,17 +779,18 @@ function Priming({ isDark }: SlideProps) {
                 <motion.text key={e.id} x={378} y={214} textAnchor="middle" fontSize={10.5} fontWeight={800} fill={t.muted} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>{e.efecto}</motion.text>
               </AnimatePresence>
             </svg>
+            } />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-2.5 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={e.id} data-g="exp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="flex flex-col gap-2.5">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className={`text-xl font-black ${heading(isDark)}`}>{e.name} <span className={`text-sm font-semibold ${textMuted(isDark)}`}>· {e.autor}</span></h3>
+              <motion.div key={e.id} data-g="exp" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className={`flex flex-col gap-2.5 p-4 rounded-3xl ${isDark ? 'bg-[#242424] shadow-[0_2px_12px_rgba(0,0,0,0.3)]' : 'bg-white shadow-[0_2px_12px_rgba(79,79,79,0.08)]'}`}>
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className={`text-xl font-black leading-tight ${heading(isDark)}`}>{e.name} <span className={`block text-sm font-semibold ${textMuted(isDark)}`}>{e.autor}</span></h3>
                   <Sello isDark={isDark} tipo="disputa" />
                 </div>
-                <div className={`p-3 rounded-2xl ${panelClass(isDark)}`}><p className={microLabel(isDark)}>Estímulo</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.estimulo}</p></div>
-                <div className={`p-3 rounded-2xl ${featuredClass(isDark)}`}><p className={microLabel(isDark)}>Resultado reportado</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.resultado}</p></div>
-                <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}><p className={microLabel(isDark)}>La idea que ilustra</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.idea}</p></div>
+                <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2e2e2e]' : 'bg-gray-50'}`}><p className={microLabel(isDark)}>Estímulo</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.estimulo}</p></div>
+                <div className={`p-3 rounded-2xl ${isDark ? 'bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10' : 'bg-gradient-to-br from-[#ff851d]/[.07] to-[#ef375c]/[.07]'}`}><p className={microLabel(isDark)}>Resultado reportado</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.resultado}</p></div>
+                <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2e2e2e]' : 'bg-gray-50'}`}><p className={microLabel(isDark)}>La idea que ilustra</p><p className={`text-sm leading-snug ${textMuted(isDark)}`}>{e.idea}</p></div>
               </motion.div>
             </AnimatePresence>
           </div>
@@ -777,6 +820,7 @@ function Facilidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={FacilidadEscena} props={{ isDark }} inicio={TRAMO_FACILIDAD.inicio} fin={TRAMO_FACILIDAD.fin} ancho={FA_W} alto={FA_H} respaldo={
             <svg role="img" viewBox="0 0 300 248" className="w-full h-full max-h-[260px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Medidor entre facilidad y tensión cognitiva">
               <SceneDefs id="fac" isDark={isDark} />
               <defs><filter id="fac-borroso"><feGaussianBlur stdDeviation={facil ? 0 : 1.4} /></filter></defs>
@@ -796,6 +840,7 @@ function Facilidad({ isDark }: SlideProps) {
               <text x={72} y={224} textAnchor="middle" fontSize={12} fontWeight={900} fill={facil ? ORANGE : t.muted}>Facilidad</text>
               <text x={228} y={224} textAnchor="middle" fontSize={12} fontWeight={900} fill={!facil ? ORANGE : t.muted}>Tensión</text>
             </svg>
+            } />
             <div className="flex gap-2">
               <Pill isDark={isDark} on={facil} onClick={() => setModo('facil')}>Facilidad</Pill>
               <Pill isDark={isDark} on={!facil} onClick={() => setModo('tenso')}>Tensión</Pill>
@@ -951,6 +996,7 @@ function Causalidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={CausalidadEscena} props={{ isDark }} inicio={TRAMO_CAUSALIDAD.inicio} fin={TRAMO_CAUSALIDAD.fin} ancho={CA_W} alto={CA_H} respaldo={<>
             <svg role="img" viewBox="0 0 340 200" className="w-full h-full max-h-[220px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un bloque que parece empujar a otro">
               <SceneDefs id="cau" isDark={isDark} />
               <motion.g animate={{ opacity: i === 3 ? 0 : 1 }}><IsoFloor cx={170} cy={130} s={160} fill={t.floor} /></motion.g>
@@ -1021,6 +1067,7 @@ function Causalidad({ isDark }: SlideProps) {
               <text x={170} y={194} textAnchor="middle" fontSize={12} fontWeight={800} fill={ORANGE}>{['La anomalía pasa porque encaja en el contexto', 'Ves un empujón, no dos movimientos', 'Formas que se mueven: les ves intenciones', 'Un mismo hecho explica dos efectos opuestos'][i]}</text>
             </svg>
             {i === 1 && <div className="flex gap-2"><Pill isDark={isDark} on={empuja} onClick={() => setEmpuja(true)}>Animar</Pill><Pill isDark={isDark} on={!empuja} onClick={() => setEmpuja(false)}>Detener</Pill></div>}
+            </>} />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-2 justify-center">
             {casos.map((c, k) => (
@@ -1062,6 +1109,7 @@ function Sustitucion({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex items-center">
+            <EscenaSincronizada componente={SustitucionEscena} props={{ isDark }} inicio={TRAMO_SUSTITUCION.inicio} fin={TRAMO_SUSTITUCION.fin} ancho={SU_W} alto={SU_H} respaldo={<>
             <svg role="img" viewBox="0 0 420 300" className="w-full h-full overflow-visible" aria-label="Una pregunta difícil es reemplazada por una fácil">
               <SceneDefs id="sus" isDark={isDark} />
               {/* Te hacen la pregunta difícil… */}
@@ -1080,14 +1128,17 @@ function Sustitucion({ isDark }: SlideProps) {
               </motion.g>
               <text x={210} y={284} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>La respuesta de la derecha se presenta como si fuera la de la izquierda</text>
             </svg>
+            </>} />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-2 justify-center">
             <p className={microLabel(isDark)}>Toca una pregunta y mira por cuál la cambia tu mente</p>
             {pares.map((p, k) => (
-              <motion.button key={p.dificil} whileHover={{ x: 4 }} onMouseEnter={() => setI(k)} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl flex items-center gap-3 ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
-                <span className={`text-sm font-bold flex-1 ${heading(isDark)}`}>{p.dificil}</span>
-                <ChevronRight size={16} className="text-[#ff851d] shrink-0" />
-                <span className={`text-sm flex-1 ${textMuted(isDark)}`}>{p.facil}</span>
+              <motion.button key={p.dificil} whileHover={{ x: 4 }} onMouseEnter={() => setI(k)} onClick={() => setI(k)} className={`text-left p-3 rounded-2xl flex flex-col gap-1 ${k === i ? featuredClass(isDark) : panelClass(isDark)}`}>
+                <span className={`text-sm font-bold ${heading(isDark)}`}>{p.dificil}</span>
+                <span className="flex items-center gap-2">
+                  <ChevronRight size={14} className="text-[#ff851d] shrink-0" />
+                  <span className={`text-sm ${textMuted(isDark)}`}>{p.facil}</span>
+                </span>
               </motion.button>
             ))}
             <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
@@ -1113,6 +1164,7 @@ function Representatividad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={RepresentatividadEscena} props={{ isDark }} inicio={TRAMO_REPRESENTATIVIDAD.inicio} fin={TRAMO_REPRESENTATIVIDAD.fin} ancho={RP_W} alto={RP_H} respaldo={<>
             <svg role="img" viewBox="0 0 520 250" className="w-full h-full max-h-[270px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Por cada bibliotecario hay más de veinte agricultores">
               <SceneDefs id="rep" isDark={isDark} />
               <IsoFloor cx={260} cy={150} s={250} fill={t.floor} />
@@ -1136,6 +1188,7 @@ function Representatividad({ isDark }: SlideProps) {
               </AnimatePresence>
               <text x={330} y={238} textAnchor="middle" fontSize={12} fontWeight={800} fill={verTasa ? ORANGE : t.muted}>{verTasa ? 'Más de 20 agricultores por cada bibliotecario' : 'Falta un dato en la pregunta…'}</text>
             </svg>
+            </>} />
             <div className="flex gap-2">
               <Pill isDark={isDark} on={!verTasa} onClick={() => setVerTasa(false)}>Solo el perfil</Pill>
               <Pill isDark={isDark} on={verTasa} onClick={() => setVerTasa(true)}>Mostrar la tasa base</Pill>
@@ -1178,6 +1231,7 @@ function Disponibilidad({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex items-center">
+            <EscenaSincronizada componente={DisponibilidadEscena} props={{ isDark }} inicio={TRAMO_DISPONIBILIDAD.inicio} fin={TRAMO_DISPONIBILIDAD.fin} ancho={DI_W} alto={DI_H} respaldo={
             <svg role="img" viewBox="0 0 440 290" className="w-full h-full overflow-visible" aria-label="Lo vívido llena la memoria de golpe; lo frecuente, gota a gota">
               <SceneDefs id="dis" isDark={isDark} />
               {/* Lo vívido: un rayo llena el vaso de golpe */}
@@ -1211,6 +1265,7 @@ function Disponibilidad({ isDark }: SlideProps) {
               </AnimatePresence>
               <text x={220} y={284} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>Y la mente usa la velocidad como si fuera la cantidad</text>
             </svg>
+            } />
           </div>
           <div className="lg:w-[42%] flex flex-col gap-3 justify-center">
             <p data-nunca className={microLabel(isDark)}>¿Cuál ocurre más? Toca para comparar</p>
@@ -1247,6 +1302,7 @@ function Afectiva({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={AfectivaEscena} props={{ isDark }} inicio={TRAMO_AFECTIVA.inicio} fin={TRAMO_AFECTIVA.fin} ancho={AF_W} alto={AF_H} respaldo={
             <svg role="img" viewBox="0 0 360 250" className="w-full h-full max-h-[265px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="El afecto llega antes que el análisis">
               <SceneDefs id="afe" isDark={isDark} />
               {/* Pie de la balanza */}
@@ -1277,6 +1333,7 @@ function Afectiva({ isDark }: SlideProps) {
               </motion.g>
               <text x={180} y={242} textAnchor="middle" fontSize={11.5} fontWeight={800} fill={t.muted}>{afecto ? 'Lo habitual: el afecto decide' : 'Lo deseable: el dato manda'}</text>
             </svg>
+            } />
             <div className="flex gap-2">
               <Pill isDark={isDark} on={afecto} onClick={() => setOrden('afecto')}>Cómo ocurre</Pill>
               <Pill isDark={isDark} on={!afecto} onClick={() => setOrden('analisis')}>Cómo debería</Pill>
@@ -1318,6 +1375,7 @@ function Halo({ isDark }: SlideProps) {
               <Pill isDark={isDark} on={alan} onClick={() => setQuien('alan')}>Alan</Pill>
               <Pill isDark={isDark} on={!alan} onClick={() => setQuien('ben')}>Ben</Pill>
             </div>
+            <EscenaSincronizada componente={HaloEscena} props={{ isDark }} inicio={TRAMO_HALO.inicio} fin={TRAMO_HALO.fin} ancho={HA_W} alto={HA_H} respaldo={
             <div data-g="chips" className="flex flex-wrap gap-2">
               {lista.map((a, i) => {
                 // Los dos primeros rasgos fijan el tono; ese tono se contagia, uno a uno, a los siguientes.
@@ -1338,6 +1396,7 @@ function Halo({ isDark }: SlideProps) {
                 );
               })}
             </div>
+            } />
             <AnimatePresence mode="wait">
               <motion.div key={quien} data-g="testarudo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Cómo se lee «testarudo» en cada caso</p>
@@ -1387,6 +1446,7 @@ function Wysiati({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[58%] min-h-0 flex flex-col items-center justify-center gap-3">
+            <EscenaSincronizada componente={WysiatiEscena} props={{ isDark }} inicio={TRAMO_WYSIATI.inicio} fin={TRAMO_WYSIATI.fin} ancho={WY_W} alto={WY_H} respaldo={<>
             <svg role="img" viewBox="0 0 520 300" className="w-full h-full max-h-[320px] lg:max-h-[calc(100%-3.25rem)] overflow-visible" aria-label="Un foco ilumina tres piezas; el resto queda en la sombra mientras la historia se arma igual">
               <SceneDefs id="wys" isDark={isDark} />
               <IsoFloor cx={200} cy={170} s={230} fill={t.floor} />
@@ -1445,6 +1505,7 @@ function Wysiati({ isDark }: SlideProps) {
                 {verOculto ? 'Nueve datos que nunca echaste de menos' : 'Tres datos bastan para una historia completa'}
               </text>
             </svg>
+            </>} />
             <div className="flex gap-2">
               <Pill isDark={isDark} on={!verOculto} onClick={() => setVerOculto(false)}>Lo que ves</Pill>
               <Pill isDark={isDark} on={verOculto} onClick={() => setVerOculto(true)}>Lo que falta</Pill>
