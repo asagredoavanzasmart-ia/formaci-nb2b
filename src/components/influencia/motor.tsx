@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Easing, useCurrentFrame, useVideoConfig } from 'remotion';
 import { NARANJA, ROSA, Gradientes, Persona, Txt, ac, pop, sombra, tono } from '../remotion/comun';
-import type { El } from './tipos';
+import type { El, Tono } from './tipos';
 
 /**
  * Motor de escenas de la clase «Influencia y persuasión».
@@ -13,7 +13,19 @@ import type { El } from './tipos';
 export const W = 1200, H = 860;
 const ID = 'ip';
 
-type Props = { isDark: boolean; els: El[]; marcas: number[]; pregunta?: string; estatico?: boolean };
+type Props = { isDark: boolean; els: El[]; marcas: number[]; pregunta?: string; estatico?: boolean; ancho?: number; alto?: number };
+
+/* Relleno plano de cada tono y caras (arriba, izquierda, derecha) de los cubos isométricos. */
+const relleno = (t: Tono | undefined, isDark: boolean) => ({
+  marca: `url(#${ID}-marca)`, naranja: NARANJA, rosa: ROSA, durazno: isDark ? '#8a5436' : '#ffc49a',
+  gris: isDark ? '#4a4a4a' : '#c7cbd1', pizarra: '#64748b',
+}[t ?? 'marca']);
+const caras = (t: Tono | undefined, isDark: boolean) => ({
+  marca: ['#ffa25c', '#ff851d', '#e8434f'], naranja: ['#ffb27a', '#ff851d', '#e86f12'], rosa: ['#f7798f', '#ef375c', '#c92a4a'],
+  durazno: isDark ? ['#a8694a', '#8a5436', '#6e4129'] : ['#ffe3cc', '#ffc49a', '#f5a77a'],
+  gris: isDark ? ['#4b4b4b', '#3a3a3a', '#2e2e2e'] : ['#f3f4f6', '#d6d9de', '#b9bfc8'],
+  pizarra: ['#94a3b8', '#64748b', '#475569'],
+}[t ?? 'marca']);
 
 /* Corta un texto en líneas de hasta `max` caracteres sin partir palabras. */
 export const envolver = (texto: string, max: number) => {
@@ -85,6 +97,8 @@ export const Icono: React.FC<{ i: string; c: string; c2?: string }> = ({ i, c, c
     case 'hospital': return <g><rect x={-32} y={-30} width={64} height={62} rx={7} fill={c} /><path d="M 0 -18 L 0 14 M -16 -2 L 16 -2" stroke={c2} strokeWidth={9} strokeLinecap="round" opacity={0.6} /></g>;
     case 'casa': return <g fill={c}><path d="M -34 -2 L 0 -32 L 34 -2 Z" /><rect x={-26} y={-4} width={52} height={36} rx={3} /><rect x={-8} y={10} width={16} height={22} rx={2} fill={c2} opacity={0.5} /></g>;
     case 'pasillo': return <g><path d="M -34 32 L -14 -30 L 14 -30 L 34 32 Z" fill={c} opacity={0.4} /><rect x={-8} y={-26} width={16} height={22} rx={3} fill={c} /><path d="M -24 4 L -20 4 M 20 4 L 24 4" stroke={c} strokeWidth={4} /></g>;
+    case 'bici': return <g><circle cx={-20} cy={12} r={14} fill="none" stroke={c} strokeWidth={5} /><circle cx={20} cy={12} r={14} fill="none" stroke={c} strokeWidth={5} /><path d="M -20 12 L -6 -12 L 12 -12 L 20 12 M -6 -12 L 2 12 L 12 -12 M -10 -20 L 0 -20" stroke={c} strokeWidth={4.5} fill="none" strokeLinecap="round" strokeLinejoin="round" /></g>;
+    case 'cohete': return <g><path d="M 0 -38 C 14 -26 16 -6 12 14 L -12 14 C -16 -6 -14 -26 0 -38 Z" fill={c} /><circle cy={-12} r={6} fill={c2} opacity={0.6} /><path d="M -12 2 L -24 20 L -12 18 Z M 12 2 L 24 20 L 12 18 Z" fill={c} /><path d="M -7 18 L 0 36 L 7 18 Z" fill={c2} opacity={0.7} /></g>;
     default: return <circle r={20} fill={c} />;
   }
 };
@@ -99,7 +113,7 @@ const estado = (el: El, t: number, tm: (a?: number) => number, estatico: boolean
   return { v: Math.max(0, entra) * sale, op: apaga };
 };
 
-export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estatico = false }) => {
+export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estatico = false, ancho = W, alto = H }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -113,7 +127,18 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
   const vigente = (el: El) => !estatico && el.a != null && el.a === actual && actual < marcas.length - 1;
   const respira = 1 + 0.035 * Math.sin(t * 3.2);
 
+  // Un elemento «en foco» crece un poco y brilla mientras suena la frase que lo nombra.
   const dibujar = (el: El, k: number) => {
+    const n = pieza(el, k);
+    if (!n || !el.foco || estatico || !el.foco.includes(actual)) return n;
+    const f = ac(t, tm(actual), tm(actual) + 0.45);
+    const [cx, cy] = 'cx' in el ? [el.cx, el.cy] : 'x' in el ? [el.x, el.y] : [ancho / 2, alto / 2];
+    return (
+      <g key={k} transform={`translate(${cx} ${cy}) scale(${1 + 0.07 * f}) translate(${-cx} ${-cy})`} style={{ filter: `drop-shadow(0 0 ${18 * f}px rgba(255,133,29,${0.55 * f}))` }}>{n}</g>
+    );
+  };
+
+  const pieza = (el: El, k: number) => {
     const { v, op } = estado(el, t, tm, estatico);
     if (v <= 0.001) return null;
     const vg = vigente(el);
@@ -210,7 +235,7 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
       case 'numero': {
         const cuenta = estatico ? 1 : ac(t, tm(el.a) + (el.d ?? 0), tm(el.a) + (el.d ?? 0) + 1.3, 0, 1, Easing.out(Easing.cubic));
         const n = el.valor * cuenta;
-        const txt = Number.isInteger(el.valor) ? Math.round(n).toLocaleString('es-ES') : n.toFixed(1).replace('.', ',');
+        const txt = Number.isInteger(el.valor) ? String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : n.toFixed(1).replace('.', ',');
         return (
           <g key={k} opacity={Math.min(1, v) * op}>
             <Txt x={el.x} y={el.y} textAnchor="middle" fontSize={el.tam ?? 110} fill={`url(#${ID}-marcaH)`} peso={900}>{el.prefijo ?? ''}{txt}{el.sufijo ?? ''}</Txt>
@@ -220,25 +245,90 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
       }
       case 'anillo':
         return <circle key={k} cx={el.x} cy={el.y} r={el.r} fill="none" stroke={c.apagado} strokeWidth={3} strokeDasharray="10 12" opacity={Math.min(1, v) * op} />;
+      case 'cubo': {
+        const t0 = tm(el.a) + (el.d ?? 0);
+        const h = el.crece && !estatico ? el.h * ac(t, t0, t0 + 1.1, 0, 1, Easing.out(Easing.cubic)) : el.h;
+        const caida = el.cae && !estatico ? (1 - Math.min(1, v)) * -260 : 0;
+        const [arr, izq, der] = caras(el.tono, isDark);
+        const { x, y, s } = el;
+        const top = y - h;
+        const lineas = el.etiqueta ? envolver(el.etiqueta, el.ancho ?? 16) : [];
+        const flota = vg ? Math.sin(t * 3) * 3 : 0;
+        return (
+          <g key={k} opacity={Math.min(1, el.cae ? v * 2 : v) * op}>
+            {!el.sinSombra && <ellipse cx={x + 6} cy={y + s / 2 - 2} rx={s * 1.15} ry={s * 0.4} fill="#000" opacity={isDark ? 0.35 : 0.12} />}
+            <g transform={`translate(0 ${caida + flota})`}>
+              <path d={`M ${x - s} ${top} L ${x} ${top + s / 2} L ${x} ${y + s / 2} L ${x - s} ${y} Z`} fill={izq} />
+              <path d={`M ${x} ${top + s / 2} L ${x + s} ${top} L ${x + s} ${y} L ${x} ${y + s / 2} Z`} fill={der} />
+              <path d={`M ${x} ${top - s / 2} L ${x + s} ${top} L ${x} ${top + s / 2} L ${x - s} ${top} Z`} fill={arr} />
+              {el.letra && !el.letraLado && <Txt x={x} y={top + s * 0.24} textAnchor="middle" fontSize={s * 0.7} fill={el.tono === 'gris' || el.tono === 'durazno' ? (isDark ? '#f1ece6' : '#374151') : '#ffffff'} peso={900}>{el.letra}</Txt>}
+              {/* En una torre la cara de arriba queda tapada: la letra va inclinada sobre la cara derecha. */}
+              {el.letra && el.letraLado && (
+                <g transform={`translate(${x + s / 2} ${(top + y) / 2 + s / 4}) skewY(-26.57)`}>
+                  <Txt x={0} y={Math.min(s, h) * 0.24} textAnchor="middle" fontSize={Math.min(s, h) * 0.66} fill="#ffffff" peso={900}>{el.letra}</Txt>
+                </g>
+              )}
+              {el.valor && <Txt x={x} y={top - s / 2 - 20} textAnchor="middle" fontSize={34} fill={c.texto} peso={900}>{el.valor}</Txt>}
+            </g>
+            {lineas.map((l, j) => <Txt key={j} f="a" x={x} y={y + s / 2 + 40 + j * 28} textAnchor="middle" fontSize={23} fill={c.tenue} peso={400}>{l}</Txt>)}
+          </g>
+        );
+      }
+      case 'viajero': {
+        const T = el.pts.map((_, i) => tm(el.en[i]) + (el.dd?.[i] ?? 0));
+        let i = -1;
+        T.forEach((ti, j) => { if (estatico || t >= ti) i = j; });
+        if (i < 0) return null;
+        const desde = el.pts[Math.max(0, i - 1)], hacia = el.pts[i];
+        const u = estatico || i === 0 ? 1 : ac(t, T[i], T[i] + 0.9);
+        const px = desde[0] + (hacia[0] - desde[0]) * u;
+        const py = desde[1] + (hacia[1] - desde[1]) * u - Math.sin(u * Math.PI) * 60 + Math.sin(t * 2.6) * 5;
+        const r = el.r ?? 24;
+        const onda = (t * 0.8) % 1;
+        return (
+          <g key={k} opacity={Math.min(1, estatico ? 1 : ac(t, T[0], T[0] + 0.4))}>
+            <ellipse cx={px} cy={py + r + 18} rx={r * (1.2 + onda * 1.4)} ry={r * (0.4 + onda * 0.45)} fill="none" stroke={NARANJA} strokeWidth={3} opacity={(1 - onda) * 0.6} />
+            <circle cx={px} cy={py} r={r} fill={`url(#${ID}-orbe)`} style={sombra(c.sombra, 6, 12)} />
+            {el.etiqueta && <Txt x={px} y={py - r - 14} textAnchor="middle" fontSize={22} fill={NARANJA} peso={900} letterSpacing={2}>{el.etiqueta}</Txt>}
+          </g>
+        );
+      }
+      case 'forma': {
+        const e = estatico ? 1 : Math.min(1, v);
+        return (
+          <g key={k} opacity={e * op} transform={`translate(${el.cx} ${el.cy}) scale(${0.85 + 0.15 * e}) translate(${-el.cx} ${-el.cy})`}>
+            <path d={el.trazo} fill={relleno(el.tono, isDark)} opacity={el.opacidad ?? 1} style={sombra(c.sombra, 8, 16)} />
+            {el.etiqueta && <Txt x={el.lx ?? el.cx} y={el.ly ?? el.cy} textAnchor="middle" fontSize={el.tam ?? 28} fill={el.tono === 'gris' || el.tono === 'durazno' ? c.texto : '#ffffff'} peso={900}>{el.etiqueta}</Txt>}
+          </g>
+        );
+      }
+      case 'circulo': {
+        const e = estatico ? 1 : Math.min(1.15, v);
+        return <circle key={k} cx={el.x} cy={el.y} r={el.r * e} fill={relleno(el.tono, isDark)} opacity={(el.opacidad ?? 0.35) * Math.min(1, v) * op} />;
+      }
       default:
         return null;
     }
   };
 
-  const lineasP = pregunta ? envolver(pregunta, 44) : [];
+  const anchoP = Math.min(1040, ancho - 80);
+  const lineasP = pregunta ? envolver(pregunta, Math.floor((anchoP - 110) / 18.5)) : [];
   const vP = estatico || !pregunta ? 0 : pop(t, tPregunta, 0.6);
   const altoP = 90 + lineasP.length * 46;
   return (
     <AbsoluteFill style={{ backgroundColor: 'transparent' }}>
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" style={{ overflow: 'visible' }}>
+      <svg viewBox={`0 0 ${ancho} ${alto}`} width="100%" height="100%" style={{ overflow: 'visible' }}>
         <Gradientes id={ID} />
+        <defs>
+          <radialGradient id={`${ID}-orbe`} cx="0.35" cy="0.3" r="0.75"><stop offset="0" stopColor="#ffe0c2" /><stop offset="0.45" stopColor={NARANJA} /><stop offset="1" stopColor={ROSA} /></radialGradient>
+        </defs>
         <g opacity={fondo}>{els.map(dibujar)}</g>
         {vP > 0.001 && (
-          <g opacity={Math.min(1, vP)} transform={`translate(600 ${H / 2}) scale(${0.85 + 0.15 * Math.min(1, vP)})`}>
-            <rect x={-520} y={-altoP / 2} width={1040} height={altoP} rx={40} fill={c.panel} style={sombra(c.sombra, 14, 30)} />
-            <rect x={-520} y={-altoP / 2} width={14} height={altoP} rx={7} fill={`url(#${ID}-marca)`} />
-            <Txt f="a" x={-470} y={-altoP / 2 + 52} fontSize={20} fill={NARANJA} peso={700} letterSpacing={3}>PARA PENSAR</Txt>
-            {lineasP.map((l, j) => <Txt key={j} x={-470} y={-altoP / 2 + 102 + j * 46} fontSize={34} fill={c.texto}>{l}</Txt>)}
+          <g opacity={Math.min(1, vP)} transform={`translate(${ancho / 2} ${alto / 2}) scale(${0.85 + 0.15 * Math.min(1, vP)})`}>
+            <rect x={-anchoP / 2} y={-altoP / 2} width={anchoP} height={altoP} rx={40} fill={c.panel} style={sombra(c.sombra, 14, 30)} />
+            <rect x={-anchoP / 2} y={-altoP / 2} width={14} height={altoP} rx={7} fill={`url(#${ID}-marca)`} />
+            <Txt f="a" x={-anchoP / 2 + 50} y={-altoP / 2 + 52} fontSize={20} fill={NARANJA} peso={700} letterSpacing={3}>PARA PENSAR</Txt>
+            {lineasP.map((l, j) => <Txt key={j} x={-anchoP / 2 + 50} y={-altoP / 2 + 102 + j * 46} fontSize={34} fill={c.texto}>{l}</Txt>)}
           </g>
         )}
       </svg>

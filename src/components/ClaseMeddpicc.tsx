@@ -6,6 +6,22 @@ import {
   ORANGE, PINK, BRAND, PEACH, NEUTRAL, SLATE, sceneTone, SceneDefs, IsoBox, IsoFrustum,
   IsoPyramid, IsoFloor, Orb, Float, Lift, Traveler, PulseDisc, hop,
 } from './scene3d';
+import { EscenaSincronizada } from './remotion/EscenaSincronizada';
+import { EscenaIP } from './influencia/motor';
+import { ESCENAS_MD } from './meddpicc/escenas';
+import { guiadoMeddpicc, marcasMeddpicc, FIN_AUDIO_MEDDPICC } from '../data/guiadoMeddpicc';
+
+/* Mientras suena la clase guiada, el gráfico de la diapositiva se reemplaza por su escena de Remotion
+   (datos en ./meddpicc/escenas.ts); fuera de ella se muestra el gráfico original. */
+function Escena({ id, isDark, children }: { id: string; isDark: boolean; children: React.ReactNode }) {
+  const e = ESCENAS_MD[id];
+  const i = guiadoMeddpicc.slides.findIndex((s) => s.id === id);
+  if (!e || i < 0) return <>{children}</>;
+  const inicio = guiadoMeddpicc.slides[i].t;
+  const fin = guiadoMeddpicc.slides[i + 1]?.t ?? FIN_AUDIO_MEDDPICC;
+  const props = { isDark, els: e.els, marcas: marcasMeddpicc[id] ?? [], pregunta: e.pregunta?.texto, ancho: e.ancho, alto: e.alto };
+  return <EscenaSincronizada componente={EscenaIP} props={props} inicio={inicio} fin={fin} ancho={e.ancho} alto={e.alto} respaldo={children} />;
+}
 
 /**
  * Clase: "MEDDPICC: calificar con rigor".
@@ -96,7 +112,7 @@ function AbcAbq({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className={`lg:w-[48%] min-h-0 p-4 rounded-3xl ${panelClass(isDark)}`}>
-            <svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Comparación de lo comprometido y lo cerrado por Aaron y Megan">
+            <Escena id="md-abc-abq" isDark={isDark}><svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Comparación de lo comprometido y lo cerrado por Aaron y Megan">
               <SceneDefs id="abq" isDark={isDark} />
               {reps.map((r, ri) => (
                 <g key={r.name}>
@@ -113,7 +129,7 @@ function AbcAbq({ isDark }: SlideProps) {
                   <text x={r.x + 40} y={ground + 56} textAnchor="middle" fontSize={16} fontWeight={900} fill={t.text}>{r.name}</text>
                 </g>
               ))}
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[52%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-2xl border-l-4 border-gray-400 ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-50'}`}>
@@ -130,7 +146,7 @@ function AbcAbq({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Los vendedores exitosos pasan su tiempo con los prospectos que <strong>terminarán comprando</strong>. Esfuerzo + tiempo no es igual a éxito.</Footer>
+        <Footer g="footer" isDark={isDark}>Los vendedores exitosos pasan su tiempo con los prospectos que <strong>terminarán comprando</strong>. Esfuerzo + tiempo no es igual a éxito.</Footer>
       </div>
     </Shell>
   );
@@ -154,7 +170,7 @@ function Origen({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex items-center">
-            <svg viewBox="0 0 560 320" className="w-full h-full overflow-visible" aria-label="Evolución del acrónimo de MEDDIC a MEDDPICCR">
+            <Escena id="md-origen" isDark={isDark}><svg viewBox="0 0 560 320" className="w-full h-full overflow-visible" aria-label="Evolución del acrónimo de MEDDIC a MEDDPICCR">
               <SceneDefs id="ori" isDark={isDark} />
               {steps.map((s, i) => {
                 const gx = 85 + i * 130;
@@ -171,12 +187,12 @@ function Origen({ isDark }: SlideProps) {
                   </motion.g>
                 );
               })}
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[50%] flex flex-col justify-center gap-3">
             <div className="flex gap-2 flex-wrap">{steps.map((s, i) => <Pill key={s.name} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{s.name}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+              <motion.div key={active} data-g="paso" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{steps[active].n} elementos</p>
                 <h3 className={`text-2xl font-black mb-2 ${heading(isDark)}`}>{steps[active].name}</h3>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{steps[active].text}</p>
@@ -208,7 +224,7 @@ function QueEs({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex items-center">
-            <svg viewBox="0 0 560 290" className="w-full h-full overflow-visible" aria-label="El proceso de venta como mapa y MEDDPICC como GPS que lo recorre">
+            <Escena id="md-que-es" isDark={isDark}><svg viewBox="0 0 560 290" className="w-full h-full overflow-visible" aria-label="El proceso de venta como mapa y MEDDPICC como GPS que lo recorre">
               <SceneDefs id="qes" isDark={isDark} />
               {tiles.map(([x, y], i) => (
                 <g key={i}>
@@ -221,7 +237,7 @@ function QueEs({ isDark }: SlideProps) {
                 <Orb id="qes" cx={0} cy={0} r={14} />
                 <text x={0} y={-24} textAnchor="middle" fontSize={11} fontWeight={900} fill={ORANGE}>MEDDPICC</text>
               </motion.g>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[48%] flex flex-col justify-center gap-3">
             <div className={`p-4 rounded-2xl ${panelClass(isDark)}`}>
@@ -236,7 +252,7 @@ function QueEs({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Batman y Robin (Whyte)</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Tu metodología de venta (SPIN, Challenger, Sandler…) lidera cómo hablas con el cliente; MEDDPICC es el compañero que mantiene todo bajo control. Se complementan.</p>
             </div>
-            <div className="flex flex-wrap gap-1.5">
+            <div data-g="rasgos" className="flex flex-wrap gap-1.5 rounded-2xl">
               {traits.map((x) => <span key={x} className={`text-xs font-semibold px-2.5 py-1 rounded-full ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-gray-100 text-gray-600'}`}><CheckCircle2 size={12} className="inline mr-1 text-[#ff851d]" />{x}</span>)}
             </div>
           </div>
@@ -262,7 +278,7 @@ function Mapa({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Las ocho letras de" highlight="MEDDPICC" subtitle="Cada letra es una pregunta que debes poder responder con evidencia. Toca cada bloque.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[50%] min-h-0 flex items-center justify-center">
-          <svg viewBox="0 0 520 260" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Ocho bloques, uno por letra de MEDDPICC">
+          <Escena id="md-mapa" isDark={isDark}><svg viewBox="0 0 520 260" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Ocho bloques, uno por letra de MEDDPICC">
             <SceneDefs id="map" isDark={isDark} />
             {LETTERS.map((x, i) => {
               const [cx, cy] = pos(i);
@@ -273,11 +289,12 @@ function Mapa({ isDark }: SlideProps) {
                 </Lift>
               );
             })}
-          </svg>
+          </svg></Escena>
         </div>
-        <div className="lg:w-[50%] flex flex-col justify-center">
+        <div className="lg:w-[50%] flex flex-col justify-center gap-3">
+          <div data-g="letras" className="flex flex-wrap gap-1.5">{LETTERS.map((x, i) => <Pill key={i} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{x.k}</Pill>)}</div>
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className={`p-6 rounded-3xl ${panelClass(isDark)}`}>
+            <motion.div key={active} data-g="carta" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className={`p-6 rounded-3xl ${panelClass(isDark)}`}>
               <div className="flex items-center gap-4 mb-4">
                 <span className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white text-3xl font-black flex items-center justify-center shadow-lg shadow-red-500/30">{l.k}</span>
                 <div>
@@ -316,7 +333,7 @@ function Metrics({ isDark }: SlideProps) {
   return (
     <Shell isDark={isDark} title="Metrics: del adjetivo" highlight="al número" subtitle="Una métrica convierte una ganancia subjetiva en una medible. Y con ella, el precio deja de ser el centro de la conversación.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
-        <div className="lg:w-[42%] flex flex-col gap-2 justify-center">
+        <div data-g="metric" className="lg:w-[42%] flex flex-col gap-2 justify-center rounded-2xl">
           <p className={microLabel(isDark)}>Una buena métrica es M·E·T·R·I·C (Lahoutifard)</p>
           {metric.map(([k, n, d], i) => (
             <motion.div key={k} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.07 }} className={`flex items-center gap-3 p-2.5 rounded-2xl ${panelClass(isDark)}`}>
@@ -327,7 +344,7 @@ function Metrics({ isDark }: SlideProps) {
         </div>
         <div className="lg:w-[58%] flex flex-col gap-3 min-h-0">
           <div className={`flex-1 min-h-0 p-4 rounded-3xl ${panelClass(isDark)}`}>
-            <svg viewBox="0 0 520 250" className="w-full h-full overflow-visible" aria-label="Costo de la solución frente al ahorro anual">
+            <Escena id="md-metrics" isDark={isDark}><svg viewBox="0 0 520 250" className="w-full h-full overflow-visible" aria-label="Costo de la solución frente al ahorro anual">
               <SceneDefs id="met" isDark={isDark} />
               <motion.g initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ type: 'spring', stiffness: 80, damping: 13 }}>
                 <g filter="url(#met-sh)"><IsoBox cx={140} cy={190 - 60} s={52} h={60} f={NEUTRAL(isDark)} /></g>
@@ -340,9 +357,9 @@ function Metrics({ isDark }: SlideProps) {
                 <text x={380} y={246} textAnchor="middle" fontSize={12} fontWeight={700} fill={t.muted}>Ahorro anual (10 ingenieros, ciclo ÷ 2)</text>
               </motion.g>
               {[0, 1, 2].map((i) => <Traveler key={i} id="met" path={hop([330, 110], [190, 130], 50)} dur={1.6} delay={i * 0.55} r={6} />)}
-            </svg>
+            </svg></Escena>
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div data-g="cifras" className="grid grid-cols-3 gap-2 rounded-2xl">
             {[['6 meses', 'para recuperar la inversión'], ['200%', 'de ROI anual'], ['≈ $1.100', 'perdidos por cada día de demora']].map(([v, l]) => (
               <div key={v} className={`p-3 rounded-2xl text-center ${featuredClass(isDark)}`}>
                 <p className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">{v}</p>
@@ -350,7 +367,7 @@ function Metrics({ isDark }: SlideProps) {
               </div>
             ))}
           </div>
-          <p className={`text-xs text-center ${textMuted(isDark)}`}>Hablar de <strong>meses de recuperación</strong> en vez de porcentajes de ROI lo entiende cualquiera: así se mueve la conversación del costo al valor.</p>
+          <p data-g="consejo" className={`text-xs text-center rounded-xl ${textMuted(isDark)}`}>Hablar de <strong>meses de recuperación</strong> en vez de porcentajes de ROI lo entiende cualquiera: así se mueve la conversación del costo al valor.</p>
         </div>
       </div>
     </Shell>
@@ -374,14 +391,14 @@ function EconomicBuyer({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[40%] min-h-0 flex items-center justify-center">
-            <svg viewBox="0 0 460 400" className="w-full h-full max-h-[360px] overflow-visible" aria-label="Pirámide de la organización: por qué, qué y cómo">
+            <Escena id="md-eb" isDark={isDark}><svg viewBox="0 0 460 400" className="w-full h-full max-h-[360px] overflow-visible" aria-label="Pirámide de la organización: por qué, qué y cómo">
               <SceneDefs id="eb" isDark={isDark} />
               <g filter="url(#eb-sh)">
                 <Lift on={active === 2} dimmed={active !== 2} onClick={() => setActive(2)} lift={6}><IsoFrustum cx={cx} y1={240} s1={140} y2={300} s2={186} f={NEUTRAL(isDark)} /></Lift>
                 <Lift on={active === 1} dimmed={active !== 1} onClick={() => setActive(1)} lift={8}><IsoFrustum cx={cx} y1={150} s1={80} y2={225} s2={132} f={PEACH} /></Lift>
                 <Lift on={active === 0} dimmed={active !== 0} onClick={() => setActive(0)} lift={12}><IsoPyramid cx={cx} apex={40} y={135} s={72} f={BRAND} /></Lift>
               </g>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[60%] flex flex-col gap-3 justify-center">
             {levels.map((l, i) => (
@@ -390,12 +407,12 @@ function EconomicBuyer({ isDark }: SlideProps) {
                 <p className={`text-sm leading-snug mt-1 ${textMuted(isDark)}`}>{l.text}</p>
               </motion.button>
             ))}
-            <div className={`p-3 rounded-2xl text-sm ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-gray-50 text-gray-700'}`}>
+            <div data-g="ojo" className={`p-3 rounded-2xl text-sm ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-gray-50 text-gray-700'}`}>
               <strong>Ojo:</strong> Compras rara vez es el comprador económico; su trabajo es mejorar precio y condiciones. Si dos ejecutivos se disputan la decisión, pregúntate <em>quién ganaría la pelea interna</em>: suele ser quien sufre el dolor.
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Reúnete con el comprador económico <strong>antes</strong> de invertir en pruebas de concepto o demos largas, y sal de esa reunión con un «boleto de vuelta»: el acuerdo de volver a reunirse.</Footer>
+        <Footer g="footer" isDark={isDark}>Reúnete con el comprador económico <strong>antes</strong> de invertir en pruebas de concepto o demos largas, y sal de esa reunión con un «boleto de vuelta»: el acuerdo de volver a reunirse.</Footer>
       </div>
     </Shell>
   );
@@ -422,7 +439,7 @@ function DecisionCriteria({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Decision Criteria:" highlight="inclinar la cancha" subtitle="Los criterios son la «lista de compras» del cliente. Quien ayuda a escribirla, controla el trato (Lahoutifard, McMahon).">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] min-h-0 flex items-center justify-center">
-          <svg viewBox="0 0 400 300" className="w-full h-full max-h-[400px] overflow-visible" aria-label="Diagrama del triángulo de valor: necesidades del cliente, nuestra solución y la competencia">
+          <Escena id="md-dc" isDark={isDark}><svg viewBox="0 0 400 300" className="w-full h-full max-h-[400px] overflow-visible" aria-label="Diagrama del triángulo de valor: necesidades del cliente, nuestra solución y la competencia">
             <SceneDefs id="dc" isDark={isDark} />
             <g filter="url(#dc-sh)">
               <motion.circle cx={200} cy={115} r={98} fill={isDark ? '#6b7280' : '#94a3b8'} opacity={0.35} initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring', stiffness: 80, damping: 12 }} style={{ transformOrigin: '200px 115px' }} />
@@ -442,18 +459,18 @@ function DecisionCriteria({ isDark }: SlideProps) {
                 </motion.g>
               );
             })}
-          </svg>
+          </svg></Escena>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
           <div className="flex flex-wrap gap-2">{zones.map((zz, i) => <Pill key={zz.k} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{zz.name}</Pill>)}</div>
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className={`p-5 rounded-3xl ${active < 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
+            <motion.div key={active} data-g="zona" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className={`p-5 rounded-3xl ${active < 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
               <p className={microLabel(isDark)}>Zona</p>
               <h3 className={`text-2xl font-black mb-2 ${heading(isDark)}`}>{z.name}</h3>
               <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{z.action}</p>
             </motion.div>
           </AnimatePresence>
-          <div className={`p-3 rounded-2xl text-sm ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-gray-50 text-gray-700'}`}>
+          <div data-g="control" className={`p-3 rounded-2xl text-sm ${isDark ? 'bg-[#2a2a2a] text-gray-300' : 'bg-gray-50 text-gray-700'}`}>
             <strong>Señal de control:</strong> si los criterios cambian a tu favor, ganas control; si cambian a favor de otro, la competencia tiene un Champion más fuerte que el tuyo.
           </div>
         </div>
@@ -529,7 +546,7 @@ function Pain({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex items-center">
-            <svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Muchos problemas pequeños y uno grande que sobresale">
+            <Escena id="md-pain" isDark={isDark}><svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Muchos problemas pequeños y uno grande que sobresale">
               <SceneDefs id="pai" isDark={isDark} />
               <IsoFloor cx={260} cy={205} s={230} fill={t.floor} />
               {noise.map((n, i) => (
@@ -543,7 +560,7 @@ function Pain({ isDark }: SlideProps) {
               </motion.g>
               <text x={300} y={22} textAnchor="middle" fontSize={13} fontWeight={900} fill={ORANGE}>Dolor de negocio + de capacidad</text>
               <text x={110} y={270} textAnchor="middle" fontSize={11} fontWeight={700} fill={t.muted}>El ruido: problemas pequeños</text>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-2xl ${panelClass(isDark)}`}>
@@ -554,14 +571,14 @@ function Pain({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>¿Quién es dueño del dolor? (McMahon)</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Vendiendo software de diseño, el director de CAD no tenía dolor: cambiar de sistema solo le traía trabajo. El dueño era el VP de Ingeniería, medido por sacar productos más rápido y más barato.</p>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div data-g="tres" className="grid grid-cols-3 gap-2 rounded-2xl">
               {[['Consecuencia', '¿Qué pasa si no lo resuelven?'], ['Resultado', '¿Qué esperan lograr y cuánto?'], ['Urgencia', '¿Para cuándo y por qué?']].map(([a, b]) => (
                 <div key={a} className={`p-3 rounded-2xl ${panelClass(isDark)}`}><p className="text-sm font-black text-[#ff851d]">{a}</p><p className={`text-xs ${textMuted(isDark)}`}>{b}</p></div>
               ))}
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}><strong>Cuida el lenguaje:</strong> no preguntes «¿cuál es su problema?», sino «¿qué le gusta de su sistema actual?». Tras contar lo bueno, casi siempre llega solo el «pero…».</Footer>
+        <Footer g="footer" isDark={isDark}><strong>Cuida el lenguaje:</strong> no preguntes «¿cuál es su problema?», sino «¿qué le gusta de su sistema actual?». Tras contar lo bueno, casi siempre llega solo el «pero…».</Footer>
       </div>
     </Shell>
   );
@@ -591,7 +608,7 @@ function Champion({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Champion vs Coach:" highlight="no confundas amistad con poder" subtitle="El error número uno: confundir a un coach con un Champion. El coach informa; el Champion actúa (McMahon).">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center">
-          <svg viewBox="0 120 660 220" className="w-full overflow-visible" aria-label="Mapa de poder: cuatro cuadrantes de influencia y autoridad">
+          <Escena id="md-champion" isDark={isDark}><svg viewBox="0 120 660 220" className="w-full overflow-visible" aria-label="Mapa de poder: cuatro cuadrantes de influencia y autoridad">
             <SceneDefs id="chp" isDark={isDark} />
             {quads.map((qq, i) => {
               const on = i === active;
@@ -603,16 +620,17 @@ function Champion({ isDark }: SlideProps) {
                 </Lift>
               );
             })}
-          </svg>
+          </svg></Escena>
+          <div data-g="cuadrantes" className="flex gap-1.5 mt-2">{quads.map((qq, i) => <Pill key={qq.k} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{qq.k}</Pill>)}</div>
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`mt-2 w-full p-3 rounded-2xl text-center ${q.champ ? featuredClass(isDark) : panelClass(isDark)}`}>
+            <motion.div key={active} data-g="rol" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`mt-2 w-full p-3 rounded-2xl text-center ${q.champ ? featuredClass(isDark) : panelClass(isDark)}`}>
               <p className={`text-sm font-black ${heading(isDark)}`}>{q.name}</p>
               <p className="text-sm font-bold text-[#ff851d]">{q.role}</p>
             </motion.div>
           </AnimatePresence>
         </div>
         <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
-          <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
+          <div data-g="tabla" className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
             <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 gap-y-2 items-center">
               <span className={microLabel(isDark)}>Rasgo</span><span className={microLabel(isDark)}>Champion</span><span className={microLabel(isDark)}>Coach</span>
               {rows.map(([r, a, b]) => (
@@ -653,7 +671,7 @@ function Competition({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex items-center">
-            <svg viewBox="0 0 540 260" className="w-full h-full overflow-visible" aria-label="Tres plataformas: cliente, tú y competencia; la esfera indica quién controla">
+            <Escena id="md-competition" isDark={isDark}><svg viewBox="0 0 540 260" className="w-full h-full overflow-visible" aria-label="Tres plataformas: cliente, tú y competencia; la esfera indica quién controla">
               <SceneDefs id="cmp" isDark={isDark} />
               {parties.map((p, i) => (
                 <g key={p.name}>
@@ -667,12 +685,12 @@ function Competition({ isDark }: SlideProps) {
                 </motion.g>
                 <text x={0} y={92} textAnchor="middle" fontSize={11} fontWeight={900} fill={t.text}>CONTROL</text>
               </motion.g>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[50%] flex flex-col justify-center gap-3">
             <div className="flex flex-wrap gap-2">{moments.map((x, i) => <Pill key={x.label} isDark={isDark} on={i === m} onClick={() => setM(i)}>{x.label}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={m} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${who === 1 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={m} data-g="momento" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${who === 1 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{moments[m].text}</p>
               </motion.div>
             </AnimatePresence>
@@ -705,7 +723,7 @@ function TresPorques({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Tres preguntas que" highlight="resumen todo" subtitle="Simples, pero no fáciles. Si tú o tu Champion no pueden responderlas, todavía estás en descubrimiento (Lahoutifard, McMahon).">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[48%] min-h-0 flex items-center">
-          <svg viewBox="0 0 520 300" className="w-full h-full overflow-visible" aria-label="Tres bloques ascendentes: por qué algo, por qué nosotros, por qué ahora">
+          <Escena id="md-porques" isDark={isDark}><svg viewBox="0 0 520 300" className="w-full h-full overflow-visible" aria-label="Tres bloques ascendentes: por qué algo, por qué nosotros, por qué ahora">
             <SceneDefs id="why" isDark={isDark} />
             {whys.map((w, i) => {
               const gx = 110 + i * 150;
@@ -719,7 +737,7 @@ function TresPorques({ isDark }: SlideProps) {
                 </Lift>
               );
             })}
-          </svg>
+          </svg></Escena>
         </div>
         <div className="lg:w-[52%] flex flex-col gap-3 justify-center">
           {whys.map((w, i) => (
@@ -751,7 +769,7 @@ function Etapas({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Calificar no es un paso:" highlight="es en cada etapa" subtitle="BANT se revisa una vez; MEDDPICC te acompaña de principio a fin y te dice si vas adelante o atrás (Whyte).">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[50%] min-h-0 flex items-center">
-          <svg viewBox="0 0 560 280" className="w-full h-full overflow-visible" aria-label="Tres plataformas: etapa temprana, media y final, con las letras a revisar">
+          <Escena id="md-etapas" isDark={isDark}><svg viewBox="0 0 560 280" className="w-full h-full overflow-visible" aria-label="Tres plataformas: etapa temprana, media y final, con las letras a revisar">
             <SceneDefs id="eta" isDark={isDark} />
             {stages.map((s, i) => {
               const x = 100 + i * 180;
@@ -769,19 +787,19 @@ function Etapas({ isDark }: SlideProps) {
                 </Lift>
               );
             })}
-          </svg>
+          </svg></Escena>
         </div>
         <div className="lg:w-[50%] flex flex-col justify-center gap-3">
           <div className="flex gap-2">{stages.map((s, i) => <Pill key={s.name} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{s.name}</Pill>)}</div>
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+            <motion.div key={active} data-g="checks" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
               <p className={microLabel(isDark)}>Letras clave · {Array.from(new Set(st.letters)).join(' · ')}</p>
               <ul className={`mt-2 space-y-2 text-sm md:text-base ${textMuted(isDark)}`}>
                 {st.checks.map((c) => <li key={c} className="flex gap-2"><CheckCircle2 size={18} className="text-[#ff851d] shrink-0 mt-0.5" />{c}</li>)}
               </ul>
             </motion.div>
           </AnimatePresence>
-          <p className={`text-xs ${textMuted(isDark)}`}>Si no puedes responder, no significa salirte: significa que esa es tu prioridad. Si no logras respuestas, entonces sí, califica fuera.</p>
+          <p data-g="nota" className={`text-xs rounded-xl ${textMuted(isDark)}`}>Si no puedes responder, no significa salirte: significa que esa es tu prioridad. Si no logras respuestas, entonces sí, califica fuera.</p>
         </div>
       </div>
     </Shell>
@@ -801,7 +819,7 @@ function DecirNo({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[40%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 360 280" className="w-full h-full max-h-[300px] overflow-visible" aria-label="Pila de esfuerzo invertido y una esfera que se libera">
+            <Escena id="md-decir-no" isDark={isDark}><svg viewBox="0 0 360 280" className="w-full h-full max-h-[300px] overflow-visible" aria-label="Pila de esfuerzo invertido y una esfera que se libera">
               <SceneDefs id="dno" isDark={isDark} />
               {stack.map((i) => (
                 <motion.g key={i} animate={{ opacity: out ? 0.35 : 1 }} filter="url(#dno-sh)">
@@ -814,7 +832,7 @@ function DecirNo({ isDark }: SlideProps) {
                   <Orb id="dno" cx={140} cy={62} r={16} />
                 </motion.g>
               </motion.g>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={!out} onClick={() => setOut(false)}>Seguir por inercia</Pill><Pill isDark={isDark} on={out} onClick={() => setOut(true)}>Calificar fuera</Pill></div>
           </div>
           <div className="lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-3 content-center">
@@ -824,7 +842,7 @@ function DecirNo({ isDark }: SlideProps) {
               ['Decir «no» en criterios y proceso', 'Cuestiona un criterio de la zona de peligro o una actividad inútil del proceso. Si la quitan, inclinas la cancha y acortas el ciclo.'],
               ['La retirada profesional', 'Un vendedor de McMahon envió una carta respetuosa retirándose de un comité. En dos horas lo llamaron para pedirle que siguiera: tenía Champions ocultos.'],
             ].map(([a, b], i) => (
-              <motion.div key={a} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={`p-4 rounded-3xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={a} data-g={`no-${i}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={`p-4 rounded-3xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-base font-black mb-1 ${heading(isDark)}`}>{a}</h3>
                 <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{b}</p>
               </motion.div>
@@ -854,13 +872,13 @@ function VsBant({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[40%] min-h-0 flex items-center">
-            <svg viewBox="0 0 360 290" className="w-full h-full overflow-visible" aria-label="Torre de cuatro bloques BANT frente a torre de ocho bloques MEDDPICC">
+            <Escena id="md-bant" isDark={isDark}><svg viewBox="0 0 360 290" className="w-full h-full overflow-visible" aria-label="Torre de cuatro bloques BANT frente a torre de ocho bloques MEDDPICC">
               <SceneDefs id="bnt" isDark={isDark} />
               {tower(['B', 'A', 'N', 'T'], 100, NEUTRAL(isDark), 0)}
               {tower(['M', 'E', 'D', 'D', 'P', 'I', 'C', 'C'], 250, BRAND, 1)}
               <text x={100} y={282} textAnchor="middle" fontSize={13} fontWeight={900} fill={t.muted}>BANT</text>
               <text x={250} y={282} textAnchor="middle" fontSize={13} fontWeight={900} fill={ORANGE}>MEDDPICC</text>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[60%] grid grid-cols-1 sm:grid-cols-2 gap-3 content-center">
             <div className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
@@ -881,7 +899,7 @@ function VsBant({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Ojo con el tono de las fuentes: Lahoutifard llega a decir que BANT debería estar «prohibido». Whyte y McMahon son más matizados: <strong>cada uno sirve en su capa</strong>.</Footer>
+        <Footer g="footer" isDark={isDark}>Ojo con el tono de las fuentes: Lahoutifard llega a decir que BANT debería estar «prohibido». Whyte y McMahon son más matizados: <strong>cada uno sirve en su capa</strong>.</Footer>
       </div>
     </Shell>
   );
@@ -903,15 +921,15 @@ function Forecast({ isDark }: SlideProps) {
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className={`lg:w-[52%] p-5 rounded-3xl flex flex-col justify-center gap-3 ${panelClass(isDark)}`}>
           <p className={microLabel(isDark)}>Reconciliación de un vendedor (en miles de dólares)</p>
-          {bars.map((b, i) => (
+          <Escena id="md-forecast" isDark={isDark}><div className="flex flex-col gap-3">{bars.map((b, i) => (
             <div key={b.label}>
               <div className="flex justify-between text-sm mb-1"><span className={`font-bold ${textMuted(isDark)}`}>{b.label}</span><span className={`font-black ${heading(isDark)}`}>${b.v}k</span></div>
               <div className={`h-4 rounded-full overflow-hidden ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-100'}`}>
                 <motion.div className={`h-full rounded-full ${b.c} ${i === 3 ? 'shadow-[0_0_15px_rgba(255,133,29,0.5)]' : ''}`} initial={{ width: 0 }} animate={{ width: `${(b.v / 400) * 100}%` }} transition={{ delay: 0.3 + i * 0.25, duration: 0.8, ease: 'easeOut' }} />
               </div>
             </div>
-          ))}
-          <p className={`text-xs ${textMuted(isDark)}`}>Con una probabilidad de cierre del 25%, cubrir $100k de brecha exige un plan de $400k. Por eso es más fácil construir pipeline antes que buscarlo dentro del trimestre.</p>
+          ))}</div></Escena>
+          <p data-g="nota" className={`text-xs rounded-xl ${textMuted(isDark)}`}>Con una probabilidad de cierre del 25%, cubrir $100k de brecha exige un plan de $400k. Por eso es más fácil construir pipeline antes que buscarlo dentro del trimestre.</p>
         </div>
         <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
           {[
@@ -919,7 +937,7 @@ function Forecast({ isDark }: SlideProps) {
             ['«Llévame a tu Champion»', 'En el primer mes del trimestre, el gerente visita al Champion de cada trato comprometido para confirmar que existe y que hay control.'],
             ['Un pipeline enorme esconde problemas', 'Puede tapar fallas de venta y de calificación; el pipeline es oxígeno, pero no reemplaza el criterio.'],
           ].map(([a, b], i) => (
-            <motion.div key={a} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className={`p-4 rounded-2xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
+            <motion.div key={a} data-g={`fc-${i}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className={`p-4 rounded-2xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
               <h3 className={`text-base font-black mb-1 ${heading(isDark)}`}>{a}</h3>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{b}</p>
             </motion.div>
@@ -958,7 +976,7 @@ function Critico({ isDark }: SlideProps) {
             <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Se suele recomendar para «implicar el dolor»: enseñar algo nuevo, adaptar el mensaje y tomar el control. Su estudio (CEB, más de 6.000 vendedores) dice que ~40% de los mejores eran «Challengers» y solo 7% «constructores de relaciones». Es investigación de una consultora y la academia la cuestionó: úsalo con criterio.</p>
           </motion.div>
         </div>
-        <Footer isDark={isDark}>Antes de adoptar cualquier metodología, pregúntate: <strong>¿hay evidencia? ¿quién la revisó? ¿encaja en mi contexto? ¿quién gana si me la creo?</strong></Footer>
+        <Footer g="footer" isDark={isDark}>Antes de adoptar cualquier metodología, pregúntate: <strong>¿hay evidencia? ¿quién la revisó? ¿encaja en mi contexto? ¿quién gana si me la creo?</strong></Footer>
       </div>
     </Shell>
   );
@@ -988,7 +1006,7 @@ function Cierre({ isDark }: SlideProps) {
       <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className={`text-3xl md:text-5xl font-black mb-6 leading-tight tracking-tighter z-10 max-w-4xl ${heading(isDark)}`}>
         Siempre calificando: <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">tu tiempo es tu recurso más valioso</span>
       </motion.h2>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="flex flex-wrap justify-center gap-2 max-w-3xl mb-6 z-10">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} data-g="habitos" className="flex flex-wrap justify-center gap-2 max-w-3xl mb-6 z-10 rounded-2xl">
         {chips.map((c) => (
           <span key={c} className={`flex items-center gap-2 text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full ${isDark ? 'bg-[#1e1e1e] text-gray-300 shadow-lg shadow-black/40' : 'bg-white text-gray-700 shadow-md shadow-gray-200'}`}>
             <CheckCircle2 size={14} className="text-[#ff851d]" /> {c}

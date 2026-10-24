@@ -1,0 +1,163 @@
+Calificar con rigor es la diferencia entre gastar tu tiempo en cualquier trato y gastarlo en los que de verdad pueden cerrarse. MEDDPICC es el método que lo ordena con ocho preguntas, una por cada letra: M de métricas, E de comprador económico, D de criterios de decisión, D de proceso de decisión, P de Paper Process, I de identificar el dolor, C de Champion y C de competencia. Su promesa es sencilla: saber, en cada etapa, si una oportunidad merece tu tiempo y qué te falta para ganarla.
+
+Antes de empezar, una advertencia honesta. MEDDPICC no te enseña a hablar con el cliente ni a cerrar. Te enseña a examinar un trato sin los lentes rosados del optimismo y a decidir dónde poner tu energía. Y lo vamos a revisar con criterio: de dónde viene, qué respaldo tiene y qué no.
+
+¿Cómo decides hoy si una oportunidad vale la pena: con datos o con una corazonada?
+
+Empecemos con una historia que viene del libro de Darius Lahoutifard. Imagina dos vendedores con las mismas diez oportunidades. Aaron es el vendedor de siempre cerrar: muchas llamadas, muchas demostraciones, muchas horas. A mitad de trimestre comprometió un millón de dólares y cerró doscientos mil. Sus tratos se cayeron por despidos, presupuestos reasignados y pruebas que se alargaban. Megan tenía esas mismas diez oportunidades, pero solo comprometió las tres que pasaban sus criterios: comprometió trescientos mil y cerró cuatrocientos mil.
+
+¿Tuvo Megan más suerte? No. Sus clientes también tenían despidos y retrasos. La diferencia es que ella calificaba: evaluaba lo antes posible si la compra iba a ocurrir, si el cliente iba a aprovechar la solución, en qué plazo y por qué monto. Por eso Lahoutifard propone un lema frente al célebre Always Be Closing de la película Glengarry Glen Ross: siempre calificar, no solo cerrar.
+
+Esfuerzo más tiempo no es igual a éxito. El éxito está en elegir bien dónde poner ese esfuerzo.
+
+¿Te pareces más a Aaron o a Megan cuando revisas tu propio pipeline?
+
+El contexto de esta historia es PTC, una empresa de software que crecía a toda velocidad y tenía un problema concreto: perdía vendedores más rápido de lo que podía contratarlos. Necesitaba que los nuevos rindieran pronto. Ese mismo problema, el tiempo que tarda un vendedor nuevo en producir, aparece en la clase de arquitectura de equipos.
+
+En 1996, Dick Dunkel y Jack Napoli revisaron cientos de oportunidades y observaron algo: cuando ganaban, dominaban seis áreas; cuando perdían, fallaba alguna. Así nació MEDDIC. Después se añadió la segunda C, de Competition; luego la P de Paper Process, el trámite donde se atrasan muchos tratos; y algunos, como Andy Whyte, agregan la R de Risks.
+
+Ahora presta atención a un dato clave para tu criterio. Dunkel lo resume así: sin consultores, sin proyectos científicos. MEDDPICC es experiencia de vendedores codificada, no un modelo validado por estudios. Eso no le quita valor, pero cambia la forma de leer sus promesas.
+
+¿Qué peso le das a un método que nace de la práctica frente a uno que nace de una investigación?
+
+La mejor imagen para entender MEDDPICC viene de John McMahon: el proceso de venta es el mapa, y MEDDPICC es el GPS. Un mapa te dice qué pasos seguir. El GPS te dice dónde estás, qué te falta y cómo volver a la ruta si te desviaste. Por eso puede aplicarse en cualquier etapa de la venta.
+
+Conviene aclarar un error muy común, que señala Whyte: MEDDPICC no es una metodología de venta. No te dice cómo conversar con el cliente; para eso están SPIN, Challenger o Sandler. Whyte lo compara con Batman y Robin: tu metodología de venta lidera, y MEDDPICC es el compañero que mantiene todo bajo control. No compiten: se complementan.
+
+Es, además, un checklist corto, basado en acciones, que revela brechas y da un lenguaje común a todo el equipo.
+
+Si tuvieras que explicarle a alguien la diferencia entre cómo vendes y cómo calificas, ¿qué le dirías?
+
+Ahora pasamos a las ocho letras, una por una. No las vamos a memorizar como una lista. Vamos a entender qué pregunta responde cada una y qué señal te avisa de que algo anda mal.
+
+¿Cuál de las ocho letras crees que es la más difícil de conseguir en una venta real?
+
+Este es el mapa completo, y lo tendremos como referencia durante toda la clase. Cada letra es una pregunta que debes poder contestar con evidencia, no con intuición. La M pregunta cuánto vale en números. La E, quién puede decir no cuando todos dicen sí. Las dos D preguntan con qué criterios y por qué pasos deciden. La P pregunta qué falta para que exista una orden de compra. La I pregunta qué dolor obliga a actuar. Y las dos C preguntan quién vende por ti dentro de la empresa y contra quién compites.
+
+Junto a cada letra hay una señal de alerta, y es lo más práctico de todo. Si reconoces una de esas señales en un trato, ahí está tu próxima tarea.
+
+Piensa en una oportunidad que conozcas: ¿cuántas de estas ocho preguntas podrías responder hoy con evidencia?
+
+Empezamos por la M, de métricas. Lahoutifard propone un acrónimo, que también forma la palabra METRIC, para reconocer una buena métrica: debe ser medible, expresarse en lenguaje cotidiano, contar una historia, mostrar un antes y un después, tener impacto en la economía del cliente y estar avalada por su Champion.
+
+El ejemplo del libro: una solución de doscientos mil dólares que reduce a la mitad el ciclo de diseño de diez ingenieros. Ese ahorro equivale a cuatrocientos mil dólares al año. Con esos números, la inversión se recupera en seis meses.
+
+Y el dato que más mueve a un comprador: cada día que el cliente no decide le cuesta más de mil dólares. El consejo final es hablar de meses de recuperación en vez de porcentajes de retorno sobre la inversión, porque eso lo entiende cualquiera. Vendes cuando mueves la conversación del costo al valor.
+
+¿Podrías expresar en números lo que tu producto le ahorra o le hace ganar a un cliente?
+
+Ahora la E, el comprador económico. Imagina la organización como una pirámide, donde cada nivel escucha en una frecuencia distinta. Abajo están los contribuyentes, que quieren saber cómo: cómo funciona y cómo cambia su día. En el medio están los mandos, que quieren saber qué: qué problema resuelve. Y arriba está el comprador económico, que quiere saber por qué: por qué cambiar, por qué contigo y por qué ahora.
+
+¿Quién es el comprador económico? No es quien tiene el título de comprador. Es quien puede reasignar presupuesto y vetar la decisión de todos los demás. El área de Compras rara vez lo es, porque su trabajo es mejorar el precio. Y si dos ejecutivos se disputan la decisión, pregúntate quién ganaría la pelea interna: suele ser quien sufre el dolor.
+
+El consejo más importante: reúnete con el comprador económico antes de invertir en pruebas largas, y sal de esa reunión con un boleto de vuelta, es decir, con una segunda reunión ya acordada.
+
+¿Alguna vez trabajaste meses en una oportunidad sin saber quién tenía la última palabra?
+
+Los criterios de decisión son la lista de compras del cliente, y quien ayuda a escribirla controla el trato. El triángulo de valor de Lahoutifard muestra por qué. Hay tres círculos: lo que pide el cliente, lo que ofrece tu solución y lo que ofrece la competencia. Donde se cruzan aparecen siete zonas.
+
+Las dos más importantes están arriba. La zona de valor es lo que el cliente pide, lo tienes tú y la competencia no; ahí pones toda tu energía. La zona de peligro es lo contrario: lo pide el cliente y solo lo tiene el otro. Ahí conviene preguntar por qué es tan crucial, si otros clientes viven sin eso.
+
+La paridad y las tendencias no merecen tu tiempo. Tus diferenciadores únicos, en cambio, son una oportunidad: ayuda al cliente a incluirlos en su lista.
+
+Y cuidado con la señal de control: si los criterios cambian a favor de otro, la competencia tiene un Champion más fuerte que el tuyo.
+
+¿Qué parte de tu oferta crees que cae en la zona de valor, y cuál en la de peligro?
+
+La D de decisión tiene dos partes. La primera es el plan de decisión. Sin equilibrar, solo trabaja el vendedor: demostraciones, pruebas, casos, propuestas, y el cliente no se compromete con nada; el ciclo dura 270 días. Equilibrado, el cliente también tiene tareas: reunirse con el comprador económico, detallar el dolor y poner los criterios por escrito. Así el ciclo baja a 90 días.
+
+La segunda es el Paper Process, el camino legal y de compras hasta la orden de compra. La técnica es simple y poderosa: pregunta una y otra vez qué pasa después, hasta tener cada paso, su persona responsable y su plazo. Si quedan cuatro semanas para el cierre y el trámite tarda seis, tu pronóstico ya falló.
+
+Y el compelling event es la fecha límite que presiona al comprador económico. Tu cierre de trimestre no es un compelling event: lo es para ti, no para el cliente.
+
+¿Qué fecha real, del lado del cliente, podría hacer que una compra no pueda esperar?
+
+La I es de identificar el dolor. Imagina muchos bloques pequeños que se mueven: son el ruido, los problemas cotidianos que todo el mundo tiene. Y uno solo sobresale. McMahon lo resume así: el dolor que importa está por encima del ruido. Sin ese dolor, ningún trato es prioridad.
+
+Lahoutifard distingue dos tipos. El dolor de negocio aparece cuando operar cuesta más de lo que rinde. El dolor de capacidad aparece cuando la empresa no puede ofrecer algo a sus clientes. El mejor dolor combina los dos.
+
+Y el dolor tiene dueño. Un caso del libro lo muestra: vendiendo software de diseño asistido por computadora, conocido como CAD, el director de esa área no tenía ningún dolor, porque cambiar de sistema solo le traía trabajo. El dueño real era el vicepresidente de Ingeniería, medido por sacar productos más rápido. Para profundizar, pregunta por la consecuencia, por el resultado esperado y por la urgencia.
+
+Un consejo de lenguaje que funciona: en vez de preguntar por su problema, pregunta qué le gusta de lo que tiene. El pero llega solo.
+
+En tu último cliente, ¿hablaste con quien sufre el dolor o con quien solo lo conoce?
+
+Ahora el Champion. McMahon dibuja un mapa de poder con cuatro tipos de personas según dos ejes: influencia y autoridad.
+
+Solo dos pueden ser Champion. Quien tiene influencia y autoridad es un posible Champion de negocio. Quien tiene influencia sin autoridad, el experto respetado, es un posible Champion técnico. Quien tiene autoridad sin influencia, o ninguna de las dos, será como mucho un coach.
+
+La diferencia es esta. El coach te da información. El Champion, además, tiene acceso al comprador económico, gana algo personal si ganas tú y vende por ti cuando no estás. El coach informa; el Champion actúa. Confundirlos es el error número uno.
+
+Y pruébalo, pero solo cuando ya te ganaste su confianza: pídele una reunión con el comprador económico, o pregúntale si te ayudará a empujar la firma al final del trimestre.
+
+Piensa en tu mejor contacto en un cliente: ¿es un coach o un Champion?
+
+La última letra es la C de competencia, y trae una pregunta de fondo: ¿quién controla el trato? Hay tres actores: el cliente, tú y la competencia. Al inicio controla el cliente, porque tú necesitas su información. Cuando tu Champion escribe contigo el caso de negocio y los criterios, la información fluye hacia el cliente y tomas tú el control. Pero si los criterios cambian para favorecer los diferenciadores del otro, y a ti solo te los comunican, el control pasa a la competencia.
+
+Un matiz importante: la competencia no es solo otro proveedor. También compites contra no hacer nada, contra el statu quo y contra los proyectos internos que quieren el mismo dinero.
+
+En una oportunidad que conozcas, ¿quién crees que tiene hoy el control?
+
+Ya conoces las letras. Ahora vamos a ponerlas en práctica día a día: preguntas de resumen, qué revisar en cada etapa, cuándo decir no y cómo pronosticar con evidencia.
+
+¿Qué crees que es más difícil: aprender las letras o aplicarlas con disciplina?
+
+Si tuvieras que quedarte con algo de toda la clase, que sean tres preguntas. La primera es por qué algo: por qué el cliente compraría lo que sea. Esa es la I, el dolor. La segunda es por qué nosotros: por qué te elegiría a ti. Ahí entran las métricas, los criterios con tus diferenciadores y tu posición frente a la competencia. La tercera es por qué ahora: por qué no lo deja para el año que viene. Esa es la urgencia del comprador económico y su compelling event.
+
+Son simples, pero no fáciles. Y la regla es clara: si tú o tu Champion no pueden responderlas, todavía estás en descubrimiento. Además, son exactamente las preguntas que el comprador económico le hará a tu Champion.
+
+¿Cuál de las tres te cuesta más responder en tus oportunidades?
+
+Aquí está la gran diferencia con otros métodos: calificar no es un paso que se marca una sola vez. Es algo que haces en cada etapa. Hay tres momentos: la etapa temprana, la media y la final.
+
+En la temprana revisas el dolor, las métricas, quién podría ser tu Champion y quién es el comprador económico. En la media profundizas: métricas con consenso, criterios y proceso completos, un Champion probado, una reunión con el comprador económico y un plan frente a la competencia. En la final confirmas que el comprador económico aceptó las métricas, cómo puntúas en los criterios y en qué punto exacto del proceso y del Paper Process estás.
+
+No tener una respuesta no significa abandonar. Significa que esa es tu prioridad. Y si no logras la respuesta, entonces sí, califica fuera.
+
+¿En qué etapa sueles darte cuenta de que una oportunidad no iba a cerrar?
+
+Cuando calificas, aparece una pregunta incómoda: ¿debo seguir en este trato? Piensa en una pila de bloques: es el esfuerzo que ya invertiste. Si decides calificar fuera, esa pila se libera y tu tiempo vuelve a estar disponible.
+
+Esto conecta con algo que ya viste: la falacia del costo hundido. Seguir en un trato solo porque ya invertiste mucho es un sesgo, el mismo que estudió Kahneman. Lo que ya gastaste no debería decidir lo que viene.
+
+Whyte lo resume así: ante la duda, califica fuera. Y es una decisión en la que ambas partes ganan. Si el cliente acepta tu salida, liberas tiempo. Si te pide que te quedes, ganas la conversación profunda que te faltaba. Eso le pasó a un vendedor que McMahon describe: envió una carta respetuosa retirándose y en dos horas lo llamaron para que siguiera.
+
+Decir no también sirve dentro del trato: para cuestionar un criterio de la zona de peligro o una actividad inútil del proceso.
+
+¿Hay alguna oportunidad en la que hoy sigas solo por todo lo que ya invertiste?
+
+Ya viste BANT, así que ahora lo comparamos de cerca. BANT son cuatro letras: presupuesto, autoridad, necesidad y tiempo. Whyte emplea una imagen para explicar la diferencia: la bicicleta y el cohete. Los dos te llevan de un lugar a otro, pero el nivel de detalle es muy distinto.
+
+¿Cuándo sirve BANT? En una venta simple que llega sola, y como primer filtro de los SDR, los representantes de desarrollo de ventas. McMahon incluso lo emplea para confirmar datos en la reunión con el comprador económico. La diferencia clave es que BANT se marca una vez, y MEDDPICC te acompaña todo el camino.
+
+Lahoutifard va más lejos: el presupuesto no debería ser un filtro, porque con métricas claras el comprador económico reasigna fondos. Y puedes marcar las cuatro letras de BANT y perder igual, si la competencia escribió los criterios o tiene un Champion y tú no.
+
+Pero escucha con atención crítica: Lahoutifard llega a decir que BANT debería estar prohibido, mientras que Whyte y McMahon son más matizados. Cuando los autores no coinciden, la postura extrema merece más sospecha.
+
+¿Por qué crees que un autor que vende formación en MEDDIC tendría una postura tan dura contra BANT?
+
+El subtítulo es de McMahon: un pronóstico preciso en un trimestre es un punto; en dos, una línea; en tres seguidos, una tendencia. Lo que buscas es consistencia.
+
+Piensa en la reconciliación de un vendedor. Su cuota es de trescientos mil dólares, tiene doscientos cerrados o comprometidos y le faltan cien mil. Pero si la probabilidad de cierre de su pipeline es del 25 %, para cubrir esos cien mil necesita un plan de cuatrocientos mil. Por eso es mucho más fácil construir pipeline antes que salir a buscarlo dentro del trimestre.
+
+Tres prácticas. Saca del pronóstico todo lo que no tenga evidencia, y hazlo temprano. Pide a tu gerente, en el primer mes, que te pregunte: llévame a tu Champion. Y ten cuidado: un pipeline enorme puede esconder fallas de venta y de calificación.
+
+Si tuvieras que defender cada trato de tu pronóstico con evidencia, ¿cuántos quedarían?
+
+Llegamos a la parte más importante para este curso: el pensamiento crítico. Aplicaremos a MEDDPICC el mismo filtro que empleamos en La ciencia de vender. ¿Una herramienta puede ser útil aunque no esté demostrada científicamente?
+
+Tres columnas, conviene leerlas en orden. La primera: lo que sí tienen estas fuentes. Décadas de uso en ventas complejas, casos propios —Whyte cuenta que en su equipo duplicaron el ticket promedio y acortaron el ciclo un 30 %— y una lógica coherente con lo que la academia sí validó, como la orientación al cliente y la venta basada en el valor.
+
+La segunda: lo que no tienen. Estudios revisados por pares. Los casos los cuentan sus protagonistas, sin grupos de comparación, y los autores venden formación sobre el método. Esto no lo invalida, pero obliga a leer con cuidado.
+
+La tercera es el complemento que suelen recomendar, The Challenger Sale, para implicar el dolor. Su estudio, de la consultora CEB con más de seis mil vendedores, dice que alrededor del 40 % de los mejores eran Challengers y solo el 7 % constructores de relaciones. Recuerda lo que vimos: es investigación de una consultora, y la academia la cuestionó. Trátala con criterio.
+
+Antes de adoptar cualquier herramienta, hazte cuatro preguntas: ¿hay evidencia?, ¿quién la revisó?, ¿encaja en tu contexto?, ¿quién gana si te la crees?
+
+Después de esta clase, ¿usarías MEDDPICC? ¿Con qué cuidados?
+
+Cerramos con las ocho letras otra vez y una idea que lo resume todo: califica siempre, porque tu tiempo es tu recurso más valioso. Para llevártelo, seis hábitos: califica en cada etapa, emplea métricas y no adjetivos, conoce al comprador económico, escribe los criterios con tu Champion, mapea el camino hasta la firma y, ante la duda, califica fuera.
+
+MEDDPICC no te enseña a hablar con el cliente. Te enseña a saber dónde estás, qué te falta y cuándo vale la pena seguir. Para la conversación tienes otras herramientas; para el criterio, esta te ayuda a ordenar lo que ves.
+
+¿Cuál es la primera oportunidad que vas a revisar con estas ocho preguntas?

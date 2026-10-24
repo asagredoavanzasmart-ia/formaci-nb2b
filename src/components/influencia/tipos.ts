@@ -3,8 +3,11 @@
  * de la clase guiada los lee con esbuild para buscar cada frase en los subtítulos).
  */
 
-/* Momento en que aparece, se atenúa o se retira un elemento: índice de la frase de la página. */
-type Base = { a?: number; d?: number; hasta?: number; tenue?: number };
+/* Momento en que aparece, se atenúa o se retira un elemento: índice de la frase de la página.
+   `foco`: frases durante las que el elemento se destaca (hasta la frase siguiente). */
+type Base = { a?: number; d?: number; hasta?: number; tenue?: number; foco?: number[] };
+
+export type Tono = 'marca' | 'durazno' | 'gris' | 'pizarra' | 'naranja' | 'rosa';
 
 export type El = Base & (
   | { k: 'icono'; i: string; x: number; y: number; s?: number; etiqueta?: string; sub?: string; gris?: boolean; ancho?: number }
@@ -16,6 +19,13 @@ export type El = Base & (
   | { k: 'tarjeta'; x: number; y: number; w: number; h: number; titulo: string; t?: string; marca?: boolean; i?: string; ancho?: number }
   | { k: 'numero'; x: number; y: number; valor: number; prefijo?: string; sufijo?: string; tam?: number; etiqueta?: string; ancho?: number }
   | { k: 'anillo'; x: number; y: number; r: number }
+  /* Cubo isométrico apoyado en (x, y): `s` es el semiancho. `cae` lo deja caer; `crece` sube su altura como una barra. */
+  | { k: 'cubo'; x: number; y: number; s: number; h: number; tono?: Tono; letra?: string; valor?: string; etiqueta?: string; ancho?: number; cae?: boolean; crece?: boolean; letraLado?: boolean; sinSombra?: boolean }
+  /* Esfera que viaja: llega a pts[i] cuando suena la frase en[i] (más dd[i] segundos). */
+  | { k: 'viajero'; pts: [number, number][]; en: number[]; dd?: number[]; etiqueta?: string; r?: number }
+  /* Forma libre (trazo SVG) con texto opcional en (lx, ly); (cx, cy) es el centro de su entrada. */
+  | { k: 'forma'; trazo: string; cx: number; cy: number; tono?: Tono; opacidad?: number; etiqueta?: string; lx?: number; ly?: number; tam?: number }
+  | { k: 'circulo'; x: number; y: number; r: number; tono?: Tono; opacidad?: number }
 );
 
 /* Lo que se lee a la derecha de la escena; aparece cuando el audio dice `frase`. */
@@ -38,3 +48,14 @@ export type Pagina = {
 
 /* Encabezado de lección (lo dibuja App.tsx): solo se ubica en el audio. */
 export type Encabezado = { id: string; inicio: string };
+
+/* Marca de la clase guiada sobre una diapositiva ya hecha: qué aparece, qué se resalta y qué se pulsa. */
+export type Marca = { frase: string; mostrar?: string[]; foco?: string | null; clicEn?: string };
+
+/* Diapositiva de una clase existente animada por audio: su escena Remotion (si la tiene) y sus marcas. */
+export type Guiada = {
+  id: string;
+  inicio: string;
+  marcas?: Marca[];
+  escena?: { frases: string[]; els: El[]; pregunta?: { frase: string; texto: string }; ancho: number; alto: number };
+};

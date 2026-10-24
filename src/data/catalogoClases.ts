@@ -20,7 +20,7 @@ export interface ClaseCatalogo {
 export const catalogoClases: readonly ClaseCatalogo[] = [
   {
     id: 'ventas-b2b',
-    title: 'Ventas B2B de Alto Impacto',
+    title: 'Ventas B2B',
     subtitle: 'Formación estratégica',
     description:
       'Roles de compra, ICP + oferta, banderas rojas, modos de respuesta y proceso comercial completo.',

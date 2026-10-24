@@ -44,6 +44,7 @@ import ClaseGuiada from './components/ClaseGuiada';
 import { guiadoCompensacion } from './data/guiadoCompensacion';
 import { guiadoKahneman } from './data/guiadoKahneman';
 import { guiadoInfluencia } from './data/guiadoInfluencia';
+import { guiadoMeddpicc } from './data/guiadoMeddpicc';
 import ClaseRevOps from './components/ClaseRevOps';
 import ClaseSalesEnablement from './components/ClaseSalesEnablement';
 import { AudioSrcContext } from './components/slideKit';
@@ -746,7 +747,7 @@ export default function App() {
                 overflowY: 'hidden',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' ? '20px 14px 92px' : '20px 14px 24px',
+                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'meddpicc' ? '20px 14px 92px' : '20px 14px 24px',
                 boxSizing: 'border-box',
                 background: isDark ? '#000' : '#f0f2f5',
                 pointerEvents: 'auto'
@@ -816,7 +817,7 @@ export default function App() {
                       FORMACIÓN ESTRATÉGICA
                     </h1>
                     <h2 className={`text-2xl md:text-4xl font-bold mb-12 ${isDark ? 'text-white/80' : 'text-gray-700'}`}>
-                      Ventas B2B de Alto Impacto
+                      Ventas B2B
                     </h2>
                     <div className="h-1.5 w-48 mx-auto bg-gradient-to-r from-[#ff851d] to-[#ef375c] rounded-full shadow-lg shadow-red-500/20"></div>
                   </div>
@@ -987,10 +988,10 @@ export default function App() {
         </div>
 
         {/* Reproducción global de la clase con audio (flecha, resaltado y aparición de elementos) */}
-        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion') && (
+        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'meddpicc') && (
           <ClaseGuiada
             key={activeClassId}
-            datos={activeClassId === 'kahneman' ? guiadoKahneman : activeClassId === 'influencia-persuasion' ? guiadoInfluencia : guiadoCompensacion}
+            datos={activeClassId === 'kahneman' ? guiadoKahneman : activeClassId === 'influencia-persuasion' ? guiadoInfluencia : activeClassId === 'meddpicc' ? guiadoMeddpicc : guiadoCompensacion}
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}
