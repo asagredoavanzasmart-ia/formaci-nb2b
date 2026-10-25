@@ -619,8 +619,8 @@ function Fab({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Demostrar capacidad:" highlight="el beneficio responde a lo que pidió el cliente" subtitle="Desde los años veinte se enseña que un beneficio es mostrar cómo algo ayuda. Rackham encontró que, en ventas grandes, eso no basta.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[44%] min-h-0 flex items-center">
-            <svg viewBox="0 0 460 270" className="w-full h-full overflow-visible" aria-label="Impacto de características, ventajas y beneficios en ventas grandes">
+          <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-2">
+            <Escena id="sp-fab" isDark={isDark}><svg viewBox="0 0 460 270" className="w-full h-full overflow-visible" aria-label="Impacto de características, ventajas y beneficios en ventas grandes">
               <SceneDefs id="fab" isDark={isDark} />
               {items.map((x, i) => {
                 const gx = 100 + i * 130;
@@ -633,11 +633,12 @@ function Fab({ isDark }: SlideProps) {
                   </Lift>
                 );
               })}
-            </svg>
+            </svg></Escena>
+            <div data-g="tipos" className="flex gap-2 rounded-full">{items.map((x, i) => <Pill key={x.k} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{x.name}</Pill>)}</div>
           </div>
           <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${active === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={active} data-g="tipo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${active === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-xl font-black mb-1 ${heading(isDark)}`}>{a.name}</h3>
                 <p className={`text-base leading-snug mb-2 ${heading(isDark)}`}>{a.def}</p>
                 <p className={`text-sm italic mb-2 ${textMuted(isDark)}`}>{a.ex}</p>
@@ -677,7 +678,7 @@ function Objeciones({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 360 260" className="w-full h-full max-h-[300px] overflow-visible" aria-label="Pila de objeciones que se reduce al prevenirlas">
+            <Escena id="sp-objeciones" isDark={isDark}><svg viewBox="0 0 360 260" className="w-full h-full max-h-[300px] overflow-visible" aria-label="Pila de objeciones que se reduce al prevenirlas">
               <SceneDefs id="obj" isDark={isDark} />
               <IsoFloor cx={180} cy={210} s={140} fill={tone.floor} />
               <AnimatePresence>
@@ -692,7 +693,7 @@ function Objeciones({ isDark }: SlideProps) {
                 })}
               </AnimatePresence>
               <text x={180} y={252} textAnchor="middle" fontSize={12} fontWeight={800} fill={prevent ? ORANGE : tone.muted}>{prevent ? 'Objeciones por hora: −55%' : 'Objeciones por hora de venta'}</text>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={!prevent} onClick={() => setPrevent(false)}>Antes</Pill><Pill isDark={isDark} on={prevent} onClick={() => setPrevent(true)}>Tras entrenar en prevención</Pill></div>
           </div>
           <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
@@ -702,14 +703,14 @@ function Objeciones({ isDark }: SlideProps) {
               ['Caso · vendedores reclutados de la competencia', 'Venían de vender equipos japoneses baratos con un estilo cargado de características. Con un producto más caro recibieron 30% más objeciones de precio: las características aumentan la sensibilidad al precio.'],
               ['Señales · cuándo son evitables', 'Objeciones temprano en la reunión (casi nadie objeta una pregunta) u objeciones de valor: «es caro», «no vale la pena cambiar».'],
             ].map(([a, b], i) => (
-              <motion.div key={a} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={a} data-g={`obj-${i}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-sm font-black mb-0.5 ${heading(isDark)}`}>{a}</h3>
                 <p className={`text-xs leading-snug ${textMuted(isDark)}`}>{b}</p>
               </motion.div>
             ))}
           </div>
         </div>
-        <Footer isDark={isDark}>Trata la causa, no el síntoma: <strong>desarrolla necesidades explícitas antes de ofrecer la solución</strong>. Las objeciones reales (algo que no puedes cubrir) seguirán existiendo; ahí sí, trátalas con honestidad.</Footer>
+        <Footer g="footer" isDark={isDark}>Trata la causa, no el síntoma: <strong>desarrolla necesidades explícitas antes de ofrecer la solución</strong>. Las objeciones reales (algo que no puedes cubrir) seguirán existiendo; ahí sí, trátalas con honestidad.</Footer>
       </div>
     </Shell>
   );
@@ -724,7 +725,8 @@ function Cierre({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Las técnicas de cierre:" highlight="útiles en lo pequeño, dañinas en lo grande" subtitle="El cierre asumido, el alternativo, el «última oportunidad»… Rackham las midió en una cadena de tiendas de fotografía.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className={`lg:w-[55%] p-5 rounded-3xl flex flex-col justify-center gap-4 ${panelClass(isDark)}`}>
+          <div className="lg:w-[55%] min-h-0 flex items-center">
+          <Escena id="sp-cierre-tecnicas" isDark={isDark}><div className={`w-full h-full p-5 rounded-3xl flex flex-col justify-center gap-4 ${panelClass(isDark)}`}>
             <p className={microLabel(isDark)}>Ventas logradas antes y después de entrenar a los vendedores en técnicas de cierre</p>
             <div className={`p-3 rounded-2xl ${isDark ? 'bg-[#1e1e1e]' : 'bg-gray-50'}`}>
               <p className={`text-sm font-black mb-2 ${heading(isDark)}`}>Productos baratos</p>
@@ -741,6 +743,7 @@ function Cierre({ isDark }: SlideProps) {
                 <div className={`h-4 rounded-full overflow-hidden ${isDark ? 'bg-[#2a2a2a]' : 'bg-gray-100'}`}><motion.div className="h-full rounded-full bg-[#ef375c]" initial={{ width: 0 }} animate={{ width: '33%' }} transition={{ delay: 0.8, duration: 0.9 }} /></div>
               </div>
             </div>
+          </div></Escena>
           </div>
           <div className="lg:w-[45%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
@@ -776,7 +779,7 @@ function Compromiso({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex items-center">
-            <svg viewBox="0 0 540 292" className="w-full h-full overflow-visible" aria-label="Cuatro escalones para obtener compromiso">
+            <Escena id="sp-compromiso" isDark={isDark}><svg viewBox="0 0 540 292" className="w-full h-full overflow-visible" aria-label="Cuatro escalones para obtener compromiso">
               <SceneDefs id="com" isDark={isDark} />
               {steps.map((s, i) => {
                 const gx = 80 + i * 125;
@@ -793,9 +796,9 @@ function Compromiso({ isDark }: SlideProps) {
                 <motion.g animate={{ y: [0, -12, 0] }} transition={{ duration: 1.1, repeat: Infinity }}><Orb id="com" cx={0} cy={0} r={12} /></motion.g>
               </motion.g>
               <text x={270} y={286} textAnchor="middle" fontSize={12} fontWeight={800} fill={tone.muted}>Investigar · verificar · resumir · proponer</text>
-            </svg>
+            </svg></Escena>
           </div>
-          <div className="lg:w-[54%] flex flex-col gap-2 justify-center">
+          <div data-g="acciones" className="lg:w-[54%] flex flex-col gap-2 justify-center rounded-2xl">
             {steps.map((s, i) => (
               <motion.button key={s.name} whileHover={{ x: 4 }} onMouseEnter={() => setActive(i)} onClick={() => setActive(i)} className={`text-left p-3 rounded-2xl ${i === active ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-sm font-black ${heading(isDark)}`}><span className="text-[#ff851d]">{i + 1}.</span> {s.name}</h3>
@@ -804,7 +807,7 @@ function Compromiso({ isDark }: SlideProps) {
             ))}
           </div>
         </div>
-        <Footer isDark={isDark}><strong>¿Qué compromiso proponer?</strong> Uno que haga avanzar la venta y que sea el más alto que el cliente pueda dar de forma realista. Para un compromiso grande, como acceder a quien decide, necesitas haber construido mucho valor.</Footer>
+        <Footer g="footer" isDark={isDark}><strong>¿Qué compromiso proponer?</strong> Uno que haga avanzar la venta y que sea el más alto que el cliente pueda dar de forma realista. Para un compromiso grande, como acceder a quien decide, necesitas haber construido mucho valor.</Footer>
       </div>
     </Shell>
   );
@@ -824,16 +827,18 @@ function Practica({ isDark }: SlideProps) {
   return (
     <Shell isDark={isDark} title="De la teoría a la práctica:" highlight="el caso Newcastle" subtitle="Xerox probó el método en una de sus sucursales de peor desempeño, con 35 vendedores.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
-        <div className={`lg:w-[45%] p-5 rounded-3xl flex flex-col justify-center gap-4 ${featuredClass(isDark)}`}>
+        <div className="lg:w-[45%] min-h-0 flex items-center">
+        <Escena id="sp-practica" isDark={isDark}><div className={`w-full h-full p-5 rounded-3xl flex flex-col justify-center gap-4 ${featuredClass(isDark)}`}>
           <p className={microLabel(isDark)}>Llamadas necesarias para conseguir un pedido</p>
           <Bar isDark={isDark} label="Antes del entrenamiento" value={48} max={50} brand={false} delay={0.2} />
           <Bar isDark={isDark} label="Después del entrenamiento" value={24} max={50} delay={0.5} />
           <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Newcastle pasó a ser la mejor sucursal del país. Pero fíjate en la honestidad del caso: un estudio independiente encargado por Xerox concluyó que, de las <strong>16 posiciones</strong> que subió, <strong>5 se explicaban por otros factores</strong> de marketing.</p>
+        </div></Escena>
         </div>
         <div className="lg:w-[55%] flex flex-col gap-2 justify-center">
-          <p className={microLabel(isDark)}>Las cuatro reglas de oro para aprender una habilidad</p>
+          <p data-g="reglas" className={microLabel(isDark)}>Las cuatro reglas de oro para aprender una habilidad</p>
           {rules.map(([a, b], i) => (
-            <motion.div key={a} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.08 }} className={`p-3.5 rounded-2xl flex gap-3 ${panelClass(isDark)}`}>
+            <motion.div key={a} data-g={`regla-${i}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.08 }} className={`p-3.5 rounded-2xl flex gap-3 ${panelClass(isDark)}`}>
               <span className="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white font-black flex items-center justify-center shadow-md shadow-red-500/30">{i + 1}</span>
               <span><span className={`block text-sm font-black ${heading(isDark)}`}>{a}</span><span className={`block text-sm ${textMuted(isDark)}`}>{b}</span></span>
             </motion.div>
@@ -853,20 +858,20 @@ function Critico({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Pensamiento crítico:" highlight="¿por qué SPIN resiste mejor el escrutinio?" subtitle="SPIN es de las pocas metodologías comerciales que la academia asimiló. Veamos qué la hace sólida y dónde están sus límites.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
+          <motion.div data-g="solida" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className={`p-5 rounded-3xl ${featuredClass(isDark)}`}>
             <div className="flex items-center gap-3 mb-3"><span className="p-2.5 rounded-xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white shadow-lg shadow-red-500/30"><FlaskConical size={20} /></span><h3 className={`text-lg font-black ${heading(isDark)}`}>Lo que la hace sólida</h3></div>
             <ul className={`text-sm space-y-2 ${textMuted(isDark)}`}>
-              {['Observación directa de miles de llamadas, con observadores entrenados hasta un acuerdo de r = 0,9.', 'Mide el éxito por el resultado de cada llamada, no por la fama del vendedor, para evitar el efecto halo.', 'Distingue correlación de causa: por eso entrena y compara con grupos de control.', 'Admite sus errores y publica correcciones que reducen su propio éxito (Newcastle, Hawthorne).', 'Coherente con lo que la academia validó sobre orientación al cliente (SOCO).'].map((x) => <li key={x} className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />{x}</li>)}
+              {['Observación directa de miles de llamadas, con observadores entrenados hasta un acuerdo de r = 0,9.', 'Mide el éxito por el resultado de cada llamada, no por la fama del vendedor, para evitar el efecto halo.', 'Distingue correlación de causa: por eso entrena y compara con grupos de control.', 'Admite sus errores y publica correcciones que reducen su propio éxito (Newcastle, Hawthorne).', 'Coherente con lo que la academia validó sobre orientación al cliente (SOCO).'].map((x, i) => <li key={x} data-g={`sol-${i}`} className="flex gap-2 rounded-xl"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />{x}</li>)}
             </ul>
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+          <motion.div data-g="limites" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
             <div className="flex items-center gap-3 mb-3"><span className="p-2.5 rounded-xl bg-[#ef375c] text-white shadow-lg"><AlertTriangle size={20} /></span><h3 className={`text-lg font-black ${heading(isDark)}`}>Sus límites</h3></div>
             <ul className={`text-sm space-y-2 ${textMuted(isDark)}`}>
-              {['Huthwaite es la empresa de Rackham y vende capacitación en SPIN: hay un interés comercial.', 'Los datos se publicaron en libros, no en revistas con revisión por pares; el propio Rackham dice que la academia casi no usa la observación por su costo.', 'Se investigó desde fines de los 60 hasta los 80, sobre todo en ventas grandes de tecnología y equipos.', 'Según el autor, el modelo predice mejor las primeras etapas del ciclo que las finales.', 'Un riesgo práctico: convertir las cuatro preguntas en un guion rígido.'].map((x) => <li key={x} className="flex gap-2"><ChevronRight size={16} className="text-[#ef375c] shrink-0 mt-0.5" />{x}</li>)}
+              {['Huthwaite es la empresa de Rackham y vende capacitación en SPIN: hay un interés comercial.', 'Los datos se publicaron en libros, no en revistas con revisión por pares; el propio Rackham dice que la academia casi no usa la observación por su costo.', 'Se investigó desde fines de los 60 hasta los 80, sobre todo en ventas grandes de tecnología y equipos.', 'Según el autor, el modelo predice mejor las primeras etapas del ciclo que las finales.', 'Un riesgo práctico: convertir las cuatro preguntas en un guion rígido.'].map((x, i) => <li key={x} data-g={`lim-${i}`} className="flex gap-2 rounded-xl"><ChevronRight size={16} className="text-[#ef375c] shrink-0 mt-0.5" />{x}</li>)}
             </ul>
           </motion.div>
         </div>
-        <Footer isDark={isDark}>El propio Rackham te da la herramienta: <strong>desconfía de lo que dicen los expertos, incluido él, y observa qué funciona</strong> en tus propias reuniones.</Footer>
+        <Footer g="footer" isDark={isDark}>El propio Rackham te da la herramienta: <strong>desconfía de lo que dicen los expertos, incluido él, y observa qué funciona</strong> en tus propias reuniones.</Footer>
       </div>
     </Shell>
   );
@@ -882,7 +887,7 @@ function Sintesis({ isDark }: SlideProps) {
     <div className={`w-full h-full flex flex-col items-center justify-center text-center p-8 md:p-12 relative overflow-hidden rounded-3xl shadow-2xl ${isDark ? 'bg-[#121212]' : 'bg-[#f8f9fa]'}`}>
       <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ef375c]/10 to-[#ff851d]/10 rounded-full blur-3xl pointer-events-none" />
-      <svg viewBox="0 0 520 150" className="w-full max-w-md mb-3 z-10 overflow-visible" aria-hidden="true">
+      <div data-g="letras-sintesis" className="w-full max-w-xl mb-3 z-10"><Escena id="sp-cierre" isDark={isDark}><svg viewBox="0 0 520 150" className="w-full overflow-visible" aria-hidden="true">
         <SceneDefs id="sps" isDark={isDark} />
         {['S', 'P', 'I', 'N'].map((k, i) => (
           <motion.g key={k} initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, type: 'spring', stiffness: 110, damping: 12 }}>
@@ -891,19 +896,19 @@ function Sintesis({ isDark }: SlideProps) {
             </Float>
           </motion.g>
         ))}
-      </svg>
-      <p className="text-xs md:text-sm uppercase tracking-[0.3em] mb-4 font-bold text-[#ff851d] z-10">Síntesis</p>
-      <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className={`text-3xl md:text-5xl font-black mb-6 leading-tight tracking-tighter z-10 max-w-4xl ${heading(isDark)}`}>
+      </svg></Escena></div>
+      <p data-g="rotulo" className="text-xs md:text-sm uppercase tracking-[0.3em] mb-4 font-bold text-[#ff851d] z-10">Síntesis</p>
+      <motion.h2 data-g="lema" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className={`text-3xl md:text-5xl font-black mb-6 leading-tight tracking-tighter z-10 max-w-4xl ${heading(isDark)}`}>
         En la venta grande, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">quien pregunta mejor, vende mejor</span>
       </motion.h2>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="flex flex-wrap justify-center gap-2 max-w-3xl mb-6 z-10">
-        {chips.map((c) => (
-          <span key={c} className={`flex items-center gap-2 text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full ${isDark ? 'bg-[#1e1e1e] text-gray-300 shadow-lg shadow-black/40' : 'bg-white text-gray-700 shadow-md shadow-gray-200'}`}>
+        {chips.map((c, i) => (
+          <span key={c} data-g={`c-${i}`} className={`flex items-center gap-2 text-xs md:text-sm font-semibold px-3 py-1.5 rounded-full ${isDark ? 'bg-[#1e1e1e] text-gray-300 shadow-lg shadow-black/40' : 'bg-white text-gray-700 shadow-md shadow-gray-200'}`}>
             <CheckCircle2 size={14} className="text-[#ff851d]" /> {c}
           </span>
         ))}
       </motion.div>
-      <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className={`max-w-3xl text-base md:text-xl font-medium leading-relaxed z-10 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
+      <motion.p data-g="final" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className={`max-w-3xl text-base md:text-xl font-medium leading-relaxed z-10 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>
         No se trata de convencer con razones, sino de ayudar al cliente a descubrir, con sus propias palabras, <strong>por qué necesita actuar</strong>.
       </motion.p>
     </div>
@@ -1045,6 +1050,7 @@ function Quincy({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="¿Implicación o necesidad-beneficio?" highlight="la regla de Quincy" subtitle="Hasta el equipo de Huthwaite discutía cómo clasificarlas. Un niño de ocho años lo resolvió: «las de implicación son tristes; las de necesidad-beneficio, felices».">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[62%] flex flex-col gap-2 justify-center">
+          <Escena id="sp-quincy" isDark={isDark}><>
           <p className={microLabel(isDark)}>Ejercicio del libro · clasifica cada pregunta del vendedor</p>
           {items.map((it, i) => {
             const ans = answers[i];
@@ -1060,6 +1066,7 @@ function Quincy({ isDark }: SlideProps) {
             );
           })}
           <p className={`text-xs ${textMuted(isDark)}`}>{done === items.length ? `Acertaste ${score} de ${items.length}. Solución del libro: implicación 1, 3 y 4; necesidad-beneficio 2, 5 y 6.` : 'I = implicación (centrada en el problema) · N = necesidad-beneficio (centrada en la solución)'}</p>
+          </></Escena>
         </div>
         <div className="lg:w-[38%] flex flex-col gap-3 justify-center">
           <div className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
@@ -1093,7 +1100,7 @@ function Apertura({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col justify-center gap-2">
-            <svg viewBox="0 0 440 240" className="w-full max-h-[250px] overflow-visible" aria-label="Tres objetivos de la apertura">
+            <Escena id="sp-apertura" isDark={isDark}><svg viewBox="0 0 440 240" className="w-full max-h-[250px] overflow-visible" aria-label="Tres objetivos de la apertura">
               <SceneDefs id="ape" isDark={isDark} />
               {goals.map((g, i) => {
                 const gx = 80 + i * 140;
@@ -1105,9 +1112,9 @@ function Apertura({ isDark }: SlideProps) {
                   </Lift>
                 );
               })}
-            </svg>
+            </svg></Escena>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} data-g="objetivo" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Objetivo {active + 1} · {goals[active].name}</p>
                 <p className={`text-sm ${textMuted(isDark)}`}>{goals[active].text}</p>
               </motion.div>
@@ -1119,14 +1126,14 @@ function Apertura({ isDark }: SlideProps) {
               ['La frase inicial de beneficio', 'Popularizada por un programa basado en ventas farmacéuticas de 6 minutos. En unas 300 llamadas de 40 minutos, no tuvo relación con el éxito. Y repetida en la segunda visita suena mecánica.'],
               ['Lo que sí hacían los mejores', 'Abrían cada reunión de forma distinta. Los menos eficaces usaban siempre la misma apertura.'],
             ].map(([a, b], i) => (
-              <motion.div key={a} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${i === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={a} data-g={`ape-${i}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${i === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-sm font-black mb-0.5 ${heading(isDark)}`}>{a}</h3>
                 <p className={`text-xs leading-snug ${textMuted(isDark)}`}>{b}</p>
               </motion.div>
             ))}
           </div>
         </div>
-        <Footer isDark={isDark}>Si dedicas <strong>más del 20% de la reunión</strong> a preliminares, es una señal de alarma. Ningún ejecutivo se queja de que un vendedor vaya al grano demasiado rápido.</Footer>
+        <Footer g="footer" isDark={isDark}>Si dedicas <strong>más del 20% de la reunión</strong> a preliminares, es una señal de alarma. Ningún ejecutivo se queja de que un vendedor vaya al grano demasiado rápido.</Footer>
       </div>
     </Shell>
   );
@@ -1168,7 +1175,7 @@ function FabQuiz({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Ejercicio: ¿característica," highlight="ventaja o beneficio?" subtitle="Diez frases de una llamada real de venta de un sistema informático, tomadas del libro. La distinción importa: cambiar ventajas por beneficios subió ventas más de 30% en sus estudios.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[38%] min-h-0 flex flex-col items-center justify-center">
-          <svg viewBox="0 0 360 230" className="w-full h-full max-h-[280px] overflow-visible" aria-label="Frases clasificadas por tipo">
+          <Escena id="sp-fab-quiz" isDark={isDark}><svg viewBox="0 0 360 230" className="w-full h-full max-h-[280px] overflow-visible" aria-label="Frases clasificadas por tipo">
             <SceneDefs id="fq" isDark={isDark} />
             <IsoFloor cx={180} cy={180} s={150} fill={tone.floor} />
             {(['C', 'V', 'B'] as const).map((k, c) => (
@@ -1181,7 +1188,7 @@ function FabQuiz({ isDark }: SlideProps) {
                 <text x={90 + c * 90} y={222} textAnchor="middle" fontSize={11} fontWeight={900} fill={k === 'B' ? ORANGE : tone.text}>{names[k]}</text>
               </g>
             ))}
-          </svg>
+          </svg></Escena>
         </div>
         <div className="lg:w-[62%] flex flex-col gap-3 justify-center">
           <p className={microLabel(isDark)}>Frase {i + 1} de {items.length} · aciertos {score}</p>
@@ -1225,7 +1232,7 @@ function Lanzamientos({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 380 250" className="w-full h-full max-h-[290px] overflow-visible" aria-label="Producto nuevo rodeado de características o de problemas">
+            <Escena id="sp-lanzamientos" isDark={isDark}><svg viewBox="0 0 380 250" className="w-full h-full max-h-[290px] overflow-visible" aria-label="Producto nuevo rodeado de características o de problemas">
               <SceneDefs id="lan" isDark={isDark} />
               <IsoFloor cx={190} cy={175} s={150} fill={tone.floor} />
               <Float amp={5} dur={2.8}>
@@ -1242,7 +1249,7 @@ function Lanzamientos({ isDark }: SlideProps) {
                 );
               })}
               <text x={190} y={240} textAnchor="middle" fontSize={12} fontWeight={800} fill={mode === 'problemas' ? ORANGE : tone.muted}>{mode === 'clasico' ? 'Foco en el producto: características y ventajas' : 'Foco en el cliente: problemas que resuelve'}</text>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={mode === 'clasico'} onClick={() => setMode('clasico')}>Lanzamiento clásico</Pill><Pill isDark={isDark} on={mode === 'problemas'} onClick={() => setMode('problemas')}>Lanzamiento por problemas</Pill></div>
           </div>
           <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
@@ -1254,10 +1261,10 @@ function Lanzamientos({ isDark }: SlideProps) {
               <p className={microLabel(isDark)}>Experimento · equipo médico de diagnóstico</p>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>A un grupo pequeño ni siquiera le mostraron la máquina: solo los problemas que resolvía y las preguntas para descubrirlos en cada cuenta. En el primer año vendió <strong>54% más</strong> que el resto de la fuerza de ventas.</p>
             </div>
-            <p className={`text-sm ${textMuted(isDark)}`}>Por eso las ventas de un producto nuevo suelen mejorar justo cuando el equipo deja de entusiasmarse: su atención vuelve al cliente.</p>
+            <p data-g="desilusion" className={`text-sm rounded-2xl ${textMuted(isDark)}`}>Por eso las ventas de un producto nuevo suelen mejorar justo cuando el equipo deja de entusiasmarse: su atención vuelve al cliente.</p>
           </div>
         </div>
-        <Footer isDark={isDark}>Ante cualquier producto nuevo, tu primera pregunta debe ser: <strong>¿qué problemas resuelve?</strong> Desde ahí planificas tus preguntas SPIN.</Footer>
+        <Footer g="footer" isDark={isDark}>Ante cualquier producto nuevo, tu primera pregunta debe ser: <strong>¿qué problemas resuelve?</strong> Desde ahí planificas tus preguntas SPIN.</Footer>
       </div>
     </Shell>
   );
@@ -1286,7 +1293,7 @@ function CierreEvidencia({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Cinco estudios contra el cierre" highlight="y una advertencia" subtitle="Rackham empezó convencido de que el cierre era la habilidad clave. Estos son los datos que lo hicieron cambiar de idea.">
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[50%] flex flex-col gap-1.5 justify-center">
+          <div data-g="estudios" className="lg:w-[50%] flex flex-col gap-1.5 justify-center rounded-2xl">
             {studies.map(([a, b], i) => (
               <motion.button key={a} onMouseEnter={() => setActive(i)} onClick={() => setActive(i)} className={`text-left p-3 rounded-2xl ${i === active ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <h3 className={`text-sm font-black ${heading(isDark)}`}>{a}</h3>
@@ -1295,8 +1302,8 @@ function CierreEvidencia({ isDark }: SlideProps) {
             ))}
           </div>
           <div className="lg:w-[50%] flex flex-col gap-2 justify-center">
-            <p className={microLabel(isDark)}>La advertencia · American Airlines, éxito según cantidad de cierres</p>
-            <svg viewBox="0 0 420 200" className="w-full max-h-[200px] overflow-visible" aria-label="Sin cierre 22%, un cierre 61%, más de dos menos de 20%">
+            <p data-g="aa-rotulo" className={microLabel(isDark)}>La advertencia · American Airlines, éxito según cantidad de cierres</p>
+            <Escena id="sp-cierre-evidencia" isDark={isDark}><svg viewBox="0 0 420 200" className="w-full max-h-[200px] overflow-visible" aria-label="Sin cierre 22%, un cierre 61%, más de dos menos de 20%">
               <SceneDefs id="cev" isDark={isDark} />
               {bars.map((b, i) => {
                 const x = 90 + i * 120;
@@ -1309,8 +1316,8 @@ function CierreEvidencia({ isDark }: SlideProps) {
                   </motion.g>
                 );
               })}
-            </svg>
-            <p className={`text-xs ${textMuted(isDark)}`}>No cerrar en absoluto también falla. En servicios profesionales y banca el problema suele ser el contrario: los clientes se irritan si no queda claro el siguiente paso.</p>
+            </svg></Escena>
+            <p data-g="aa-texto" className={`text-xs rounded-xl ${textMuted(isDark)}`}>No cerrar en absoluto también falla. En servicios profesionales y banca el problema suele ser el contrario: los clientes se irritan si no queda claro el siguiente paso.</p>
             <div className={`p-3 rounded-2xl border-l-4 border-[#ef375c] ${isDark ? 'bg-[#2a2a2a]' : 'bg-rose-50'}`}>
               <p className={microLabel(isDark)}>¿Por qué se sigue enseñando?</p>
               <p className={`text-xs leading-snug ${textMuted(isDark)}`}>De las 116 conductas estudiadas, el cierre es la única que el pedido premia de inmediato. Y como funciona «a veces», ese refuerzo intermitente es el más adictivo. Al vendedor le parece que el cierre causó la venta, aunque la causa fueron las necesidades que desarrolló antes.</p>
@@ -1340,7 +1347,7 @@ function Aprender({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[48%] min-h-0 flex flex-col justify-center gap-2">
-            <svg viewBox="0 0 500 230" className="w-full max-h-[250px] overflow-visible" aria-label="Cuatro fases para aprender SPIN">
+            <Escena id="sp-aprender" isDark={isDark}><svg viewBox="0 0 500 230" className="w-full max-h-[250px] overflow-visible" aria-label="Cuatro fases para aprender SPIN">
               <SceneDefs id="apr" isDark={isDark} />
               {phases.map((p, i) => {
                 const gx = 70 + i * 120;
@@ -1355,9 +1362,10 @@ function Aprender({ isDark }: SlideProps) {
               })}
               {phases.slice(0, -1).map((_, i) => <Traveler key={i} id="apr" path={hop([70 + i * 120, 170 - i * 10 - (26 + i * 24) - 26], [190 + i * 120, 170 - (i + 1) * 10 - (26 + (i + 1) * 24) - 26], 22)} dur={1.1} delay={i * 0.4} repeatDelay={1.4} r={4} />)}
               <text x={250} y={222} textAnchor="middle" fontSize={12} fontWeight={800} fill={tone.muted}>No pases a la siguiente hasta dominar la anterior</text>
-            </svg>
+            </svg></Escena>
+            <div data-g="fases" className="flex flex-wrap gap-2 rounded-full">{phases.map((p, i) => <Pill key={p.name} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{p.name}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} data-g="fase" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Fase {active + 1} · {phases[active].name}</p>
                 <p className={`text-sm ${textMuted(isDark)}`}>{phases[active].text}</p>
               </motion.div>
@@ -1377,7 +1385,7 @@ function Aprender({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Analiza tus productos por los <strong>problemas que resuelven</strong>, no por sus características: así es mucho más fácil planificar las preguntas.</Footer>
+        <Footer g="footer" isDark={isDark}>Analiza tus productos por los <strong>problemas que resuelven</strong>, no por sus características: así es mucho más fácil planificar las preguntas.</Footer>
       </div>
     </Shell>
   );
@@ -1405,17 +1413,17 @@ function Evaluar({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] flex flex-col gap-2 justify-center">
-            <p className={microLabel(isDark)}>Tres resultados engañosos sobre el propio SPIN</p>
+            <p data-g="trampas" className={microLabel(isDark)}>Tres resultados engañosos sobre el propio SPIN</p>
             {traps.map(([a, b], i) => (
-              <motion.div key={a} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${panelClass(isDark)}`}>
+              <motion.div key={a} data-g={`trap-${i}`} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl ${panelClass(isDark)}`}>
                 <p className="text-lg font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c] leading-tight">{a}</p>
                 <p className={`text-xs leading-snug ${textMuted(isDark)}`}>{b}</p>
               </motion.div>
             ))}
-            <p className={`text-xs ${textMuted(isDark)}`}>Inspirado en Popper: en vez de intentar probar que funciona, intenta refutarlo y observa si resiste.</p>
+            <p data-g="popper" className={`text-xs rounded-xl ${textMuted(isDark)}`}>Inspirado en Popper: en vez de intentar probar que funciona, intenta refutarlo y observa si resiste.</p>
           </div>
           <div className="lg:w-[50%] flex flex-col gap-2 justify-center">
-            <svg viewBox="0 0 440 210" className="w-full max-h-[220px] overflow-visible" aria-label="Tres pruebas sucesivas">
+            <Escena id="sp-evaluar" isDark={isDark}><svg viewBox="0 0 440 210" className="w-full max-h-[220px] overflow-visible" aria-label="Tres pruebas sucesivas">
               <SceneDefs id="eva" isDark={isDark} />
               {tests.map((t, i) => {
                 const gx = 80 + i * 140;
@@ -1429,9 +1437,10 @@ function Evaluar({ isDark }: SlideProps) {
               })}
               {tests.slice(0, -1).map((_, i) => <Traveler key={i} id="eva" path={hop([80 + i * 140, 150 - i * 12 - (30 + i * 28) - 26], [220 + i * 140, 150 - (i + 1) * 12 - (30 + (i + 1) * 28) - 26], 22)} dur={1.2} delay={i * 0.5} repeatDelay={1.2} r={4} />)}
               <text x={220} y={204} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone.muted}>Las tres pruebas de Huthwaite</text>
-            </svg>
+            </svg></Escena>
+            <div data-g="pruebas" className="flex gap-2 rounded-full">{tests.map((t, i) => <Pill key={t.name} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{`Prueba ${i + 1}`}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
+              <motion.div key={active} data-g="prueba" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-2xl ${featuredClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Prueba {active + 1}</p>
                 <h3 className={`text-base font-black mb-1 ${heading(isDark)}`}>{tests[active].name}</h3>
                 <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{tests[active].text}</p>
@@ -1439,7 +1448,7 @@ function Evaluar({ isDark }: SlideProps) {
             </AnimatePresence>
           </div>
         </div>
-        <Footer isDark={isDark}>El «test de la sonrisa» (a la gente le gustó el curso) no mide nada. Kodak adoptó SPIN en todo el mundo por las reacciones del piloto y nunca midió la productividad.</Footer>
+        <Footer g="footer" isDark={isDark}>El «test de la sonrisa» (a la gente le gustó el curso) no mide nada. Kodak adoptó SPIN en todo el mundo por las reacciones del piloto y nunca midió la productividad.</Footer>
       </div>
     </Shell>
   );
@@ -1472,7 +1481,7 @@ function Motorola({ isDark }: SlideProps) {
           {view === 'moto' ? (
             <motion.div key="m" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
               <div className="lg:w-[52%] min-h-0 flex items-center">
-                <svg viewBox="0 0 460 300" className="w-full h-full overflow-visible" aria-label="Pedidos +17% frente a −13%; dólares +5,3% frente a −22,1%">
+                <Escena id="sp-motorola" isDark={isDark}><svg viewBox="0 0 460 300" className="w-full h-full overflow-visible" aria-label="Pedidos +17% frente a −13%; dólares +5,3% frente a −22,1%">
                   <SceneDefs id="mot" isDark={isDark} />
                   {metrics.map((m, g) => (
                     <g key={m.label}>
@@ -1492,7 +1501,7 @@ function Motorola({ isDark }: SlideProps) {
                       <text x={130 + g * 220} y={292} textAnchor="middle" fontSize={12} fontWeight={900} fill={tone.text}>{m.label}</text>
                     </g>
                   ))}
-                </svg>
+                </svg></Escena>
               </div>
               <div className="lg:w-[48%] flex flex-col gap-2 justify-center">
                 {[
@@ -1500,14 +1509,14 @@ function Motorola({ isDark }: SlideProps) {
                   ['Prueba 2 · la conducta cambió', 'Las preguntas SPIN de alto impacto pasaron de 5,8 a 8,8 por llamada y superaron a las de situación. Los beneficios, de 1,2 a 2,2.'],
                   ['Prueba 3 · la productividad subió', 'En un mercado difícil, el grupo SPIN terminó 27,4% sobre el control en dólares vendidos, y sus pedidos de clientes nuevos subieron 63%.'],
                 ].map(([a, b], i) => (
-                  <div key={a} className={`p-3 rounded-2xl ${i === 2 ? featuredClass(isDark) : panelClass(isDark)}`}><p className={`text-sm font-black ${heading(isDark)}`}>{a}</p><p className={`text-xs leading-snug ${textMuted(isDark)}`}>{b}</p></div>
+                  <div key={a} data-g={`mot-${i}`} className={`p-3 rounded-2xl ${i === 2 ? featuredClass(isDark) : panelClass(isDark)}`}><p className={`text-sm font-black ${heading(isDark)}`}>{a}</p><p className={`text-xs leading-snug ${textMuted(isDark)}`}>{b}</p></div>
                 ))}
               </div>
             </motion.div>
           ) : (
             <motion.div key="h" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
               <div className="lg:w-[52%] min-h-0 flex flex-col items-center justify-center">
-                <svg viewBox="0 0 440 230" className="w-full h-full max-h-[280px] overflow-visible" aria-label="Esquema: quienes aprendieron más SPIN siguen mejorando; quienes aprendieron menos vuelven al nivel inicial">
+                <Escena id="sp-motorola" isDark={isDark}><svg viewBox="0 0 440 230" className="w-full h-full max-h-[280px] overflow-visible" aria-label="Esquema: quienes aprendieron más SPIN siguen mejorando; quienes aprendieron menos vuelven al nivel inicial">
                   <SceneDefs id="haw" isDark={isDark} />
                   {curves.map((c, i) => {
                     const top = c.pts.map((v, k) => `${X[k]},${Y(v)}`).join(' ');
@@ -1517,7 +1526,7 @@ function Motorola({ isDark }: SlideProps) {
                   })}
                   {['Antes', 'Durante', 'Después'].map((l, k) => <text key={l} x={X[k]} y={222} textAnchor="middle" fontSize={11} fontWeight={800} fill={tone.muted}>{l}</text>)}
                   {curves.map((c, i) => <text key={c.name} x={X[2] + 8} y={Y(c.pts[2]) + 8} fontSize={10} fontWeight={900} fill={i === 0 ? ORANGE : tone.text}>{c.name}</text>)}
-                </svg>
+                </svg></Escena>
                 <p className={`text-[11px] ${textMuted(isDark)}`}>Esquema ilustrativo de la figura A.16 del libro (no son los valores exactos).</p>
               </div>
               <div className="lg:w-[48%] flex flex-col gap-2 justify-center">
