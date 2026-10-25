@@ -77,7 +77,7 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
   const saltar = datos.saltar ?? [];
   const silenciar = datos.silenciar ?? [];
 
-  const r = useRef({ cur: slideActualId, auto: slideActualId, pedido: 0, fired: new Set<string>(), lastT: 0, foco: null as HTMLElement | null, ultimoSeg: -1, vol: 1, recorte: 0, recorteSlide: '', reveladas: 0 });
+  const r = useRef({ cur: slideActualId, auto: slideActualId, pedido: 0, fired: new Set<string>(), lastT: 0, foco: null as HTMLElement | null, ultimoSeg: -1, vol: 1, recorte: 0, recorteSlide: '', reveladas: 0, sinBajada: '' });
   r.current.cur = slideActualId;
   const irARef = useRef(irA);
   irARef.current = irA;
@@ -241,7 +241,11 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
               // Si lo visible exige achicar la diapositiva por debajo del 82 %, se retira la tarjeta más antigua (una por cuadro).
               const caja = document.querySelector<HTMLElement>('[data-ajuste-caja]');
               const dentro = document.querySelector<HTMLElement>('[data-ajuste-dentro]');
-              if (caja && dentro && caja.clientHeight && dentro.offsetHeight / caja.clientHeight > 1 / 0.82 && k.recorte < reveladas.length - ultimas.length) k.recorte++;
+              const apretado = !!caja && !!dentro && caja.clientHeight > 0 && dentro.offsetHeight / caja.clientHeight > 1 / 0.82;
+              if (apretado && k.recorte < reveladas.length - ultimas.length) k.recorte++;
+              // Sin tarjetas que retirar y aún sin espacio: se quita la bajada del titular (queda oculta hasta cambiar de diapositiva).
+              else if (apretado) k.sinBajada = destino;
+              document.querySelectorAll('[data-g="titulo"] > p').forEach((p) => p.classList.toggle('g-colapso', k.sinBajada === destino));
             }
             // Sellos y pies de gráfico sueltos: el pie aparece con el primer elemento y el sello con el último.
             const reveladores = cues.filter((c) => c.mostrar?.some((g) => g !== 'titulo'));

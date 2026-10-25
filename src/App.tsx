@@ -442,9 +442,18 @@ export default function App() {
     if (!el) return true;
     return dir > 0 ? el.scrollTop + el.clientHeight >= el.scrollHeight - 4 : el.scrollTop <= 2;
   };
+  // Pantalla angosta en vertical (teléfono o iframe incrustado): la clase se abre sola en modo reel,
+  // para que el contenido se reemplace en vez de desbordarse. Si la persona sale del reel, se respeta hasta girar la pantalla.
+  const vertical = windowSize.width < 768 && windowSize.height > windowSize.width;
+  const reelRechazado = useRef(false);
+  useEffect(() => {
+    if (!vertical) { reelRechazado.current = false; return; }
+    if (activeClassId && !reel && !reelRechazado.current) { setReel(true); setIsSidebarOpen(false); setIsNotesOpen(false); }
+  }, [vertical, activeClassId]);
   const toggleReel = async () => {
     const orientation = screen.orientation as any;
     if (reel) {
+      if (vertical) reelRechazado.current = true;
       setReel(false);
       try { orientation?.unlock?.(); } catch (e) { /* sin soporte */ }
       if (document.fullscreenElement) { try { await document.exitFullscreen(); } catch (e) { /* ya salió */ } }
@@ -506,6 +515,11 @@ export default function App() {
     setActiveClassId(classId);
   };
 
+  // Enlace directo a una clase (?clase=<id>): sirve para incrustarla en otra página.
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get('clase');
+    if (id && slidesByClass[id]) openClass(id);
+  }, []);
   // Abre la ventana de "Modo presentador" en una segunda pantalla.
   const openPresenter = () => {
     const url = new URL(window.location.href);
