@@ -1,23 +1,29 @@
-// Genera src/data/guiadoMeddpicc.ts a partir del .srt unido de la clase y de src/components/meddpicc/escenas.ts.
-// Uso: node scripts/generar-guiado-meddpicc.cjs (desde la raíz del proyecto).
+// Genera los tiempos de una clase guiada sobre diapositivas existentes a partir de su .srt y de su archivo de escenas.
+// Uso: node scripts/generar-guiado.cjs <clase>   (clases: meddpicc, spin)
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..').split(path.sep).join('/');
-const SRT = `${ROOT}/guiones/meddpicc.srt`;
 const esbuild = require(`${ROOT}/node_modules/esbuild`);
 
+const CLASES = {
+  meddpicc: { srt: 'guiones/meddpicc.srt', escenas: 'src/components/meddpicc/escenas.ts', orden: 'ORDEN_MD', audio: 'meddpicc.mp3', salida: 'src/data/guiadoMeddpicc.ts', nombre: 'Meddpicc', titulo: 'MEDDPICC: calificar con rigor' },
+  spin: { srt: 'guiones/spin.srt', escenas: 'src/components/spin/escenas.ts', orden: 'ORDEN_SP', audio: 'spin.mp3', salida: 'src/data/guiadoSpin.ts', nombre: 'Spin', titulo: 'SPIN Selling: preguntar para vender' },
+};
+const cfg = CLASES[process.argv[2]];
+if (!cfg) { console.log('Uso: node scripts/generar-guiado.cjs <' + Object.keys(CLASES).join('|') + '>'); process.exit(1); }
+
 // Datos de la clase (TypeScript puro) transpilados al vuelo.
-const out = esbuild.buildSync({ entryPoints: [`${ROOT}/src/components/meddpicc/escenas.ts`], bundle: true, platform: 'node', format: 'cjs', write: false });
+const out = esbuild.buildSync({ entryPoints: [`${ROOT}/${cfg.escenas}`], bundle: true, platform: 'node', format: 'cjs', write: false });
 const mod = { exports: {} };
 new Function('module', 'exports', 'require', out.outputFiles[0].text)(mod, mod.exports, require);
-const { ORDEN_MD } = mod.exports;
+const ORDEN = mod.exports[cfg.orden];
 
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
   .replace(/(\d)\.(\d{3})\b/g, '$1$2').replace(/[^a-z0-9ñ]+/g, ' ').trim();
 const toks = (s) => norm(s).split(' ').filter(Boolean);
 const sec = (h, m, s, ms) => +h * 3600 + +m * 60 + +s + +ms / 1000;
 const R = [];
-for (const b of fs.readFileSync(SRT, 'utf8').replace(/\r/g, '').split(/\n\n+/)) {
+for (const b of fs.readFileSync(`${ROOT}/${cfg.srt}`, 'utf8').replace(/^﻿/, '').replace(/\r/g, '').split(/\n\n+/)) {
   const l = b.split('\n'); if (l.length < 3) continue;
   const m = l[1].match(/(\d+):(\d+):(\d+),(\d+) --> (\d+):(\d+):(\d+),(\d+)/); if (!m) continue;
   const t0 = sec(m[1], m[2], m[3], m[4]), t1 = sec(m[5], m[6], m[7], m[8]);
@@ -40,10 +46,10 @@ const buscar = (frase, desde, hasta = R.length) => {
 };
 
 const avisos = [];
-// 1) Inicio de cada diapositiva, en orden.
+// 1) Inicio de cada diapositiva, en orden. Las que el audio aún no narra quedan fuera de la línea de tiempo.
 const inicios = [];
 let cursor = 0;
-for (const e of ORDEN_MD) {
+for (const e of ORDEN) {
   if (e.inicio === '@cero') { inicios.push({ e, i: 0, t: 0 }); continue; }
   const h = buscar(e.inicio, cursor);
   if (!h) { avisos.push(`NO HALLADO inicio: ${e.id} → ${e.inicio}`); continue; }
@@ -88,28 +94,29 @@ inicios.forEach(({ e, i, t }, k) => {
     marcas[e.id] = rel;
   }
   if (lista.length) cues[e.id] = lista.sort((a, b) => a.t - b.t);
-  console.log(e.id.padEnd(20), fmt(t).padStart(6), marcas[e.id] ? 'escena ' + marcas[e.id].map((x) => (x > 9999 ? '??' : x.toFixed(0))).join(' ') : '');
+  console.log(e.id.padEnd(22), fmt(t).padStart(6), marcas[e.id] ? 'escena ' + marcas[e.id].map((x) => (x > 9999 ? '??' : x.toFixed(0))).join(' ') : '');
 });
 if (avisos.length) console.log('\n' + avisos.join('\n'));
 
-const ts = `import audio from '../audios_clase/meddpicc.mp3?url';
+const N = cfg.nombre;
+const ts = `import audio from '../audios_clase/${cfg.audio}?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
- * Clase guiada «MEDDPICC: calificar con rigor»: audio completo + inicio de cada diapositiva
- * + marcas de sus elementos. GENERADO desde los subtítulos (guiones/meddpicc.srt) y
- * src/components/meddpicc/escenas.ts con scripts/generar-guiado-meddpicc.cjs: no editar a mano.
+ * Clase guiada «${cfg.titulo}»: audio completo + inicio de cada diapositiva + marcas de sus
+ * elementos. GENERADO desde ${cfg.srt} y ${cfg.escenas} con
+ * node scripts/generar-guiado.cjs ${process.argv[2]}: no editar a mano.
  */
-export const guiadoMeddpicc: GuiadoClase = {
+export const guiado${N}: GuiadoClase = {
   audio,
   slides: ${JSON.stringify(slides)},
   cues: ${JSON.stringify(cues)},
 };
 
 /* Segundos desde el inicio de cada diapositiva en que entra cada marca de su escena (la última es la pregunta). */
-export const marcasMeddpicc: Record<string, number[]> = ${JSON.stringify(marcas)};
+export const marcas${N}: Record<string, number[]> = ${JSON.stringify(marcas)};
 
-export const FIN_AUDIO_MEDDPICC = ${FIN_AUDIO.toFixed(2)};
+export const FIN_AUDIO_${N.toUpperCase()} = ${FIN_AUDIO.toFixed(2)};
 `;
-fs.writeFileSync(`${ROOT}/src/data/guiadoMeddpicc.ts`, ts);
-console.log('\nescrito guiadoMeddpicc.ts · diapositivas', slides.length, '· avisos', avisos.length);
+fs.writeFileSync(`${ROOT}/${cfg.salida}`, ts);
+console.log(`\nescrito ${cfg.salida} · diapositivas ${slides.length} · avisos ${avisos.length}`);

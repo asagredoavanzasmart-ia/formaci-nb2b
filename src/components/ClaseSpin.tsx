@@ -6,6 +6,12 @@ import {
   ORANGE, PINK, BRAND, PEACH, NEUTRAL, SLATE, sceneTone, SceneDefs, IsoBox, IsoFloor,
   Orb, Float, Lift, Traveler, PulseDisc, hop,
 } from './scene3d';
+import { crearEscena } from './remotion/EscenaDeClase';
+import { ESCENAS_SP } from './spin/escenas';
+import { guiadoSpin, marcasSpin, FIN_AUDIO_SPIN } from '../data/guiadoSpin';
+
+/* Mientras suena la clase guiada, el gráfico de cada diapositiva se reemplaza por su escena de Remotion. */
+const Escena = crearEscena(ESCENAS_SP, guiadoSpin, marcasSpin, FIN_AUDIO_SPIN);
 
 /**
  * Clase: "SPIN Selling: preguntar para vender".
@@ -97,7 +103,7 @@ function Investigacion({ isDark }: SlideProps) {
   return (
     <Shell isDark={isDark} title="Una investigación," highlight="no una opinión" subtitle="El equipo de Rackham (Huthwaite) salió a observar ventas reales en lugar de preguntar a los vendedores cómo vendían.">
       <div className="h-full flex flex-col min-h-0">
-        <div className="shrink-0 grid grid-cols-4 gap-3 mb-4">
+        <div data-g="cifras" className="shrink-0 grid grid-cols-4 gap-3 mb-4 rounded-2xl">
           {stats.map(([v, l], i) => (
             <motion.div key={v} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={`p-3 rounded-2xl text-center ${i === 0 ? featuredClass(isDark) : panelClass(isDark)}`}>
               <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">{v}</p>
@@ -107,7 +113,7 @@ function Investigacion({ isDark }: SlideProps) {
         </div>
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[55%] min-h-0 flex items-center">
-            <svg viewBox="0 0 600 240" className="w-full h-full overflow-visible" aria-label="Los cuatro pasos del análisis de conducta">
+            <Escena id="sp-investigacion" isDark={isDark}><svg viewBox="0 0 600 240" className="w-full h-full overflow-visible" aria-label="Los cuatro pasos del análisis de conducta">
               <SceneDefs id="inv" isDark={isDark} />
               {method.map((m, i) => {
                 const x = 80 + i * 145;
@@ -121,12 +127,12 @@ function Investigacion({ isDark }: SlideProps) {
               })}
               {method.slice(0, -1).map((_, i) => <Traveler key={i} id="inv" path={hop([80 + i * 145, 150 - i * 24], [225 + i * 145, 150 - (i + 1) * 24], 30)} dur={1.2} delay={i * 0.4} repeatDelay={1.6} r={5} />)}
               <text x={300} y={232} textAnchor="middle" fontSize={12} fontWeight={800} fill={t.muted}>Análisis de conducta (behaviour analysis)</text>
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[45%] flex flex-col gap-3 justify-center">
-            <div className="flex flex-wrap gap-2">{method.map((m, i) => <Pill key={m} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{i + 1}</Pill>)}</div>
+            <div data-g="pasos" className="flex flex-wrap gap-2">{method.map((m, i) => <Pill key={m} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{i + 1}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
+              <motion.div key={active} data-g="paso" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Paso {active + 1}</p>
                 <h3 className={`text-xl font-black mb-2 ${heading(isDark)}`}>{method[active]}</h3>
                 <p className={`text-sm leading-relaxed ${textMuted(isDark)}`}>{[
@@ -156,7 +162,7 @@ function NoConfies({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 460 250" className="w-full h-full max-h-[300px] overflow-visible" aria-label="23 agentes de aduana; 18 dijeron que la clave estaba en los ojos">
+            <Escena id="sp-no-confies" isDark={isDark}><svg viewBox="0 0 460 250" className="w-full h-full max-h-[300px] overflow-visible" aria-label="23 agentes de aduana; 18 dijeron que la clave estaba en los ojos">
               <SceneDefs id="nco" isDark={isDark} />
               <IsoFloor cx={230} cy={150} s={210} fill={t.floor} />
               {Array.from({ length: 23 }, (_, i) => {
@@ -173,12 +179,12 @@ function NoConfies({ isDark }: SlideProps) {
                 );
               })}
               <text x={230} y={238} textAnchor="middle" fontSize={12} fontWeight={800} fill={observed ? ORANGE : t.muted}>{observed ? 'Lo que mostraron las cámaras' : '18 de 23 dijeron: «está en los ojos»'}</text>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={!observed} onClick={() => setObserved(false)}>Lo que dijeron</Pill><Pill isDark={isDark} on={observed} onClick={() => setObserved(true)}>Lo que se observó</Pill></div>
           </div>
           <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={observed ? 'o' : 'd'} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${observed ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={observed ? 'o' : 'd'} data-g="relato" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${observed ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <div className="flex items-center gap-3 mb-2">
                   <span className={`p-2.5 rounded-xl ${observed ? 'bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white' : isDark ? 'bg-[#333] text-gray-300' : 'bg-gray-100 text-gray-600'}`}>{observed ? <FlaskConical size={20} /> : <Eye size={20} />}</span>
                   <h3 className={`text-xl font-black ${heading(isDark)}`}>{observed ? 'Observación con cámaras ocultas' : 'Entrevistas a 23 agentes de aduana'}</h3>
@@ -215,7 +221,7 @@ function GrandePequena({ isDark }: SlideProps) {
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[50%] grid grid-cols-1 sm:grid-cols-2 gap-3 content-center">
           {diffs.map(([a, b], i) => (
-            <motion.div key={a} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} whileHover={{ y: -3 }} className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
+            <motion.div key={a} data-g={`dif-${i}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} whileHover={{ y: -3 }} className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
               <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">0{i + 1}</span>
               <h3 className={`text-base font-black mb-1 ${heading(isDark)}`}>{a}</h3>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{b}</p>
@@ -224,9 +230,11 @@ function GrandePequena({ isDark }: SlideProps) {
         </div>
         <div className={`lg:w-[50%] p-5 rounded-3xl flex flex-col justify-center gap-4 ${featuredClass(isDark)}`}>
           <p className={microLabel(isDark)}>¿Cuánto recuerda el cliente de una gran presentación?</p>
+          <Escena id="sp-grande-pequena" isDark={isDark}><div className="flex flex-col gap-4">
           <Bar isDark={isDark} label="Puntos clave recordados al terminar (de 8)" value={5.7} max={8} delay={0.3} />
           <Bar isDark={isDark} label="Una semana después (menos de la mitad)" value={2.5} max={8} brand={false} delay={0.6} />
-          <p className={`text-sm leading-snug ${textMuted(isDark)}`}>Un guion escrito por publicistas encantó a los clientes en el momento, pero una semana después habían olvidado más de la mitad y ya no pensaban comprar. <strong>Si no hay decisión en el momento, el entusiasmo se evapora.</strong> Por eso presionar sirve en la venta de una sola visita y perjudica en la de varias.</p>
+          </div></Escena>
+          <p data-g="evapora" className={`text-sm leading-snug rounded-xl ${textMuted(isDark)}`}>Un guion escrito por publicistas encantó a los clientes en el momento, pero una semana después habían olvidado más de la mitad y ya no pensaban comprar. <strong>Si no hay decisión en el momento, el entusiasmo se evapora.</strong> Por eso presionar sirve en la venta de una sola visita y perjudica en la de varias.</p>
         </div>
       </div>
     </Shell>
@@ -251,7 +259,7 @@ function Avances({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex items-center">
-            <svg viewBox="0 0 560 260" className="w-full h-full overflow-visible" aria-label="Cuatro resultados posibles de una llamada de venta">
+            <Escena id="sp-avances" isDark={isDark}><svg viewBox="0 0 560 260" className="w-full h-full overflow-visible" aria-label="Cuatro resultados posibles de una llamada de venta">
               <SceneDefs id="ava" isDark={isDark} />
               {outcomes.map((o, i) => {
                 const x = 80 + i * 130;
@@ -266,11 +274,12 @@ function Avances({ isDark }: SlideProps) {
                   </Lift>
                 );
               })}
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[50%] flex flex-col gap-3 justify-center">
+            <div data-g="resultados" className="flex flex-wrap gap-2">{outcomes.map((o, i) => <Pill key={o.name} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{o.name}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${outcomes[active].ok ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={active} data-g="resultado" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${outcomes[active].ok ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <div className="flex items-center gap-2 mb-1">{outcomes[active].ok ? <CheckCircle2 size={20} className="text-emerald-500" /> : <XCircle size={20} className="text-[#ef375c]" />}<h3 className={`text-xl font-black ${heading(isDark)}`}>{outcomes[active].name}</h3></div>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{outcomes[active].text}</p>
               </motion.div>
@@ -281,7 +290,7 @@ function Avances({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>Antes de cada reunión pregúntate: <strong>¿qué acción concreta quiero que el cliente acepte?</strong> Si la respuesta es "recoger información", estás planeando una continuación.</Footer>
+        <Footer g="footer" isDark={isDark}>Antes de cada reunión pregúntate: <strong>¿qué acción concreta quiero que el cliente acepte?</strong> Si la respuesta es "recoger información", estás planeando una continuación.</Footer>
       </div>
     </Shell>
   );
@@ -303,7 +312,7 @@ function Preguntas({ isDark }: SlideProps) {
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[50%] grid grid-cols-1 sm:grid-cols-2 gap-3 content-center">
           {reasons.map(([a, b], i) => (
-            <motion.div key={a} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
+            <motion.div key={a} data-g={`raz-${i}`} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={`p-4 rounded-3xl ${panelClass(isDark)}`}>
               <h3 className={`text-base font-black mb-1 ${heading(isDark)}`}>{a}</h3>
               <p className={`text-sm leading-snug ${textMuted(isDark)}`}>{b}</p>
             </motion.div>
@@ -312,8 +321,10 @@ function Preguntas({ isDark }: SlideProps) {
         <div className="lg:w-[50%] flex flex-col gap-3 justify-center">
           <div className={`p-5 rounded-3xl flex flex-col gap-4 ${featuredClass(isDark)}`}>
             <p className={microLabel(isDark)}>Más preguntas en las llamadas exitosas que en las fallidas</p>
+            <Escena id="sp-preguntas" isDark={isDark}><div className="flex flex-col gap-4">
             <Bar isDark={isDark} label="Venta simple (Hertz, arriendo de autos)" value={63} max={70} suffix="%" delay={0.3} />
             <Bar isDark={isDark} label="Venta compleja (1.161 llamadas, equipos técnicos)" value={6} max={70} suffix="%" brand={false} delay={0.6} />
+            </div></Escena>
           </div>
           <div className={`p-4 rounded-2xl border-l-4 border-[#ef375c] ${isDark ? 'bg-[#2a2a2a]' : 'bg-rose-50'}`}>
             <p className={microLabel(isDark)}>Un mito derribado</p>
@@ -342,7 +353,7 @@ function Necesidades({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex items-center">
-            <svg viewBox="0 0 540 280" className="w-full h-full overflow-visible" aria-label="Tres escalones: imperfección, problema y deseo">
+            <Escena id="sp-necesidades" isDark={isDark}><svg viewBox="0 0 540 280" className="w-full h-full overflow-visible" aria-label="Tres escalones: imperfección, problema y deseo">
               <SceneDefs id="nec" isDark={isDark} />
               {stages.map((s, i) => {
                 const gx = 110 + i * 160;
@@ -359,11 +370,12 @@ function Necesidades({ isDark }: SlideProps) {
                 );
               })}
               <Traveler id="nec" path={[[110, 170], [270, 110], [430, 40]]} dur={2.4} repeatDelay={0.8} r={6} />
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[50%] flex flex-col gap-3 justify-center">
+            <div data-g="etapas" className="flex flex-wrap gap-2">{['Imperfección', 'Problema', 'Deseo'].map((n, i) => <Pill key={n} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{n}</Pill>)}</div>
             <AnimatePresence mode="wait">
-              <motion.div key={active} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${active === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={active} data-g="etapa" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${active === 2 ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>Necesidad {stages[active].type.toLowerCase()}</p>
                 <h3 className={`text-xl font-black mb-2 ${heading(isDark)}`}>{stages[active].name}</h3>
                 <p className={`text-base italic ${textMuted(isDark)}`}>{stages[active].ex}</p>
@@ -375,7 +387,7 @@ function Necesidades({ isDark }: SlideProps) {
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>El propósito de las preguntas en la venta grande es <strong>descubrir necesidades implícitas y convertirlas en explícitas</strong>. Un problema no es una señal de compra; una intención de actuar, sí.</Footer>
+        <Footer g="footer" isDark={isDark}>El propósito de las preguntas en la venta grande es <strong>descubrir necesidades implícitas y convertirlas en explícitas</strong>. Un problema no es una señal de compra; una intención de actuar, sí.</Footer>
       </div>
     </Shell>
   );
@@ -395,7 +407,7 @@ function Ecuacion({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[52%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 520 280" className="w-full h-full max-h-[320px] overflow-visible" aria-label="Balanza entre la gravedad del problema y el costo de la solución">
+            <Escena id="sp-ecuacion" isDark={isDark}><svg viewBox="0 0 520 280" className="w-full h-full max-h-[320px] overflow-visible" aria-label="Balanza entre la gravedad del problema y el costo de la solución">
               <SceneDefs id="ecu" isDark={isDark} />
               <g filter="url(#ecu-sh)"><IsoBox cx={260} cy={150} s={22} h={100} f={NEUTRAL(isDark)} /></g>
               <motion.g animate={{ rotate: tilt }} transition={{ type: 'spring', stiffness: 50, damping: 9 }} style={{ transformOrigin: '260px 140px' }}>
@@ -411,19 +423,19 @@ function Ecuacion({ isDark }: SlideProps) {
               </motion.g>
               <text x={110} y={262} textAnchor="middle" fontSize={13} fontWeight={900} fill={ORANGE}>Gravedad del problema</text>
               <text x={410} y={262} textAnchor="middle" fontSize={13} fontWeight={900} fill={t.muted}>Costo de la solución ($120.000)</text>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={!developed} onClick={() => setDeveloped(false)}>Solo un problema</Pill><Pill isDark={isDark} on={developed} onClick={() => setDeveloped(true)}>Problema desarrollado</Pill></div>
           </div>
           <div className="lg:w-[48%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={developed ? 'd' : 's'} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${developed ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={developed ? 'd' : 's'} data-g="dialogo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-5 rounded-3xl ${developed ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{developed ? 'Después de preguntar por las implicaciones' : 'Problema y solución de inmediato'}</p>
                 <p className={`text-base leading-relaxed ${textMuted(isDark)}`}>{developed
                   ? 'Las máquinas difíciles de usar resultan generar rotación de operarios, más de $25.000 en capacitación, horas extra al 250%, trabajos tercerizados con peor calidad y entregas tarde. Ahora $120.000 parece razonable.'
                   : '"¿Son difíciles de usar sus máquinas?" — "Un poco, pero ya aprendimos." — "Nuestro sistema lo resuelve: cuesta $120.000." — "¡¿$120.000 solo para que sea más fácil?!"'}</p>
               </motion.div>
             </AnimatePresence>
-            <p className={`text-sm ${textMuted(isDark)}`}>Recuerda que en la venta grande el costo no es solo dinero: también es el riesgo de equivocarse ante toda la empresa.</p>
+            <p data-g="riesgo" className={`text-sm rounded-xl ${textMuted(isDark)}`}>Recuerda que en la venta grande el costo no es solo dinero: también es el riesgo de equivocarse ante toda la empresa.</p>
           </div>
         </div>
       </div>
@@ -448,7 +460,7 @@ function Spin({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Las cuatro preguntas de" highlight="SPIN" subtitle="Una descripción de cómo preguntan los mejores en un buen día, no una fórmula rígida: si el cliente llega con una necesidad explícita, puedes saltar a la N. Toca cada bloque.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[46%] min-h-0 flex items-center">
-          <svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Cuatro bloques ascendentes: S, P, I y N">
+          <Escena id="sp-spin" isDark={isDark}><svg viewBox="0 0 520 280" className="w-full h-full overflow-visible" aria-label="Cuatro bloques ascendentes: S, P, I y N">
             <SceneDefs id="spn" isDark={isDark} />
             {q.map((x, i) => {
               const gx = 80 + i * 120;
@@ -462,11 +474,12 @@ function Spin({ isDark }: SlideProps) {
                 </Lift>
               );
             })}
-          </svg>
+          </svg></Escena>
         </div>
-        <div className="lg:w-[54%] flex flex-col justify-center">
+        <div className="lg:w-[54%] flex flex-col justify-center gap-3">
+          <div data-g="letras" className="flex gap-2">{q.map((x, i) => <Pill key={x.k} isDark={isDark} on={i === active} onClick={() => setActive(i)}>{x.k}</Pill>)}</div>
           <AnimatePresence mode="wait">
-            <motion.div key={active} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className={`p-6 rounded-3xl ${panelClass(isDark)}`}>
+            <motion.div key={active} data-g="carta" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }} className={`p-6 rounded-3xl ${panelClass(isDark)}`}>
               <div className="flex items-center gap-4 mb-3">
                 <span className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#ff851d] to-[#ef375c] text-white text-3xl font-black flex items-center justify-center shadow-lg shadow-red-500/30">{a.k}</span>
                 <h3 className={`text-2xl font-black ${heading(isDark)}`}>Preguntas de {a.name.toLowerCase()}</h3>
@@ -504,7 +517,7 @@ function Implicacion({ isDark }: SlideProps) {
     <Shell isDark={isDark} title="Implicación: cómo un problema" highlight="pequeño se vuelve grande" subtitle="Un ejemplo del libro: la máquina «difícil de usar» que nadie consideraba urgente. Avanza pregunta por pregunta.">
       <div className="h-full flex flex-col lg:flex-row gap-5 min-h-0">
         <div className="lg:w-[42%] min-h-0 flex flex-col items-center justify-center">
-          <svg viewBox="0 0 320 340" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Una pila que crece con cada consecuencia descubierta">
+          <Escena id="sp-implicacion" isDark={isDark}><svg viewBox="0 0 320 340" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Una pila que crece con cada consecuencia descubierta">
             <SceneDefs id="imp" isDark={isDark} />
             <IsoFloor cx={160} cy={272} s={110} fill={tone.floor} />
             {steps.slice(0, n + 1).map((s, i) => (
@@ -514,7 +527,7 @@ function Implicacion({ isDark }: SlideProps) {
               </motion.g>
             ))}
             <text x={160} y={334} textAnchor="middle" fontSize={12} fontWeight={800} fill={tone.muted}>Lo que el cliente ve ahora</text>
-          </svg>
+          </svg></Escena>
         </div>
         <div className="lg:w-[58%] flex flex-col gap-3 justify-center">
           <AnimatePresence mode="wait">
@@ -550,7 +563,7 @@ function NeedPayoff({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[44%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 360 260" className="w-full h-full max-h-[300px] overflow-visible" aria-label="El ánimo de la conversación según el tipo de pregunta">
+            <Escena id="sp-need-payoff" isDark={isDark}><svg viewBox="0 0 360 260" className="w-full h-full max-h-[300px] overflow-visible" aria-label="El ánimo de la conversación según el tipo de pregunta">
               <SceneDefs id="npo" isDark={isDark} />
               <IsoFloor cx={180} cy={200} s={140} fill={tone.floor} />
               <motion.g animate={{ y: mode === 'need' ? -50 : 20 }} transition={{ type: 'spring', stiffness: 60, damping: 10 }}>
@@ -560,7 +573,7 @@ function NeedPayoff({ isDark }: SlideProps) {
                 </motion.g>
               </motion.g>
               <text x={180} y={248} textAnchor="middle" fontSize={12} fontWeight={800} fill={mode === 'need' ? ORANGE : tone.muted}>{mode === 'need' ? 'Foco en la solución: ánimo positivo' : 'Foco en el problema: el cliente se tensa'}</text>
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={mode === 'impl'} onClick={() => setMode('impl')}>Solo implicación</Pill><Pill isDark={isDark} on={mode === 'need'} onClick={() => setMode('need')}>+ Necesidad-beneficio</Pill></div>
           </div>
           <div className="lg:w-[56%] flex flex-col gap-3 justify-center">
@@ -576,7 +589,7 @@ function NeedPayoff({ isDark }: SlideProps) {
                 <li className="flex gap-2"><CheckCircle2 size={16} className="text-[#ff851d] shrink-0 mt-0.5" />Ese cliente luego le vende la idea a sus colegas con sus propias palabras.</li>
               </ul>
             </div>
-            <p className={`text-sm italic ${textMuted(isDark)}`}>«¿Por qué es importante para usted resolverlo?» · «¿De qué otra forma le ayudaría?»</p>
+            <p data-g="ejemplos" className={`text-sm italic rounded-xl ${textMuted(isDark)}`}>«¿Por qué es importante para usted resolverlo?» · «¿De qué otra forma le ayudaría?»</p>
           </div>
         </div>
       </div>
@@ -916,7 +929,7 @@ function Planificar({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[50%] min-h-0 flex flex-col items-center justify-center">
-            <svg viewBox="0 0 510 340" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Un problema central con cuatro dificultades relacionadas">
+            <Escena id="sp-planificar" isDark={isDark}><svg viewBox="0 0 510 340" className="w-full h-full max-h-[380px] overflow-visible" aria-label="Un problema central con cuatro dificultades relacionadas">
               <SceneDefs id="pla" isDark={isDark} />
               <IsoFloor cx={255} cy={195} s={230} fill={tone.floor} />
               {branches.map((_, i) => <Traveler key={i} id="pla" path={hop([255, 145], pos[i], 30)} dur={1.3} delay={i * 0.35} repeatDelay={1.4} r={i === active ? 6 : 4} color={i === active ? ORANGE : '#94a3b8'} />)}
@@ -933,7 +946,7 @@ function Planificar({ isDark }: SlideProps) {
                   </Lift>
                 );
               })}
-            </svg>
+            </svg></Escena>
           </div>
           <div className="lg:w-[50%] flex flex-col gap-3 justify-center">
             <div className={`p-4 rounded-2xl ${panelClass(isDark)}`}>
@@ -950,7 +963,7 @@ function Planificar({ isDark }: SlideProps) {
                 {branches[active].qs.map((q) => <p key={q} className={`text-sm italic mt-1 ${heading(isDark)}`}>«{q}»</p>)}
               </motion.div>
             </AnimatePresence>
-            <p className={`text-sm leading-snug ${textMuted(isDark)}`}><strong>Truco de Rackham:</strong> imagina a un cliente que dice «¿Y qué? Sí, tengo ese problema, pero no es grave». Anota los argumentos con que lo convencerías y convierte cada uno en pregunta. Son el idioma de quienes deciden: «esa persona habló mi idioma».</p>
+            <p data-g="truco" className={`text-sm leading-snug rounded-xl ${textMuted(isDark)}`}><strong>Truco de Rackham:</strong> imagina a un cliente que dice «¿Y qué? Sí, tengo ese problema, pero no es grave». Anota los argumentos con que lo convencerías y convierte cada uno en pregunta. Son el idioma de quienes deciden: «esa persona habló mi idioma».</p>
           </div>
         </div>
       </div>
@@ -971,7 +984,7 @@ function VentaInterna({ isDark }: SlideProps) {
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
           <div className="lg:w-[46%] min-h-0 flex flex-col items-center justify-center gap-2">
-            <svg viewBox="0 0 520 310" className="w-full h-full max-h-[330px] overflow-visible" aria-label="El cliente lleva el mensaje a otras áreas">
+            <Escena id="sp-venta-interna" isDark={isDark}><svg viewBox="0 0 520 310" className="w-full h-full max-h-[330px] overflow-visible" aria-label="El cliente lleva el mensaje a otras áreas">
               <SceneDefs id="vin" isDark={isDark} />
               <IsoFloor cx={300} cy={160} s={200} fill={tone.floor} />
               <g opacity={0.55}><Orb id="vin" cx={70} cy={150} r={20} neutral /></g>
@@ -985,12 +998,12 @@ function VentaInterna({ isDark }: SlideProps) {
                   <Traveler id="vin" path={hop([230, 120], [x, y - 20], 24)} dur={mode === 'need' ? 1.1 : 2.6} delay={i * 0.4} repeatDelay={mode === 'need' ? 0.3 : 2.4} r={mode === 'need' ? 6 : 3} color={mode === 'need' ? ORANGE : '#94a3b8'} />
                 </g>
               ))}
-            </svg>
+            </svg></Escena>
             <div className="flex gap-2"><Pill isDark={isDark} on={mode === 'prod'} onClick={() => setMode('prod')}>Le das datos del producto</Pill><Pill isDark={isDark} on={mode === 'need'} onClick={() => setMode('need')}>Le preguntas por el beneficio</Pill></div>
           </div>
           <div className="lg:w-[54%] flex flex-col gap-3 justify-center">
             <AnimatePresence mode="wait">
-              <motion.div key={mode} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${mode === 'need' ? featuredClass(isDark) : panelClass(isDark)}`}>
+              <motion.div key={mode} data-g="modo" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className={`p-4 rounded-3xl ${mode === 'need' ? featuredClass(isDark) : panelClass(isDark)}`}>
                 <p className={microLabel(isDark)}>{mode === 'need' ? 'Con preguntas de necesidad-beneficio' : 'Dándole argumentos para repetir'}</p>
                 {mode === 'need' ? (
                   <p className={`text-sm leading-relaxed ${textMuted(isDark)}`}>«¿Qué beneficio tendría bajar el inventario?» — «El costo.» — «¿Es lo más importante para su director de finanzas?» — «Ahora que lo pienso… si bajamos un 5%, podríamos cerrar la bodega del centro: <strong>unos $250.000 al año</strong>. Le pediré 15 minutos antes de la reunión.»</p>
@@ -999,14 +1012,14 @@ function VentaInterna({ isDark }: SlideProps) {
                 )}
               </motion.div>
             </AnimatePresence>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div data-g="razones" className="grid grid-cols-1 sm:grid-cols-3 gap-2 rounded-2xl">
               {[['Habla de lo que conoce', 'Su negocio y sus necesidades, no tu producto.'], ['Ensaya contigo', 'Te explica los beneficios a ti antes de explicárselos a otros.'], ['Se entusiasma', 'Siente que la solución también es idea suya.']].map(([a, b]) => (
                 <div key={a} className={`p-3 rounded-2xl ${panelClass(isDark)}`}><p className={`text-sm font-black ${heading(isDark)}`}>{a}</p><p className={`text-xs ${textMuted(isDark)}`}>{b}</p></div>
               ))}
             </div>
           </div>
         </div>
-        <Footer isDark={isDark}>«En las ventas grandes eres el director de la obra, no el actor: tu trabajo está en los ensayos.» — gerente de ventas citado por Rackham. Además, cuando tu solución resuelve solo parte de un problema complejo, que el cliente diga qué partes resuelve <strong>evita objeciones</strong>.</Footer>
+        <Footer g="footer" isDark={isDark}>«En las ventas grandes eres el director de la obra, no el actor: tu trabajo está en los ensayos.» — gerente de ventas citado por Rackham. Además, cuando tu solución resuelve solo parte de un problema complejo, que el cliente diga qué partes resuelve <strong>evita objeciones</strong>.</Footer>
       </div>
     </Shell>
   );

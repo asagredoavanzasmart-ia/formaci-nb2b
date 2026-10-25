@@ -1,0 +1,980 @@
+1
+00:00:00,000 --> 00:00:05,520
+Lo que separa aquí les ganan las ventas grandes no es como cierran, sino que preguntan y en qué orden.
+
+2
+00:00:05,520 --> 00:00:09,360
+Y eso lo demostró una investigación de 35.000 llamadas.
+
+3
+00:00:09,360 --> 00:00:12,400
+Spin son las iniciales de 4 tipos de preguntas.
+
+4
+00:00:12,400 --> 00:00:16,160
+situación, problema, implicación y necesidad beneficio.
+
+5
+00:00:16,160 --> 00:00:21,120
+Crecen como una escalera, porque en una venta grande cada tipo pesa más que el anterior.
+
+6
+00:00:21,120 --> 00:00:25,560
+Detrás está Neil Rackham, que en lugar de opinar sobre cómo se vende,
+
+7
+00:00:25,560 --> 00:00:28,560
+se dedicó a observar a vendedores reales.
+
+8
+00:00:28,560 --> 00:00:33,120
+Esta clase dialoga con la de METPIC, allá aprendiste a calificar una oportunidad,
+
+9
+00:00:33,120 --> 00:00:37,120
+aquí vas a aprender a conversar para que es oportunidad crezca.
+
+10
+00:00:37,120 --> 00:00:42,240
+Si pudieras escuchar una grabación de última reunión de venta, ¿quién crees que hablo más?
+
+11
+00:00:42,240 --> 00:00:44,640
+Tú o al cliente.
+
+12
+00:00:44,640 --> 00:00:47,040
+Una investigación no una opinión.
+
+13
+00:00:47,040 --> 00:00:53,200
+Las cifras lo dicen. 35.000 llamadas, 12 años, 116 factores y 23 países.
+
+14
+00:00:53,200 --> 00:00:56,240
+Fue cerca de un millón de dólares en investigación.
+
+15
+00:00:56,240 --> 00:01:01,200
+0,4.000 de líneas y al ver los resultados se sumaron otras empresas como IBM.
+
+16
+00:01:01,200 --> 00:01:05,200
+Los novedoso no fue el tamaño, sino el método.
+
+17
+00:01:05,200 --> 00:01:06,400
+En cuatro pasos.
+
+18
+00:01:06,400 --> 00:01:12,720
+El gira una conducta, observar las llamadas reales, separar las llamadas exitosas de las fallidas y comparar.
+
+19
+00:01:12,720 --> 00:01:17,200
+Si una conducta parece mucho más en las exitosas, está asociada al éxito.
+
+20
+00:01:17,200 --> 00:01:19,840
+Si aparezca igual en ambas, no importa.
+
+21
+00:01:20,800 --> 00:01:26,800
+Hasta entonces, casi todo lo que se enseñaba en ventas venía de la experiencia personal de algún vendedor exitoso.
+
+22
+00:01:26,800 --> 00:01:28,800
+Rakan propuso algo distinto.
+
+23
+00:01:28,800 --> 00:01:30,320
+Contar.
+
+24
+00:01:30,320 --> 00:01:31,920
+Una disimportante.
+
+25
+00:01:31,920 --> 00:01:35,360
+Observar asociaciones no es lo mismo que demostrar causas.
+
+26
+00:01:35,360 --> 00:01:37,440
+Por eso, como veremos más adelante,
+
+27
+00:01:37,440 --> 00:01:40,640
+también hicieron pruebas con grupos de control.
+
+28
+00:01:40,640 --> 00:01:44,880
+¿Cuántas de las técnicas de venta que empleas hoy aprendiste de alguien que solo te
+
+29
+00:01:44,880 --> 00:01:48,000
+con todo lo que a él o a ella le funcionaba?
+
+30
+00:01:48,000 --> 00:01:53,520
+El primer error del equipo de Rakan y el mismo lo admite fue entrevistar a los vendedores estrella.
+
+31
+00:01:53,520 --> 00:01:55,520
+¿Ve ahí sale la idea central?
+
+32
+00:01:55,520 --> 00:01:58,720
+No confies en lo que dicen los mejores observa.
+
+33
+00:01:58,720 --> 00:02:01,600
+Un estudio de Jud wait con agentes de Aguana, lo y Lustra.
+
+34
+00:02:01,600 --> 00:02:03,040
+Primero, lo que dijeron.
+
+35
+00:02:03,040 --> 00:02:09,520
+18 de 23 de los mejores agentes aseguraban que su secreto era mirar a los ojos y ver la culpa.
+
+36
+00:02:09,520 --> 00:02:11,200
+Después, lo que se observó.
+
+37
+00:02:11,200 --> 00:02:15,760
+Con camaras ocultas descubrieron que en realidad detectaban señales de control,
+
+38
+00:02:15,760 --> 00:02:18,400
+una postura rígida o el cuello tenso.
+
+39
+00:02:18,400 --> 00:02:24,880
+Paradogicamente, quien no tiene nada que esconder para ese nervioso, y quien esconde algo se controla.
+
+40
+00:02:24,880 --> 00:02:27,840
+Los buenos raras saben qué los hace buenos.
+
+41
+00:02:27,840 --> 00:02:31,040
+Eso vale para tus colegas, para los gurus de las redes sociales,
+
+42
+00:02:31,040 --> 00:02:34,240
+y también para ti cuando explicas tus éxitos.
+
+43
+00:02:34,240 --> 00:02:40,560
+¿Qué crees que hace bien en tus ventas, que quizás alguien te observara, resultaría ser otra cosa?
+
+44
+00:02:40,560 --> 00:02:43,200
+Lo que funciona en lo pequeño falla en lo grande.
+
+45
+00:02:43,200 --> 00:02:45,600
+Toda la investigación empezó con una anecdota.
+
+46
+00:02:45,600 --> 00:02:49,520
+Un vendedor que era el número 3 de 200, vendiendo productos baratos,
+
+47
+00:02:49,520 --> 00:02:52,800
+pasó a ser el último cuando los sentieron a vender máquinas caras.
+
+48
+00:02:52,800 --> 00:02:55,680
+Las mismas habilidades, otros resultados.
+
+49
+00:02:55,680 --> 00:02:58,640
+Hay cuatro diferencias entre la venta pequeña y la grande.
+
+50
+00:02:58,640 --> 00:03:00,640
+La más importante es el ciclo largo.
+
+51
+00:03:00,640 --> 00:03:04,160
+En la venta grande, las conversaciones que deciden ocurren entre reuniones.
+
+52
+00:03:04,160 --> 00:03:09,360
+Cuando tú no estás, las otras tres son un compromiso mayor, una relación continua,
+
+53
+00:03:09,360 --> 00:03:13,760
+y un riesgo público que obliga a justificar la decisión con razones.
+
+54
+00:03:13,760 --> 00:03:15,920
+Un experimento lo muestra con claridad.
+
+55
+00:03:15,920 --> 00:03:19,600
+Un empresa contra tu publicista para escribir una presentación perfecta.
+
+56
+00:03:19,600 --> 00:03:23,840
+Al terminarla, los clientes recordaban 5,7 de 8 puntos clave.
+
+57
+00:03:23,840 --> 00:03:28,800
+Una semana después, había no olvidado más de la mitad y ya no estaban interesados.
+
+58
+00:03:28,800 --> 00:03:32,640
+Si no hay decisión en el momento, el entusias moce de vapora.
+
+59
+00:03:32,640 --> 00:03:37,520
+Por eso, la presión funciona en la venta de una sola visita y estorba en las de varias.
+
+60
+00:03:37,520 --> 00:03:43,600
+En las ventas que manejas, ¿qué pasa con el interés del cliente durante las semanas en que tú no estás presente?
+
+61
+00:03:43,600 --> 00:03:47,600
+En una venta grande, casi ninguna reunión terminan un pedido o en un rechazo.
+
+62
+00:03:47,600 --> 00:03:50,000
+Así que, ¿cómo sabes si te fue bien?
+
+63
+00:03:50,000 --> 00:03:53,840
+Rueca a un responde que el exito se mide por acciones, no por palabras.
+
+64
+00:03:53,840 --> 00:03:56,560
+Hay cuatro resultados posibles, dos onexitos.
+
+65
+00:03:56,560 --> 00:04:00,880
+El pedido y el avance, que es una acción concreta que mueve la venta,
+
+66
+00:04:00,880 --> 00:04:04,400
+como una demostración o una reunión con alguien de más rango.
+
+67
+00:04:04,400 --> 00:04:06,880
+Dos son fracazos. La 90, claro.
+
+68
+00:04:06,880 --> 00:04:12,320
+Y también la continuación, ese sigamos en contacto, amable, que no comprometan nada.
+
+69
+00:04:12,320 --> 00:04:14,560
+El libro le ilustra con dos vendedores.
+
+70
+00:04:14,560 --> 00:04:17,360
+John Salio Feliz, porque al cliente le gustó la presentación.
+
+71
+00:04:17,360 --> 00:04:19,600
+Eso es una continuación.
+
+72
+00:04:19,600 --> 00:04:24,080
+Fred, de los mejores vendedores, buscaba que el ingeniero jefe visitar a la fábrica.
+
+73
+00:04:24,080 --> 00:04:25,120
+No lo consiguió.
+
+74
+00:04:25,120 --> 00:04:27,840
+Pero obtuvo una reunión con el equipo del proyecto.
+
+75
+00:04:27,840 --> 00:04:29,840
+Eso es una avance.
+
+76
+00:04:29,840 --> 00:04:32,800
+Si tu objetivo para una reunión es recoger información,
+
+77
+00:04:32,800 --> 00:04:35,360
+estás planeando una continuación.
+
+78
+00:04:35,360 --> 00:04:36,960
+¿Pienzan tu próxima reunión?
+
+79
+00:04:36,960 --> 00:04:40,400
+¿Qué acción concreta quiere es que el cliente acepta el final?
+
+80
+00:04:40,400 --> 00:04:44,000
+Entramos en el corazón del libro, las preguntas spin.
+
+81
+00:04:44,000 --> 00:04:47,680
+Antes de las cuatro, conviene entender por qué preguntar persuade.
+
+82
+00:04:47,680 --> 00:04:50,320
+¿Cómo nace una necesidad en la mente del cliente?
+
+83
+00:04:50,320 --> 00:04:53,360
+¿Y por qué un problema tiene que pesar más que su solución?
+
+84
+00:04:53,360 --> 00:04:54,400
+Y un detalle.
+
+85
+00:04:54,400 --> 00:04:56,720
+Estas preguntas no se inventaron en un escritorio.
+
+86
+00:04:56,720 --> 00:04:59,280
+Describen lo que hacían, sin saberlo del todo.
+
+87
+00:04:59,280 --> 00:05:01,360
+Los vendedores que ganaban.
+
+88
+00:05:01,360 --> 00:05:05,040
+¿Qué tipo de preguntas sueles hacer más en los primeros minutos de una reunión?
+
+89
+00:05:05,040 --> 00:05:07,360
+¿Preguntar persuade más que cualquier argumento?
+
+90
+00:05:07,360 --> 00:05:08,720
+¿Por cuatro razones?
+
+91
+00:05:08,720 --> 00:05:12,160
+Las preguntas hacen hablar al cliente, controlan su atención.
+
+92
+00:05:12,160 --> 00:05:16,080
+Dejen que las personas se convenza sola y descubren necesidades.
+
+93
+00:05:16,080 --> 00:05:19,920
+Las razones en cambio sólo convencen a quien ya está detulado.
+
+94
+00:05:19,920 --> 00:05:21,920
+Pero los datos traen una sorpresa.
+
+95
+00:05:21,920 --> 00:05:24,640
+En una venta simple, como arrendar autos en Hertz,
+
+96
+00:05:24,640 --> 00:05:29,440
+las llamadas exitosas tenían un 63% más de preguntas que las fallidas.
+
+97
+00:05:29,440 --> 00:05:32,560
+En ventas complejas, apenas un 6% más.
+
+98
+00:05:32,560 --> 00:05:35,200
+En lo grande, la cantidad casi no importa.
+
+99
+00:05:35,200 --> 00:05:37,200
+Importa el tipo de pregunta.
+
+100
+00:05:37,200 --> 00:05:38,800
+Y cae un mito.
+
+101
+00:05:38,800 --> 00:05:43,760
+Desde 1925 se enseña que las preguntas abiertas son mejores que las cerradas.
+
+102
+00:05:43,760 --> 00:05:47,280
+Just wait, lo mivió y no encontró relación con el exito.
+
+103
+00:05:47,280 --> 00:05:51,040
+Algunos de los mejores vendedores hacía en casi solo preguntas cerradas.
+
+104
+00:05:51,040 --> 00:05:55,280
+Un consejo repetido durante 60 años sin datos.
+
+105
+00:05:55,280 --> 00:05:55,840
+¿Qué?
+
+106
+00:05:55,840 --> 00:06:00,640
+Otro consejo de ventas que das por cierto nunca ha visto respaldado por datos?
+
+107
+00:06:00,640 --> 00:06:03,520
+Para entender spin necesitas una idea.
+
+108
+00:06:03,520 --> 00:06:08,640
+Una necesidad crece de implícita a explícita en tres escalones.
+
+109
+00:06:08,640 --> 00:06:14,240
+En pieza con una pequeña inferfección, como el corrector ortográfico es algo incómodo,
+
+110
+00:06:14,240 --> 00:06:20,000
+crece hasta un problema claro, el sistema no da abasto y terminan un deseo de actuar.
+
+111
+00:06:20,000 --> 00:06:22,560
+Necesitamos un sistema más rápido.
+
+112
+00:06:22,560 --> 00:06:27,360
+Las dos primeras son necesidades implícitas, problemas e insatisfacciones.
+
+113
+00:06:27,360 --> 00:06:32,080
+La tercera es una necesidad explícita, una intención concreta.
+
+114
+00:06:32,080 --> 00:06:34,080
+Y aquí está la llago clave.
+
+115
+00:06:34,080 --> 00:06:38,080
+En las ventas pequeñas, las necesidades implícitas predicen el exito.
+
+116
+00:06:38,080 --> 00:06:39,680
+En las grandes, no.
+
+117
+00:06:39,680 --> 00:06:43,840
+Lo que parece el doble en las llamadas exitosas son las explícitas.
+
+118
+00:06:43,840 --> 00:06:48,240
+Un problema no es una señal de compra, una intención de actuar si.
+
+119
+00:06:48,240 --> 00:06:53,120
+Por eso, en la venta grande, tu trabajo no es encontrar problemas y saltar a la solución.
+
+120
+00:06:53,120 --> 00:06:55,760
+Si no ayudará a que esa necesidad crezca.
+
+121
+00:06:55,760 --> 00:07:00,000
+¿Cuántas veces has ofreciado tu solución apenas el cliente mencionó un problema
+
+122
+00:07:00,000 --> 00:07:02,560
+sin esperar a que lo sintiera como urgente?
+
+123
+00:07:02,560 --> 00:07:05,440
+La ecuación de valor funciona como una valanza.
+
+124
+00:07:05,440 --> 00:07:10,240
+El cliente compra solo cuando la gravedad del problema pesa más que el costo de resolverlo.
+
+125
+00:07:10,240 --> 00:07:15,040
+Con un solo problema pequeño, contra una solución de 120 mil dólares,
+
+126
+00:07:15,040 --> 00:07:17,360
+la valanza se inclina hacia el costo.
+
+127
+00:07:17,440 --> 00:07:19,440
+El diálogo típico suena así.
+
+128
+00:07:19,440 --> 00:07:22,640
+¿Son difíciles de usar sus máquinas? Un poco.
+
+129
+00:07:22,640 --> 00:07:26,240
+Nuestro sistema lo resuelve por 120 mil dólares.
+
+130
+00:07:26,240 --> 00:07:31,280
+Tanto por eso, pero cuando el problema se desarrolla, aparecen la rotación operarios,
+
+131
+00:07:31,280 --> 00:07:37,840
+los 25 mil dólares en capacitación, las horas extra al 250% y la calidad perdida.
+
+132
+00:07:37,840 --> 00:07:40,720
+Con el mismo precio, la valanza se da vuelta.
+
+133
+00:07:40,720 --> 00:07:45,360
+El venta grande, además, el costo incluye el riesgo de equivocarse frente a toda la empresa.
+
+134
+00:07:45,360 --> 00:07:47,760
+Por eso el problema tiene que ser grande visible.
+
+135
+00:07:47,760 --> 00:07:52,320
+El precio no cambió, lo que cambió fue cuánto entendía el cliente su propio problema.
+
+136
+00:07:52,320 --> 00:07:54,560
+Cuando un cliente te dice es muy caro,
+
+137
+00:07:54,560 --> 00:07:58,320
+¿qué tan segura estás de que entendió los grandes que su problema?
+
+138
+00:07:58,320 --> 00:08:01,440
+Las cuatro preguntas de spin no son una fórmula rigida.
+
+139
+00:08:01,440 --> 00:08:05,840
+Raja mi insisten que describen cómo preguntan los mejores en un buen día.
+
+140
+00:08:05,840 --> 00:08:10,480
+Si el cliente llega con una necesidad de explícita, puedes saltar directo a la última.
+
+141
+00:08:10,480 --> 00:08:12,800
+Las preguntas de situación recogen hechos.
+
+142
+00:08:12,800 --> 00:08:14,800
+En las llamadas exitosas se hacen menos,
+
+143
+00:08:14,800 --> 00:08:17,680
+y los novatos hacen más, porque se sienten seguros con ellas,
+
+144
+00:08:17,680 --> 00:08:19,840
+conviene a ser la tarea antes.
+
+145
+00:08:19,840 --> 00:08:23,280
+Las preguntas de problema buscar dificultades e insatisfacciones.
+
+146
+00:08:23,280 --> 00:08:26,560
+Son clave en las ventas pequeñas, y en Fujicerox, en Japón,
+
+147
+00:08:26,560 --> 00:08:29,920
+entrenar la suyo las ventas un 74%.
+
+148
+00:08:29,920 --> 00:08:32,960
+Las preguntas de implicación exploran las consecuencias del problema.
+
+149
+00:08:32,960 --> 00:08:35,280
+Son las más ligadas al éxito en las ventas grandes,
+
+150
+00:08:35,280 --> 00:08:40,000
+y aún así, sólo una de cada 20 preguntas en una llamada promedio de implicación.
+
+151
+00:08:40,000 --> 00:08:45,200
+Las preguntas de necesidad beneficio logran que el cliente diga los beneficios con sus palabras.
+
+152
+00:08:45,200 --> 00:08:48,400
+Los clientes califican esas llamadas como positivas y útiles,
+
+153
+00:08:48,400 --> 00:08:52,240
+pero en casi la mitad de las llamadas estudiadas no apareció ni una.
+
+154
+00:08:52,240 --> 00:08:55,920
+Muchos vendedores con experiencia dicen que esto es sentido común.
+
+155
+00:08:55,920 --> 00:08:57,440
+Raja amles de la razón.
+
+156
+00:08:57,440 --> 00:09:00,720
+Espín describe lo que ya hacen en sus mejores reuniones.
+
+157
+00:09:00,720 --> 00:09:06,240
+Su valor es poner un nombre preciso, para que distingas qué hace bien y qué te falta practicar.
+
+158
+00:09:06,240 --> 00:09:08,240
+Pienzan tu mejor venta del último año.
+
+159
+00:09:08,240 --> 00:09:11,360
+¿Qué preguntas hiciste que hoy reconoces como de implicación?
+
+160
+00:09:12,080 --> 00:09:15,360
+Un ejemplo del libro muestra el poder de las preguntas de implicación.
+
+161
+00:09:15,360 --> 00:09:17,840
+¿Cómo un problema pequeño se vuelve grande?
+
+162
+00:09:17,840 --> 00:09:19,840
+Empieza con una pregunta de problema.
+
+163
+00:09:19,840 --> 00:09:22,080
+¿Son difíciles de usar sus máquinas?
+
+164
+00:09:22,080 --> 00:09:23,520
+El cliente lo minimiza.
+
+165
+00:09:23,520 --> 00:09:26,160
+Un poco ya entrenamos a tres personas.
+
+166
+00:09:26,160 --> 00:09:30,160
+Después, cada pregunta de implicación descubre algo nuevo.
+
+167
+00:09:30,160 --> 00:09:33,840
+La rotación de operarios 25.000 dólares en capacitación,
+
+168
+00:09:33,840 --> 00:09:38,400
+hora extra y tercerización y, finalmente, lo que más le vuelve.
+
+169
+00:09:38,400 --> 00:09:40,880
+La calidad y las entregas.
+
+170
+00:09:40,880 --> 00:09:43,040
+El vendedor nunca firman nada.
+
+171
+00:09:43,040 --> 00:09:46,720
+Es el cliente que construye el caso con sus propias respuestas.
+
+172
+00:09:46,720 --> 00:09:49,680
+Al final dice, ¿visto así?
+
+173
+00:09:49,680 --> 00:09:53,040
+Esa máquina no está en generando un problema muy serio.
+
+174
+00:09:53,040 --> 00:09:56,080
+Recién ahí, tiene sentido hablar de la solución.
+
+175
+00:09:56,080 --> 00:09:57,280
+Y hay algo más.
+
+176
+00:09:57,280 --> 00:10:02,400
+Esas consecuencias, costos, calidad y entregas son el lenguaje de quienes deciden.
+
+177
+00:10:02,400 --> 00:10:03,920
+No de quienes operan.
+
+178
+00:10:03,920 --> 00:10:06,320
+Piensa en un problema que resuelve tu producto.
+
+179
+00:10:06,320 --> 00:10:09,600
+¿Qué tres consecuencias podrías explorar con preguntas
+
+180
+00:10:09,600 --> 00:10:11,440
+antes de mencionar tu solución?
+
+181
+00:10:11,440 --> 00:10:13,920
+Las implicaciones no salen solas en la reunión.
+
+182
+00:10:13,920 --> 00:10:16,800
+Incluso los vendedores más hábiles que observo rakan,
+
+183
+00:10:16,800 --> 00:10:19,040
+rara vez las asianas sin prepararlas.
+
+184
+00:10:19,040 --> 00:10:20,560
+Por eso parecen tampoco.
+
+185
+00:10:20,560 --> 00:10:22,480
+Uno de cada 20 preguntas.
+
+186
+00:10:22,480 --> 00:10:24,320
+El método tiene tres pasos.
+
+187
+00:10:24,320 --> 00:10:28,080
+Escribe un problema probable, como máquinas difíciles de usar.
+
+188
+00:10:28,080 --> 00:10:31,200
+Preguntate aquí otras dificultades con dulce de ese problema.
+
+189
+00:10:31,200 --> 00:10:34,160
+Y anota las preguntas que salen de cada una.
+
+190
+00:10:34,160 --> 00:10:36,160
+Raka magrega un truco personal.
+
+191
+00:10:36,160 --> 00:10:40,320
+Imagina a un cliente esceptico que responde y que.
+
+192
+00:10:40,320 --> 00:10:42,720
+Anota los argumentos con que lo convencerías.
+
+193
+00:10:42,720 --> 00:10:48,320
+Eficiencia, costos o motivación del equipo y convierte cada argumento en una pregunta.
+
+194
+00:10:48,320 --> 00:10:50,960
+Así el cliente llega solo a la conclusión.
+
+195
+00:10:50,960 --> 00:10:52,160
+Dos datos más.
+
+196
+00:10:52,160 --> 00:10:54,880
+Estas preguntas pesan sobre todo con quienes deciden.
+
+197
+00:10:54,880 --> 00:10:58,560
+Después de una reunión, varios dijeron que esa persona hablaba su idioma.
+
+198
+00:10:58,560 --> 00:11:02,000
+Y son especialmente poderosas en ventas de alta tecnología.
+
+199
+00:11:02,000 --> 00:11:05,040
+Aunque Raka me reconoce que no sabe explicar del todo porque.
+
+200
+00:11:05,040 --> 00:11:08,480
+También cuenta que profesionales que supuestamente no saben vender,
+
+201
+00:11:08,480 --> 00:11:10,400
+como consultores o auditores,
+
+202
+00:11:10,400 --> 00:11:13,760
+las aprenden rápido, porque ya hacen preguntas de diagnóstico.
+
+203
+00:11:13,760 --> 00:11:16,800
+Tienzan el problema más común que resuelve tu producto.
+
+204
+00:11:16,800 --> 00:11:19,920
+Aquí tres dificultades conducen el negocio de tu cliente.
+
+205
+00:11:19,920 --> 00:11:25,280
+Las preguntas de necesidad beneficio buscan que el cliente diga por qué les sirve tu solución.
+
+206
+00:11:25,280 --> 00:11:27,760
+Hay un riesgo en quedarse solo en la implicación.
+
+207
+00:11:27,760 --> 00:11:31,040
+El problema se siente cada vez peor y el cliente puedes deprimirse.
+
+208
+00:11:31,040 --> 00:11:36,480
+Raka jambrómea con que socrate fue un maestro de las implicaciones y terminó bebiendo cicuta.
+
+209
+00:11:36,480 --> 00:11:38,400
+Estas preguntas cambian el ánimo.
+
+210
+00:11:38,400 --> 00:11:41,920
+Llevan la atención a la solución y crean un clima positivo.
+
+211
+00:11:41,920 --> 00:11:44,800
+Lo más valioso es que el cliente en un si a los beneficios.
+
+212
+00:11:44,800 --> 00:11:47,680
+Y ese cliente después le vende la idea a sus colegas,
+
+213
+00:11:47,680 --> 00:11:51,440
+con sus propias palabras en las reuniones donde tú no estás.
+
+214
+00:11:51,440 --> 00:11:52,960
+¿Dóye ejemplos simples?
+
+215
+00:11:52,960 --> 00:11:55,360
+¿Por qué importante para usted resolverlo?
+
+216
+00:11:55,360 --> 00:11:58,080
+¿Y ¿De qué otra forma la ayudaría?
+
+217
+00:11:58,080 --> 00:11:59,360
+Un detalle curioso.
+
+218
+00:11:59,360 --> 00:12:01,520
+Podrían haberse llamado preguntas de valor.
+
+219
+00:12:01,520 --> 00:12:04,400
+Pero las iniciales habrían sido SEP y V.
+
+220
+00:12:04,400 --> 00:12:09,200
+Y en inglés colloquial un SPIF es un estafador callejero que vende mercadería robada.
+
+221
+00:12:09,200 --> 00:12:12,000
+No era el mejor nombre para un método de ventas.
+
+222
+00:12:12,000 --> 00:12:17,680
+¿Qué cambiaría en tus reuniones si fueras tú, quienes cuchan los beneficios en lugar de quién lo recita?
+
+223
+00:12:17,680 --> 00:12:20,160
+La venta grande ocurre cuando tú no estás.
+
+224
+00:12:20,160 --> 00:12:23,680
+En una compra compleja hay decenas de conversaciones internas
+
+225
+00:12:23,680 --> 00:12:25,600
+y no puedes estar en todas.
+
+226
+00:12:25,600 --> 00:12:28,400
+¿Cómo preparas a tu contacto para que venda por ti?
+
+227
+00:12:28,400 --> 00:12:29,840
+Comparados caminos.
+
+228
+00:12:29,840 --> 00:12:32,240
+En el primero, le das datos del producto.
+
+229
+00:12:32,240 --> 00:12:37,520
+El vendedor le pide que mencioné el etiquetado de auditoría automático al director de finanzas.
+
+230
+00:12:37,520 --> 00:12:39,120
+El cliente no entiende que es,
+
+231
+00:12:39,120 --> 00:12:41,680
+y la idea apenas llega a las otras áreas.
+
+232
+00:12:41,680 --> 00:12:44,400
+En el segundo le preguntas por el beneficio.
+
+233
+00:12:44,400 --> 00:12:48,800
+Con dos preguntas, el propio cliente descubre que bajar el inventario un 5%
+
+234
+00:12:48,800 --> 00:12:53,440
+le permitiría cerrar una bodega y ahorrar 250 mil dólares al año.
+
+235
+00:12:53,440 --> 00:12:56,560
+Y es él, quien pide 15 minutos con su director.
+
+236
+00:12:56,560 --> 00:12:58,160
+Funciona por 3 razones.
+
+237
+00:12:58,160 --> 00:13:03,120
+El cliente habla de lo que conoce, su negocio, ensalla contigo la explicación.
+
+238
+00:13:03,120 --> 00:13:06,080
+Y sentusiasma porque siente la solución como propia.
+
+239
+00:13:06,080 --> 00:13:10,000
+No espera que el cliente aprende en una hora lo que atite tomó meses,
+
+240
+00:13:10,000 --> 00:13:12,320
+pide le que hables de sus necesidades.
+
+241
+00:13:12,320 --> 00:13:14,160
+No de tu producto.
+
+242
+00:13:14,160 --> 00:13:15,920
+Y una ventaja más.
+
+243
+00:13:15,920 --> 00:13:19,600
+Cuando tu solución resuelve solo parte de un problema complejo,
+
+244
+00:13:19,600 --> 00:13:24,880
+afirmar lo bien que lo resuelve invita el cliente a señalar lo que no cubre.
+
+245
+00:13:24,880 --> 00:13:30,080
+Si es él, quien dice qué parte resuelve es evitas esa objeción.
+

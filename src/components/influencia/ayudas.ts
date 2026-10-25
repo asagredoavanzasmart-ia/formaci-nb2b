@@ -17,5 +17,12 @@ export const viaj = (pts: [number, number][], en: number[], o: O = {}): El => ({
 export const forma = (trazo: string, cx: number, cy: number, a?: number, o: O = {}): El => ({ k: 'forma', trazo, cx, cy, a, ...o }) as El;
 export const circ = (x: number, y: number, r: number, a?: number, o: O = {}): El => ({ k: 'circulo', x, y, r, a, ...o }) as El;
 
+export const burb = (t: string, x: number, y: number, w: number, a?: number, o: O = {}): El => ({ k: 'burbuja', t, x, y, w, a, ...o }) as El;
+export const sello = (t: string, x: number, y: number, a?: number, o: O = {}): El => ({ k: 'sello', t, x, y, a, ...o }) as El;
+export const tachar = (x1: number, x2: number, y: number, a?: number, o: O = {}): El => ({ k: 'tachar', x1, x2, y, a, ...o }) as El;
+export const curva = (pts: [number, number][], a?: number, o: O = {}): El => ({ k: 'curva', pts, a, ...o }) as El;
+export const flujo = (x1: number, y1: number, x2: number, y2: number, a?: number, o: O = {}): El => ({ k: 'flujo', x1, y1, x2, y2, a, ...o }) as El;
+export const boom = (x: number, y: number, a?: number, o: O = {}): El => ({ k: 'estallido', x, y, a, ...o }) as El;
+
 /* Posiciones x de n elementos repartidos en el ancho útil del lienzo. */
 export const fila = (n: number, desde = 150, hasta = 1050) => Array.from({ length: n }, (_, k) => (n === 1 ? (desde + hasta) / 2 : desde + (k * (hasta - desde)) / (n - 1)));

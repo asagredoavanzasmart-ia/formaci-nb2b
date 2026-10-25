@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Easing, useCurrentFrame, useVideoConfig } from 'remotion';
 import { NARANJA, ROSA, Gradientes, Persona, Txt, ac, pop, sombra, tono } from '../remotion/comun';
-import type { El, Tono } from './tipos';
+import type { El, Tono, Camara } from './tipos';
 
 /**
  * Motor de escenas de la clase «Influencia y persuasión».
@@ -13,7 +13,7 @@ import type { El, Tono } from './tipos';
 export const W = 1200, H = 860;
 const ID = 'ip';
 
-type Props = { isDark: boolean; els: El[]; marcas: number[]; pregunta?: string; estatico?: boolean; ancho?: number; alto?: number };
+type Props = { isDark: boolean; els: El[]; marcas: number[]; pregunta?: string; estatico?: boolean; ancho?: number; alto?: number; camara?: Camara[] };
 
 /* Relleno plano de cada tono y caras (arriba, izquierda, derecha) de los cubos isométricos. */
 const relleno = (t: Tono | undefined, isDark: boolean) => ({
@@ -113,7 +113,7 @@ const estado = (el: El, t: number, tm: (a?: number) => number, estatico: boolean
   return { v: Math.max(0, entra) * sale, op: apaga };
 };
 
-export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estatico = false, ancho = W, alto = H }) => {
+export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estatico = false, ancho = W, alto = H, camara = [] }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -127,10 +127,24 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
   const vigente = (el: El) => !estatico && el.a != null && el.a === actual && actual < marcas.length - 1;
   const respira = 1 + 0.035 * Math.sin(t * 3.2);
 
-  // Un elemento «en foco» crece un poco y brilla mientras suena la frase que lo nombra.
+  // Cámara: con cada frase indicada se acerca a una zona; en la pregunta vuelve a la vista completa.
+  let cam = { x: ancho / 2, y: alto / 2, z: 1 };
+  if (!estatico) {
+    const claves = [...camara, ...(pregunta ? [{ a: marcas.length - 1, x: ancho / 2, y: alto / 2, z: 1 }] : [])];
+    for (const kf of claves) {
+      const T = tm(kf.a) + (kf.d ?? 0);
+      if (t < T) break;
+      const u = ac(t, T, T + 1.1);
+      cam = { x: cam.x + (kf.x - cam.x) * u, y: cam.y + (kf.y - cam.y) * u, z: cam.z + (kf.z - cam.z) * u };
+    }
+  }
+
+  // Un elemento «en foco» crece un poco y brilla mientras suena la frase que lo nombra; `flota` lo mece sin parar.
   const dibujar = (el: El, k: number) => {
-    const n = pieza(el, k);
-    if (!n || !el.foco || estatico || !el.foco.includes(actual)) return n;
+    let n = pieza(el, k);
+    if (!n) return n;
+    if (el.flota && !estatico) n = <g key={k} transform={`translate(0 ${Math.sin(t * 2.2 + k) * el.flota})`}>{n}</g>;
+    if (!el.foco || estatico || !el.foco.includes(actual)) return n;
     const f = ac(t, tm(actual), tm(actual) + 0.45);
     const [cx, cy] = 'cx' in el ? [el.cx, el.cy] : 'x' in el ? [el.x, el.y] : [ancho / 2, alto / 2];
     return (
@@ -176,7 +190,9 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
       case 'texto': {
         const tam = el.tam ?? 30;
         const color = el.tono === 'marca' ? `url(#${ID}-marcaH)` : el.tono === 'tenue' ? c.tenue : c.texto;
-        const lineas = envolver(el.t, el.ancho ?? 40);
+        // Con `escribe`, el texto aparece letra por letra.
+        const visibles = el.escribe && !estatico ? Math.floor(el.t.length * ac(t, tm(el.a) + (el.d ?? 0), tm(el.a) + (el.d ?? 0) + el.t.length * 0.04, 0, 1, Easing.linear)) : el.t.length;
+        const lineas = envolver(el.t.slice(0, visibles), el.ancho ?? 40);
         return (
           <g key={k} opacity={Math.min(1, v) * op} transform={`translate(0 ${(1 - Math.min(1, v)) * 12})`}>
             {lineas.map((l, j) => (
@@ -306,6 +322,130 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
         const e = estatico ? 1 : Math.min(1.15, v);
         return <circle key={k} cx={el.x} cy={el.y} r={el.r * e} fill={relleno(el.tono, isDark)} opacity={(el.opacidad ?? 0.35) * Math.min(1, v) * op} />;
       }
+      case 'burbuja': {
+        const t0 = tm(el.a) + (el.d ?? 0) + 0.25;
+        const tam = el.tam ?? 26;
+        const porLinea = Math.floor((el.w - 44) / (tam * 0.5));
+        const todas = envolver(el.t, porLinea);
+        const visibles = estatico ? el.t.length : Math.floor(el.t.length * ac(t, t0, t0 + el.t.length * 0.035, 0, 1, Easing.linear));
+        const lineas = envolver(el.t.slice(0, visibles), porLinea);
+        const h = 36 + todas.length * tam * 1.3;
+        const ven = el.quien !== 'cliente';
+        const cx = el.cola === 'der' ? el.x + el.w - 46 : el.x + 46;
+        const e = Math.min(1, v);
+        return (
+          <g key={k} opacity={e * op} transform={`translate(${cx} ${el.y + h}) scale(${0.7 + 0.3 * e}) translate(${-cx} ${-(el.y + h)})`}>
+            <path d={`M ${el.x + 26} ${el.y} H ${el.x + el.w - 26} Q ${el.x + el.w} ${el.y} ${el.x + el.w} ${el.y + 26} V ${el.y + h - 26} Q ${el.x + el.w} ${el.y + h} ${el.x + el.w - 26} ${el.y + h} H ${cx + 16} L ${cx + (el.cola === 'der' ? 22 : -22)} ${el.y + h + 26} L ${cx - 16} ${el.y + h} H ${el.x + 26} Q ${el.x} ${el.y + h} ${el.x} ${el.y + h - 26} V ${el.y + 26} Q ${el.x} ${el.y} ${el.x + 26} ${el.y} Z`}
+              fill={ven ? `url(#${ID}-marca)` : c.panel} style={sombra(c.sombra, 8, 18)} />
+            {lineas.map((l, j) => <Txt key={j} f="a" x={el.x + 22} y={el.y + 18 + tam + j * tam * 1.3} fontSize={tam} fill={ven ? '#ffffff' : c.texto} peso={600}>{l}</Txt>)}
+          </g>
+        );
+      }
+      case 'balanza': {
+        const L = el.largo ?? 520;
+        const angulo = (s: { izq: number; der: number }) => Math.max(-15, Math.min(15, (s.der - s.izq) * 5));
+        let ang = 0, izq = 0, der = 0;
+        el.estados.forEach((s, j) => {
+          const T = tm(s.en);
+          if (!estatico && t < T) return;
+          const previo = j ? angulo(el.estados[j - 1]) : 0;
+          const u = estatico ? 1 : ac(t, T, T + 1.3, 0, 1, Easing.out(Easing.back(2.2)));
+          ang = previo + (angulo(s) - previo) * u;
+          izq = s.izq; der = s.der;
+        });
+        const rad = (ang * Math.PI) / 180;
+        const ex = (L / 2) * Math.cos(rad), ey = (L / 2) * Math.sin(rad);
+        const platos: [number, number][] = [[el.x - ex, el.y - ey], [el.x + ex, el.y + ey]];
+        return (
+          <g key={k} opacity={Math.min(1, v) * op}>
+            <rect x={el.x - 12} y={el.y} width={24} height={300} rx={10} fill={c.apagado} />
+            <rect x={el.x - 110} y={el.y + 290} width={220} height={24} rx={12} fill={c.apagado} />
+            <line x1={el.x - ex} y1={el.y - ey} x2={el.x + ex} y2={el.y + ey} stroke={c.tenue} strokeWidth={14} strokeLinecap="round" />
+            <circle cx={el.x} cy={el.y} r={16} fill={NARANJA} />
+            {platos.map(([px, py], j) => (
+              <g key={j}>
+                <path d={`M ${px} ${py} L ${px - 90} ${py + 120} M ${px} ${py} L ${px + 90} ${py + 120}`} stroke={c.apagado} strokeWidth={3} />
+                <path d={`M ${px - 110} ${py + 120} Q ${px} ${py + 175} ${px + 110} ${py + 120} Z`} fill={j === 0 ? `url(#${ID}-marca)` : c.panel2} style={sombra(c.sombra, 6, 12)} />
+                {j === 0 && Array.from({ length: izq }, (_, q) => {
+                  const fila = Math.floor(q / 3), col = q % 3;
+                  return <rect key={q} x={px - 75 + col * 52 + (fila % 2) * 24} y={py + 76 - fila * 42} width={44} height={40} rx={8} fill={q % 2 ? NARANJA : ROSA} style={sombra(c.sombra, 3, 6)} />;
+                })}
+                {j === 1 && der > 0 && <g><rect x={px - 70} y={py + 26} width={140} height={92} rx={14} fill={isDark ? '#475569' : '#64748b'} style={sombra(c.sombra, 4, 8)} />{el.derValor && <Txt x={px} y={py + 82} textAnchor="middle" fontSize={26} fill="#ffffff" peso={900}>{el.derValor}</Txt>}</g>}
+                <Txt x={px} y={py + 205} textAnchor="middle" fontSize={26} fill={j === 0 ? NARANJA : c.tenue} peso={900}>{j === 0 ? el.izq : el.der}</Txt>
+              </g>
+            ))}
+          </g>
+        );
+      }
+      case 'sello': {
+        const T = tm(el.a) + (el.d ?? 0);
+        const golpe = estatico ? 1 : ac(t, T, T + 0.32, 0, 1, Easing.in(Easing.cubic));
+        const tiembla = estatico ? 0 : Math.sin((t - T) * 60) * 4 * (1 - ac(t, T + 0.32, T + 0.7));
+        const esc = 2.4 - 1.4 * golpe;
+        const tam = el.tam ?? 44;
+        const w = el.t.length * tam * 0.68 + 60;
+        const col = el.tono === 'marca' ? NARANJA : el.tono === 'gris' ? c.tenue : ROSA;
+        return (
+          <g key={k} opacity={golpe * op} transform={`translate(${el.x + tiembla} ${el.y}) rotate(${el.rot ?? -10}) scale(${esc})`}>
+            <rect x={-w / 2} y={-tam * 0.95} width={w} height={tam * 1.6} rx={14} fill="none" stroke={col} strokeWidth={6} />
+            <Txt x={0} y={tam * 0.32} textAnchor="middle" fontSize={tam} fill={col} peso={900} letterSpacing={4}>{el.t.toUpperCase()}</Txt>
+          </g>
+        );
+      }
+      case 'tachar': {
+        const T = tm(el.a) + (el.d ?? 0);
+        const u = estatico ? 1 : ac(t, T, T + 0.45);
+        return <line key={k} x1={el.x1} y1={el.y} x2={el.x1 + (el.x2 - el.x1) * u} y2={el.y - 6 * u} stroke={ROSA} strokeWidth={7} strokeLinecap="round" opacity={op} />;
+      }
+      case 'curva': {
+        const T = tm(el.a) + (el.d ?? 0);
+        const u = estatico ? 1 : ac(t, T, T + (el.dur ?? 1.6), 0, 1, Easing.inOut(Easing.cubic));
+        const largo = el.pts.slice(1).reduce((s, p, j) => s + Math.hypot(p[0] - el.pts[j][0], p[1] - el.pts[j][1]), 0);
+        const d = 'M ' + el.pts.map((p) => p.join(' ')).join(' L ');
+        // Punto que acompaña la punta de la línea mientras se dibuja.
+        let resto = largo * u, punta = el.pts[0];
+        for (let j = 1; j < el.pts.length; j++) {
+          const seg = Math.hypot(el.pts[j][0] - el.pts[j - 1][0], el.pts[j][1] - el.pts[j - 1][1]);
+          if (resto <= seg) { const f = seg ? resto / seg : 0; punta = [el.pts[j - 1][0] + (el.pts[j][0] - el.pts[j - 1][0]) * f, el.pts[j - 1][1] + (el.pts[j][1] - el.pts[j - 1][1]) * f]; break; }
+          resto -= seg; punta = el.pts[j];
+        }
+        const col = relleno(el.tono, isDark);
+        return (
+          <g key={k} opacity={Math.min(1, v) * op}>
+            {el.area && <path d={`${d} L ${el.pts[el.pts.length - 1][0]} ${el.base ?? alto} L ${el.pts[0][0]} ${el.base ?? alto} Z`} fill={col} opacity={0.15 * u} />}
+            <path d={d} fill="none" stroke={col} strokeWidth={el.grosor ?? 8} strokeLinecap="round" strokeLinejoin="round" strokeDasharray={largo} strokeDashoffset={largo * (1 - u)} />
+            {el.punto !== false && <circle cx={punta[0]} cy={punta[1]} r={(el.grosor ?? 8) * 1.4} fill={col} />}
+          </g>
+        );
+      }
+      case 'flujo': {
+        const n = el.n ?? 5;
+        const mx = (el.x1 + el.x2) / 2, my = (el.y1 + el.y2) / 2 - (el.curva ?? 40);
+        return (
+          <g key={k} opacity={Math.min(1, v) * op}>
+            {Array.from({ length: n }, (_, j) => {
+              const u = ((t * 0.6 + j / n) % 1);
+              const x = (1 - u) * (1 - u) * el.x1 + 2 * (1 - u) * u * mx + u * u * el.x2;
+              const y = (1 - u) * (1 - u) * el.y1 + 2 * (1 - u) * u * my + u * u * el.y2;
+              return <circle key={j} cx={x} cy={y} r={9 * Math.sin(u * Math.PI) + 2} fill={j % 2 ? ROSA : NARANJA} opacity={Math.sin(u * Math.PI)} />;
+            })}
+          </g>
+        );
+      }
+      case 'estallido': {
+        const T = tm(el.a) + (el.d ?? 0);
+        const u = estatico ? 0 : ac(t, T, T + 0.9, 0, 1, Easing.out(Easing.cubic));
+        if (u <= 0 || u >= 1) return null;
+        const r = el.r ?? 120;
+        return (
+          <g key={k} opacity={1 - u}>
+            {Array.from({ length: 12 }, (_, j) => {
+              const a = (j / 12) * Math.PI * 2;
+              return <line key={j} x1={el.x + Math.cos(a) * r * 0.3 * u} y1={el.y + Math.sin(a) * r * 0.3 * u} x2={el.x + Math.cos(a) * r * u} y2={el.y + Math.sin(a) * r * u} stroke={j % 2 ? ROSA : NARANJA} strokeWidth={6} strokeLinecap="round" />;
+            })}
+          </g>
+        );
+      }
       default:
         return null;
     }
@@ -317,12 +457,13 @@ export const EscenaIP: React.FC<Props> = ({ isDark, els, marcas, pregunta, estat
   const altoP = 90 + lineasP.length * 46;
   return (
     <AbsoluteFill style={{ backgroundColor: 'transparent' }}>
-      <svg viewBox={`0 0 ${ancho} ${alto}`} width="100%" height="100%" style={{ overflow: 'visible' }}>
+      {/* Con cámara, lo que queda fuera del encuadre se recorta para no invadir la diapositiva. */}
+      <svg viewBox={`0 0 ${ancho} ${alto}`} width="100%" height="100%" style={{ overflow: camara.length ? 'hidden' : 'visible' }}>
         <Gradientes id={ID} />
         <defs>
           <radialGradient id={`${ID}-orbe`} cx="0.35" cy="0.3" r="0.75"><stop offset="0" stopColor="#ffe0c2" /><stop offset="0.45" stopColor={NARANJA} /><stop offset="1" stopColor={ROSA} /></radialGradient>
         </defs>
-        <g opacity={fondo}>{els.map(dibujar)}</g>
+        <g opacity={fondo} transform={`translate(${ancho / 2} ${alto / 2}) scale(${cam.z}) translate(${-cam.x} ${-cam.y})`}>{els.map(dibujar)}</g>
         {vP > 0.001 && (
           <g opacity={Math.min(1, vP)} transform={`translate(${ancho / 2} ${alto / 2}) scale(${0.85 + 0.15 * Math.min(1, vP)})`}>
             <rect x={-anchoP / 2} y={-altoP / 2} width={anchoP} height={altoP} rx={40} fill={c.panel} style={sombra(c.sombra, 14, 30)} />

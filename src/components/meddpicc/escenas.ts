@@ -6,7 +6,7 @@ import { ic, chip, tx, fl, tj, num, pers, cubo, viaj, forma, circ } from '../inf
  * Cada entrada ubica la diapositiva en el audio y dice qué aparece, qué se resalta y qué se pulsa;
  * las que tienen `escena` reemplazan su gráfico por una escena de Remotion mientras suena la clase.
  * Las frases copian la transcripción del .srt (guiones/meddpicc.srt), no el guion.
- * Regenerar los tiempos: node scripts/generar-guiado-meddpicc.cjs
+ * Regenerar los tiempos: node scripts/generar-guiado.cjs meddpicc
  */
 
 const ini = { frase: '@inicio', mostrar: ['titulo'], foco: null };

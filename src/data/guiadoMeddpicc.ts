@@ -2,9 +2,9 @@ import audio from '../audios_clase/meddpicc.mp3?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
- * Clase guiada «MEDDPICC: calificar con rigor»: audio completo + inicio de cada diapositiva
- * + marcas de sus elementos. GENERADO desde los subtítulos (guiones/meddpicc.srt) y
- * src/components/meddpicc/escenas.ts con scripts/generar-guiado-meddpicc.cjs: no editar a mano.
+ * Clase guiada «MEDDPICC: calificar con rigor»: audio completo + inicio de cada diapositiva + marcas de sus
+ * elementos. GENERADO desde guiones/meddpicc.srt y src/components/meddpicc/escenas.ts con
+ * node scripts/generar-guiado.cjs meddpicc: no editar a mano.
  */
 export const guiadoMeddpicc: GuiadoClase = {
   audio,
