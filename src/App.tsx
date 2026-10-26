@@ -37,6 +37,8 @@ import ClaseMeddpicc from './components/ClaseMeddpicc';
 import ClaseSpin from './components/ClaseSpin';
 import ClaseKahneman from './components/ClaseKahneman';
 import ClaseInfluencia from './components/ClaseInfluencia';
+import ClaseNegociacion from './components/ClaseNegociacion';
+import ClaseProteccion from './components/ClaseProteccion';
 import ClaseChallenger from './components/ClaseChallenger';
 import ClaseTrampas from './components/ClaseTrampas';
 import ClaseCompensacion from './components/ClaseCompensacion';
@@ -44,6 +46,8 @@ import ClaseGuiada from './components/ClaseGuiada';
 import { guiadoCompensacion } from './data/guiadoCompensacion';
 import { guiadoKahneman } from './data/guiadoKahneman';
 import { guiadoInfluencia } from './data/guiadoInfluencia';
+import { guiadoNegociacion } from './data/guiadoNegociacion';
+import { guiadoProteccion } from './data/guiadoProteccion';
 import { guiadoMeddpicc } from './data/guiadoMeddpicc';
 import { guiadoSpin } from './data/guiadoSpin';
 import ClaseRevOps from './components/ClaseRevOps';
@@ -75,7 +79,7 @@ const REEL_CSS = `
 .reel-lienzo [class*="max-h-["] { max-height: none !important; }
 .reel-lienzo [data-g="titulo"] h2 { font-size: 1.35rem !important; line-height: 1.12 !important; margin-bottom: .35rem !important; }
 .reel-lienzo [data-g="titulo"] p { line-height: 1.33 !important; }
-.reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; padding-right: 34px; }
+.reel-lienzo [data-g="titulo"] { margin-bottom: .9rem !important; padding-right: calc(44px / var(--k, 1)); }
 .reel-lienzo [data-shell] { background: transparent !important; box-shadow: none !important; border: none !important; padding: 0 !important; border-radius: 0 !important; overflow: visible !important; }
 .reel-lienzo [data-adorno] { display: none !important; }
 `;
@@ -112,7 +116,7 @@ function AjustarAlto({ activo, children }: { activo: boolean; children: React.Re
   if (!activo) return <>{children}</>;
   return (
     <div ref={caja} data-ajuste-caja="" style={{ height: '100%', overflow: 'clip', position: 'relative' }}>
-      <div ref={dentro} data-ajuste-dentro="" style={{ width: `${100 / k}%`, transform: `scale(${k})`, transformOrigin: 'top left' }}>{children}</div>
+      <div ref={dentro} data-ajuste-dentro="" style={{ width: `${100 / k}%`, transform: `scale(${k})`, transformOrigin: 'top left', ['--k' as string]: k }}>{children}</div>
     </div>
   );
 }
@@ -145,9 +149,9 @@ export default function App() {
   });
   const [pendingChanges, setPendingChanges] = useState<Record<string, string>>({});
   const [isSavedFeedback, setIsSavedFeedback] = useState(false);
-  const [windowSize, setWindowSize] = useState({ 
-    width: typeof window !== 'undefined' ? window.innerWidth : 1280, 
-    height: typeof window !== 'undefined' ? window.innerHeight : 720 
+  const [windowSize, setWindowSize] = useState({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1280,
+    height: typeof window !== 'undefined' ? window.innerHeight : 720
   });
 
   // Manejador de redimensión para el escalado dinámico
@@ -516,9 +520,13 @@ export default function App() {
   };
 
   // Enlace directo a una clase (?clase=<id>): sirve para incrustarla en otra página.
+  // Modo fullscreen (?fullscreen=1): oculta el botón de retorno a la portada.
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get('clase');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('clase');
+    const fullscreen = params.get('fullscreen') === '1';
     if (id && slidesByClass[id]) openClass(id);
+    if (fullscreen) setIsFullscreen(true);
   }, []);
   // Abre la ventana de "Modo presentador" en una segunda pantalla.
   const openPresenter = () => {
@@ -593,15 +601,17 @@ export default function App() {
             />
           </div>
           <div className="flex items-center gap-1">
-            <button
-              id="btn-volver-portada"
-              onClick={() => setActiveClassId(null)}
-              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors"
-              title="Volver a la portada"
-              aria-label="Volver a la portada"
-            >
-              <LayoutGrid size={16} />
-            </button>
+            {!isFullscreen && (
+              <button
+                id="btn-volver-portada"
+                onClick={() => setActiveClassId(null)}
+                className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors"
+                title="Volver a la portada"
+                aria-label="Volver a la portada"
+              >
+                <LayoutGrid size={16} />
+              </button>
+            )}
             <button onClick={() => setIsSidebarOpen(false)} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-[#2a2a2a] transition-colors">
               <X size={16} />
             </button>
@@ -762,7 +772,7 @@ export default function App() {
                 overflowY: 'hidden',
                 overflowX: 'hidden',
                 overscrollBehavior: 'contain',
-                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'meddpicc' || activeClassId === 'spin-selling' ? '20px 14px 92px' : '20px 14px 24px',
+                padding: activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'negociacion' || activeClassId === 'proteccion-datos' || activeClassId === 'meddpicc' || activeClassId === 'spin-selling' ? '20px 14px 92px' : '20px 14px 24px',
                 boxSizing: 'border-box',
                 background: isDark ? '#000' : '#f0f2f5',
                 pointerEvents: 'auto'
@@ -898,6 +908,16 @@ export default function App() {
                   <ClaseInfluencia slideId={currentSlideId} isDark={isDark} />
                 )}
 
+                {/* Clase "Negociación: lo esencial de HBR": diapositivas de contenido (ng-*) */}
+                {currentSlideId.startsWith('ng-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseNegociacion slideId={currentSlideId} isDark={isDark} />
+                )}
+
+                {/* Clase "Protección de datos: Ley 21.719": diapositivas de contenido (pd-*) */}
+                {currentSlideId.startsWith('pd-') && slidesOrder[currentSlideIndex].level !== 1 && (
+                  <ClaseProteccion slideId={currentSlideId} isDark={isDark} />
+                )}
+
                 {/* Clase "El Vendedor Desafiante": diapositivas de contenido (ch-*) */}
                 {currentSlideId.startsWith('ch-') && slidesOrder[currentSlideIndex].level !== 1 && (
                   <ClaseChallenger slideId={currentSlideId} isDark={isDark} />
@@ -1003,10 +1023,10 @@ export default function App() {
         </div>
 
         {/* Reproducción global de la clase con audio (flecha, resaltado y aparición de elementos) */}
-        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'meddpicc' || activeClassId === 'spin-selling') && (
+        {(activeClassId === 'compensacion-comercial' || activeClassId === 'kahneman' || activeClassId === 'influencia-persuasion' || activeClassId === 'negociacion' || activeClassId === 'proteccion-datos' || activeClassId === 'meddpicc' || activeClassId === 'spin-selling') && (
           <ClaseGuiada
             key={activeClassId}
-            datos={activeClassId === 'kahneman' ? guiadoKahneman : activeClassId === 'influencia-persuasion' ? guiadoInfluencia : activeClassId === 'meddpicc' ? guiadoMeddpicc : activeClassId === 'spin-selling' ? guiadoSpin : guiadoCompensacion}
+            datos={activeClassId === 'kahneman' ? guiadoKahneman : activeClassId === 'influencia-persuasion' ? guiadoInfluencia : activeClassId === 'negociacion' ? guiadoNegociacion : activeClassId === 'proteccion-datos' ? guiadoProteccion : activeClassId === 'meddpicc' ? guiadoMeddpicc : activeClassId === 'spin-selling' ? guiadoSpin : guiadoCompensacion}
             slideActualId={currentSlideId}
             irA={(id) => { const i = slidesOrder.findIndex((s) => s.id === id); if (i >= 0) setCurrentSlideIndex(i); }}
             isDark={isDark}
