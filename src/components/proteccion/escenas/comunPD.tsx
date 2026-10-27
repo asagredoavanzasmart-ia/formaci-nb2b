@@ -138,3 +138,48 @@ export const Insignia: React.FC<{ x: number; y: number; texto: string; c: Tono; 
 
 /* Escudo de derechos. */
 export const ESCUDO = 'M 0 -40 L 34 -28 V 4 C 34 28 16 42 0 50 C -16 42 -34 28 -34 4 V -28 Z';
+
+/* Candado cerrado. */
+export const Candado: React.FC<{ x: number; y: number; s: number; id: string }> = ({ x, y, s, id }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <path d="M -30 -10 V -36 A 30 30 0 0 1 30 -36 V -10" fill="none" stroke={NARANJA} strokeWidth={12} />
+    <rect x={-48} y={-14} width={96} height={80} rx={16} fill={`url(#${id}-marca)`} />
+    <circle cx={0} cy={18} r={10} fill="#fff" />
+    <rect x={-4} y={18} width={8} height={24} rx={3} fill="#fff" />
+  </g>
+);
+
+/* Visto bueno (check). */
+export const Visto: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <circle cx={0} cy={0} r={28} fill="#0f9f6e" />
+    <path d="M -14 2 L -4 14 L 16 -10" fill="none" stroke="#fff" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" />
+  </g>
+);
+
+/* Cruz de rechazo / error. */
+export const Cruz: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <circle cx={0} cy={0} r={28} fill="#c2263e" />
+    <path d="M -12 -12 L 12 12 M 12 -12 L -12 12" fill="none" stroke="#fff" strokeWidth={5} strokeLinecap="round" />
+  </g>
+);
+
+/* Reloj (plazo). */
+export const Reloj: React.FC<{ x: number; y: number; s?: number; c: Tono; progreso?: number }> = ({ x, y, s = 1, c, progreso = 0.5 }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <circle cx={0} cy={0} r={48} fill={c.panel2} />
+    <circle cx={0} cy={0} r={44} fill="none" stroke={c.apagado} strokeWidth={8} />
+    <path d={`M 0 0 L 0 -32`} stroke={NARANJA} strokeWidth={5} strokeLinecap="round" />
+    <path d={`M 0 0 L ${Math.sin(progreso * Math.PI * 2) * 22} ${-Math.cos(progreso * Math.PI * 2) * 22}`} stroke={c.texto} strokeWidth={3} strokeLinecap="round" />
+    <circle cx={0} cy={0} r={5} fill={NARANJA} />
+  </g>
+);
+
+/* Sobre de correo. */
+export const Sobre: React.FC<{ x: number; y: number; s?: number; c: Tono; id: string }> = ({ x, y, s = 1, c, id }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <rect x={-52} y={-36} width={104} height={72} rx={10} fill={`url(#${id}-marca)`} />
+    <path d="M -52 -36 L 0 8 L 52 -36" fill="none" stroke="#fff" strokeWidth={3} opacity={0.7} />
+  </g>
+);
