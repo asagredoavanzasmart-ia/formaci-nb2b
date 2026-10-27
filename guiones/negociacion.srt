@@ -1,0 +1,2319 @@
+1
+00:00:00,000 --> 00:00:03,680
+La mayoría de las negociaciones se deciden antes de sentar a la mesa
+
+2
+00:00:03,680 --> 00:00:06,120
+y se confirman mucho después de firmar
+
+3
+00:00:06,120 --> 00:00:09,800
+y dominar esos dos momentos es lo que separa aquí en cierra trato
+
+4
+00:00:09,800 --> 00:00:11,720
+de quien de verdad crea valor.
+
+5
+00:00:11,720 --> 00:00:15,280
+Negotiación, lo esencial de Harvard Business Review.
+
+6
+00:00:15,280 --> 00:00:18,560
+Detrás hay 11 artículos de la revista de negocios de Harvard
+
+7
+00:00:18,560 --> 00:00:21,320
+escritos por quienes más han estudiado y practicado el tema.
+
+8
+00:00:21,320 --> 00:00:23,920
+James Bennings, Deepak Malhotra,
+
+9
+00:00:23,920 --> 00:00:26,960
+Alisson Woodbrooke, Deb Deborah Colff y Judit Williams,
+
+10
+00:00:26,960 --> 00:00:32,360
+Erin Mayer, un negociador de Reyes de la Policía de Nueva York, David Lacks, Max Baszerman,
+
+11
+00:00:32,360 --> 00:00:38,560
+junto a Daniel Cahneman, Daniel Ertel y un equipo de Vayner Company. El recorrido sigue una lógica
+
+12
+00:00:38,560 --> 00:00:44,760
+simple. Primero, los errores que cometen incluso quienes ya negocian bien. Después, lo que ocurre antes
+
+13
+00:00:44,760 --> 00:00:45,440
+de la mesa, el proceso, las emociones y el poder que no se ve incluso quienes ya negocian bien. Después lo que ocurre antes de la mesa,
+
+14
+00:00:45,440 --> 00:00:51,280
+el proceso, las emociones y el poder que no se ve. Luego la negociación en contextos concretos,
+
+15
+00:00:51,280 --> 00:00:57,200
+un oferta de trabajo, otra cultura, una crisis con reines y al final los tratos complejos,
+
+16
+00:00:57,200 --> 00:01:02,400
+campañas con muchas partes, ofertas justas, la implementación y el momento de retirarse.
+
+17
+00:01:03,280 --> 00:01:05,460
+Negotiar no es un talento reservado para
+
+18
+00:01:05,460 --> 00:01:10,000
+las grandes funciones, negociar con clientes, con proveedores, con tu jefatura y con tu
+
+19
+00:01:10,000 --> 00:01:14,760
+propio equipo, casi todos los días. ¿Cuál fue la última negociación de la que saliste
+
+20
+00:01:14,760 --> 00:01:17,680
+con la sensación de haber dejado algo sobre la mesa?
+
+21
+00:01:17,680 --> 00:01:23,720
+6 habitos de quienes negocian de forma apenas eficaz. Así llama James Seveneos, profesor
+
+22
+00:01:23,720 --> 00:01:25,000
+de la Escuela de negociador de Harvard,
+
+23
+00:01:25,000 --> 00:01:30,000
+a los errores que cometen incluso negociadores con años de experiencia. Antes de recorrerlos,
+
+24
+00:01:30,000 --> 00:01:35,000
+conviene definir el problema que toda negociación tiene que resolver. Al final, cada parte
+
+25
+00:01:35,000 --> 00:01:40,000
+decide entre dos caminos, aceptar el trato o quedarse con su mejor opción sin trato,
+
+26
+00:01:40,000 --> 00:01:43,000
+es decir, lo que haría si el acuerdo no fuera posible.
+
+27
+00:01:43,000 --> 00:01:46,800
+Tú quieres que la otra parte diga que sí y que lo diga en serio
+
+28
+00:01:46,800 --> 00:01:50,800
+a una propuesta que te conviene más que tu propia opción sin trato.
+
+29
+00:01:50,800 --> 00:01:52,400
+¿Y por qué diría que sí?
+
+30
+00:01:52,400 --> 00:01:55,600
+Porque a ella también le conviene más que la suya.
+
+31
+00:01:55,600 --> 00:02:00,280
+Tu problema como negociador entonces es entender y moldear la decisión que persibe tu
+
+32
+00:02:00,280 --> 00:02:03,000
+contraparte. Trato frente a no trato.
+
+33
+00:02:03,000 --> 00:02:06,000
+Para que escoja por su propia interés lo que tú quieres.
+
+34
+00:02:06,000 --> 00:02:10,000
+El diplomático italiano Daniel Evares lo resumió con ironia.
+
+35
+00:02:10,000 --> 00:02:14,000
+Negotiar es el arte de dejar que los demás se salgan con la tuya.
+
+36
+00:02:14,000 --> 00:02:17,000
+Puede sonar a manipulación, pero es lo contrario.
+
+37
+00:02:17,000 --> 00:02:21,000
+Si la otra parte acepta por sus propias razones, el acuerdo se sostiene en el tiempo.
+
+38
+00:02:21,000 --> 00:02:25,400
+Si acepta presionada, se cae a la primera dificultad.
+
+39
+00:02:25,400 --> 00:02:29,840
+Seis errores frecuentes impiden resolver bien este problema.
+
+40
+00:02:29,840 --> 00:02:34,440
+En tu próxima negociación, ¿sabría decir que haría tu contraparte si no llega un acuerdo
+
+41
+00:02:34,440 --> 00:02:40,000
+contigo? Descudar el problema del otro es el error más común. Como la otra parte
+
+42
+00:02:40,000 --> 00:02:46,120
+dirá que sí por sus razones y no por las tuyas, llegaron a un acuerdo exige entender y resolver su problema
+
+43
+00:02:46,120 --> 00:02:51,280
+como camino para resolver el tuyo. Se ven y os cuento al caso de una empresa tecnológica que
+
+44
+00:02:51,280 --> 00:02:57,040
+crea un detector de fugas para tanques subterráneos de combustible. Más barato y una cien veces más
+
+45
+00:02:57,040 --> 00:03:02,600
+preciso que lo que existía justo cuando la agencia de protección ambiental de Estados Unidos impulsaba
+
+46
+00:03:02,600 --> 00:03:12,080
+que esos tanques se revisaran de forma continua. El momento parecía perfecto. Sin embargo, la primera venta fue también la única.
+
+47
+00:03:12,080 --> 00:03:17,920
+¿Por qué? Las normas permitían fugas de hasta 1.500 galones y el detector captaba fugas
+
+48
+00:03:17,920 --> 00:03:23,440
+de apenas 8 onzas. Desde el lado del comprador, el razonamiento era otro. Este aparato
+
+49
+00:03:23,440 --> 00:03:27,120
+me va a meter en problemas regulatorios caros y en líos de imagen, mejor
+
+50
+00:03:27,120 --> 00:03:29,280
+que lo tenga mi competencia.
+
+51
+00:03:29,280 --> 00:03:33,760
+Para la empresa más rápido, mejor y más barato sumaba un trato seguro.
+
+52
+00:03:33,760 --> 00:03:36,920
+Para el cliente, sumaba un dolor de cabeza.
+
+53
+00:03:36,920 --> 00:03:41,080
+Wayne Hoisanga con más de 1000 tratos acuesta lo resumía así.
+
+54
+00:03:41,080 --> 00:03:43,580
+Ponte siempre en los zapatos del otro.
+
+55
+00:03:43,580 --> 00:03:45,840
+Steve Holtzman de de Millennium Pharmaceuticals,
+
+56
+00:03:45,840 --> 00:03:51,160
+decía que su equipo pasaba mucho tiempo pensando en cómo la persona al otro lado de la mesa
+
+57
+00:03:51,160 --> 00:03:56,400
+tendría que venderle el trato a su jefe. Bill Uri lo llama construir un puente de oro,
+
+58
+00:03:56,400 --> 00:04:01,200
+unir el punto donde está tu contraparte con el punto al que quieres llegar en lugar de empujarla
+
+59
+00:04:01,200 --> 00:04:06,280
+desde su posición hasta la tuya. ¿Qué tendría que explicarle tu cliente a su jefatura
+
+60
+00:04:06,280 --> 00:04:07,800
+para defender tu propuesta?
+
+61
+00:04:07,800 --> 00:04:10,120
+¿Y le diste tuve esos argumentos?
+
+62
+00:04:10,800 --> 00:04:13,760
+Dejar que el precio aplaste los demás intereses.
+
+63
+00:04:13,760 --> 00:04:16,120
+Se venios llamada quién esca en este error
+
+64
+00:04:16,120 --> 00:04:17,920
+negociadores midas al revés.
+
+65
+00:04:17,920 --> 00:04:20,200
+En lugar de convertir en oro lo que tocan
+
+66
+00:04:20,200 --> 00:04:23,040
+convierten cualquier trato que podría ser cooperativo
+
+67
+00:04:23,040 --> 00:04:24,960
+en una pelea por el precio.
+
+68
+00:04:24,960 --> 00:04:29,000
+Felix Roattin, del Banco de Inversión, la Sartrex, lo decía con claridad.
+
+69
+00:04:29,000 --> 00:04:34,000
+La mayoría de los trato son 50% emoción y 50% economía.
+
+70
+00:04:34,000 --> 00:04:38,000
+Un experimento muy estudiado lo demuestra con dinero real.
+
+71
+00:04:38,000 --> 00:04:42,000
+Una persona recibe 100 dólares para repartir con otra comoquiera.
+
+72
+00:04:42,000 --> 00:04:44,000
+La segunda puede aceptar o rechazar.
+
+73
+00:04:44,000 --> 00:04:46,040
+Si acepta, el dinero se reparte
+
+74
+00:04:46,040 --> 00:04:53,200
+según la propuesta. Si rechaza, nadie reciben nada. La lógica pura del precio diría propon 99 para ti
+
+75
+00:04:53,200 --> 00:04:58,600
+y uno para la otra persona, porque un dólar es mejor que nada. En la realidad ocurre otra cosa.
+
+76
+00:04:58,600 --> 00:04:59,960
+La mayoría rechaza
+
+77
+00:05:00,000 --> 00:05:06,120
+y quien es paciente más a largo plazo. Por eso se ven y us propone a ser un inventario de diferencias.
+
+78
+00:05:06,120 --> 00:05:12,600
+Si fuéramos clones con los mismos intereses, no habría nada que negociar. ¿Qué diferencia entre tú
+
+79
+00:05:12,600 --> 00:05:18,640
+y tú contra parte podrías convertir en una ganancia para ambos? Descudar la mejor alternativa a un
+
+80
+00:05:18,640 --> 00:05:29,480
+acuerdo negociado, el Batman. El término lo cuñaron Roger Fisher, William Yurie y Bruce Patt en su libro Obtengal Sí. Es lo que haría si el trato no fuera posible,
+
+81
+00:05:29,480 --> 00:05:35,760
+retirarte, buscar otro comprador, hacerlo internamente o ir a juicio. El batna de cada parte
+
+82
+00:05:35,760 --> 00:05:40,720
+fija el umbral que cualquier acuerdo debe superar y entre ambos umbrales queda la zona
+
+83
+00:05:40,720 --> 00:05:46,600
+donde un acuerdo es posible. Un batna fuerte da poder. Roger Fisher lo dramatizaba así.
+
+84
+00:05:46,600 --> 00:05:48,520
+Al negociar tu sueldo con tu jefe,
+
+85
+00:05:48,520 --> 00:05:50,560
+¿qué preferirías llevar en el bolsillo?
+
+86
+00:05:50,560 --> 00:05:54,440
+Un arma o un excelente oferta de un competidor de tu empresa.
+
+87
+00:05:54,440 --> 00:05:57,920
+Pensar en el bat na de lo otro también habré posibilidades.
+
+88
+00:05:57,920 --> 00:06:00,320
+Una empresa británica quería vender una división
+
+89
+00:06:00,320 --> 00:06:02,400
+con bajo desempeño por algo más de su valor
+
+90
+00:06:02,400 --> 00:06:04,800
+contable de 7 millones de dólares.
+
+91
+00:06:04,800 --> 00:06:08,600
+Había dos posibles compradores, rivales feroses en otros mercados.
+
+92
+00:06:08,600 --> 00:06:12,800
+La venderora se aseguró de que cada uno supiera que el otro estaba interesado.
+
+93
+00:06:12,800 --> 00:06:15,600
+La división se vendió en 45 millones.
+
+94
+00:06:15,600 --> 00:06:18,600
+El error contrario es dañar tu propio vándano.
+
+95
+00:06:18,600 --> 00:06:22,800
+Un fabricante químico canadiense necesitaba vender una división con urgencia.
+
+96
+00:06:22,800 --> 00:06:27,760
+Su director ejecutivo, amigo de la infancia del director de la compradora australiana,
+
+97
+00:06:27,760 --> 00:06:34,960
+aceptó darle nueve meses de exclusividad. El encargado de vender viajó a Sydney sin ninguna alternativa durante nueve
+
+98
+00:06:34,960 --> 00:06:43,960
+interminables meses. Se veniós lo comparar con unas tijeras. El trato posible y tu vatna son las dos hojas y solo cortan cuando trabajan juntas.
+
+99
+00:06:43,960 --> 00:06:48,240
+¿Cuál es hoy tu mejor alternativa si tu negociación más importante no prospera
+
+100
+00:06:48,240 --> 00:06:50,240
+y la conoce tu contra parte?
+
+101
+00:06:50,240 --> 00:06:54,440
+Un episodio de 1912 junta varios de estos errores.
+
+102
+00:06:54,440 --> 00:06:59,160
+Theodore Roosevelt cerraba su campaña presidencial y su equipo había impreso 3 millones de folletos
+
+103
+00:06:59,160 --> 00:07:00,160
+con su retrato.
+
+104
+00:07:00,160 --> 00:07:02,920
+Entonces alguien notó una línea bajo la foto.
+
+105
+00:07:02,920 --> 00:07:04,920
+Moffett Studios Chicago.
+
+106
+00:07:04,920 --> 00:07:09,520
+El estudio tenía los derechos y el uso no autorizado podía costarla a la campaña
+
+107
+00:07:09,520 --> 00:07:13,000
+un dólar por copia. No había tiempo para reintrimir.
+
+108
+00:07:13,000 --> 00:07:18,160
+Teóraún averiguaron que el fotógrafo Moffett pasaba a puros económicos y cerca de jubilarse
+
+109
+00:07:18,160 --> 00:07:24,060
+solo pensaba en el dinero. El equipo desanimado acudió al director de campaña George Perkins
+
+110
+00:07:24,060 --> 00:07:25,760
+Ex socio de JP Morgan.
+
+111
+00:07:25,760 --> 00:07:28,560
+Perkins envió de inmediato un telegrama al estudio.
+
+112
+00:07:28,560 --> 00:07:32,120
+Vamos a repartir millones de folletos con la foto de Roosevelt en la portada.
+
+113
+00:07:32,120 --> 00:07:35,400
+Será una gran publicidad para el estudio cuya foto parezca.
+
+114
+00:07:35,400 --> 00:07:37,760
+¿Cuánto nos pagarían por poner la suya?
+
+115
+00:07:37,760 --> 00:07:39,600
+Respondan de inmediato.
+
+116
+00:07:39,600 --> 00:07:41,200
+Moffett contestó.
+
+117
+00:07:41,200 --> 00:07:49,560
+Nunca lo hemos hecho, pero de las circunstancias nos complacería ofrecerles $250 dólares y Perkins aceptó. Se venió a advierte que
+
+118
+00:07:49,560 --> 00:07:53,400
+el enfoque de Perkins era engañoso y levantaban deras éticas, pero la elección
+
+119
+00:07:53,400 --> 00:07:58,480
+es clara. El equipo estaba obsesionado con su propio problema y Moffett ni siquiera
+
+120
+00:07:58,480 --> 00:08:02,960
+sabía que tenía uno. Perkins moldeó cómo el fotógrafo veía su problema y su
+
+121
+00:08:02,960 --> 00:08:07,280
+alternativa y marcó la decisión como el valor de la publicidad y el reconocimiento.
+
+122
+00:08:08,080 --> 00:08:11,240
+¿Dónde termina para ti en marcar el problema del otro
+
+123
+00:08:11,240 --> 00:08:12,920
+y dónde empieza a hacer un engaño?
+
+124
+00:08:13,960 --> 00:08:15,760
+No corregir la visión sesgada.
+
+125
+00:08:16,240 --> 00:08:18,760
+Como la percepción del horizonte de un piloto de noche,
+
+126
+00:08:18,760 --> 00:08:21,600
+nuestra psicología nos engaña de forma sistemática al negociar.
+
+127
+00:08:22,200 --> 00:08:24,120
+El primer sesgo es el sesgo de rol.
+
+128
+00:08:24,480 --> 00:08:29,000
+Investigadores de Harvard dieron a un grupo de ejecutivos la misma información sobre un
+
+129
+00:08:29,000 --> 00:08:34,500
+empresa inventa y los asignaron al azar como compradores o vendedores. Al pedirles su valoración
+
+130
+00:08:34,500 --> 00:08:39,400
+privada de lo que era justo quienes hacían de vendedores dieron valoraciones medianas de más
+
+131
+00:08:39,400 --> 00:08:45,500
+del doble que quienes hacían de compradores. La diferencia no tenía base real, venía solo del rol
+
+132
+00:08:45,500 --> 00:08:51,940
+asignado. Basta un cejo moderado para trabajar un acuerdo. Si quien demanda cree tener un 70% de
+
+133
+00:08:51,940 --> 00:08:57,860
+probabilidades de ganar un juicio de un millón de dólares y la defensa cree que solo tiene un 50%
+
+134
+00:08:57,860 --> 00:09:04,220
+quien demanda espera 700 mil dólares menos son horarios y la defensa teme pagar 500 mil más
+
+135
+00:09:04,220 --> 00:09:05,640
+son horarios. No hay
+
+136
+00:09:05,640 --> 00:09:11,720
+arreglo posible fuera del tribunal. El segundo sesgo son las percepciones partidistas.
+
+137
+00:09:11,720 --> 00:09:17,480
+Vemos a nuestro lado como más talentoso o honesto y moral y demonizamos a la otra parte.
+
+138
+00:09:17,480 --> 00:09:23,880
+Si estás convencido de que tu contra parte cerca tiende a provocar justo esa conducta.
+
+139
+00:09:23,880 --> 00:09:25,880
+¿Cómo contraerrestarlo? Saber que estos
+
+140
+00:09:25,880 --> 00:09:31,440
+sesgos existen, pedir la opinión de personas externas y hacer un juego de roles inverso.
+
+141
+00:09:31,440 --> 00:09:35,820
+Se venius pidió un cliente preparar un informe para cada lado, el suyo era largo y
+
+142
+00:09:35,820 --> 00:09:40,920
+elocuente. El de la otra parte ocupaba apenas un par de hojas, casi todas razones para que
+
+143
+00:09:40,920 --> 00:09:50,640
+se diera rápido. Si alguien de tu equipo tuviera que defender mañana la posición de tu cliente, ¿cuántos argumentos sólidos encontraría? Contró la negociación
+
+144
+00:09:50,640 --> 00:09:55,640
+antes de que empiece. Deepak Malootra también de Harvard sostiene que algunos de los errores
+
+145
+00:09:55,640 --> 00:10:00,040
+más caros ocurren antes de discutir el fondo del trato y el primero
+
+146
+00:10:00,000 --> 00:10:02,800
+conversemos sobre el valor que aportamos.
+
+147
+00:10:02,800 --> 00:10:05,280
+Tus alternativas frente a las suyas.
+
+148
+00:10:05,280 --> 00:10:08,240
+Quien llega obsesionado con lo que le pasará si no hay trato
+
+149
+00:10:08,240 --> 00:10:12,720
+obtiene peores resultados que quien se concentra en lo que le pasará a la otra parte.
+
+150
+00:10:12,720 --> 00:10:16,520
+Así el marco gira hacia el valor único que ofrece.
+
+151
+00:10:16,520 --> 00:10:18,560
+Igualdad frente a dominio.
+
+152
+00:10:18,560 --> 00:10:22,280
+Maljo tras eso era una empresa pequeña frente a una multinacional.
+
+153
+00:10:22,280 --> 00:10:25,060
+Cada vez que la grande hacia una exigencia de procedimiento
+
+154
+00:10:25,060 --> 00:10:30,080
+que no le haría un igual, la rechazaban con respeto y cada cláusula desequilibrada la
+
+155
+00:10:30,080 --> 00:10:36,240
+redactaban de nuevo para que fuera simétrica. Zunzzu escribió en el arte de la guerra que
+
+156
+00:10:36,240 --> 00:10:42,500
+toda guerra se gana o se pierde antes de empezar. En negociación ocurre algo parecido. Desde
+
+157
+00:10:42,500 --> 00:10:46,080
+qué marco te está mirando hoy tu cliente, el del valor que aportas o el del precio que cobras, la emoción y el arte de negociación ocurre algo parecido. Desde qué marco te está mirando hoy tu cliente, el del valor que aportas
+
+158
+00:10:46,080 --> 00:10:49,880
+o el del precio que cobras, la emoción y el arte de negociar.
+
+159
+00:10:49,880 --> 00:10:55,720
+Alison Woodbrooke's de Harvard tiene un ejercicio favorito con su alumnado, llamado
+
+160
+00:10:55,720 --> 00:11:01,200
+honrar el contrato. En parejas, una persona representa un fabricante de componentes y otra
+
+161
+00:11:01,200 --> 00:11:07,600
+a una empresa emergente de buscadores en internet que firmaron un contrato hace 8 meses y ahora chocan en varios términos.
+
+162
+00:11:07,600 --> 00:11:12,800
+Lo interesante está en una instrucción secreta que recibe solo uno de cada par.
+
+163
+00:11:12,800 --> 00:11:16,800
+Empieza la negociación mostrando en nojo durante al menos 10 minutos.
+
+164
+00:11:16,800 --> 00:11:21,600
+Interrumpe, llame injusta la otra persona, culpa la y sube la voz.
+
+165
+00:11:21,600 --> 00:11:26,280
+Pasados 30 minutos siempre hay parejas que siguen gritar doce y por lo general,
+
+166
+00:11:26,280 --> 00:11:33,040
+cuanto más en ojo hubo, peor terminó la negociación en juicio o sin acuerdo, llevar ir a una negociación
+
+167
+00:11:33,040 --> 00:11:38,600
+es como lanzar una bomba al proceso. Hasta hace unos 20 años casi nadie estudiaba las emociones
+
+168
+00:11:38,600 --> 00:11:44,200
+al negociar. La atención estaba en la estrategia y las tácticas. Hoy se investigan emociones
+
+169
+00:11:44,200 --> 00:11:46,000
+específicas como la ira, la ansiedad, la decepción o el ent tácticas. Hoy se investigan emociones específicas como la ira,
+
+170
+00:11:46,000 --> 00:11:52,000
+la ansiedad, la decepción o el entusiasmo y se distingue entre sentirlas y expresarlas.
+
+171
+00:11:52,000 --> 00:11:57,000
+Brooks ordena las emociones según el momento. La ansiedad aparece antes o al inicio.
+
+172
+00:11:57,000 --> 00:12:00,000
+La ira y el entusiasmo surgen en lo más intenso de la discusión.
+
+173
+00:12:00,000 --> 00:12:03,000
+Y la decepción y el arrepentimiento llegan al final.
+
+174
+00:12:03,000 --> 00:12:10,240
+¿Qué emoción te acompaña con más frecuencia cuando negociuencia cuando negocias antes durante o después? La ansiedad activa
+
+175
+00:12:10,240 --> 00:12:15,800
+el impulso de UIR y al negociar la paciencia suele pagar. En 2011, Brooks y Maurice
+
+176
+00:12:15,800 --> 00:12:22,240
+Schweitzer preguntaron a 185 profesionales que esperaban sentir al negociar. Con un desconocido
+
+177
+00:12:22,240 --> 00:12:25,920
+o por un aumento de sueldo, la ansiedad fue la emoción dominante,
+
+178
+00:12:25,920 --> 00:12:31,720
+al comprar un auto que 2ª después de la entusiasmo. Luego pidieron a otras 136 personas
+
+179
+00:12:31,720 --> 00:12:36,200
+negociar un contrato de teléfono celular. A la mitad le hicieron escucharla inquietante
+
+180
+00:12:36,200 --> 00:12:41,200
+música de la película psicosis y a la otra mitad música agradable de Gendel. Quienes
+
+181
+00:12:41,200 --> 00:12:45,080
+sentían ansiedad hicieron primeras ofertas más débiles, respondieron más rápido
+
+182
+00:12:45,080 --> 00:12:49,760
+a cada movimiento y abandonaron antes. Sus acuerdos fueron un 12% menos atractivos.
+
+183
+00:12:49,760 --> 00:12:55,840
+Hubo una excepción, quien se calificaba en alto en aptitud para negociar se vieron menos afectados.
+
+184
+00:12:55,840 --> 00:13:02,120
+En 2012, junto a Francesca Gino, Brooks encontró que las personas ansiosas no descartaban los consejos
+
+185
+00:13:02,120 --> 00:13:09,560
+de alguien con un conflicto de interés declarado, quien muestra ansiedad queda más expuesto a que se aprovechen de él o de ella. En el
+
+186
+00:13:09,560 --> 00:13:14,160
+programa Shark Tank, inversionistas negocian con emprendedores bajo música tensa y preguntas
+
+187
+00:13:14,160 --> 00:13:18,400
+agresivas y quienes menos alteran suelen lograr los mejores tratos.
+
+188
+00:13:18,400 --> 00:13:23,720
+Dos remedios. El primero, practicar y ensayar hasta que negociar se vuelva familiar, como
+
+189
+00:13:23,720 --> 00:13:25,920
+en la terapia de exposición para el miedo a volar.
+
+190
+00:13:25,920 --> 00:13:31,440
+El segundo, delegar en un tercero experto como un corredor de propiedades o una gente.
+
+191
+00:13:31,440 --> 00:13:36,640
+¿Cuántas veces ensayas en voz alta una negociación importante antes de tenerla?
+
+192
+00:13:36,640 --> 00:13:38,160
+La ira.
+
+193
+00:13:38,160 --> 00:13:42,400
+Mucha gente crea que nojarse ayuda a quedarse con una tajada mayor del pastel.
+
+194
+00:13:42,400 --> 00:13:46,880
+En la investigación de Brooks, más de la mitad de las personas preferirse sentirse enojada
+
+195
+00:13:46,880 --> 00:13:49,080
+antes que feliz al negociar.
+
+196
+00:13:49,080 --> 00:13:51,000
+Los datos dicen otra cosa.
+
+197
+00:13:51,000 --> 00:13:55,860
+Las investigaciones de Keith Allred muestran que la ira escala el conflicto, sega las
+
+198
+00:13:55,860 --> 00:14:00,920
+percepciones, hace más probable el estancamiento, reduce las ganancias conjuntas y aumenta el
+
+199
+00:14:00,920 --> 00:14:01,920
+rechazo de fertiles.
+
+200
+00:14:01,920 --> 00:14:05,000
+Y en negocia con el enojo recuerda peor sus propios intereses
+
+201
+00:14:05,000 --> 00:14:07,000
+y juja peor los agenos.
+
+202
+00:14:07,000 --> 00:14:09,000
+Hay matices.
+
+203
+00:14:09,000 --> 00:14:11,000
+Jerven van Cliff de la Universidad de Amsterdam
+
+204
+00:14:11,000 --> 00:14:15,000
+encontró que en una negociación única y puramente transaccional
+
+205
+00:14:15,000 --> 00:14:17,000
+como regatear un auto con un desconocido,
+
+206
+00:14:17,000 --> 00:14:20,000
+mostrar enojo puede lograr un mejor trato.
+
+207
+00:14:20,000 --> 00:14:22,000
+Pero tiene costos.
+
+208
+00:14:22,000 --> 00:14:24,000
+Rachel Campaña de la Universidad de New Hampshire
+
+209
+00:14:24,000 --> 00:14:27,800
+mostró que fingir ir a traer beneficios tácticos pequeños
+
+210
+00:14:27,800 --> 00:14:30,400
+y un efecto rebote grande y persistente.
+
+211
+00:14:30,400 --> 00:14:34,800
+La ir a fingir termina volviado ser real y destruye la confianza.
+
+212
+00:14:34,800 --> 00:14:39,400
+Y Jeremy Jeep y Martin Schoinsberg encontraron que frente a alguien enojado
+
+213
+00:14:39,400 --> 00:14:42,400
+más personas prefieren retirarse. ¿Qué hacer?
+
+214
+00:14:42,400 --> 00:14:46,700
+Construir cercanía antes, durante y después.
+
+215
+00:14:46,700 --> 00:14:52,320
+Enmarcar la conversación como cooperativa, si la otra parte se enoja, disculparte y calmar,
+
+216
+00:14:52,320 --> 00:14:58,000
+pedir una pausa cuando la atención sube porque muchas negociaciones ocurren en varias reuniones
+
+217
+00:14:58,000 --> 00:15:01,000
+y aunque es un raro, re encuadrar
+
+218
+00:15:00,000 --> 00:15:05,800
+como feudos. Ventas cobraban unos por volumen y prometían lo que producción no podía cumplir.
+
+219
+00:15:05,800 --> 00:15:12,160
+Suini no tenía autoridad para ordenarles cooperar, así que primero redujo los errores de
+
+220
+00:15:12,160 --> 00:15:19,760
+facturación del 7,1% al 2,4% en 3 meses y luego acéleco el reenvolso de gastos al equipo de ventas.
+
+221
+00:15:19,760 --> 00:15:26,600
+Al demostrar su valor a ambos consiguió que se sentaran a reviseñar juntos cómo se tomaba las decisiones.
+
+222
+00:15:26,600 --> 00:15:29,480
+Ponerle precio al estatucuo.
+
+223
+00:15:29,480 --> 00:15:36,680
+Ava Eban, ex-canciller de Israel, decía que los diplomáticos viven una pasionado romance con el estatucuo.
+
+224
+00:15:36,680 --> 00:15:40,840
+Mientras no cuesta nada evitar el problema, evitarlo será lo más fácil.
+
+225
+00:15:40,840 --> 00:15:44,980
+Karen Hartig había sido ascendida sin aumento y hacía dos trabajos.
+
+226
+00:15:44,980 --> 00:15:45,600
+Su jefe
+
+227
+00:15:45,600 --> 00:15:50,360
+la apoyaba de palabra pero nada cambiaba. Cuando respondió la llamada de un casa talento
+
+228
+00:15:50,360 --> 00:15:55,200
+y recibió una oferta, su jefe ya no pudo mantener la situación y además tuvo un argumento
+
+229
+00:15:55,200 --> 00:15:59,280
+para defenderla ante su propia jefatura y recursos humanos.
+
+230
+00:15:59,280 --> 00:16:02,220
+Sumar aliados El capitán Dan Reilly de la fuerza
+
+231
+00:16:02,220 --> 00:16:08,460
+aérea necesitaba cambiar la rotación de vuelos de su escuadrón por una emergencia familiar de un subordinado.
+
+232
+00:16:08,460 --> 00:16:11,520
+Debía probarlo un comandante dos niveles más arriba.
+
+233
+00:16:11,520 --> 00:16:16,040
+En vez de saltarse a su superior inmediato, le presentó primero un borrador, anticiparon
+
+234
+00:16:16,040 --> 00:16:19,840
+juntos las objeciones y llegaron al comandante con su respaldo.
+
+235
+00:16:19,840 --> 00:16:23,560
+Nadie discutió su credibilidad, solo los méritos de la solución.
+
+236
+00:16:23,560 --> 00:16:30,360
+¿Qué valor podría demostrarle hoy a alguien que no ve razones para negociar contigo? Los movimientos de proceso no toca en el
+
+237
+00:16:30,360 --> 00:16:35,660
+fondo del asunto pero cambian cómo se recibe, la agenda, el trabajo previo y el ordenen que
+
+238
+00:16:35,660 --> 00:16:41,400
+se escucha las personas. Sembrar y de hasta enprano. Joe Lopez, un ingeniero que defendía sus ideas
+
+239
+00:16:41,400 --> 00:16:49,160
+con mucha energía en las reuniones de planificación, notó que sus colegas habían dejado de escucharlo. Así que empezó a molser con cada uno
+
+240
+00:16:49,160 --> 00:16:54,600
+por separado y a contarle cómo un proyecto beneficiaría su área. Después en las reuniones,
+
+241
+00:16:54,600 --> 00:16:58,920
+ya no necesitaba sobrevender, lo grababa a ser escuchado con menos palabras y en un tono
+
+242
+00:16:58,920 --> 00:17:00,320
+más bajo.
+
+243
+00:17:00,320 --> 00:17:07,000
+Reencuadrar el proceso. En la empresa de Marcia Filvin, el espacio y los equipos se lo llevaba quien presionaba más
+
+244
+00:17:07,000 --> 00:17:09,000
+y todos inflaban sus cifras.
+
+245
+00:17:09,000 --> 00:17:12,000
+Ella se posicionó como defensora de su área y también de la empresa
+
+246
+00:17:12,000 --> 00:17:15,000
+y propuso definir en grupo criterios objetivos
+
+247
+00:17:15,000 --> 00:17:17,000
+para medir la necesidad real.
+
+248
+00:17:17,000 --> 00:17:21,000
+La gerencia aceptó y Filvin terminó presidiendo el comité que los redactó.
+
+249
+00:17:21,000 --> 00:17:24,000
+Así llevó la discusión de los intereses de cada feudo
+
+250
+00:17:24,000 --> 00:17:25,000
+a las necesidades de la organización.
+
+251
+00:17:25,000 --> 00:17:30,400
+Construir con senso Mark Chapin, director ejecutivo de una empresa de
+
+252
+00:17:30,400 --> 00:17:35,000
+biotecnología, debía integrar un laboratorio recién adquirido sin perder a sus científicos.
+
+253
+00:17:35,000 --> 00:17:41,000
+Primero se reunió a solas con cada líder clave para trazar un mapa de apoyos y resistencias.
+
+254
+00:17:41,000 --> 00:17:44,000
+Luego, en una segunda ronda, cuido el orden.
+
+255
+00:17:44,000 --> 00:17:45,900
+Empezó por la persona más
+
+256
+00:17:45,900 --> 00:17:51,100
+favorable y fue sumando compromisos uno a uno antes de que la oposición pudiera organizarse.
+
+257
+00:17:51,100 --> 00:17:55,900
+Cuando llegó la reunión formal, no tuvo que imponer nada. ¿Con quién deberías
+
+258
+00:17:55,900 --> 00:18:01,580
+conversar a solas antes de tu próxima reunión decisiva? Los movimientos de reconocimiento cambian
+
+259
+00:18:01,580 --> 00:18:06,320
+el clima. Cuando la conversación se traba, generan confianza e invitan a la otra parte de
+
+260
+00:18:06,320 --> 00:18:07,820
+al hogar de verdad.
+
+261
+00:18:07,820 --> 00:18:09,820
+Ayudara salvar la cara.
+
+262
+00:18:09,820 --> 00:18:14,320
+Sam Newton tenía un jefe nuevo, venido de finanzas y sin experiencia en operaciones,
+
+263
+00:18:14,320 --> 00:18:18,760
+que vetaba cada una de sus propuestas antes de que terminara de explicarlas.
+
+264
+00:18:18,760 --> 00:18:24,060
+Newton presionó más y encontró más resistencia, hasta que lo vio desde el otro lado.
+
+265
+00:18:24,060 --> 00:18:26,400
+A probar sus ideas podía parecer de habilidad
+
+266
+00:18:26,600 --> 00:18:28,800
+en alguien que todavía buscaba legitimarse.
+
+267
+00:18:29,000 --> 00:18:31,400
+Desde entonces le presentó varias opciones
+
+268
+00:18:31,600 --> 00:18:34,400
+y reconoció que la decisión final era de su jefe.
+
+269
+00:18:34,600 --> 00:18:38,600
+Poco a poco el jefe dejó de necesitar imponerse.
+
+270
+00:18:38,800 --> 00:18:41,000
+Mantener vivo el diálogo.
+
+271
+00:18:41,200 --> 00:18:44,600
+Francesca Rosy quería adquirir una pequeña empresa de software
+
+272
+00:18:44,800 --> 00:18:45,400
+pero el director de investigación dudaba de su viabilidad comercial. Rosy quería adquirir una pequeña empresa de software, pero el director
+
+273
+00:18:45,400 --> 00:18:50,560
+de investigación dudaba de su viabilidad comercial. Rosy no forzó la decisión, dio un
+
+274
+00:18:50,560 --> 00:18:55,740
+paso atrás, trabajó con los diseñadores de la empresa y con analistas, reunió datos
+
+275
+00:18:55,740 --> 00:19:00,320
+y fue sumando al director a la conversación. Él abandonó su oposición cuando entendió
+
+276
+00:19:00,320 --> 00:19:07,000
+que la compra lejos de achicar su área la haría crecer. Pedir nuevas perspectivas.
+
+277
+00:19:07,000 --> 00:19:12,080
+Donahyitchcock había negociado una empresa conjunta entre su organización de salud y una
+
+278
+00:19:12,080 --> 00:19:13,080
+aseguradora.
+
+279
+00:19:13,080 --> 00:19:16,080
+En el papel era perfecta, pero no avanzaba.
+
+280
+00:19:16,080 --> 00:19:20,560
+Se reunió con su contraparte y le preguntó ¿qué efectos inesperados estaba teniendo
+
+281
+00:19:20,560 --> 00:19:23,560
+la acuerdo en su organización y en su propio trabajo?
+
+282
+00:19:23,560 --> 00:19:28,840
+Descubrió que el acuerdo sobrecargaba partamentos que aún no tenían ingresos para contratar
+
+283
+00:19:28,840 --> 00:19:32,480
+y que su contraparte cargaba personalmente con ese peso.
+
+284
+00:19:32,480 --> 00:19:35,800
+Con eso buscaron juntas como aliviarlo.
+
+285
+00:19:35,800 --> 00:19:39,980
+¿Qué pregunta podría hacerle a una contraparte trabaja para entender lo que todavía no
+
+286
+00:19:39,980 --> 00:19:41,680
+te ha dicho?
+
+287
+00:19:41,680 --> 00:19:49,840
+Quince reglas para negociar una oferta de trabajo. Deep pack mal otra Reune aquí lo que aconseja sus estudiantes y ex alumnos y las primeras
+
+288
+00:19:49,840 --> 00:19:56,360
+reglas tratan de cómo te perciben. No subestimes la simpatía. La gente solo luchará por
+
+289
+00:19:56,360 --> 00:19:59,560
+conseguirte una mejor oferta si la agradas.
+
+290
+00:19:59,560 --> 00:20:01,560
+No se trata de...
+
+291
+00:20:00,000 --> 00:20:07,040
+piensa no solo en cuanto te pagan sino en cuando un camino que hoy pagan menos puede dejarte mejor
+
+292
+00:20:07,040 --> 00:20:14,640
+posicionado mañana. Negócia varios temas a la vez no uno tras otro. Si pide solo un cambio,
+
+293
+00:20:14,640 --> 00:20:20,960
+la otra persona supondrá que con eso aceptarás. Si después vuelves con un y otra cosa más se
+
+294
+00:20:20,960 --> 00:20:28,760
+le acabara la buena disposición. Plantea todo junto e indica cuánto te importa cada punto. Si no lo haces, puede considerte
+
+295
+00:20:28,760 --> 00:20:34,280
+los dos que menos valoras porque son fáciles y sentir que ya hizo su parte. No negociar
+
+296
+00:20:34,280 --> 00:20:39,760
+solo por negociar. Maljo otra vez estudiantes de MBA, el majíster en administración de
+
+297
+00:20:39,760 --> 00:20:44,280
+empresas, que acaban de tomar un curso de negociación y salen a regatear todo con su
+
+298
+00:20:44,280 --> 00:20:45,000
+primer empleador.
+
+299
+00:20:45,000 --> 00:20:51,000
+Si algo te importa, negocia sin dodarlo. Pero pelear cada detalle de jasca la relación
+
+300
+00:20:51,000 --> 00:20:55,000
+y limita lo que podrás negociar más adelante cuando quizás importa más.
+
+301
+00:20:55,000 --> 00:21:01,000
+Si hoy tuvieras que ordenar por importancia lo que quieres de un trabajo en qué lugar quedaría el sueldo,
+
+302
+00:21:01,000 --> 00:21:05,000
+las últimas reglas tratan del tiempo y de la perspectiva.
+
+303
+00:25:00,000 --> 00:25:02,000
+y
+
+304
+00:30:00,000 --> 00:30:02,000
+y
+
+305
+00:35:00,000 --> 00:35:02,000
+y
+
+306
+00:40:00,000 --> 00:40:02,000
+y
+
+307
+00:41:05,328 --> 00:41:10,688
+piensan el momento de las ofertas si quieres comparar varias conviene que lleguen juntas
+
+308
+00:41:10,688 --> 00:41:15,208
+no temas frenar un proceso por ejemplo pidiendo una entrevista adicional más adelante
+
+309
+00:41:15,208 --> 00:41:20,448
+o acelerar otro eso sí sin exagerar o la empresa puede perder interés
+
+310
+00:41:20,448 --> 00:41:27,488
+evita ignora o resta importancia a los ultimatums a nadie le gusta un asesto o atente de las consecuencias
+
+311
+00:41:27,488 --> 00:41:30,328
+si te dan uno maljo tras sugiere ignorarlo.
+
+312
+00:41:30,328 --> 00:41:33,128
+Quien lo dio, quizás quiera retirarlo después.
+
+313
+00:41:33,128 --> 00:41:35,728
+Y lo hará más fácil sin nunca se discutió.
+
+314
+00:41:35,728 --> 00:41:39,428
+Puede responder, entiendo que eso sea difícil dado donde estamos hoy,
+
+315
+00:41:39,428 --> 00:41:41,828
+quizás podemos conversar sobre otras opciones.
+
+316
+00:41:41,828 --> 00:41:44,328
+Recuerda que no van contra ti.
+
+317
+00:41:44,328 --> 00:41:47,828
+Una negociación dura o una demora en la carta oferta
+
+318
+00:41:47,828 --> 00:41:49,828
+no significa mala voluntad.
+
+319
+00:41:49,828 --> 00:41:52,328
+Si llegaste lejos en el proceso les agradas.
+
+320
+00:41:52,328 --> 00:41:54,328
+Manté en el contacto y tempatiencia.
+
+321
+00:41:54,328 --> 00:42:00,328
+Quédate en la mesa, un no en realidad significa no dado como veo el mundo hoy.
+
+322
+00:42:00,328 --> 00:42:03,328
+Si tu futura es de fecha que trabajes desde casa a los viernes,
+
+323
+00:42:03,328 --> 00:42:05,328
+quizás solo falta confianza.
+
+324
+00:42:05,328 --> 00:42:07,328
+En seis meses podrías convencerla.
+
+325
+00:42:07,328 --> 00:42:11,028
+Y la regla más importante mantén la perspectiva.
+
+326
+00:42:11,028 --> 00:42:15,908
+Puedes negociar como profesional y aún así perder si estás en la negociación equivocada.
+
+327
+00:42:15,908 --> 00:42:20,788
+La industria, la función, tu trayectoria y las personas con las que trabajas cada día
+
+328
+00:42:20,788 --> 00:42:24,128
+pesan mucho más en tu satisfacción que los detalles de la oferta.
+
+329
+00:42:24,128 --> 00:42:28,248
+Antes de negociar tu próxima oferta, ¿tienes claro si es el trabajo correcto?
+
+330
+00:42:28,248 --> 00:42:32,728
+Llegar al C, H, We, High, I, D,
+
+331
+00:42:32,728 --> 00:42:36,608
+Erwin Mayer, profesora de Incead, abre con la historia de Tim Carr,
+
+332
+00:42:36,608 --> 00:42:42,568
+un estadounidense de una empresa de defensa que negociaba por teléfono con un cliente de alto nivel en Arabia Saudita.
+
+333
+00:42:42,568 --> 00:42:51,028
+Carr conocía la teoría, separara las personas del problema, definir su mejor alternativa y concentrarse en intereses, no en posiciones.
+
+334
+00:42:51,028 --> 00:42:53,028
+La llamada iba según lo previsto.
+
+335
+00:42:53,028 --> 00:42:56,468
+Al final, que arrepazó en detalle quién había acordado que.
+
+336
+00:42:56,468 --> 00:43:00,828
+Usted aportará los suministros del próximo año, contactará su par enroficina de energía,
+
+337
+00:43:00,828 --> 00:43:06,528
+yo enviaré una carta del otro lado hubo silencio, luego una voz suave, pero firme.
+
+338
+00:43:06,528 --> 00:43:08,208
+Le dije que lo haría.
+
+339
+00:43:08,208 --> 00:43:10,168
+¿Cree que no cumplo mis promesas?
+
+340
+00:43:10,168 --> 00:43:13,528
+Ahí terminó la conversación y también el trato.
+
+341
+00:43:13,528 --> 00:43:17,028
+Lo que te lleva al cien una cultura puede llevarte al no en otra.
+
+342
+00:43:17,028 --> 00:43:22,328
+En una negociación internacional quizás no tengas el contexto para interpretar bien las señales de tu contraparte,
+
+343
+00:43:22,328 --> 00:43:26,328
+sobre todo las que no se dicen y es fácil sacar conclusiones equivocadas.
+
+344
+00:43:26,328 --> 00:43:32,928
+Por eso, Mayor propone cinco reglas para negociar con alguien cuyo estilo de comunicaciones distintos del tuyo. Adaptar como expresas el
+
+345
+00:43:32,928 --> 00:43:38,168
+desacuerdo, entender qué significa la expresividad emocional, aprender cómo se
+
+346
+00:43:38,168 --> 00:43:42,928
+construye la confianza, evitar las preguntas de sí o no, y tener cuidado con lo que
+
+347
+00:43:42,928 --> 00:43:44,208
+pones por escrito.
+
+348
+00:43:44,208 --> 00:43:48,448
+¿Alguna vez un gesto que para ti era profesional fue leído por la otra parte como
+
+349
+00:43:48,448 --> 00:43:50,408
+desconfianza, expresar
+
+350
+00:43:50,408 --> 00:43:55,768
+el desacuerdo. Una estudiante rusa le explicó a Mayor que en Rusia se llega a negociar listo
+
+351
+00:43:55,768 --> 00:44:00,608
+para un gran debate y que si la contraparte dice compasión que no está de acuerdo con nada,
+
+352
+00:44:00,608 --> 00:44:05,088
+es una invitación a una discusión animada. En cambio, John Green, un estadounidense que
+
+353
+00:44:05,088 --> 00:44:10,848
+negoció años en México, aprendió a decir, no entiendo bien su punto o explíqueme más por qué lo
+
+354
+00:44:10,848 --> 00:44:16,728
+piensa así porque un estoy en desacuerdo podía cerrar la conversación. La clave está en
+
+355
+00:44:16,728 --> 00:44:22,848
+dos tipos de palabras. Los intensificadores refuerzan el desacuerdo totalmente, completamente,
+
+356
+00:44:22,848 --> 00:44:33,528
+absolutamente. Los atenuadores lo suavizan. Parcialmente, un poco, quizás. Ruso, franceses, alemanes, israelíes y holandeses
+
+357
+00:44:33,528 --> 00:44:39,048
+recurren mucho a los intensificadores. Mexicano, estáislandeses, japoneses, peruanos y ganeses
+
+358
+00:44:39,048 --> 00:44:43,928
+recurren mucho a los atenuadores. Si un negociador peruano dice que está un poco en
+
+359
+00:44:43,928 --> 00:44:48,808
+desacuerdo, puede haber un problema serio. Si un alemán dice que está completamente en
+
+360
+00:44:48,808 --> 00:44:54,808
+desacuerdo, quizá empiece un debate agradable. La expresividad emocional es otro eje.
+
+361
+00:44:54,808 --> 00:45:00,608
+Embrasil, México o Arabia Saudita se expresan mucho las emociones, pero se evita el desacuerdo
+
+362
+00:45:00,608 --> 00:45:04,408
+abierto. Pedro Álvarez, un gerente mexicano, lo explica.
+
+363
+00:45:04,408 --> 00:45:09,688
+Para nosotros expresar emociones es señal de honestidad, pero si me contradices con demasiada
+
+364
+00:45:09,688 --> 00:45:10,528
+fuerza entiendo que no te caigo bien. en Dinamarca, Alemania y los países bajos expresar emociones señal de honestidad, pero si me contradices con demasiada fuerza,
+
+365
+00:45:10,528 --> 00:45:12,608
+entiendo que no te caigo bien.
+
+366
+00:45:12,608 --> 00:45:16,608
+En Dinamarca, Alemania y los países bajos ocurre lo contrario.
+
+367
+00:45:16,608 --> 00:45:20,448
+El desacuerdo abierto es positivo si se expresa con calma.
+
+368
+00:45:20,448 --> 00:45:24,848
+En la alemán de Irkfons recuerda una negociación con franceses que se fue acalorando con
+
+369
+00:45:24,848 --> 00:45:30,248
+bocés altas y orejas rojas, el crió que el trato se caía y los franceses salieron
+
+370
+00:45:30,248 --> 00:45:31,788
+encantados a cenar.
+
+371
+00:45:31,788 --> 00:45:37,588
+¿Cómo expresa el desacuerdo la cultura de tu cliente más importante y cómo lo expresas tú?
+
+372
+00:45:37,588 --> 00:45:43,428
+Aprender cómo se construye la confianza. John Katz, un australiano que negociaba una empresa
+
+373
+00:45:43,428 --> 00:45:48,128
+conjunta en China, sentía que no lograba la información que necesitaba, aunque él compartía
+
+374
+00:45:48,128 --> 00:45:55,928
+todo contra la transparencia. Su asesor le explicó que estaba yendo demasiado rápido, tenía que acercarse desde la relación,
+
+375
+00:45:55,928 --> 00:45:58,048
+no desde el negocio.
+
+376
+00:45:58,048 --> 00:46:00,808
+La investigación distingue dos tipos de confianza.
+
+377
+00:46:00,808 --> 00:46:03,568
+La confianza cognitiva nace de la cabeza.
+
+378
+00:46:03,568 --> 00:46:05,368
+Confía en alguien por sus logros, sus habilitos.
+
+379
+00:46:05,328 --> 00:46:10,648
+La escucha activa tiene técnicas concretas. La primera es el espejo, repetir las palabras
+
+380
+00:46:10,648 --> 00:46:13,928
+del otro para atender un puente. Así que tienes un arma.
+
+381
+00:46:13,928 --> 00:46:18,808
+Sí, tengo un arma. Un arma? Sí, una de nueve milímetros.
+
+382
+00:46:18,808 --> 00:46:24,808
+Nueve milímetros? Sí, con dos cargadores, 18 balas. Además de obtener datos críticos,
+
+383
+00:46:24,808 --> 00:46:29,208
+el arma deja de separarlos y se convierte en información compartida.
+
+384
+00:46:29,208 --> 00:46:31,208
+La segunda es detectar el sentimiento
+
+385
+00:46:31,208 --> 00:46:36,028
+de atrás de las palabras. Un compañero de mi sino negociaba con una anciana atrincherada
+
+386
+00:46:36,028 --> 00:46:42,388
+con un cuchillo de carnicero que lo insultaba gritos. Él le dijo, Marta, escucho tu dolor,
+
+387
+00:46:42,388 --> 00:46:48,028
+lo escucho en tu voz, ella se quedó en silencio y soltó el cuchillo. Y después vienen las
+
+388
+00:46:48,028 --> 00:46:50,888
+frases con nosotros. Estamos en estos juntos,
+
+389
+00:46:50,888 --> 00:46:56,528
+podemos resolverlo, pero cuidado con decirse exactamente lo que sientes. Un negociador
+
+390
+00:46:56,528 --> 00:47:00,808
+lo intentó y el asaltante estalló. ¿Cuándo fue la última vez que asaltaste un banco
+
+391
+00:47:00,808 --> 00:47:06,808
+con cinco reguenes? Mi sino agrega que los peores negociadores son quienes no toleran
+
+392
+00:47:06,808 --> 00:47:15,928
+el rechazo y se toman los gritos como algo personal. Si dejas que el otro se desahogue, suele sentirse mejor y de paso, te cuenta su problema y su solución.
+
+393
+00:47:15,928 --> 00:47:22,528
+Cuando fue la última vez que dejaste un cliente desahogarse sin interrumpirlo, el equipo es lo que permite sostener la presión.
+
+394
+00:47:22,528 --> 00:47:29,128
+Hoy los equipos de negociación de la policía suelen tener cinco personas, el negociador principal, que habla con el captor,
+
+395
+00:47:29,128 --> 00:47:31,088
+el comandante que toma todas las
+
+396
+00:47:31,088 --> 00:47:37,188
+decisiones, el coach que da apoyo y respaldo, un ayudante que corre a reunir información y una
+
+397
+00:47:37,188 --> 00:47:41,168
+escriba que lleva el registro de lo que pasa y escribe enletras grandes el nombre del captor,
+
+398
+00:47:41,168 --> 00:47:47,368
+porque en plena crisis es fácil olvidarlo. Separa ahora quién negocia de quién decide da alivio y
+
+399
+00:47:47,368 --> 00:47:50,968
+sobre todo poder. Si el captor exige un auto en 30 minutos,
+
+400
+00:47:50,968 --> 00:47:56,208
+el negociador puede responder que su comandante está cargo y que debe consultarlo y así gana tiempo.
+
+401
+00:47:56,208 --> 00:48:00,128
+Es lo mismo que hacen los diplomáticos cuando llevan una propuesta a sus gobiernos.
+
+402
+00:48:00,128 --> 00:48:05,608
+Hay una última elección, quizá la más grande para mi sino. Si quieres ganar,
+
+403
+00:48:05,608 --> 00:48:11,828
+ayuda al otro a salvar la cara. Una noche deberá a las tres de la mañana en el barrio de Spanish Harlem
+
+404
+00:48:11,828 --> 00:48:16,528
+entre 300 y 400 personas miraban un edificio donde un joven con una escopeta
+
+405
+00:48:16,528 --> 00:48:18,328
+cargada se había trincherado.
+
+406
+00:48:18,328 --> 00:48:21,828
+Quería entregarse pero no podía porque se vería débil.
+
+407
+00:48:21,828 --> 00:48:25,328
+Mi sino le propuso que si se calmaba y se dejaba esposar
+
+408
+00:48:25,328 --> 00:48:27,828
+haría parecer que tuvo que someterlo por la fuerza.
+
+409
+00:48:27,828 --> 00:48:32,328
+El joven bajó tranquilo y al llegar a la calle empezó a gritar y forsejar como habían
+
+410
+00:48:32,328 --> 00:48:35,168
+acordado mientras la multitud coriaba a su nombre.
+
+411
+00:48:35,168 --> 00:48:36,168
+José!
+
+412
+00:48:36,168 --> 00:48:41,368
+Dos cuadras después son Riendo, le dijo a mi sino, gracias de verdad al opresión.
+
+413
+00:48:41,368 --> 00:48:45,808
+¿En tu próxima negociación qué salida digna podría ofrecerle a la otra parte para que
+
+414
+00:48:45,808 --> 00:48:48,808
+aceptes sin sentirse derrotada?
+
+415
+00:48:48,808 --> 00:48:52,128
+Negotiación 2.0, una guía para negociaciones complejas.
+
+416
+00:48:52,128 --> 00:48:55,328
+David Lacks y James Benjos parten de una idea.
+
+417
+00:48:55,328 --> 00:48:59,328
+La mayoría de los grandes tratos se construye con una serie de tratos más pequeños
+
+418
+00:48:59,328 --> 00:49:02,328
+y lo que decide el resultado ocurre el lejos de la mesa.
+
+419
+00:49:02,328 --> 00:49:04,328
+Lo llaman campaña de negociación.
+
+420
+00:49:04,328 --> 00:49:09,328
+Su caso estrella es el enfrentamiento en los puertos de la costa del Pacífico de Estados Unidos.
+
+421
+00:49:09,328 --> 00:49:10,328
+La asociación marítima del pacífico de Estados Unidos.
+
+422
+00:49:16,328 --> 00:49:26,328
+La asociación marítima del pacífico, la PMA, representa 72 navieras y operadores de terminales. Al otro lado, está el sindicato de estivadores, la IL-W-1, que había perdido cerca del 90% de sus miembros en la costa oeste desde los años 50 por la llegada de los contenedores.
+
+423
+00:49:26,328 --> 00:49:31,688
+En 1999, la PMA intentó introducir nuevas tecnologías y el sindicato
+
+424
+00:49:31,688 --> 00:49:36,888
+respondió con una desaceleración del trabajo que traba un comercio de 6.000 millones de dólares
+
+425
+00:49:36,888 --> 00:49:42,028
+por semana. La PMA se dio. Para 2002 su presidente Joseph Minías
+
+426
+00:49:42,028 --> 00:49:47,808
+se armó una campaña en cuatro frances. El frente interno restructuró el directorio de la PMA
+
+427
+00:49:47,808 --> 00:49:52,288
+con más ejecutivos de operaciones y votos ponderados según el tonelaje.
+
+428
+00:49:52,288 --> 00:49:58,088
+El frente empresarial con Robin Lanier sumó a grandes importadores y minoristas como Walmart.
+
+429
+00:49:58,088 --> 00:50:03,048
+El frente del gobierno visitó varios ministerios sin pedir favores para advertir que esta
+
+430
+00:50:03,048 --> 00:50:06,608
+vez la PMA no se dería y cerraría los puertos.
+
+431
+00:50:06,608 --> 00:50:08,328
+Y el frente de la opinión pública.
+
+432
+00:50:08,328 --> 00:50:13,328
+Cuando el sindicato volvió a desacelerar la PMA, cerró los puertos y el presidente George W. Bush invocó la
+
+433
+00:50:13,328 --> 00:50:16,328
+ley Tafthardley por primera vez en más de 30 años,
+
+434
+00:50:16,328 --> 00:50:18,328
+obligando a volver al trabajo.
+
+435
+00:50:18,328 --> 00:50:21,328
+El acuerdo final dio la tecnología a las navieras,
+
+436
+00:50:21,328 --> 00:50:24,328
+los nuevos empleos tecnológicos al sindicato y garantías
+
+437
+00:50:24,328 --> 00:50:27,328
+para los empleos actuales, por seis años en lugar de tres.
+
+438
+00:50:27,328 --> 00:50:30,588
+Para 2010, el empleo y el tonelaje
+
+439
+00:50:30,588 --> 00:50:36,528
+habían crecido casi un 40% el negociador se indica lo resumió antes la negociación
+
+440
+00:50:36,528 --> 00:50:41,048
+ocurría en la mesa. ¿Qué negociación tú ya se está perdiendo en la mesa? ¿Por qué
+
+441
+00:50:41,048 --> 00:50:45,568
+nadie trabaja los frontes que la rodean? Una campaña conviene cuando hay barreras que
+
+442
+00:50:45,568 --> 00:50:50,128
+la negociación directa no supera. Una alternativa débil frente a una contra parte que puede
+
+443
+00:50:50,128 --> 00:50:53,108
+retirarse sin perder mucho poco valor en el trato, un
+
+444
+00:50:53,108 --> 00:50:57,288
+opositor es capaz de bloquearlo. L'Axis Evenius propone en 6 pasos y los
+
+445
+00:50:57,288 --> 00:51:02,928
+primeros 3 tratan de quienes participan. Elegir a las partes correctas y agruparlas en
+
+446
+00:51:02,928 --> 00:51:03,408
+frente.
+
+447
+00:51:05,328 --> 00:51:07,568
+Con la opinión de varios expertos externos,
+
+448
+00:51:07,568 --> 00:51:11,928
+AYG estimó el valor justo del reclamo entre 1 y 1,1 millones de dólares
+
+449
+00:51:11,928 --> 00:51:13,768
+y ofreció 850.000.
+
+450
+00:51:13,768 --> 00:51:16,448
+El abogado del trabajador pidió 2,6 millones,
+
+451
+00:51:16,448 --> 00:51:18,008
+insistió en que era justo.
+
+452
+00:51:18,008 --> 00:51:19,728
+AYG respondió con el desafío,
+
+453
+00:51:19,728 --> 00:51:22,368
+llevar ambas ofertas a un árbitro profesional
+
+454
+00:51:22,368 --> 00:51:24,608
+que decidiría cuál era más razonable,
+
+455
+00:51:24,608 --> 00:51:26,408
+con una decisión obligatoria.
+
+456
+00:51:26,408 --> 00:51:30,128
+El abogado entendió que AYG estaba segura de supostura
+
+457
+00:51:30,128 --> 00:51:31,428
+y en pocos días el
+
+458
+00:51:31,428 --> 00:51:37,588
+reclamos esero en 1,25 millones, siguieron ofertas rápidas y en pocos días el reclamos
+
+459
+00:51:37,588 --> 00:51:43,728
+esero en 1,05 millones, cerca de la oferta inicial de Aij y sin necesidad de arbitraje.
+
+460
+00:51:43,728 --> 00:51:49,128
+¿En qué disputa tuya ayudaría que ambas partes supieran que un tercero escogerá
+
+461
+00:51:49,128 --> 00:51:51,328
+la oferta más razonable? El desafío tiene sentido cuando se cumple en cuatro? ¿Y si usted una oferta razonable y te respondieron con una que no lo es?
+
+462
+00:51:51,328 --> 00:51:53,328
+Confías en saber cuál sería una solución justa.
+
+463
+00:51:53,328 --> 00:51:59,328
+Escalar la disputa a juicio sería costoso y ninguna de las partes puede retirarse con facilidad.
+
+464
+00:51:59,328 --> 00:52:04,328
+En una compra venta típica si la otra parte puede irse sin más, el desafío no sirve de mucho.
+
+465
+00:52:04,328 --> 00:52:09,328
+Para saber qué es justo se puede reunir a varios expertos independientes
+
+466
+00:52:09,328 --> 00:52:11,328
+El desafío no sirve de mucho.
+
+467
+00:52:11,328 --> 00:52:15,328
+Para saber qué es justo, se puede reunir a varios expertos independientes,
+
+468
+00:52:15,328 --> 00:52:18,328
+darles los hechos y pedirles que estimen el valor.
+
+469
+00:52:18,328 --> 00:52:20,328
+Si coincidan, puedes confiar en tu oferta.
+
+470
+00:52:20,328 --> 00:52:25,328
+Si sus cifras divergen mucho, lo justo es ambigo y el desafío se vuelve riesgoso.
+
+471
+00:52:25,328 --> 00:52:27,328
+También puedes salvar tratos.
+
+472
+00:52:27,328 --> 00:52:30,328
+Imagina una fusión de unos 800 millones de dólares
+
+473
+00:52:30,328 --> 00:52:33,328
+en la que las partes están a solo 30 millones de distancia
+
+474
+00:52:33,328 --> 00:52:35,328
+por la valoración de un proyecto nuevo.
+
+475
+00:52:35,328 --> 00:52:40,328
+Pueden avanzar con el acuerdo y llevar sólo esa pieza a un arbitrage de oferta final.
+
+476
+00:52:40,328 --> 00:52:42,328
+Lo más probable es que acuerden antes de llegar a él.
+
+477
+00:52:42,328 --> 00:52:46,328
+Además de la oro, el desafío construye reputación de justicia.
+
+478
+00:52:46,328 --> 00:52:50,488
+Por eso recomiendan abrir con una oferta razonable antes de que la otra parte
+
+479
+00:52:50,488 --> 00:52:56,168
+ponga una irra sonable sobre la mesa y no aplicarlo cuando ambas partes son irra sonables. En
+
+480
+00:52:56,168 --> 00:53:02,648
+IG el programa se llamó la forma IG de negociar y formó a cientos de ajustadores. Un punto clave
+
+481
+00:53:02,648 --> 00:53:07,448
+no castigar a quien pierda una arbitraje porque ganar siempre indicaría que la empresa está
+
+482
+00:53:07,448 --> 00:53:10,728
+ofreciendo demás. ¿Qué tendría que cambiar en tu organización
+
+483
+00:53:10,728 --> 00:53:16,148
+para que abrir con una oferta justa no se viera como una debilidad más allá del sí?
+
+484
+00:53:16,148 --> 00:53:18,908
+Negotiar como si la implementación importara.
+
+485
+00:53:18,908 --> 00:53:22,868
+Daniel Erte, el fundador de Vantage Partners, abre con un caso.
+
+486
+00:53:22,868 --> 00:53:27,628
+En julio de 1998, AT&T y VT anunciaron Concert,
+
+487
+00:53:27,628 --> 00:53:29,888
+una empresa conjunta en partes iguales
+
+488
+00:53:29,888 --> 00:53:30,568
+para conectar a clientes multinacionales en todo el mundoert, una empresa conjunta en partes iguales para conectar
+
+489
+00:53:30,568 --> 00:53:35,368
+a clientes multinacionales en todo el mundo. Era una empresa de 10.000 millones de dólares
+
+490
+00:53:35,368 --> 00:53:38,488
+y se esperaba que ganara 1.000 millones desde el primer día.
+
+491
+00:53:38,488 --> 00:53:45,208
+Tres años después había cerrado, despidió a 2.300 personas y anunció cargos por 7.000 millones.
+
+492
+00:53:45,208 --> 00:53:49,768
+El mercado de Bill influyó, pero la forma en que se armó el trato también.
+
+493
+00:53:49,768 --> 00:53:50,788
+Los negociadores de 80
+
+494
+00:53:50,788 --> 00:53:56,248
+en ti lograron que su unidad 80 en ti solutions conservara clientes multinacionales clave. Y así,
+
+495
+00:53:56,248 --> 00:54:01,028
+las dos empresas madre terminaron compitiendo entre sí, justo lo que Concert debía evitar.
+
+496
+00:54:01,028 --> 00:54:07,288
+Biti por su parte se negó a aportar a la compra de la red global de IBM, a horro dinero y dejó
+
+497
+00:54:07,288 --> 00:54:12,328
+a Concert con productos superpuestos. Cada lado ganó su pequeña victoria y el trato perdió.
+
+498
+00:54:12,328 --> 00:54:15,328
+El problema es la mentalidad del cerrador de tratos,
+
+499
+00:54:15,328 --> 00:54:17,328
+que ve la firma como la meta.
+
+500
+00:54:17,328 --> 00:54:20,328
+Los medios glorifican a los grandes negociadores
+
+501
+00:54:20,328 --> 00:54:23,328
+y las empresas miden y premian a sus equipos por la cantidad
+
+502
+00:54:23,328 --> 00:54:25,328
+y el tamaño de los tratos firmados.
+
+503
+00:54:25,328 --> 00:54:29,328
+El área de asuntos de negocios de AOL dirigida por David Cullburn
+
+504
+00:54:29,328 --> 00:54:34,748
+se obsesió en tanto con cerrar tratos que en 2002 AOL Time Warner tuvo que reexpresar
+
+505
+00:54:34,748 --> 00:54:35,828
+su resultado financiero.
+
+506
+00:54:35,828 --> 00:54:40,828
+Erte la clara que esa mentalidad sirve para vender un activo y no volver a verse,
+
+507
+00:54:40,828 --> 00:54:46,028
+pero cuando la firma inicia un trabajo conjunto, la forma de llegar al sí importa mucho.
+
+508
+00:54:46,028 --> 00:54:52,728
+¿Cómo se me ideó en tu organización a quien negocia? lo que firma o por lo que la acuerdo termina entregando?
+
+509
+00:54:53,428 --> 00:54:58,928
+Pasar a una mentalidad de implementación exige cinco cambios, empezar con el final en mente.
+
+510
+00:54:59,428 --> 00:55:07,128
+Imagina que pasaron dos meses desde la firma. Funciona el trato con qué métricas lo sabes, que salió mal, ¿quién intentó bloquearlo?
+
+511
+00:55:07,128 --> 00:55:12,528
+Tom Finn, de Proctor and Gamble, formas úricicos, evita cláusulas que saben que traen problemas,
+
+512
+00:55:12,528 --> 00:55:14,528
+como regalías que bajan con el tiempo
+
+513
+00:55:14,528 --> 00:55:16,328
+y quitan incentivos al socio.
+
+514
+00:55:16,328 --> 00:55:19,328
+Su frase, dejar algo de dinero sobre la mesa
+
+515
+00:55:19,328 --> 00:55:21,928
+está bien si entiendes que el trato más caro
+
+516
+00:55:21,928 --> 00:55:22,928
+es el que fracasa.
+
+517
+00:55:22,928 --> 00:55:25,928
+Ayudar a la otra parte de prepararse.
+
+518
+00:55:25,928 --> 00:55:29,928
+Sorprenderla solo si deshí después no tienes que trabajar con ella.
+
+519
+00:55:29,928 --> 00:55:34,328
+La reaseguradora equitas envía a su contarte un paquete de inicio con su forma de trabajar,
+
+520
+00:55:34,328 --> 00:55:37,328
+su proceso y hasta las fallas de sus propios datos.
+
+521
+00:55:37,328 --> 00:55:44,328
+A Ventys Farm, organizó una reunión de lanzamiento en la que ambas partes planifican juntas como van a negociar.
+
+522
+00:55:44,328 --> 00:55:48,328
+Tratar la lineación como responsabilidad compartida.
+
+523
+00:55:48,328 --> 00:55:55,328
+Si los intereses de la otra parte no están alineados y no puede cumplir, ese también es tu problema.
+
+524
+00:55:55,328 --> 00:56:01,328
+Ocultar el trato aquí en eslo van a ejecutar provoca la típica reacción tardía con mi gente no.
+
+525
+00:56:01,328 --> 00:56:04,328
+Empear un solo mensaje.
+
+526
+00:56:05,328 --> 00:56:10,328
+ingresos, costos operativos e inversiones necesarias para los cinco años siguientes.
+
+527
+00:56:10,328 --> 00:56:14,328
+Descubrió que las proyecciones de crecimiento nacionales no se sostanían con las tendencias locales
+
+528
+00:56:14,328 --> 00:56:19,328
+y negoció pagar 45 millones de libras menos que el precio pedido.
+
+529
+00:56:19,328 --> 00:56:23,328
+Lo hizo trabajando en equipo con los directivos de Audion, no desde la confrontación.
+
+530
+00:56:23,328 --> 00:56:27,328
+Y si la empresa se resiste a ser investigada, esa es una señal en sí misma.
+
+531
+00:56:27,328 --> 00:56:33,328
+Joe trusty de Summit Partners lo deja claro. Nos retiramos y la dirección de la empresa no coopera con la investigación.
+
+532
+00:56:33,328 --> 00:56:35,328
+Para nosotros, eso rompe el trato.
+
+533
+00:56:35,328 --> 00:56:41,328
+¿Qué cifra de tu próximo trato estás aceptando tal como te le entregaron sin verificarla en el terreno?
+
+534
+00:56:41,328 --> 00:56:44,328
+¿Dónde están las energías y los esqueletos?
+
+535
+00:56:44,328 --> 00:56:48,328
+Los autores proponen imaginar las energías como círculos concentricos.
+
+536
+00:56:48,328 --> 00:56:53,448
+En el centro está eliminar funciones duplicadas como los equipos legales, la tesorería
+
+537
+00:56:53,448 --> 00:56:56,608
+o los gastos de directorio, es lo más fácil de lograr.
+
+538
+00:56:56,608 --> 00:57:00,888
+Luego vienen los costos operativos compartidos, como distribución y ventas.
+
+539
+00:57:00,888 --> 00:57:06,488
+Más afuera, la racionalización de instalaciones, más difícil por temas laborales y regulatorios.
+
+540
+00:57:06,488 --> 00:57:09,288
+Y en los anillos exteriores están las energías de ingresos.
+
+541
+00:57:09,288 --> 00:57:11,128
+Primero, vende productos existentes por canales nuevos y en el borde venderes están las sinergias de ingresos, primero vender productos existentes
+
+542
+00:57:11,128 --> 00:57:16,408
+por canales nuevos y en el verde vender productos nuevos por canales nuevos. Cuanto más
+
+543
+00:57:16,408 --> 00:57:21,888
+lejos del centro más tiempo toma, menos probable lograrlo. En 2003, las inmobiliarias
+
+544
+00:57:21,888 --> 00:57:27,288
+canadienses Owen White Properties y Bantle Capital cancelaron su función al calcular que el costo
+
+545
+00:57:27,288 --> 00:57:32,608
+de integrarse superaría a los ahorros. Los esqueletos son las sinergias negativas.
+
+546
+00:57:32,608 --> 00:57:36,608
+Clientes que compran menos por miedo de depender de un solo proveedor, talento que se
+
+547
+00:57:36,608 --> 00:57:38,808
+va, sistemas que no se integran.
+
+548
+00:57:38,808 --> 00:57:45,328
+La función de los ferrocarriles Union Pacific y Southern Pacific en 1996 causó tal desorden
+
+549
+00:57:45,328 --> 00:57:48,208
+que el gobierno declaró una emergencia federal de transporte.
+
+550
+00:57:48,208 --> 00:57:51,048
+Y por último, el precio de retirada,
+
+551
+00:57:51,448 --> 00:57:53,248
+lo máximo que estás dispuesto a pagar,
+
+552
+00:57:53,408 --> 00:57:55,328
+sin incluir todo el valor de las sinergias.
+
+553
+00:57:55,968 --> 00:57:58,128
+Carlos Gutiérrez, director ejecutivo de Kellogg,
+
+554
+00:57:58,288 --> 00:58:00,288
+quería a toda costa comprar Kipler,
+
+555
+00:58:00,608 --> 00:58:04,088
+pero su análisis fijó un máximo de 42 dólares por acción.
+
+556
+00:58:04,608 --> 00:58:06,408
+Se preparó mentalmente para perder el trato.
+
+557
+00:58:06,728 --> 00:58:08,248
+Presentó esa cifra como final,
+
+558
+00:58:08,528 --> 00:58:10,928
+dijo que si alguien pagaba más lo aceptaron
+
+559
+00:58:10,928 --> 00:58:16,608
+y se fue haber un partido de Baseball de los Mets. Dos días después Kipler aceptó. Para un
+
+560
+00:58:16,608 --> 00:58:21,288
+precio de retirada creíble, ayuda a un equipo menos apegado al trato, como el de Bridgepoint,
+
+561
+00:58:21,288 --> 00:58:26,528
+que incluye a alguien que hace de fiscal. Tienes definido tu precio de retirada antes de entrar a
+
+562
+00:58:26,528 --> 00:58:33,128
+negociar o lo vas descubriando en la mesa. Si miras todo el recorrido aparece una misma idea con distintas caras.
+
+563
+00:58:33,128 --> 00:58:38,648
+Negotiar bien no es ganarle al otro en la mesa, sino entender su decisión mejor que nadie
+
+564
+00:58:38,648 --> 00:58:44,208
+y diseñar el camino para decir que sí sea también para esa persona la mejor opción.
+
+565
+00:58:44,208 --> 00:58:50,128
+Eso empieza mucho antes de la primera oferta al definir el proceso, mapear a todos los actores,
+
+566
+00:58:50,128 --> 00:58:51,528
+fijar el marco
+
+567
+00:58:51,528 --> 00:58:57,168
+y conocer tu alternativa. Siguien la mesa, donde las emociones, la cultura y la escucha pesan
+
+568
+00:58:57,168 --> 00:59:02,848
+tanto como las cifras y donde cada pequeño acuerdo construye confianza y continuates,
+
+569
+00:59:02,848 --> 00:59:07,448
+pues de la firma, porque el valor real aparece cuando las partes cumplen lo acordado,
+
+570
+00:59:07,448 --> 00:59:12,088
+no cuando están pan su nombre. También aprendiste a resistir dos tentaciones.
+
+571
+00:59:12,088 --> 00:59:17,248
+Una es la de tratar todo como una pelea por el precio, cuando las diferencias es la relación
+
+572
+00:59:17,248 --> 00:59:20,928
+y el espíritu del trato suele crear más valor que cualquier regateo.
+
+573
+00:59:20,928 --> 00:59:25,408
+La otra es la de la fiebre del trato, que empuja a cerrar aunque las cifras digan que es
+
+574
+00:59:25,408 --> 00:59:26,408
+mejor retirarse.
+
+575
+00:59:26,408 --> 00:59:34,808
+Las grandes negociaciones raras se ganan con un golpe brillante, se ganan con preparación, con paciencia y con la humildad de cuestionar cada supuesto,
+
+576
+00:59:34,808 --> 00:59:39,408
+incluso de sentarte a la mesa. ¿Qué vas a hacer distinto en la próxima negociación que tengas
+
+577
+00:59:39,408 --> 00:59:41,488
+antes incluso de sentarte a la mesa?
+
+578
+01:01:05,328 --> 01:01:07,328
+y
+
+579
+01:06:05,328 --> 01:06:07,328
+y
+
+580
+01:11:05,328 --> 01:11:07,328
+y

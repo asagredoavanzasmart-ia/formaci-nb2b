@@ -82,6 +82,24 @@ export const catalogoClases: readonly ClaseCatalogo[] = [
     iconKey: 'liderazgo',
   },
   {
+    id: 'negociacion',
+    title: 'Negociación: el método Harvard',
+    subtitle: 'Fisher, Ury & Patton · Getting to Yes',
+    description:
+      'Los cuatro principios de la negociación según intereses: separar personas del problema, enfocarse en intereses no en posiciones, generar opciones de ganancia mutua y usar criterios objetivos. BATNA, ZOPA, anclas, presión y las trampas más comunes.',
+    category: 'Ventas',
+    iconKey: 'ventas',
+  },
+  {
+    id: 'proteccion-datos',
+    title: 'Protección de datos personales',
+    subtitle: 'Ley 21.719 · Chile',
+    description:
+      'Lo que toda empresa de marketing y ventas necesita saber: qué datos requieren consentimiento, cómo pedirlo bien, derechos de los titulares, obligaciones del responsable, brechas de seguridad, la Agencia de Protección de Datos y el régimen de infracciones y multas.',
+    category: 'General',
+    iconKey: 'general',
+  },
+  {
     id: 'challenger',
     title: 'El Vendedor Desafiante (Challenger)',
     subtitle: 'Dixon y Adamson · venta compleja B2B',
