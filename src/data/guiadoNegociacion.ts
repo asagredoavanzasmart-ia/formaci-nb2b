@@ -1,80 +1,18 @@
-// ⚠️ PLACEHOLDER: reemplazar con '../audios_clase/negociacion.mp3?url' cuando el audio esté disponible
-import audio from '../audios_clase/meddpicc.mp3?url';
+import audio from '../audios_clase/negociacion.mp3?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
- * Clase guiada «Negociación: lo esencial de HBR»: audio completo + inicio de cada diapositiva
+ * Clase guiada «Influencia y persuasión»: audio completo + inicio de cada diapositiva
  * + marcas de sus tarjetas. GENERADO desde los subtítulos (guiones/negociacion.srt)
  * y los datos de src/components/negociacion: no editar a mano.
- * ⚠️  PLACEHOLDER — regenerar con node scripts/generar-guiado-negociacion.cjs cuando
- *     el audio y el SRT estén disponibles.
  */
 export const guiadoNegociacion: GuiadoClase = {
   audio,
-  slides: [
-    {"id":"ng-portada","t":0},
-    {"id":"ng-header-1","t":10},
-    {"id":"ng-problema","t":15},
-    {"id":"ng-otro-lado","t":105},
-    {"id":"ng-precio","t":195},
-    {"id":"ng-cuatro-intereses","t":285},
-    {"id":"ng-intereses","t":375},
-    {"id":"ng-diferencias","t":465},
-    {"id":"ng-batna","t":555},
-    {"id":"ng-roosevelt","t":645},
-    {"id":"ng-sesgos","t":735},
-    {"id":"ng-header-2","t":825},
-    {"id":"ng-proceso","t":830},
-    {"id":"ng-normalizar","t":920},
-    {"id":"ng-mapa","t":1010},
-    {"id":"ng-marco","t":1100},
-    {"id":"ng-honrar","t":1190},
-    {"id":"ng-header-3","t":1280},
-    {"id":"ng-ansiedad","t":1285},
-    {"id":"ng-ira","t":1375},
-    {"id":"ng-decepcion","t":1465},
-    {"id":"ng-entusiasmo","t":1555},
-    {"id":"ng-sombra","t":1645},
-    {"id":"ng-header-4","t":1735},
-    {"id":"ng-poder","t":1740},
-    {"id":"ng-proceso-mov","t":1830},
-    {"id":"ng-reconocimiento","t":1920},
-    {"id":"ng-header-5","t":2010},
-    {"id":"ng-simpatia","t":2015},
-    {"id":"ng-persona","t":2105},
-    {"id":"ng-yo-nosotros","t":2195},
-    {"id":"ng-trato-completo","t":2285},
-    {"id":"ng-tiempo","t":2375},
-    {"id":"ng-header-6","t":2465},
-    {"id":"ng-si-no","t":2470},
-    {"id":"ng-desacuerdo","t":2560},
-    {"id":"ng-confianza","t":2650},
-    {"id":"ng-preguntas-escrito","t":2740},
-    {"id":"ng-sentido-comun","t":2830},
-    {"id":"ng-escucha","t":2920},
-    {"id":"ng-header-7","t":3010},
-    {"id":"ng-equipo-cara","t":3015},
-    {"id":"ng-header-8","t":3105},
-    {"id":"ng-puertos","t":3110},
-    {"id":"ng-frentes","t":3200},
-    {"id":"ng-secuencia","t":3290},
-    {"id":"ng-baile","t":3380},
-    {"id":"ng-arbitraje","t":3470},
-    {"id":"ng-header-9","t":3560},
-    {"id":"ng-cuando-desafio","t":3565},
-    {"id":"ng-header-10","t":3655},
-    {"id":"ng-concert","t":3660},
-    {"id":"ng-implementacion","t":3750},
-    {"id":"ng-fiebre","t":3840},
-    {"id":"ng-que-compramos","t":3930},
-    {"id":"ng-valor","t":4020},
-    {"id":"ng-sinergias","t":4110},
-    {"id":"ng-header-11","t":4200},
-    {"id":"ng-sintesis","t":4205},
-  ],
-  cues: {},
+  slides: [{"id":"ng-portada","t":0},{"id":"ng-problema","t":81.21},{"id":"ng-otro-lado","t":154.85},{"id":"ng-precio","t":250.65},{"id":"ng-batna","t":316.33},{"id":"ng-roosevelt","t":410.09},{"id":"ng-sesgos","t":493.81},{"id":"ng-header-2","t":589.11},{"id":"ng-proceso","t":592.5},{"id":"ng-header-3","t":643.85},{"id":"ng-honrar","t":651.91},{"id":"ng-ansiedad","t":728.96},{"id":"ng-ira","t":816.49},{"id":"ng-header-4","t":2843.41},{"id":"ng-header-6","t":3284.26},{"id":"ng-implementacion","t":3293.28},{"id":"ng-sinergias","t":3401.18},{"id":"ng-sintesis","t":3508.85}],
+  cues: {"ng-portada":[{"t":0.3,"mostrar":["titulo"],"foco":null},{"t":1.51,"mostrar":["n:Antes y después"],"foco":"n:Antes y después"},{"t":15.08,"mostrar":["n:Once artículos"],"foco":"n:Once artículos"},{"t":66.44,"mostrar":["n:Todos los días"],"foco":"n:Todos los días"},{"t":71.75,"foco":null}],"ng-problema":[{"t":81.51,"mostrar":["titulo"],"foco":null},{"t":94.18,"mostrar":["n:Dos caminos"],"foco":"n:Dos caminos"},{"t":118.18,"mostrar":["n:Tu problema"],"foco":"n:Tu problema"},{"t":140.8,"mostrar":["n:Por sus razones"],"foco":"n:Por sus razones"},{"t":151.01,"foco":null}],"ng-otro-lado":[{"t":155.15,"mostrar":["titulo"],"foco":null},{"t":192.43,"mostrar":["n:Lo que veía el cliente"],"foco":"n:Lo que veía el cliente"},{"t":234.54,"mostrar":["n:El puente de oro"],"foco":"n:El puente de oro"},{"t":242.94,"foco":null}],"ng-precio":[{"t":250.95,"mostrar":["titulo"],"foco":null},{"t":255.92,"mostrar":["n:Midas al revés"],"foco":"n:Midas al revés"}],"ng-batna":[{"t":316.63,"mostrar":["titulo"],"foco":null},{"t":326.21,"mostrar":["n:Qué es"],"foco":"n:Qué es"},{"t":364.6,"mostrar":["n:Dos rivales"],"foco":"n:Dos rivales"},{"t":396.66,"mostrar":["n:Las dos hojas"],"foco":"n:Las dos hojas"},{"t":403.76,"foco":null}],"ng-roosevelt":[{"t":410.39,"mostrar":["titulo"],"foco":null},{"t":429.32,"mostrar":["n:El problema"],"foco":"n:El problema"},{"t":446,"mostrar":["n:El telegrama"],"foco":"n:El telegrama"},{"t":477.55,"mostrar":["n:La lección y su límite"],"foco":"n:La lección y su límite"},{"t":487.88,"foco":null}],"ng-sesgos":[{"t":494.11,"mostrar":["titulo"],"foco":null},{"t":517.3,"mostrar":["n:Sesgo de rol"],"foco":"n:Sesgo de rol"},{"t":544.94,"mostrar":["n:70 % frente a 50 %"],"foco":"n:70 % frente a 50 %"},{"t":569.19,"mostrar":["n:Antídotos"],"foco":"n:Antídotos"},{"t":581.72,"foco":null}],"ng-proceso":[{"t":592.8,"mostrar":["titulo"],"foco":null}],"ng-honrar":[{"t":652.21,"mostrar":["titulo"],"foco":null},{"t":668.91,"mostrar":["n:La instrucción secreta"],"foco":"n:La instrucción secreta"},{"t":693.02,"mostrar":["n:Una bomba al proceso"],"foco":"n:Una bomba al proceso"},{"t":712.22,"mostrar":["n:El momento de cada emoción"],"foco":"n:El momento de cada emoción"},{"t":722.8,"foco":null}],"ng-ansiedad":[{"t":729.26,"mostrar":["titulo"],"foco":null},{"t":761.83,"mostrar":["n:Psicosis frente a Handel"],"foco":"n:Psicosis frente a Handel"},{"t":767.83,"mostrar":["n:12 % peor"],"foco":"n:12 % peor"},{"t":798.2,"mostrar":["n:Dos remedios"],"foco":"n:Dos remedios"},{"t":811.24,"foco":null}],"ng-ira":[{"t":816.79,"mostrar":["titulo"],"foco":null},{"t":834,"mostrar":["n:Lo que hace la ira"],"foco":"n:Lo que hace la ira"},{"t":859.8,"mostrar":["n:Los costos"],"foco":"n:Los costos"},{"t":882.2,"mostrar":["n:Qué hacer"],"foco":"n:Qué hacer"}],"ng-implementacion":[{"t":3293.58,"mostrar":["titulo"],"foco":null},{"t":3299.23,"mostrar":["n:Final en mente"],"foco":"n:Final en mente"},{"t":3322.73,"mostrar":["n:Preparación y alineación"],"foco":"n:Preparación y alineación"}],"ng-sinergias":[{"t":3401.48,"mostrar":["titulo"],"foco":null},{"t":3405.33,"mostrar":["n:Círculos de sinergias"],"foco":"n:Círculos de sinergias"},{"t":3449.58,"mostrar":["n:Esqueletos"],"foco":"n:Esqueletos"},{"t":3481.75,"mostrar":["n:Precio de retirada"],"foco":"n:Precio de retirada"},{"t":3503.3,"foco":null}],"ng-sintesis":[{"t":3509.15,"mostrar":["titulo"],"foco":null},{"t":3516.15,"mostrar":["n:La idea central"],"foco":"n:La idea central"},{"t":3524.01,"mostrar":["n:Antes, durante y después"],"foco":"n:Antes, durante y después"},{"t":3550.36,"mostrar":["n:Dos tentaciones"],"foco":"n:Dos tentaciones"},{"t":3576.11,"foco":null}]},
 };
 
-export const marcasNegociacion: Record<string, number[]> = {};
+/* Segundos desde el inicio de cada diapositiva en que entra cada marca de su escena (la última es la pregunta). */
+export const marcasNegociacion: Record<string, number[]> = {"ng-portada":[1.51,3.61,15.08,38.79,42.82,48.32,54.85,66.44,71.75],"ng-problema":[12.97,15.1,21.59,30.99,36.97,44.59,59.59,69.8],"ng-otro-lado":[16.52,99999,34.17,37.58,41.91,47.54,59.91,66.03,79.69,88.09],"ng-precio":[5.27,20.41,27.15,36.56,41.05,99999,99999,99999,99999],"ng-batna":[4.02,9.88,19.23,26.75,34.03,39.74,48.27,56.27,59.07,72.03,80.33,87.43],"ng-roosevelt":[7.12,10.42,19.23,99999,30.88,35.91,45.11,54.05,58.42,67.46,77.79],"ng-sesgos":[8.19,16.02,23.49,32.11,36.56,41.59,51.13,54.13,67.12,75.38,83.99,87.91],"ng-proceso":[99999,99999,99999,99999,99999,99999,99999,99999,99999,99999],"ng-honrar":[4.78,17,24.69,29.49,99999,41.11,43.04,60.31,62.6,64.89,68.01,70.89],"ng-ansiedad":[7.39,14.63,20.54,99999,32.87,38.87,40.6,51.22,60.06,69.24,76.76,82.28],"ng-ira":[7.2,12.39,17.51,26.52,30.31,40.31,43.31,99999,62.71,65.71,75.63,99999,99999],"ng-implementacion":[3.63,5.95,27.41,29.45,44.73,50.85,66.84,99999,99999,99999,99999,99999,99999,99999],"ng-sinergias":[4.15,6.95,15.23,20.16,28.01,29.39,34.36,43.32,48.4,64.7,66.83,80.57,99999,92.74,100.66,102.12],"ng-sintesis":[1.54,7.3,15.16,99999,32.86,41.51,43.04,51.88,99999,61.47,67.26]};
 
-export const FIN_AUDIO_NEGOCIACION = 4295;
+export const FIN_AUDIO_NEGOCIACION = 4266.33;

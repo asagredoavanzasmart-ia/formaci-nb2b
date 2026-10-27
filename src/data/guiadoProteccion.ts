@@ -1,54 +1,18 @@
-// ⚠️ PLACEHOLDER: reemplazar con '../audios_clase/proteccion_datos.mp3?url' cuando el audio esté disponible
-import audio from '../audios_clase/meddpicc.mp3?url';
+import audio from '../audios_clase/proteccion_datos.mp3?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
- * Clase guiada «Protección de datos: Ley 21.719»: audio completo + inicio de cada diapositiva
+ * Clase guiada «Influencia y persuasión»: audio completo + inicio de cada diapositiva
  * + marcas de sus tarjetas. GENERADO desde los subtítulos (guiones/proteccion_datos.srt)
  * y los datos de src/components/proteccion: no editar a mano.
- * ⚠️  PLACEHOLDER — regenerar con node scripts/generar-guiado-proteccion.cjs cuando
- *     el audio y el SRT estén disponibles.
  */
 export const guiadoProteccion: GuiadoClase = {
   audio,
-  slides: [
-    {"id":"pd-portada","t":0},
-    {"id":"pd-dato-personal","t":90},
-    {"id":"pd-sensibles","t":180},
-    {"id":"pd-roles","t":270},
-    {"id":"pd-papel","t":360},
-    {"id":"pd-principios","t":450},
-    {"id":"pd-consentimiento","t":540},
-    {"id":"pd-formularios","t":630},
-    {"id":"pd-bases","t":720},
-    {"id":"pd-reutilizar","t":810},
-    {"id":"pd-oposicion","t":900},
-    {"id":"pd-perfiles","t":990},
-    {"id":"pd-cesion","t":1080},
-    {"id":"pd-scraping","t":1170},
-    {"id":"pd-prospeccion","t":1260},
-    {"id":"pd-encargados","t":1350},
-    {"id":"pd-transferencia","t":1440},
-    {"id":"pd-especiales","t":1530},
-    {"id":"pd-derechos","t":1620},
-    {"id":"pd-procedimiento","t":1710},
-    {"id":"pd-negar","t":1800},
-    {"id":"pd-conservacion","t":1890},
-    {"id":"pd-seguridad","t":1980},
-    {"id":"pd-incidentes","t":2070},
-    {"id":"pd-transparencia","t":2160},
-    {"id":"pd-impacto","t":2250},
-    {"id":"pd-agencia","t":2340},
-    {"id":"pd-infracciones","t":2430},
-    {"id":"pd-multas","t":2520},
-    {"id":"pd-prevencion","t":2610},
-    {"id":"pd-plan","t":2700},
-    {"id":"pd-checklist","t":2790},
-    {"id":"pd-sintesis","t":2880},
-  ],
-  cues: {},
+  slides: [{"id":"pd-portada","t":0},{"id":"pd-dato-personal","t":67.18},{"id":"pd-sensibles","t":132.85},{"id":"pd-roles","t":199.85},{"id":"pd-papel","t":265.29},{"id":"pd-reutilizar","t":340.89},{"id":"pd-oposicion","t":404.41},{"id":"pd-perfiles","t":468.49},{"id":"pd-cesion","t":541.13},{"id":"pd-especiales","t":1257.5},{"id":"pd-derechos","t":1336.94},{"id":"pd-procedimiento","t":1425.5},{"id":"pd-negar","t":1503.43},{"id":"pd-impacto","t":1598.96},{"id":"pd-agencia","t":1676.12},{"id":"pd-infracciones","t":1753.5},{"id":"pd-multas","t":1840.5},{"id":"pd-sintesis","t":1918.26}],
+  cues: {"pd-portada":[{"t":0.3,"mostrar":["titulo"],"foco":null},{"t":9.28,"mostrar":["n:Ley 21.719"],"foco":"n:Ley 21.719"},{"t":39.36,"mostrar":["n:Sin régimen especial"],"foco":"n:Sin régimen especial"},{"t":62.17,"foco":null}],"pd-dato-personal":[{"t":67.48,"mostrar":["titulo"],"foco":null},{"t":74.47,"mostrar":["n:Identificada o identificable"],"foco":"n:Identificada o identificable"},{"t":105.28,"mostrar":["n:Sin nombre también"],"foco":"n:Sin nombre también"},{"t":113.59,"mostrar":["n:Contactos entre empresas"],"foco":"n:Contactos entre empresas"},{"t":127.8,"foco":null}],"pd-sensibles":[{"t":133.15,"mostrar":["titulo"],"foco":null},{"t":133.4,"mostrar":["n:Categoría más protegida"],"foco":"n:Categoría más protegida"},{"t":163.98,"mostrar":["n:Lo más delicado"],"foco":"n:Lo más delicado"},{"t":178.29,"mostrar":["n:Consentimiento expreso"],"foco":"n:Consentimiento expreso"},{"t":192.8,"foco":null}],"pd-roles":[{"t":200.15,"mostrar":["titulo"],"foco":null},{"t":202.8,"mostrar":["n:Cuatro papeles"],"foco":"n:Cuatro papeles"},{"t":228.16,"mostrar":["n:Fuera de Chile"],"foco":"n:Fuera de Chile"},{"t":249.28,"mostrar":["n:Correo ante la Agencia"],"foco":"n:Correo ante la Agencia"},{"t":258.88,"foco":null}],"pd-papel":[{"t":265.59,"mostrar":["titulo"],"foco":null},{"t":278.58,"mostrar":["n:Encargada"],"foco":"n:Encargada"}],"pd-reutilizar":[{"t":341.19,"mostrar":["titulo"],"foco":null},{"t":353.52,"mostrar":["n:Cuatro salidas"],"foco":"n:Cuatro salidas"},{"t":379.72,"mostrar":["n:Fuera de ellas"],"foco":"n:Fuera de ellas"},{"t":387.82,"mostrar":["n:La finalidad viaja con la base"],"foco":"n:La finalidad viaja con la base"},{"t":397.02,"foco":null}],"pd-oposicion":[{"t":404.71,"mostrar":["titulo"],"foco":null},{"t":455.28,"mostrar":["n:Una baja, todos los canales"],"foco":"n:Una baja, todos los canales"},{"t":462.44,"foco":null}],"pd-perfiles":[{"t":468.79,"mostrar":["titulo"],"foco":null},{"t":473.69,"mostrar":["n:Qué es un perfil"],"foco":"n:Qué es un perfil"},{"t":499,"mostrar":["n:Tres excepciones"],"foco":"n:Tres excepciones"},{"t":509.04,"mostrar":["n:Siempre, una persona"],"foco":"n:Siempre, una persona"},{"t":533.72,"foco":null}],"pd-cesion":[{"t":541.43,"mostrar":["titulo"],"foco":null},{"t":551.88,"mostrar":["n:Cuatro bases para ceder"],"foco":"n:Cuatro bases para ceder"},{"t":556.19,"mostrar":["n:Si falta el consentimiento"],"foco":"n:Si falta el consentimiento"},{"t":565.81,"mostrar":["n:Por escrito"],"foco":"n:Por escrito"}],"pd-especiales":[{"t":1257.8,"mostrar":["titulo"],"foco":null},{"t":1261.65,"mostrar":["n:Biometría"],"foco":"n:Biometría"},{"t":1279.09,"mostrar":["n:Menores"],"foco":"n:Menores"},{"t":1302.45,"mostrar":["n:Geolocalización y salud"],"foco":"n:Geolocalización y salud"},{"t":1330.85,"foco":null}],"pd-derechos":[{"t":1337.24,"mostrar":["titulo"],"foco":null},{"t":1342.01,"mostrar":["n:Acceso"],"foco":"n:Acceso"},{"t":1357.93,"mostrar":["n:Corregir, borrar, oponerse, llevar y pausar"],"foco":"n:Corregir, borrar, oponerse, llevar y pausar"},{"t":1399.93,"mostrar":["n:Irrenunciables"],"foco":"n:Irrenunciables"},{"t":1417.45,"foco":null}],"pd-procedimiento":[{"t":1425.8,"mostrar":["titulo"],"foco":null},{"t":1429.45,"mostrar":["n:La solicitud"],"foco":"n:La solicitud"},{"t":1446.95,"mostrar":["n:30 + 30 días"],"foco":"n:30 + 30 días"},{"t":1471.33,"mostrar":["n:Bloqueo: 2 días hábiles"],"foco":"n:Bloqueo: 2 días hábiles"},{"t":1497.33,"foco":null}],"pd-negar":[{"t":1503.73,"mostrar":["titulo"],"foco":null},{"t":1510.01,"mostrar":["n:Procede"],"foco":"n:Procede"},{"t":1531.3,"mostrar":["n:No procede"],"foco":"n:No procede"}],"pd-impacto":[{"t":1599.26,"mostrar":["titulo"],"foco":null},{"t":1617.65,"mostrar":["n:Cuatro casos"],"foco":"n:Cuatro casos"},{"t":1653.41,"mostrar":["n:Qué incluye"],"foco":"n:Qué incluye"},{"t":1664.28,"mostrar":["n:Alto riesgo"],"foco":"n:Alto riesgo"},{"t":1670.36,"foco":null}],"pd-agencia":[{"t":1676.42,"mostrar":["titulo"],"foco":null},{"t":1693.6,"mostrar":["n:Dos procedimientos"],"foco":"n:Dos procedimientos"},{"t":1734.95,"mostrar":["n:Después"],"foco":"n:Después"},{"t":1748.45,"foco":null}],"pd-infracciones":[{"t":1753.8,"mostrar":["titulo"],"foco":null},{"t":1756.45,"mostrar":["n:Leves"],"foco":"n:Leves"},{"t":1773.21,"mostrar":["n:Graves"],"foco":"n:Graves"},{"t":1804.61,"mostrar":["n:Gravísimas"],"foco":"n:Gravísimas"},{"t":1836.45,"foco":null}],"pd-multas":[{"t":1840.8,"mostrar":["titulo"],"foco":null}],"pd-sintesis":[{"t":1918.56,"mostrar":["titulo"],"foco":null},{"t":1922.45,"mostrar":["n:Antes"],"foco":"n:Antes"},{"t":1926.88,"mostrar":["n:Ahora"],"foco":"n:Ahora"},{"t":1942.81,"mostrar":["n:Para la agencia"],"foco":"n:Para la agencia"},{"t":1958.84,"foco":null}]},
 };
 
-export const marcasProteccion: Record<string, number[]> = {};
+/* Segundos desde el inicio de cada diapositiva en que entra cada marca de su escena (la última es la pregunta). */
+export const marcasProteccion: Record<string, number[]> = {"pd-portada":[1.81,4.76,99999,8.06,9.28,15.38,99999,26.56,28.57,33.17,39.36,45.32,48.3,54.85,55.46,56.23,60.19,62.17],"pd-dato-personal":[4.48,7.29,13.5,15.85,17.79,20.12,24.53,29.44,38.1,41.55,42.62,46.41,47.62,53.04,55.1,59.35,60.62],"pd-sensibles":[2.06,3.75,6.29,11.05,15.55,17.39,21.64,26.07,31.13,35.32,39.84,45.44,47.92,49.28,51.87,58.46,59.95],"pd-roles":[2.95,6.97,9.85,14.98,19.51,20.86,24.6,28.31,33.1,34.51,38.47,43.35,49.43,55.19,59.03],"pd-papel":[2.73,7.44,9.59,13.29,14.43,19.37,22.16,31.38,33.15,99999,99999,99999,99999,99999,99999,99999],"pd-reutilizar":[2.5,7.91,12.63,14.43,18.61,29.21,31.79,38.83,40.62,46.93,52.66,56.13],"pd-oposicion":[2.46,99999,13.39,16.67,25.47,32.51,99999,50.87,55.15,58.03],"pd-perfiles":[5.2,9.33,13.28,22.88,28,30.51,40.55,46.54,49.54,54.57,63.38,65.23],"pd-cesion":[4.41,10.75,15.75,19.12,22.39,24.68,99999,99999,50.49,55.47,99999,99999],"pd-especiales":[4.15,13.93,21.59,27.65,40.99,44.95,56.7,68.78,73.35],"pd-derechos":[5.07,20.99,34.37,37.51,41.51,53.34,62.99,99999,76.19,80.51],"pd-procedimiento":[3.95,10.95,19.56,21.45,99999,28.45,32.95,99999,45.83,99999,71.83],"pd-negar":[6.58,27.87,32.64,39.76,99999,49.8,99999,84.75,99999],"pd-impacto":[9.48,16.87,18.69,27.89,33.21,38.04,42.04,54.45,65.32,67.93,71.4],"pd-agencia":[99999,9.39,17.48,33.7,35.7,43.28,51.99,58.83,64.67,72.33],"pd-infracciones":[2.95,7.77,19.71,32.79,51.11,52.45,80.64,82.95],"pd-multas":[99999,8.95,11.09,99999,99999,99999,99999,99999,99999,99999,99999],"pd-sintesis":[4.19,8.62,9.33,10.19,11.55,13.19,14.21,15.23,24.55,31.55,40.58]};
 
-export const FIN_AUDIO_PROTECCION = 2970;
+export const FIN_AUDIO_PROTECCION = 2458.65;
