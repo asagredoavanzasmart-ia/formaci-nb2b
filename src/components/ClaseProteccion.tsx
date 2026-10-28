@@ -129,24 +129,6 @@ function PaginaPD({ p, isDark }: { p: Pagina; isDark: boolean }) {
   );
 }
 
-/* Portada a pantalla completa: la escena PortadaPD original, sin Shell ni tarjetas,
-   para que las animaciones del guión (escudo, calendario, Ley 21.719, embudo, etc.) se vean.*/
-function PortadaFullScreen({ isDark }: { isDark: boolean }) {
-  const { inicio, fin } = tramo('pd-portada');
-  const marcas = marcasProteccion['pd-portada'] ?? [];
-  const total = Math.max(1, Math.ceil((fin - inicio) * FPS));
-  const completo = marcas.length ? Math.min(total - 1, Math.max(0, Math.round((marcas[marcas.length - 1] - 0.6) * FPS))) : 0;
-  const props = { isDark, marcas };
-  return (
-    <div className={`w-full h-full flex items-center justify-center overflow-hidden rounded-3xl ${isDark ? 'bg-[#121212]' : 'bg-[#f8f9fa]'}`}>
-      <EscenaSincronizada componente={PortadaPD} props={props} inicio={inicio} fin={fin} ancho={W} alto={H} respaldo={
-        <Thumbnail component={PortadaPD} inputProps={props} compositionWidth={W} compositionHeight={H} frameToDisplay={completo} durationInFrames={total} fps={FPS}
-          style={{ width: '100%', aspectRatio: `${W} / ${H}`, maxHeight: '100%' }} />
-      } />
-    </div>
-  );
-}
-
 /* Página 00: carátula estática del curso. No tiene audio: al dar play, la clase
    guiada salta a pd-portada y arranca la narración desde el segundo 0. */
 function PortadaCover({ isDark }: { isDark: boolean }) {
@@ -185,7 +167,6 @@ function PortadaCover({ isDark }: { isDark: boolean }) {
 
 export default function ClaseProteccion({ slideId, isDark }: { slideId: string; isDark: boolean }) {
   if (slideId === 'pd-cover') return <PortadaCover isDark={isDark} />;
-  if (slideId === 'pd-portada') return <PortadaFullScreen isDark={isDark} />;
   const p = PAGINAS[slideId];
   return p ? <PaginaPD key={slideId} p={p} isDark={isDark} /> : null;
 }
