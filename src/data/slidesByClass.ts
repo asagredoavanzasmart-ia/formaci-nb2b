@@ -583,6 +583,7 @@ export const negociacionSlides: SlideMeta[] = [
 ];
 
 export const proteccionSlides: SlideMeta[] = [
+  { id: 'pd-cover', title: 'Portada', level: 2 },
   { id: 'pd-portada', title: 'Protección de datos', level: 2 },
   { id: 'pd-dato-personal', title: 'Qué es un dato personal', level: 2 },
   { id: 'pd-sensibles', title: 'Datos sensibles', level: 2 },
