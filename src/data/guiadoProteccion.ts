@@ -1,4 +1,7 @@
-import audio from '../audios_clase/proteccion_datos.mp3?url';
+// Versión CBR: el MP3 original era VBR sin cabecera Xing, así que el navegador
+// estimaba mal la duración (2817 s en vez de 2563 s) y cada búsqueda caía un 9 %
+// antes de lo pedido — el botón siguiente sonaba hasta 18 s atrasado.
+import audio from '../audios_clase/proteccion_datos_cbr.mp3?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
