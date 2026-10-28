@@ -171,11 +171,17 @@ export default function ClaseGuiada({ datos, slideActualId, irA, isDark, compact
         if (k.cur !== destino) {
           if (k.cur !== k.auto && ahora - k.pedido > 350) {
             // Alguien cambió de diapositiva a mano: el audio la sigue.
+            // Se salta 0,5 s por delante del tiempo t de la diapositiva para evitar oír
+            // la cola de la frase anterior (p. ej. su pregunta de reflexión) que suele
+            // caer en el mismo bloque del SRT que el inicio de la diapositiva nueva.
             const ts = datos.slides.find((x) => x.id === k.cur)?.t;
             if (ts == null) { salir(); return; }
-            a.currentTime = ts + 0.05;
+            const destinoReal = ts + 0.5;
+            a.currentTime = destinoReal;
+            k.lastT = destinoReal;
             k.auto = k.cur;
             k.fired.clear();
+            setTiempo(destinoReal);
           } else if (k.cur === k.auto) {
             k.auto = destino;
             k.pedido = ahora;

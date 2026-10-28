@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Thumbnail } from '@remotion/player';
 import { Shell, panelClass, textMuted, microLabel, featuredClass } from './slideKit';
 import { EscenaSincronizada } from './remotion/EscenaSincronizada';
@@ -129,46 +128,26 @@ function PaginaPD({ p, isDark }: { p: Pagina; isDark: boolean }) {
   );
 }
 
-/* Portada de pantalla completa: título, visual y descripción. */
-function PortadaCover({ isDark }: { isDark: boolean }) {
+/* Portada a pantalla completa: la escena PortadaPD original, sin Shell ni tarjetas,
+   para que las animaciones del guión (escudo, calendario, Ley 21.719, embudo, etc.) se vean.*/
+function PortadaFullScreen({ isDark }: { isDark: boolean }) {
+  const { inicio, fin } = tramo('pd-portada');
+  const marcas = marcasProteccion['pd-portada'] ?? [];
+  const total = Math.max(1, Math.ceil((fin - inicio) * FPS));
+  const completo = marcas.length ? Math.min(total - 1, Math.max(0, Math.round((marcas[marcas.length - 1] - 0.6) * FPS))) : 0;
+  const props = { isDark, marcas };
   return (
-    <div className={`w-full h-full flex flex-col items-center justify-center text-center p-8 relative overflow-hidden rounded-3xl ${isDark ? 'bg-[#121212]' : 'bg-[#f8f9fa]'}`}>
-      <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-br from-[#ff851d]/10 to-[#ef375c]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-gradient-to-tr from-[#ef375c]/10 to-[#ff851d]/10 rounded-full blur-3xl pointer-events-none" />
-      {/* Escudo + candado SVG */}
-      <motion.svg initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewBox="0 0 200 160" className="w-48 md:w-64 mb-4 z-10" aria-hidden="true">
-        <defs>
-          <linearGradient id="pdcov-g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ff851d" />
-            <stop offset="100%" stopColor="#ef375c" />
-          </linearGradient>
-        </defs>
-        {/* Escudo */}
-        <g transform="translate(100 90) scale(1.3)">
-          <path d="M 0 -52 L 44 -36 V 5 C 44 36 21 55 0 65 C -21 55 -44 36 -44 5 V -36 Z" fill="url(#pdcov-g)" opacity={0.15} />
-          <path d="M 0 -52 L 44 -36 V 5 C 44 36 21 55 0 65 C -21 55 -44 36 -44 5 V -36 Z" fill="none" stroke="url(#pdcov-g)" strokeWidth="4" />
-          {/* Candado dentro del escudo */}
-          <path d="M -14 -4 V -18 A 14 14 0 0 1 14 -18 V -4" fill="none" stroke="url(#pdcov-g)" strokeWidth="5" strokeLinecap="round" />
-          <rect x="-20" y="-8" width="40" height="34" rx="8" fill="url(#pdcov-g)" />
-          <circle cx="0" cy="8" r="5" fill="#fff" />
-          <rect x="-2" y="8" width="4" height="10" rx="2" fill="#fff" />
-        </g>
-      </motion.svg>
-      <motion.p initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-xs md:text-sm uppercase tracking-[0.3em] mb-3 font-bold text-[#ff851d] z-10">
-        Ley 21.719 · Chile · vigente desde diciembre 2026
-      </motion.p>
-      <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className={`text-4xl md:text-6xl font-black mb-4 leading-tight tracking-tighter z-10 ${isDark ? 'text-white' : 'text-gray-900'}`}>
-        Protección de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff851d] to-[#ef375c]">datos personales</span>
-      </motion.h1>
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className={`text-base md:text-xl max-w-3xl mx-auto z-10 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-        Cada dato que tu empresa maneja es ahora un <strong>préstamo</strong> que alguien debe poder justificar.
-      </motion.p>
+    <div className={`w-full h-full flex items-center justify-center overflow-hidden rounded-3xl ${isDark ? 'bg-[#121212]' : 'bg-[#f8f9fa]'}`}>
+      <EscenaSincronizada componente={PortadaPD} props={props} inicio={inicio} fin={fin} ancho={W} alto={H} respaldo={
+        <Thumbnail component={PortadaPD} inputProps={props} compositionWidth={W} compositionHeight={H} frameToDisplay={completo} durationInFrames={total} fps={FPS}
+          style={{ width: '100%', aspectRatio: `${W} / ${H}`, maxHeight: '100%' }} />
+      } />
     </div>
   );
 }
 
 export default function ClaseProteccion({ slideId, isDark }: { slideId: string; isDark: boolean }) {
-  if (slideId === 'pd-portada') return <PortadaCover isDark={isDark} />;
+  if (slideId === 'pd-portada') return <PortadaFullScreen isDark={isDark} />;
   const p = PAGINAS[slideId];
   return p ? <PaginaPD key={slideId} p={p} isDark={isDark} /> : null;
 }
