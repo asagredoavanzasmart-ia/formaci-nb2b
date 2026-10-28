@@ -48,10 +48,12 @@ import { guiadoProteccion, marcasProteccion, FIN_AUDIO_PROTECCION } from '../dat
 
 const FPS = 30;
 
-/* Tramo del audio que cubre una diapositiva: de su inicio al de la siguiente. */
+/* Tramo del audio que cubre una diapositiva: de su inicio al de la siguiente.
+   Para slides sin audio en el SRT devuelve una ventana ficticia de 75 s
+   que permite mostrar la animación completa en el Thumbnail. */
 const tramo = (id: string) => {
   const i = guiadoProteccion.slides.findIndex((s) => s.id === id);
-  if (i < 0) return { inicio: 0, fin: 1 };
+  if (i < 0) return { inicio: 0, fin: 75 };
   return { inicio: guiadoProteccion.slides[i].t, fin: guiadoProteccion.slides[i + 1]?.t ?? FIN_AUDIO_PROTECCION };
 };
 
