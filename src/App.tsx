@@ -1006,19 +1006,6 @@ export default function App() {
             >
               <Smartphone size={18} />
             </button>
-            {/* Botón de Guardar Cambios */}
-            <button 
-              onClick={saveChangesToDisk}
-              className={`p-2.5 rounded-full shadow-md bg-white hover:bg-gray-50 border border-gray-100 transition-all duration-300 hover:scale-110 ${
-                isSavedFeedback
-                  ? 'text-green-500'
-                  : 'text-gray-500 hover:text-gray-700'
-              }`}
-              title="Guardar todos los cambios"
-              id="btn-save-changes"
-            >
-              <Save size={18} />
-            </button>
           </div>
         </div>
 
