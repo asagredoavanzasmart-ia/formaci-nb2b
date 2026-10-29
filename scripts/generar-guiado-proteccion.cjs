@@ -95,7 +95,7 @@ inicios.forEach(({ e, i, t }, k) => {
 });
 if (avisos.length) console.log('\n' + avisos.join('\n'));
 
-const ts = `import audio from '../audios_clase/proteccion_datos.mp3?url';
+const ts = `import audio from '../audios_clase/proteccion_datos_cbr.mp3?url';
 import type { GuiadoClase } from '../lib/guiado';
 
 /**
