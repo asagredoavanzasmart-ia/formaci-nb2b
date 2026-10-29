@@ -39,6 +39,22 @@ const buscar = (frase, desde, hasta = R.length) => {
   return null;
 };
 
+// Respaldo tolerante a errores de transcripción: dentro del tramo, la ventana donde aparecen más palabras
+// de la frase (sin exigir orden exacto); debe empezar en una de sus dos primeras palabras.
+const parecido = (a, b) => a === b || (a.length > 3 && b.length > 3 && 1 - lev(a, b) / Math.max(a.length, b.length) >= 0.6);
+const buscarFlex = (frase, desde, hasta = R.length) => {
+  const f = toks(frase); let mejor = null;
+  for (let a = desde; a < hasta; a++) {
+    if (!f.slice(0, 2).some((w) => parecido(R[a].w, w))) continue;
+    const ventana = R.slice(a, Math.min(hasta, a + f.length + 2)).map((x) => x.w);
+    const ok = f.filter((w) => ventana.some((v) => parecido(v, w))).length;
+    if (ok >= Math.ceil(f.length * 0.6) && (!mejor || ok > mejor.ok)) mejor = { i: a, t: R[a].t, ok };
+  }
+  return mejor;
+};
+const buscarExacta = buscar;
+const buscarEnTramo = (frase, desde, hasta) => buscarExacta(frase, desde, hasta) ?? buscarFlex(frase, desde, hasta);
+
 const avisos = [];
 // 1) Inicio de cada diapositiva, en orden.
 const inicios = [];
@@ -70,11 +86,11 @@ inicios.forEach(({ e, i, t }, k) => {
   const rel = [];
   let desde = i;
   for (const f of e.frases) {
-    const r = buscar(f, desde, hasta);
+    const r = buscarEnTramo(f, desde, hasta);
     if (!r) { avisos.push(`NO HALLADA en ${e.id}: ${f}`); rel.push(99999); continue; }
     rel.push(+(r.t - 0.2 - t).toFixed(2)); desde = r.i + 1;
   }
-  const rp = buscar(e.pregunta.frase, desde, hasta) ?? buscar(e.pregunta.frase, i, hasta);
+  const rp = buscarEnTramo(e.pregunta.frase, desde, hasta) ?? buscarEnTramo(e.pregunta.frase, i, hasta);
   if (!rp) avisos.push(`NO HALLADA pregunta en ${e.id}: ${e.pregunta.frase}`);
   const tPregunta = rp ? +(rp.t - 0.2).toFixed(2) : null;
   rel.push(tPregunta != null ? +(tPregunta - t).toFixed(2) : 99999);
@@ -83,7 +99,7 @@ inicios.forEach(({ e, i, t }, k) => {
   const lista = [{ t: +(t + 0.3).toFixed(2), mostrar: ['titulo'], foco: null }];
   let dt = i;
   for (const tj of e.tarjetas) {
-    const r = buscar(tj.frase, dt, hasta) ?? buscar(tj.frase, i, hasta);
+    const r = buscarEnTramo(tj.frase, dt, hasta) ?? buscarEnTramo(tj.frase, i, hasta);
     if (!r) { avisos.push(`NO HALLADA tarjeta en ${e.id}: ${tj.frase}`); continue; }
     lista.push({ t: +(r.t - 0.2).toFixed(2), mostrar: [`n:${tj.rotulo}`], foco: `n:${tj.rotulo}` });
     dt = r.i + 1;

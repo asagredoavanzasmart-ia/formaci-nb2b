@@ -824,7 +824,7 @@ en esas excepciones el responsable debe asegurar el derecho a la información y 
 
 207
 00:13:34,520 --> 00:13:39,600
-obtener una explicación, al intervención humana, a expresar su punto de vista y a solicitar
+obtener una explicación, a la intervención humana, a expresar su punto de vista y a solicitar
 
 208
 00:13:39,600 --> 00:13:44,200
@@ -908,7 +908,7 @@ Si se se deshina el consentimiento del titular,
 
 228
 00:14:48,800 --> 00:14:52,040
-cuando era necesario, las sesiones nulas y el sesionario
+cuando era necesario, la cesión es nula y el cesionario
 
 229
 00:14:52,040 --> 00:14:54,200
@@ -1452,11 +1452,11 @@ El derecho de oposición permite impedir un tratamiento determinado.
 
 364
 00:22:59,120 --> 00:23:00,000
-derecho de portable.
+El derecho de portabilidad
 
 365
 00:23:00,000 --> 00:23:03,720
-y la realidad permite recibir una copia en un formato electrónico estructurado,
+permite recibir una copia en un formato electrónico estructurado,
 
 366
 00:23:03,720 --> 00:23:08,840
@@ -2068,7 +2068,7 @@ actúa la ciencia.
 
 518
 00:33:00,000 --> 00:33:05,440
-Para fiscalizar, puede requerir aquí entre datos cualquier documento, libro o antecedente
+Para fiscalizar, puede requerir a quien trate datos cualquier documento, libro o antecedente
 
 519
 00:33:05,440 --> 00:33:10,000
@@ -2432,7 +2432,7 @@ y medianas empresas el dueño puede asumir esa función.
 
 609
 00:38:38,720 --> 00:38:43,400
-Sustarea son asesorar, promover la política de datos, supervisar el cumplimiento,
+Sus tareas son asesorar, promover la política de datos, supervisar el cumplimiento,
 
 610
 00:38:43,400 --> 00:38:48,340
