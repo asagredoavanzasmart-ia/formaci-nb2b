@@ -66,8 +66,10 @@ export const infracciones: Pagina = {
   bajada: 'Leves, graves y gravísimas: desde no tener un canal de contacto hasta el tratamiento fraudulento.',
   inicio: 'la ley clasifica las infracciones en tres niveles',
   frases: [
-    'las leves incluyen', 'no tener un canal de contacto', 'las graves incluyen', 'impedir u obstaculizar el ejercicio', 'las gravísimas incluyen',
-    'el tratamiento fraudulento', 'y no hacer la evaluación de impacto',
+    'las leves incluyen', 'incumplir el deber de información', 'no tener un canal de contacto', 'responder de forma incompleta o fuera de plazo', 'incumplir sus instrucciones generales',
+    'las graves incluyen', 'sin fundamento legal', 'para una finalidad distinta', 'impedir u obstaculizar el ejercicio', 'infringir las normas sobre niños', 'vulnerar el deber de secreto',
+    'las gravísimas incluyen', 'el tratamiento fraudulento', 'destinar maliciosamente los datos', 'información falsa o desactualizada', 'datos sensibles o de menores', 'omitir deliberadamente reportar',
+    'y no hacer la evaluación de impacto',
   ],
   els: [],
   tarjetas: [
@@ -86,7 +88,7 @@ export const multas: Pagina = {
   inicio: 'las multas se fijan según ese nivel',
   frases: [
     'hasta 5.000 unidades tributarias', 'las graves con multa de hasta 10.000', 'las gravísimas con multa de hasta 20.000', 'hasta tres veces el monto',
-    'al 2 o al 4', 'la multa sube un 50', 'las atenuantes son', 'las agravantes son', 'quedan cinco años en el registro', 'a las empresas de menor tamaño',
+    'al 2 o al 4', 'hay reincidencia cuando el responsable', 'las medidas correctivas', 'la multa sube un 50', 'las atenuantes son', 'las agravantes son', 'quedan cinco años en el registro', 'a las empresas de menor tamaño',
   ],
   els: [],
   tarjetas: [
@@ -104,8 +106,9 @@ export const prevencion: Pagina = {
   bajada: 'Un programa de cumplimiento de siete elementos, con un delegado de protección de datos, que la Agencia certifica por tres años.',
   inicio: 'la ley ofrece una herramienta para ordenar',
   frases: [
-    'el modelo de prevención de infracciones', 'un programa de cumplimiento con siete elementos', 'designar a un delegado', 'el cuarto identificar los procesos',
-    'el sexto contar con mecanismos de reporte', 'deben incorporarse en los contratos de trabajo', 'el dueño puede asumir esa función', 'sus tareas son asesorar',
+    'el modelo de prevención de infracciones', 'un programa de cumplimiento con siete elementos', 'designar a un delegado', 'el segundo define sus medios',
+    'el tercero identificar qué información', 'el cuarto identificar los procesos', 'el quinto establecer protocolos', 'el sexto contar con mecanismos de reporte',
+    'y el séptimo tener sanciones internas', 'deben incorporarse en los contratos de trabajo', 'el dueño puede asumir esa función', 'sus tareas son asesorar',
     'certifica estos modelos por tres años',
   ],
   els: [],

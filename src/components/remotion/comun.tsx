@@ -54,6 +54,11 @@ export const Persona: React.FC<{ id: string; x: number; y: number; s?: number; c
 );
 
 /* Texto SVG en Ubuntu/Arimo con los defaults de la guía. */
-export const Txt: React.FC<React.SVGProps<SVGTextElement> & { f?: 'u' | 'a'; peso?: number }> = ({ f = 'u', peso = 700, children, ...p }) => (
-  <text fontFamily={f === 'u' ? 'Ubuntu' : 'Arimo'} fontWeight={peso} {...p}>{children}</text>
-);
+/* Tamaño mínimo (en unidades de la escena) que la clase impone al texto cuando la escena se ve angosta; 0 = sin piso. */
+export const PisoTexto = React.createContext(0);
+
+export const Txt: React.FC<React.SVGProps<SVGTextElement> & { f?: 'u' | 'a'; peso?: number }> = ({ f = 'u', peso = 700, children, fontSize, ...p }) => {
+  const piso = React.useContext(PisoTexto);
+  const tam = typeof fontSize === 'number' && fontSize < piso ? piso : fontSize;
+  return <text fontFamily={f === 'u' ? 'Ubuntu' : 'Arimo'} fontWeight={peso} fontSize={tam} {...p}>{children}</text>;
+};

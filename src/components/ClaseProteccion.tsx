@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Thumbnail } from '@remotion/player';
 import { Shell, panelClass, textMuted, microLabel, featuredClass } from './slideKit';
 import { EscenaSincronizada } from './remotion/EscenaSincronizada';
+import { PisoTexto } from './remotion/comun';
 import { PAGINAS } from './proteccion/indice';
 import { PortadaPD, W, H } from './proteccion/escenas/PortadaPD';
 import { DatoPersonalPD } from './proteccion/escenas/DatoPersonalPD';
@@ -94,8 +95,21 @@ const ESCENAS: Record<string, React.FC<any>> = {
   'pd-sintesis': SintesisPD,
 };
 
+/* Escenas diseñadas con texto bajo 44 unidades: en pantallas angostas su texto no baja de 13 px reales. */
+const CON_PISO = new Set(['pd-prevencion', 'pd-plan']);
+
 /* Página de contenido: escena animada a la izquierda y lo que se lee a la derecha. */
 function PaginaPD({ p, isDark }: { p: Pagina; isDark: boolean }) {
+  const caja = React.useRef<HTMLDivElement>(null);
+  const [ancho, setAncho] = React.useState(0);
+  React.useEffect(() => {
+    const el = caja.current;
+    if (!el || !CON_PISO.has(p.id)) return;
+    const ro = new ResizeObserver(([e]) => setAncho(e.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [p.id]);
+  const piso = ancho > 0 && ancho < 520 ? (13 * W) / ancho : 0;
   const { inicio, fin } = tramo(p.id);
   const marcas = marcasProteccion[p.id] ?? [];
   const componente = ESCENAS[p.id];
@@ -107,12 +121,14 @@ function PaginaPD({ p, isDark }: { p: Pagina; isDark: boolean }) {
     <Shell isDark={isDark} title={p.titulo} highlight={p.destaque} subtitle={p.bajada}>
       <div className="h-full flex flex-col min-h-0">
         <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5">
-          <div className="lg:w-[58%] min-w-0 min-h-0 flex items-center justify-center overflow-hidden rounded-2xl">
+          <div ref={caja} className="lg:w-[58%] min-w-0 min-h-0 flex items-center justify-center overflow-hidden rounded-2xl">
             {componente && (
-              <EscenaSincronizada componente={componente} props={props} inicio={inicio} fin={fin} ancho={W} alto={H} respaldo={
-                <Thumbnail component={componente} inputProps={props} compositionWidth={W} compositionHeight={H} frameToDisplay={completo} durationInFrames={total} fps={FPS}
-                  style={{ width: '100%', aspectRatio: `${W} / ${H}`, maxHeight: '100%' }} />
-              } />
+              <PisoTexto.Provider value={piso}>
+                <EscenaSincronizada componente={componente} props={props} inicio={inicio} fin={fin} ancho={W} alto={H} respaldo={
+                  <Thumbnail component={componente} inputProps={props} compositionWidth={W} compositionHeight={H} frameToDisplay={completo} durationInFrames={total} fps={FPS}
+                    style={{ width: '100%', aspectRatio: `${W} / ${H}`, maxHeight: '100%' }} />
+                } />
+              </PisoTexto.Provider>
             )}
           </div>
           <div className="lg:w-[42%] min-w-0 flex flex-col gap-3 justify-center">

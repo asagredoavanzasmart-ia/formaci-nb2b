@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, Easing, useCurrentFrame, useVideoConfig } from 'remotion';
 import { NARANJA, ROSA, VERDE, Gradientes, Txt, ac, pop, sombra, tono } from '../../remotion/comun';
-import { MIN_TXT, PanelPregunta, Rotulo, lerp } from './comunPD';
+import { PanelPregunta, Rotulo, lerp } from './comunPD';
 
 /**
  * «El plan de cinco pasos», escena propia. Una escalera de cinco peldaños que sube hacia el calendario
@@ -19,7 +19,7 @@ type Props = { isDark: boolean; marcas: number[]; pregunta?: string; estatico?: 
 const PASOS: { n: Nombre; txt: string }[] = [
   { n: 'p1', txt: 'inventario' }, { n: 'p2', txt: 'base legal' }, { n: 'p3', txt: 'contratos' }, { n: 'p4', txt: 'canales' }, { n: 'p5', txt: 'evidencia' },
 ];
-const px = (k: number) => 170 + k * 210, top = (k: number) => 740 - k * 90;
+const px = (k: number) => 170 + k * 210, top = (k: number) => 700 - k * 85;
 
 export const PlanPD: React.FC<Props> = ({ isDark, marcas, pregunta, estatico = false }) => {
   const frame = useCurrentFrame();
@@ -63,8 +63,8 @@ export const PlanPD: React.FC<Props> = ({ isDark, marcas, pregunta, estatico = f
                 {u > 0.01 && (
                   <g>
                     <rect x={px(k) - 100} y={y} width={200} height={790 - y} rx={14} fill={k % 2 ? ROSA : NARANJA} style={sombra(c.sombra, 5, 10)} />
-                    <Txt x={px(k)} y={y + 50} dominantBaseline="central" textAnchor="middle" fontSize={44} fill="#fff">{k + 1}</Txt>
-                    <Txt f="a" x={px(k)} y={y - 34} textAnchor="middle" fontSize={MIN_TXT} fill={c.texto} opacity={u}>{p.txt}</Txt>
+                    <Txt x={px(k)} y={y + 45} dominantBaseline="central" textAnchor="middle" fontSize={44} fill="#fff" opacity={u}>{k + 1}</Txt>
+                    <Txt f="a" x={px(k)} y={y - 24} textAnchor="middle" fontSize={30} fill={c.texto} opacity={u}>{p.txt}</Txt>
                   </g>
                 )}
               </g>

@@ -13,7 +13,7 @@ import { Insignia, MIN_TXT, Oficinas, PanelPregunta, Rotulo, lerp, ventana } fro
 export const W = 1200, H = 860;
 const ID = 'pdy';
 
-const nombres = ['leve', 'grave', 'gravisima', 'triple', 'ingresos', 'recargo', 'atenuantes', 'agravantes', 'registro', 'pyme', 'pregunta'] as const;
+const nombres = ['leve', 'grave', 'gravisima', 'triple', 'ingresos', 'reincide', 'correctivas', 'recargo','atenuantes', 'agravantes', 'registro', 'pyme', 'pregunta'] as const;
 type Nombre = typeof nombres[number];
 type Props = { isDark: boolean; marcas: number[]; pregunta?: string; estatico?: boolean };
 
@@ -37,7 +37,8 @@ export const MultasPD: React.FC<Props> = ({ isDark, marcas, pregunta, estatico =
 
   const rotulos: [number, string][] = [
     [0.2, 'Según el nivel'], [M('leve'), 'Leves: hasta 5.000 UTM'], [M('grave'), 'Graves: hasta 10.000'], [M('gravisima'), 'Gravísimas: hasta 20.000'],
-    [M('triple'), 'Reincidir: hasta el triple'], [M('ingresos'), 'o el 2 % o 4 % de los ingresos'], [M('recargo'), 'Sin corregir: +50 %'],
+    [M('triple'), 'Reincidir: hasta el triple'], [M('ingresos'), 'o el 2 % o 4 % de los ingresos'],
+    [M('reincide'), 'Reincidir: 2 sanciones en 30 meses'], [M('correctivas'), 'Corregir en 60 días'], [M('recargo'), 'Sin corregir: +50 %'],
     [M('atenuantes'), 'Lo que atenúa…'], [M('agravantes'), '…y lo que agrava'], [M('registro'), 'Cinco años en un registro público'], [M('pyme'), 'Empresas de menor tamaño: amonestación'],
   ];
   const e = (n: Nombre, d = 0) => Math.min(1, pop(t, M(n) + d, 0.55));
@@ -73,9 +74,85 @@ export const MultasPD: React.FC<Props> = ({ isDark, marcas, pregunta, estatico =
                   </g>
                 );
               })}
-              <g opacity={e('triple')}><Txt x={930} y={300} dominantBaseline="central" textAnchor="middle" fontSize={90} fill={ROSA}>×3</Txt></g>
-              <g opacity={e('ingresos')}><Insignia x={930} y={450} texto="2 % · 4 %" c={c} id={ID} tono="alerta" /></g>
-              <g opacity={e('recargo')}><Insignia x={930} y={580} texto="+50 %" c={c} id={ID} /></g>
+              {/* Reincidir: la multa máxima de 20.000 UTM se triplica. */}
+              {(() => {
+                const op = ventana(t, M('triple'), M('ingresos'));
+                if (op < 0.01) return null;
+                const u = ac(t, M('triple') + 0.4, M('triple') + 1.8, 0, 1, Easing.inOut(Easing.cubic));
+                const base = ALTO / 3, h = base * (1 + 2 * u);
+                const valor = Math.round((20000 + 40000 * u) / 1000) * 1000;
+                return (
+                  <g opacity={op}>
+                    <rect x={880} y={BASE - h} width={120} height={h - base} rx={12} fill={ROSA} opacity={0.45} />
+                    <rect x={880} y={BASE - base} width={120} height={base} rx={12} fill={ROSA} />
+                    <Txt x={940} y={BASE - h - 26} textAnchor="middle" fontSize={MIN_TXT} fill={c.texto}>{valor.toLocaleString('es-CL')}</Txt>
+                    <Txt f="a" x={940} y={BASE + 48} textAnchor="middle" fontSize={MIN_TXT} fill={ROSA} peso={700}>×3</Txt>
+                  </g>
+                );
+              })()}
+              {/* O un porcentaje de los ingresos anuales: 2 % en graves, 4 % en gravísimas. */}
+              {(() => {
+                const op = ventana(t, M('ingresos'), M('reincide'));
+                if (op < 0.01) return null;
+                const u = ac(t, M('ingresos') + 0.3, M('ingresos') + 1.5, 0, 1, Easing.out(Easing.cubic));
+                const cx = 940, cy = 420, r = 150;
+                const cuña = (pct: number) => {
+                  const a = (-90 + 360 * pct * u) * Math.PI / 180;
+                  return `M ${cx} ${cy} L ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx + r * Math.cos(a)} ${cy + r * Math.sin(a)} Z`;
+                };
+                return (
+                  <g opacity={op}>
+                    <circle cx={cx} cy={cy} r={r} fill={c.apagado} style={sombra(c.sombra, 4, 10)} />
+                    <g transform={`translate(${14 * u} ${-24 * u})`}>
+                      <path d={cuña(0.04)} fill={ROSA} />
+                      <path d={cuña(0.02)} fill={NARANJA} />
+                    </g>
+                    <Txt f="a" x={cx} y={cy + 70} textAnchor="middle" fontSize={MIN_TXT} fill={c.texto}>ingresos</Txt>
+                    <Txt f="a" x={cx} y={640} textAnchor="middle" fontSize={MIN_TXT} fill={NARANJA} peso={700}>2 % grave</Txt>
+                    <Txt f="a" x={cx} y={700} textAnchor="middle" fontSize={MIN_TXT} fill={ROSA} peso={700}>4 % gravísima</Txt>
+                  </g>
+                );
+              })()}
+              {/* Hay reincidencia con dos o más sanciones en 30 meses. */}
+              {(() => {
+                const op = ventana(t, M('reincide'), M('correctivas'));
+                if (op < 0.01) return null;
+                const traza = ac(t, M('reincide'), M('reincide') + 1);
+                const sello = (k: number) => ac(t, M('reincide') + 1 + k * 1.4, M('reincide') + 1.6 + k * 1.4, 0, 1, Easing.out(Easing.bounce));
+                return (
+                  <g opacity={op}>
+                    <line x1={790} y1={470} x2={790 + 300 * traza} y2={470} stroke={c.tenue} strokeWidth={8} strokeLinecap="round" />
+                    {Array.from({ length: 7 }, (_, k) => <rect key={k} x={787 + k * 50} y={452} width={6} height={36} rx={3} fill={c.tenue} opacity={traza} />)}
+                    {[840, 1040].map((x, k) => {
+                      const v = sello(k);
+                      return v > 0.01 ? (
+                        <g key={x} transform={`translate(${x} ${390 - (1 - v) * 120})`} opacity={Math.min(1, v * 2)}>
+                          <circle r={44} fill={ROSA} style={sombra(c.sombra, 4, 10)} />
+                          <Txt x={0} y={16} textAnchor="middle" fontSize={MIN_TXT} fill="#fff">{k + 1}</Txt>
+                        </g>
+                      ) : null;
+                    })}
+                    <Txt f="a" x={940} y={560} textAnchor="middle" fontSize={MIN_TXT} fill={c.texto} opacity={traza}>30 meses</Txt>
+                  </g>
+                );
+              })()}
+              {/* 60 días para corregir; si no, la multa sube un 50 %. */}
+              {(() => {
+                const op = ventana(t, M('correctivas'), M('atenuantes'));
+                if (op < 0.01) return null;
+                const lleno = ac(t, M('correctivas') + 0.4, M('recargo'));
+                const sube = Math.min(1, pop(t, M('recargo'), 0.6));
+                const r = 110, L = 2 * Math.PI * r;
+                return (
+                  <g opacity={op}>
+                    <circle cx={940} cy={360} r={r} fill="none" stroke={c.apagado} strokeWidth={22} />
+                    <circle cx={940} cy={360} r={r} fill="none" stroke={sube > 0.01 ? ROSA : NARANJA} strokeWidth={22} strokeLinecap="round"
+                      strokeDasharray={L} strokeDashoffset={L * (1 - lleno)} transform="rotate(-90 940 360)" />
+                    <Txt x={940} y={372} textAnchor="middle" fontSize={MIN_TXT} fill={c.texto}>60 días</Txt>
+                    {sube > 0.01 && <g opacity={sube} transform={`translate(0 ${(1 - sube) * 20})`}><Insignia x={940} y={580} texto="+50 %" c={c} id={ID} tono="alerta" /></g>}
+                  </g>
+                );
+              })()}
             </g>
           )}
 

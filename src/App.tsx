@@ -587,7 +587,11 @@ export default function App() {
 
   return (
     <div className={`min-h-screen transition-colors duration-500 overflow-hidden flex ${isDark ? 'bg-[#000000] text-[#f8f9fa]' : 'bg-[#f0f2f5] text-[#111827]'}`}>
-      
+      {/* Aviso temporal de mantenimiento */}
+      <div role="status" className="fixed bottom-[72px] md:bottom-auto md:top-3 left-1/2 -translate-x-1/2 z-[200] pointer-events-none px-4 py-1.5 rounded-full text-xs md:text-sm font-bold text-white bg-gradient-to-r from-[#ff851d] to-[#ef375c] shadow-lg">
+        En mantenimiento
+      </div>
+
       {/* Sidebar - Ocupa altura completa y empuja el contenido */}
       <aside 
         className={`transition-all duration-300 flex flex-col h-dvh border-r shadow-xl overflow-hidden ${isCompact ? 'fixed inset-y-0 left-0 z-[120]' : 'z-50'} ${isDark ? 'bg-[#111111] border-[#2a2a2a]' : 'bg-white border-gray-100'} ${isSidebarOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}

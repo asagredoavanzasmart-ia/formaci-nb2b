@@ -13,7 +13,8 @@ import { Hoja, Insignia, Oficinas, PanelPregunta, Rotulo } from './comunPD';
 export const W = 1200, H = 860;
 const ID = 'pdh';
 
-const nombres = ['modelo', 'siete', 'delegado', 'procesos', 'reporte', 'contratos', 'dueno', 'tareas', 'certifica', 'pregunta'] as const;
+const nombres = ['modelo', 'siete', 'delegado', 'medios', 'datos', 'procesos', 'protocolos', 'reporte', 'sanciones', 'contratos', 'dueno', 'tareas', 'certifica', 'pregunta'] as const;
+const ELEMENTOS = ['delegado', 'medios', 'datos', 'procesos', 'protocolos', 'reportes', 'sanciones'];
 type Nombre = typeof nombres[number];
 type Props = { isDark: boolean; marcas: number[]; pregunta?: string; estatico?: boolean };
 
@@ -30,8 +31,7 @@ export const PrevencionPD: React.FC<Props> = ({ isDark, marcas, pregunta, estati
   const vP = estatico ? 0 : pop(t, tPregunta, 0.6);
   const fondo = 1 - 0.72 * ac(t, tPregunta, tPregunta + 0.6);
 
-  // Momentos de los siete elementos: los nombrados con marca y los intermedios repartidos entre ellas.
-  const tiempos = [M('delegado'), (M('delegado') * 2 + M('procesos')) / 3, (M('delegado') + M('procesos') * 2) / 3, M('procesos'), (M('procesos') + M('reporte')) / 2, M('reporte'), (M('reporte') + M('contratos')) / 2];
+  const tiempos = [M('delegado'), M('medios'), M('datos'), M('procesos'), M('protocolos'), M('reporte'), M('sanciones')];
   const rotulos: [number, string][] = [
     [0.2, 'Una herramienta para ordenar'], [M('modelo'), 'El modelo de prevención'], [M('siete'), 'Siete elementos'],
     [tiempos[0], 'Un delegado'], [tiempos[1], 'Sus medios y facultades'], [tiempos[2], 'Qué datos y de quiénes'], [tiempos[3], 'Los procesos de riesgo'],
@@ -55,11 +55,14 @@ export const PrevencionPD: React.FC<Props> = ({ isDark, marcas, pregunta, estati
               const on = ac(t, tiempos[k], tiempos[k] + 0.6);
               const contorno = ac(t, M('siete') + k * 0.15, M('siete') + 0.5 + k * 0.15);
               const p = (a: number, r: number) => `${CX + r * Math.cos(rad(a))} ${CY + r * Math.sin(rad(a))}`;
+              const medio = rad((a0 + a1) / 2);
               return (
                 <g key={k}>
                   <path d={`M ${p(a0, R)} A ${R} ${R} 0 0 1 ${p(a1, R)}`} fill="none" stroke={c.apagado} strokeWidth={44} opacity={contorno} />
                   <path d={`M ${p(a0, R)} A ${R} ${R} 0 0 1 ${p(a1, R)}`} fill="none" stroke={k % 2 ? ROSA : NARANJA} strokeWidth={44} opacity={on} />
-                  <Txt x={CX + (R) * Math.cos(rad((a0 + a1) / 2))} y={CY + (R) * Math.sin(rad((a0 + a1) / 2))} dominantBaseline="central" textAnchor="middle" fontSize={26} fill="#fff" opacity={on}>{k + 1}</Txt>
+                  <Txt x={CX + R * Math.cos(medio)} y={CY + R * Math.sin(medio)} dominantBaseline="central" textAnchor="middle" fontSize={26} fill="#fff" opacity={on}>{k + 1}</Txt>
+                  <Txt f="a" x={CX + 320 * Math.cos(medio)} y={CY + 320 * Math.sin(medio)} dominantBaseline="central" textAnchor="middle" fontSize={30} fill={c.texto} peso={700}
+                    opacity={on} transform={`translate(0 ${(1 - on) * 8})`}>{ELEMENTOS[k]}</Txt>
                 </g>
               );
             })}
@@ -76,16 +79,23 @@ export const PrevencionPD: React.FC<Props> = ({ isDark, marcas, pregunta, estati
           })}
 
           {/* Fuera del anillo */}
-          <g opacity={e('contratos')}><Hoja x={170} y={700} w={130} h={160} c={c} cabeza={`url(#${ID}-marca)`} titulo="" llena={ac(t, M('contratos'), M('contratos') + 1.4)} /></g>
+          {/* Las reglas del programa quedan escritas y firmadas en los contratos de trabajo */}
+          <g opacity={e('contratos')}>
+            <Hoja x={170} y={230} w={220} h={220} c={c} cabeza={`url(#${ID}-marca)`} titulo="contrato" tituloTam={26} llena={ac(t, M('contratos'), M('contratos') + 1.4)} />
+            {(() => {
+              const firma = ac(t, M('contratos') + 1.4, M('contratos') + 2.4);
+              return <path d="M 110 318 q 14 -24 28 0 t 28 0 t 28 0 t 28 0" fill="none" stroke={NARANJA} strokeWidth={4} strokeLinecap="round" strokeDasharray={140} strokeDashoffset={140 * (1 - firma)} />;
+            })()}
+          </g>
           {(() => {
             const op = e('dueno');
-            return op > 0.01 ? <g opacity={op}><Oficinas x={1040} y={700} s={0.45} c={c} t={t} /><Insignia x={980} y={800} texto="pyme: dueño" c={c} id={ID} tono="tenue" /></g> : null;
+            return op > 0.01 ? <g opacity={op}><Oficinas x={1060} y={700} s={0.45} c={c} t={t} /><Txt f="a" x={990} y={760} textAnchor="middle" fontSize={30} fill={c.texto} peso={700}>pyme: dueño</Txt></g> : null;
           })()}
           {(() => {
             const s = Math.min(1, pop(t, M('certifica'), 0.6));
             if (s < 0.01) return null;
             return (
-              <g opacity={s} transform={`translate(1040 300) scale(${s}) rotate(-8)`} style={sombra(c.sombra, 4, 10)}>
+              <g opacity={s} transform={`translate(1060 190) scale(${s}) rotate(-8)`} style={sombra(c.sombra, 4, 10)}>
                 <circle r={92} fill={`url(#${ID}-marca)`} />
                 <circle r={78} fill="none" stroke="#fff" strokeWidth={4} strokeDasharray="6 6" />
                 <Txt f="a" x={0} y={0} dominantBaseline="central" textAnchor="middle" fontSize={30} fill="#fff" peso={700}>3 años</Txt>
